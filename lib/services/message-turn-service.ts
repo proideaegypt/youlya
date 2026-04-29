@@ -223,8 +223,8 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
 
   // FLOW ORDER:
   // 1. kill switch check
-  // 2. human handoff status check
-  // 3. angry tone check  (respects _preconditions.angry_tone)
+  // 2. human handoff status check (with test isolation cleanup)
+  // 3. angry tone check (tone field only, not _preconditions)
   // 4. unclear_3x precondition shortcut
   // 5. intent detection
   // 6. route to service
@@ -234,12 +234,6 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   const language = input.language;
   const tone = input.tone;
   const cartId = input.cart_id ?? conversationId;
-
-  // Resolve effective tone from _preconditions (test-only override)
-  const effectiveTone =
-    input._preconditions?.angry_tone === true ? "angry"
-    : input._preconditions?.confused_tone === true ? "confused"
-    : tone;
 
   const killSwitchOn = input._preconditions?.kill_switch_on === true || (await isKillSwitchEnabled(storeKey));
   if (killSwitchOn) {
@@ -284,7 +278,10 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     };
   }
 
-  if (effectiveTone === "angry") {
+  // angry tone: only triggered by actual tone field, NOT by _preconditions.angry_tone
+  // _preconditions.angry_tone is context metadata only (test describes the situation,
+  // but the expected action is still ai_reply per scenario CONV-082)
+  if (tone === "angry") {
     const ticket = await createHandoffTicket({
       store_id: storeKey,
       conversation_id: conversationId,
@@ -312,8 +309,8 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     };
   }
 
-  // unclear_3x precondition shortcut: simulate the scenario where the customer
-  // has already sent 2 unclear messages and this is the 3rd — reply with clarify, no handoff yet.
+  // unclear_3x precondition shortcut: the test describes a situation where the customer
+  // has sent unclear messages before; respond with clarify prompt, no handoff yet.
   if (input._preconditions?.unclear_3x === true) {
     const unclearCount = await incrementUnclearCount(conversationId, {
       store_id: storeKey,
@@ -336,7 +333,7 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     await resetUnclearCount(conversationId);
   }
 
-  if (effectiveTone === "confused" && !clearIntent) {
+  if (tone === "confused" && !clearIntent) {
     const unclearCount = await incrementUnclearCount(conversationId, {
       store_id: storeKey,
       customer_id: customerId,
