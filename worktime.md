@@ -53,3 +53,17 @@ User requested push of phase-0-product-mapping-core, then implementation and rel
 RESULT 4 29/04/26
 STATUS: PASS
 Pushed v0.1.0 product-mapping-core release, implemented DB-backed product mapping repository contract with store-scoped queries and expiry filtering, wired services/routes with async mapping calls, added repository tests and seed data, and validated required typecheck + targeted unit tests.
+
+PROMPT 5 29/04/26
+User requested `phase-0-order-confirmation-idempotency`: implement cart validation state machine, idempotency key guard, migration for order idempotency keys with RLS, confirmation parser with threshold, and unit tests; no Shopify calls in this task.
+
+RESULT 5 29/04/26
+STATUS: PASS
+Implemented cart validation service, confirmation parser, idempotency key generator/check/mark logic with 24h retry window, RLS migration for order_idempotency_keys, and unit tests covering missing fields, duplicate key behavior, explicit/ambiguous confirmations.
+
+PROMPT 6 29/04/26
+User requested `phase-0-shopify-cod-order-creation`: implement Shopify COD order creation endpoint wired to cart validation + idempotency guard, with client adapter retry behavior and unit tests.
+
+RESULT 6 29/04/26
+STATUS: PASS
+Implemented `shopify-order-service` flow (validation -> idempotency -> cached inventory check -> Shopify create -> audit/idempotency mark), added `shopify-client` with 429 retry + 5xx error handling, updated create-order route/schema, added orders RLS migration, and added unit tests for happy/duplicate/OOS/missing-field/429/500/audit cases.

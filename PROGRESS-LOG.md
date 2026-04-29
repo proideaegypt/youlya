@@ -201,3 +201,63 @@ Blockers:
 - None in this task scope
 Next step:
 - Wire repository with real Supabase server client in integration environment while preserving store_id isolation and expiry checks.
+
+## 2026-04-29 — phase-0-order-confirmation-idempotency
+
+Date: 2026-04-29
+Phase: Phase 0 — Youlya Production Hardening
+Task: phase-0-order-confirmation-idempotency
+Files changed:
+- `lib/services/cart-validation-service.ts`
+- `lib/services/idempotency-service.ts`
+- `lib/services/confirmation-parser.ts`
+- `lib/services/confirmation-service.ts`
+- `supabase/migrations/20260429194000_order_idempotency_keys.sql`
+- `tests/unit/cart-validation.test.ts`
+- `PROGRESS-LOG.md`
+- `worktime.md`
+Commands run:
+- `npm run typecheck`
+- `npm test -- tests/unit/cart-validation.test.ts`
+- `npm test -- tests/unit/confirmation.test.ts`
+Tests passed:
+- Typecheck pass
+- Cart validation/idempotency/parser tests pass (6/6)
+- Confirmation tests pass (2/2)
+Tests failed/skipped:
+- None
+Blockers:
+- None
+Next step:
+- Wire cart validation + idempotency guard into order creation service flow in a dedicated safe integration step.
+
+## 2026-04-29 — phase-0-shopify-cod-order-creation
+
+Date: 2026-04-29
+Phase: Phase 0 — Youlya Production Hardening
+Task: phase-0-shopify-cod-order-creation
+Files changed:
+- `lib/adapters/shopify/shopify-client.ts`
+- `lib/services/shopify-order-service.ts`
+- `app/api/ai/tools/create-shopify-order/route.ts`
+- `lib/validation/schemas.ts`
+- `lib/config/env.ts`
+- `lib/services/product-search-service.ts`
+- `supabase/migrations/20260429195500_orders_rls.sql`
+- `tests/unit/shopify-order-service.test.ts`
+- `PROGRESS-LOG.md`
+- `worktime.md`
+Commands run:
+- `npm run typecheck`
+- `npm test -- tests/unit/shopify-order-service.test.ts`
+- `npm test -- tests/unit/cart-validation.test.ts`
+Tests passed:
+- Typecheck pass
+- Shopify order service tests pass (6/6)
+- Cart validation tests pass (6/6)
+Tests failed/skipped:
+- None
+Blockers:
+- None
+Next step:
+- Replace route-level context/permission stubs with centralized auth middleware and wire real DB persistence path for orders + idempotency keys.
