@@ -1,0 +1,171 @@
+# PROGRESS-LOG.md — Youlya AI Commerce OS
+
+## 2026-04-28 — Final live starter pack
+
+Status: prepared for Codex GPT-5.3-Codex implementation.
+
+Completed in this pack:
+
+- Added final start files for Codex.
+- Cleaned scenario JSONL from 91 lines with fake header to 90 real scenarios.
+- Locked Phase 0 as safe commerce core only.
+- Added Shopify product name/code sync spec.
+- Added dashboard/system feature spec with MVP/later split.
+- Added final roadmap from Phase 0 to production live and later SaaS.
+- Added no-overengineering rules.
+- Added Codex tools/plugins guidance.
+- Added validation scripts.
+- Added Supabase Phase 0 migration blueprint.
+- Added Opus/Claude review brief.
+
+Next action:
+
+```text
+Open this repo in Codex, paste COPY_TO_CODEX_GPT53.md, and start Phase 0 bootstrap only.
+```
+
+## Required task log format for future Codex work
+
+Every Codex task must append:
+
+```text
+Date:
+Phase:
+Task:
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+```
+
+## 2026-04-28 — Package Fix: Root CLAUDE.md Added
+
+- Added root-level `CLAUDE.md` for Claude Code compatibility.
+- Kept mirrored `docs/04_CLAUDE.md` documentation copy.
+- Updated `START_HERE_FOR_CODEX.md` and `MANIFEST.md` so reviewers and coding agents can find the contract immediately.
+
+## 2026-04-29 — codex-skills-setup
+
+Date: 2026-04-29
+Phase: Phase -1 setup/readiness
+Task: codex-skills-setup
+Files changed:
+- Added `.agents/skills/*` (10 repo-scoped skills).
+- Added `.codex/config.example.toml` and `.codex/README.md`.
+- Added `scripts/check-codex-tooling.mjs`.
+- Added `docs/19_CODEX_INSTALL_AND_SKILLS_SETUP.md`.
+- Added `docs/20_CODEX_GLOBAL_MEMORY_SNIPPET.md`.
+- Added `docs/21_PORTAINER_GIT_DEPLOY_FROM_REPO.md`.
+- Added `prompts/00_CODEX_BOOTSTRAP_AFTER_SKILLS_INSTALL.md`.
+- Added `deploy/portainer/*` templates.
+- Added baseline QA artifact for this task.
+- Updated `README.md`, `AGENTS.md`, `START_HERE_FOR_CODEX.md`.
+- Added `.gitignore` and sanitized `.env.example`.
+Commands run:
+- discovery (`pwd`, `ls`, `find`, `test -f`, `command -v`, tool `--version`)
+- `node scripts/check-codex-tooling.mjs`
+- `node scripts/scan-secrets.mjs`
+- `node scripts/validate-scenarios.mjs`
+- `node scripts/validate-n8n-workflows.mjs`
+- `node scripts/validate-shopify-products.mjs`
+Tests passed:
+- Scenario validation pass (90 total: 80 CONV, 10 DASH).
+- n8n validator returned BLOCKED (missing workflow JSON expected in starter pack).
+- Shopify validator template/check completed (real export missing).
+Tests failed/skipped:
+- Playwright Agent CLI not available via local/global command.
+- No `package.json`, so npm typecheck/lint/test skipped.
+Blockers:
+- `package.json` absent (repo is spec pack; app scaffold not started yet).
+- `workflows/*.json` missing (expected blocker for runtime n8n contract checks).
+Next step:
+- Use `$youlya-phase-guardian`, then start Phase 0 bootstrap prompt from `prompts/00_CODEX_BOOTSTRAP_AFTER_SKILLS_INSTALL.md`.
+
+## 2026-04-29 — worktime logging rule
+
+Date: 2026-04-29
+Phase: Governance / process safety
+Task: enforce prompt/result history logging
+Files changed:
+- Added `worktime.md`
+- Updated `AGENTS.md`
+- Updated `START_HERE_FOR_CODEX.md`
+Commands run:
+- file inspection only
+Tests passed:
+- N/A (documentation/process change)
+Tests failed/skipped:
+- N/A
+Blockers:
+- None
+Next step:
+- All future Codex tasks must append incremental prompt/result entries in `worktime.md`.
+
+## 2026-04-29 — phase-0-bootstrap executable scaffold
+
+Date: 2026-04-29
+Phase: Phase 0
+Task: phase-0-bootstrap
+Files changed:
+- Added executable Next.js + TypeScript scaffold (`package.json`, `tsconfig.json`, app/public/config files).
+- Implemented Phase 0 API routes for message turn, tools, and health endpoint.
+- Added env validation (`lib/config/env.ts`) with mock/testMode support.
+- Added mock adapter boundaries (Shopify + supabase mock store abstractions).
+- Added core services for product search/mapping/select, cart, shipping, confirmation, idempotency, handoff, audit/tool logging, and order creation boundary.
+- Added unit/API tests via Vitest and `vitest.config.ts`.
+- Added QA artifacts:
+  - `qa-artifacts/tasks/2026-04-29/phase-0-bootstrap/baseline/RESULT.md`
+  - `qa-artifacts/tasks/2026-04-29/phase-0-bootstrap/after/RESULT.md`
+- Updated `docs/01_SPEC_DRIVEN_MASTER_SPEC.md` with explicit testMode no-live-side-effect rule.
+Commands run:
+- `npx create-next-app@latest /tmp/youlya-phase0-app --ts --eslint --tailwind --app --use-npm --yes`
+- `rsync -a --exclude ... /tmp/youlya-phase0-app/ /root/youlya/`
+- `npm install`
+- `npm run typecheck`
+- `npm run lint`
+- `npm test`
+- `npm run build`
+- `npm run validate:scenarios`
+- `node scripts/scan-secrets.mjs`
+- `node scripts/validate-n8n-workflows.mjs`
+- `npm run dev`
+- `APP_URL=http://localhost:3000 SCENARIO_PREFIX=CONV npx playwright test tests/playwright-youlya-scenarios.spec.ts --reporter=list`
+Tests passed:
+- typecheck/build/tests/validate-scenarios/scan-secrets all passed.
+- Playwright CONV scenarios passed: 80/80.
+Tests failed/skipped:
+- n8n workflow static contract remained BLOCKED due to missing workflow JSON files (expected external input).
+Blockers:
+- Missing workflow exports:
+  - `workflows/Whatsapp Youlya (4).json`
+  - `workflows/Sales Assistant - SubWorkflow.json`
+Next step:
+- Continue Phase 0 hardening on this executable base with DB-backed persistence and guarded live adapter integration after approval.
+
+## 2026-04-29 — phase-0-product-mapping-core
+
+Date: 2026-04-29
+Phase: Phase 0 — Youlya Production Hardening
+Task: phase-0-product-mapping-core
+Files changed:
+- `lib/adapters/supabase/mock-store.ts`
+- `lib/services/product-mapping-service.ts`
+- `lib/services/select-product-service.ts`
+- `tests/unit/select-product.test.ts`
+- `worktime.md`
+Commands run:
+- `npm run typecheck`
+- `npm test -- tests/unit/select-product.test.ts`
+- `npm run validate:scenarios`
+Tests passed:
+- Typecheck pass
+- Select-product unit suite pass (4/4)
+- Scenario validation pass (90 total: 80 CONV + 10 DASH)
+Tests failed/skipped:
+- No additional failures
+Blockers:
+- None for this task scope
+Next step:
+- Move mapping persistence from mock state to DB-backed repository while preserving selection safety checks.
