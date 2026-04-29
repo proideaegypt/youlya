@@ -36,3 +36,6 @@ Thumbs.db
 # qa-artifacts/
 
 # auto-release marker
+
+# Local test env
+.env.test

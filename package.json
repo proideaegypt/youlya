@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test tests/playwright-youlya-scenarios.spec.ts --reporter=list",
+    "test:e2e": "dotenv -e .env.test -- npx playwright test tests/playwright-youlya-scenarios.spec.ts --reporter=list",
     "validate:scenarios": "node scripts/validate-scenarios.mjs",
     "scan:secrets": "node scripts/scan-secrets.mjs"
   },
@@ -28,6 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "tailwindcss": "^4",
