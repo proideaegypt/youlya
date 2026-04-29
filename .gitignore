@@ -1,0 +1,37 @@
+# Secrets — NEVER commit
+.env
+.env.local
+.env.production
+.env.development
+.env*.local
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Test artifacts (optional — keep or ignore based on preference)
+# qa-artifacts/
+
