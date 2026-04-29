@@ -67,3 +67,17 @@ User requested `phase-0-shopify-cod-order-creation`: implement Shopify COD order
 RESULT 6 29/04/26
 STATUS: PASS
 Implemented `shopify-order-service` flow (validation -> idempotency -> cached inventory check -> Shopify create -> audit/idempotency mark), added `shopify-client` with 429 retry + 5xx error handling, updated create-order route/schema, added orders RLS migration, and added unit tests for happy/duplicate/OOS/missing-field/429/500/audit cases.
+
+PROMPT 7 29/04/26
+User requested `phase-0-handoff-and-logs`: implement handoff trigger system, kill switch cache check, AI tool call logging with PII-safe summaries, unclear intent counter, migrations, and unit tests.
+
+RESULT 7 29/04/26
+STATUS: PASS
+Implemented new handoff/kill-switch/conversation-state/ai-tool-logger services, added RLS migrations for handoff_tickets and ai_tool_calls contracts, updated handoff route to new ticket input model, and added tests for angry/high priority, unclear 3x auto-handoff, kill switch on/off, PII-safe tool logs, and duplicate-handoff upsert.
+
+PROMPT 8 29/04/26
+User requested `phase-0-auth-middleware-and-store-context`: replace stubbed auth/permission middleware with JWT+Supabase-backed context, add store config cache, wire middleware into create-shopify-order/handoff/select-product routes, add store_users migration with RLS, and add auth middleware unit tests.
+
+RESULT 8 29/04/26
+STATUS: PASS
+Implemented real middleware modules and route integration for protected tools, added `store_users` migration with RLS and indexes, and added `tests/unit/auth-middleware.test.ts` covering valid/invalid/expired/missing token cases, wrong store access, and role permission checks.

@@ -218,6 +218,35 @@ Files changed:
 - `worktime.md`
 Commands run:
 - `npm run typecheck`
+
+## 2026-04-29 — phase-0-auth-middleware-and-store-context
+
+Date: 2026-04-29
+Phase: Phase 0 — Youlya Production Hardening
+Task: phase-0-auth-middleware-and-store-context
+Files changed:
+- `lib/middleware/require-store-context.ts`
+- `lib/middleware/assert-permission.ts`
+- `lib/middleware/store-context.ts`
+- `app/api/ai/tools/create-shopify-order/route.ts`
+- `app/api/ai/tools/handoff/route.ts`
+- `app/api/ai/tools/select-product/route.ts`
+- `supabase/migrations/20260429213000_users_roles.sql`
+- `tests/unit/auth-middleware.test.ts`
+- `PROGRESS-LOG.md`
+- `worktime.md`
+Commands run:
+- `npm run typecheck`
+- `npm test -- tests/unit/auth-middleware.test.ts`
+Tests passed:
+- Typecheck pass
+- Auth middleware test suite pass (7/7)
+Tests failed/skipped:
+- None in scoped task checks
+Blockers:
+- None
+Next step:
+- Wire the same auth middleware into remaining protected API routes as Phase 0 hardening continues.
 - `npm test -- tests/unit/cart-validation.test.ts`
 - `npm test -- tests/unit/confirmation.test.ts`
 Tests passed:
@@ -261,3 +290,33 @@ Blockers:
 - None
 Next step:
 - Replace route-level context/permission stubs with centralized auth middleware and wire real DB persistence path for orders + idempotency keys.
+
+## 2026-04-29 — phase-0-handoff-and-logs
+
+Date: 2026-04-29
+Phase: Phase 0 — Youlya Production Hardening
+Task: phase-0-handoff-and-logs
+Files changed:
+- `lib/services/handoff-service.ts`
+- `lib/services/kill-switch-service.ts`
+- `lib/services/ai-tool-logger.ts`
+- `lib/services/conversation-state-service.ts`
+- `app/api/ai/tools/handoff/route.ts`
+- `lib/adapters/supabase/mock-store.ts`
+- `supabase/migrations/20260429201000_handoff_tickets.sql`
+- `supabase/migrations/20260429201100_ai_tool_calls.sql`
+- `tests/unit/handoff-service.test.ts`
+- `PROGRESS-LOG.md`
+- `worktime.md`
+Commands run:
+- `npm run typecheck`
+- `npm test -- tests/unit/handoff-service.test.ts`
+Tests passed:
+- Typecheck pass
+- Handoff/logging unit tests pass (6/6)
+Tests failed/skipped:
+- None
+Blockers:
+- None
+Next step:
+- Integrate kill-switch + unclear-count logic into message-turn service execution path for automatic runtime handoff decisions.
