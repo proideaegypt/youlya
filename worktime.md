@@ -167,3 +167,17 @@ User requested Phase 0 idempotency for incoming webhook messages: persist proces
 RESULT 22 30/04/26
 STATUS: PARTIAL
 Implemented incoming webhook idempotency layer with `processed_messages` migration, fail-open middleware (`checkAndMarkProcessed` + action update), internal turn route duplicate short-circuit response (`duplicate_ignored`), schema/type updates for optional `provider_message_id`, and added CONV-086/CONV-087 scenarios. `npm run typecheck`, `npm test`, and `npm run lint` passed (lint warnings only). Playwright run for legacy CONV-001..CONV-085 currently fails broadly from early scenarios in this environment.
+
+PROMPT 23 30/04/26
+User requested dead-letter logging and graceful message-turn error handling: add dead_letter_log table, add dead-letter service, wrap runMessageTurn in try/catch returning safe Arabic error action (no 500), and add CONV-088 scenario.
+
+RESULT 23 30/04/26
+STATUS: PARTIAL
+Added dead-letter logging migration/service, wrapped `runMessageTurn` in global try/catch with safe Arabic fallback response, and added CONV-088 forced-error scenario. Typecheck/lint (warnings only)/unit tests passed. Scenario validator remains failing due pre-existing JSONL schema/count drift in CONV-081..CONV-087/088 block.
+
+PROMPT 24 30/04/26
+User requested kill switch + human handoff management API: add ai_settings/human_handoffs tables, ai settings service with 30s cache, admin settings/handoffs routes with internal auth, enforce ai_enabled gate in message-turn, and add CONV-089 scenario.
+
+RESULT 24 30/04/26
+STATUS: PASS
+Implemented ai settings + human handoff management API: added Supabase migration for `ai_settings` and `human_handoffs`, added `ai-settings-service` with 30s cache and DB/mock fallback, added admin settings GET/POST and admin handoffs GET routes with internal auth, wired `isAiEnabled` gate into message-turn returning `ai_disabled`, and added CONV-089 scenario. Validation: `npm run typecheck`, `npm test`, `npm run lint` (warnings only).

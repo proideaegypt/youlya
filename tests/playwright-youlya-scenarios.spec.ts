@@ -12,15 +12,15 @@ type Scenario = {
   input: string;
   preconditions: Record<string, unknown>;
   expected: {
-    action?: 'ai_reply' | 'product_results' | 'order_created' | 'handoff' | 'error';
-    action_any?: Array<'ai_reply' | 'product_results' | 'order_created' | 'handoff' | 'error'>;
+    action?: 'ai_reply' | 'product_results' | 'order_created' | 'handoff' | 'error' | 'ai_disabled';
+    action_any?: Array<'ai_reply' | 'product_results' | 'order_created' | 'handoff' | 'error' | 'ai_disabled'>;
     reply_contains_any?: string[];
   };
 };
 
 type TurnResponse = {
   reply?: string;
-  action?: 'ai_reply' | 'product_results' | 'order_created' | 'handoff' | 'error';
+  action?: 'ai_reply' | 'product_results' | 'order_created' | 'handoff' | 'error' | 'ai_disabled';
   data?: unknown;
 };
 
@@ -164,7 +164,7 @@ test.describe(`Youlya AI Commerce OS scenarios (${SCENARIO_PREFIX})`, () => {
       const body = (await res.json()) as TurnResponse;
 
       expect(typeof body.reply, `${scenario.id} reply must be string`).toBe('string');
-      expect(['ai_reply', 'product_results', 'order_created', 'handoff', 'error']).toContain(body.action);
+      expect(['ai_reply', 'product_results', 'order_created', 'handoff', 'error', 'ai_disabled']).toContain(body.action);
 
       const expectedAction = scenario.expected.action;
       const expectedAny = scenario.expected.action_any;

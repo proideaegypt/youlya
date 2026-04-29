@@ -19,7 +19,17 @@ type StoreState = {
   conversationStatus: Map<string, string>;
   unclearCounts: Map<string, number>;
   killSwitchByStore: Map<string, boolean>;
+  aiEnabledByStore: Map<string, boolean>;
   processedMessages: Map<string, { conversationId: string; processedAt: string; resultAction?: string }>;
+  humanHandoffs: Array<{
+    id: string;
+    conversation_id: string;
+    reason: string;
+    requested_at: string;
+    resolved_at: string | null;
+    resolved_by: string | null;
+    notes: string | null;
+  }>;
 };
 
 const globalStore = globalThis as typeof globalThis & { __youlyaMockState__?: StoreState };
@@ -36,7 +46,9 @@ function buildState(): StoreState {
     conversationStatus: new Map(),
     unclearCounts: new Map(),
     killSwitchByStore: new Map(),
+    aiEnabledByStore: new Map(),
     processedMessages: new Map(),
+    humanHandoffs: [],
   };
 }
 

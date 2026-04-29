@@ -46,6 +46,6 @@ export type MessageTurnResponse = {
   toolsCalled: string[];
   reply: string;
   handoff: boolean;
-  action: "ai_reply" | "product_results" | "order_created" | "handoff" | "error" | "duplicate_ignored";
+  action: "ai_reply" | "product_results" | "order_created" | "handoff" | "error" | "duplicate_ignored" | "ai_disabled";
   data?: unknown;
 };

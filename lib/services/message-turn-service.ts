@@ -7,12 +7,14 @@ import { incrementUnclearCount, resetUnclearCount } from "@/lib/services/convers
 import { createCODOrder } from "@/lib/services/shopify-order-service";
 import { detectIntent } from "@/lib/services/intent-detector";
 import { isKillSwitchEnabled } from "@/lib/services/kill-switch-service";
+import { isAiEnabled } from "@/lib/services/ai-settings-service";
 import { logToolCall } from "@/lib/services/ai-tool-logger";
 import { parseConfirmationMessage } from "@/lib/services/confirmation-parser";
 import { searchProducts } from "@/lib/services/product-search-service";
 import { persistRecommendations, resolveVariant } from "@/lib/services/product-mapping-service";
 import { selectProduct } from "@/lib/services/select-product-service";
 import { getCartItems } from "@/lib/services/cart-service";
+import { logFailedTurn } from "@/lib/services/dead-letter-service";
 
 import { buildOrderSummary, getCart, getCustomerInfo, getStage, looksLikeAddress, resetConversation, setCart, setCustomerInfo, setStage } from "@/lib/services/conversation-flow-service";
 import { placeOrder } from "@/lib/services/shopify-mock-service";
@@ -169,7 +171,8 @@ function resolveFallbackReply(text: string, language: string): string {
 }
 
 function buildIdempotencyKey(input: InternalMessageTurnInput): string {
-  return crypto.createHash("sha256").update(`${input.store_id}:${input.conversation_id}:${input.provider_message_id}`).digest("hex");
+  const providerMessageId = input.provider_message_id ?? "missing-provider-message-id";
+  return crypto.createHash("sha256").update(`${input.store_id}:${input.conversation_id}:${providerMessageId}`).digest("hex");
 }
 
 function logTool(input: {
@@ -205,6 +208,22 @@ function toInternalInput(input: CanonicalMessageEvent): InternalMessageTurnInput
 }
 
 export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTurnResponse> {
+  try {
+    return await runMessageTurnUnsafe(input);
+  } catch (error) {
+    const err = error instanceof Error ? error : new Error("Unhandled runMessageTurn error");
+    await logFailedTurn(input, err);
+    return {
+      intent: "error",
+      toolsCalled: [],
+      reply: "حصل خطأ تقني، بنحله دلوقتي. ممكن تبعث تاني؟",
+      handoff: false,
+      action: "error",
+    };
+  }
+}
+
+async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTurnResponse> {
   if (!isInternalInput(input)) {
     if (input.testMode && input.scenarioId) return buildScenarioResponse(input);
     return runMessageTurn(toInternalInput(input));
@@ -223,6 +242,20 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     });
   }
 
+  const aiEnabled =
+    input._preconditions?.ai_enabled === false
+      ? false
+      : await isAiEnabled(input.store_id);
+  if (!aiEnabled) {
+    return {
+      intent: "ai_disabled",
+      toolsCalled: [],
+      reply: "الخدمة متوقفة مؤقتاً، بنرجع قريب",
+      handoff: true,
+      action: "ai_disabled",
+    };
+  }
+
   // FLOW ORDER:
   // 1. kill switch check
   // 2. human handoff status check (with test isolation cleanup)
@@ -237,6 +270,10 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   const tone = input.tone;
   const stage = await getStage(conversationId);
   const cartId = input.cart_id ?? conversationId;
+
+  if (input._preconditions?.force_internal_error === true) {
+    throw new Error("Forced internal error from preconditions");
+  }
 
   // angry_tone precondition = context metadata only, not a handoff trigger
   // The AI should still reply normally (see CONV-082 expected: action=ai_reply)

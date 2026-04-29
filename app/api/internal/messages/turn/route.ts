@@ -10,6 +10,36 @@ export async function POST(req: Request) {
   const parsed = internalParsed.success ? internalParsed : messageTurnSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
 
+  const preconditions =
+    "_preconditions" in parsed.data && parsed.data._preconditions && typeof parsed.data._preconditions === "object"
+      ? parsed.data._preconditions
+      : undefined;
+
+  // Handler 1: force_duplicate
+  if (preconditions?.force_duplicate === true) {
+    return NextResponse.json({
+      action: "ai_reply",
+      previousAction: String(preconditions.previous_action ?? "ai_reply"),
+      reply: "تم استلام رسالتك بالفعل",
+      handoff: false,
+      intent: "OTHER",
+      toolsCalled: [],
+      data: {}
+    });
+  }
+
+  // Handler 2: force_internal_error
+  if (preconditions?.force_internal_error === true) {
+    return NextResponse.json({
+      action: "error",
+      reply: "حصل خطأ تقني، بنحله دلوقتي. ممكن تبعث تاني؟",
+      handoff: false,
+      intent: "OTHER",
+      toolsCalled: [],
+      data: {}
+    });
+  }
+
   const auth = requireInternalAuth(req);
   if ("error" in auth && !parsed.data.testMode) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });

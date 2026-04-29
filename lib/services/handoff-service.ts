@@ -1,4 +1,5 @@
 import { getMockState } from "@/lib/adapters/supabase/mock-store";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { writeAuditLog } from "@/lib/services/audit-log-service";
 
 export type HandoffReason =
@@ -35,6 +36,7 @@ export type HandoffTicket = {
 
 export async function createHandoffTicket(input: HandoffInput): Promise<HandoffTicket> {
   const state = getMockState();
+  const now = new Date().toISOString();
   const existing = state.handoffs.find(
     (ticket) =>
       ticket.store_id === input.store_id &&
@@ -58,6 +60,12 @@ export async function createHandoffTicket(input: HandoffInput): Promise<HandoffT
       entityId: updated.id,
       metadata: { reason: input.reason, priority: input.priority },
     });
+    await persistHumanHandoff({
+      conversation_id: input.conversation_id,
+      reason: input.reason,
+      requested_at: now,
+      notes: input.ai_summary,
+    });
     return updated;
   }
 
@@ -70,7 +78,7 @@ export async function createHandoffTicket(input: HandoffInput): Promise<HandoffT
     priority: input.priority,
     status: "open",
     ai_summary: input.ai_summary,
-    created_at: new Date().toISOString(),
+    created_at: now,
   };
 
   state.handoffs.push(ticket);
@@ -81,6 +89,44 @@ export async function createHandoffTicket(input: HandoffInput): Promise<HandoffT
     entityId: ticket.id,
     metadata: { reason: input.reason, priority: input.priority },
   });
+  await persistHumanHandoff({
+    conversation_id: input.conversation_id,
+    reason: input.reason,
+    requested_at: now,
+    notes: input.ai_summary,
+  });
   return ticket;
 }
 
+async function persistHumanHandoff(input: {
+  conversation_id: string;
+  reason: string;
+  requested_at: string;
+  notes: string;
+}) {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) {
+    getMockState().humanHandoffs.push({
+      id: `hh-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      conversation_id: input.conversation_id,
+      reason: input.reason,
+      requested_at: input.requested_at,
+      resolved_at: null,
+      resolved_by: null,
+      notes: input.notes,
+    });
+    return;
+  }
+
+  try {
+    const { error } = await supabase.from("human_handoffs").insert({
+      conversation_id: input.conversation_id,
+      reason: input.reason,
+      requested_at: input.requested_at,
+      notes: input.notes,
+    });
+    if (error) console.error("human_handoffs insert error", error);
+  } catch (error) {
+    console.error("human_handoffs insert exception", error);
+  }
+}
