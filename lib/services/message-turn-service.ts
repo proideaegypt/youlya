@@ -126,6 +126,46 @@ function summarizeClarify(language: string): string {
   return isArabic(language) ? "ممكن توضحي أكثر؟" : "Could you clarify a bit more?";
 }
 
+const REPLY_TEMPLATES = {
+  unclear: "مش فاهم قصدك، ممكن توضحلي أكتر؟",
+  product_results: "اتفضل نتايج البحث 👆 اختار برقم المنتج والمقاس.",
+  select_prompt: "اكتبلي رقم المنتج اللي عايزاه والمقاس.",
+  handoff: "هنتابع معك فوراً، هحولك لفريق الدعم.",
+  confirm_prompt: "تأكدي من الطلب وابعتيلي كلمة تأكيد.",
+  cancel: "تم إلغاء الطلب.",
+  cod_only: "الدفع عند الاستلام فقط (COD).",
+  shipping: "مدة التوصيل 2-5 أيام عمل.",
+  return_policy: "سياسة الإرجاع: غير قابل للإرجاع بعد التأكيد.",
+  size_guide: "اختاري المقاس المناسب: S / M / L / XL.",
+  color_ask: "عندنا ألوان متعددة، اختاري اللون المناسب.",
+  specs: "مواصفات المنتج موجودة في تفاصيل كل قطعة.",
+  free_shipping: "الشحن مجاني على الطلبات فوق 1200 جنيه.",
+  online_only: "أونلاين فقط، التوصيل لجميع أنحاء مصر.",
+  contact: "خدمة العملاء متاحة على الإيميل.",
+} as const;
+
+function resolveFallbackReply(text: string, language: string): string {
+  const normalized = text.toLowerCase();
+
+  if (/(cancel|إلغاء|الغاء|مش عايز|مش عايزة|stop)/i.test(normalized)) return REPLY_TEMPLATES.cancel;
+  if (/(cod|الدفع عند الاستلام|visa|فيزا)/i.test(normalized)) return REPLY_TEMPLATES.cod_only;
+  if (/(شحن|التوصيل|shipping|cairo|القاهرة|اسكندرية|alex)/i.test(normalized)) return REPLY_TEMPLATES.shipping;
+  if (/(مجاني|free shipping|1200)/i.test(normalized)) return REPLY_TEMPLATES.free_shipping;
+  if (/(إرجاع|ارجاع|return)/i.test(normalized)) return REPLY_TEMPLATES.return_policy;
+  if (/(مقاس|size|xl|l|m|s|وزني)/i.test(normalized)) return REPLY_TEMPLATES.size_guide;
+  if (/(لون|color)/i.test(normalized)) return REPLY_TEMPLATES.color_ask;
+  if (/(خامة|مواصفات|spec|details)/i.test(normalized)) return REPLY_TEMPLATES.specs;
+  if (/(فرع|branch|location|فين)/i.test(normalized)) return REPLY_TEMPLATES.online_only;
+  if (/(ايميل|email|contact)/i.test(normalized)) return REPLY_TEMPLATES.contact;
+  if (/(رقم|number)/i.test(normalized)) return REPLY_TEMPLATES.select_prompt;
+  if (/(confirm|تأكيد|أكدي|ايوه)/i.test(normalized)) return REPLY_TEMPLATES.confirm_prompt;
+  if (/(بيجام|product|show me|عايزة|عايز|عندكم)/i.test(normalized)) return REPLY_TEMPLATES.product_results;
+
+  return language.toLowerCase().startsWith("ar")
+    ? REPLY_TEMPLATES.unclear
+    : "I need a bit more detail to help you.";
+}
+
 function buildIdempotencyKey(input: InternalMessageTurnInput): string {
   return crypto.createHash("sha256").update(`${input.store_id}:${input.conversation_id}:${input.provider_message_id}`).digest("hex");
 }
@@ -181,6 +221,12 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     });
   }
 
+  // FLOW ORDER:
+  // 1. kill switch check
+  // 2. human handoff status check
+  // 3. angry tone check
+  // 4. intent detection
+  // 5. route to service
   const storeKey = input.store_id;
   const conversationId = input.conversation_id;
   const customerId = input.customer_id;
@@ -209,7 +255,7 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     return {
       intent: "handoff",
       toolsCalled: ["handoff"],
-      reply: summarizeHandoff(language),
+      reply: "هحولك لفريق الدعم دلوقتي.",
       handoff: true,
       action: "handoff",
       data: { ticket },
@@ -224,6 +270,34 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
       reply: replyFor(language, "العميلة تحت متابعة زميل بشري الآن.", "This conversation is already under human care."),
       handoff: true,
       action: "handoff",
+    };
+  }
+
+  if (tone === "angry") {
+    const ticket = await createHandoffTicket({
+      store_id: storeKey,
+      conversation_id: conversationId,
+      customer_id: customerId,
+      reason: "ANGRY_TONE",
+      priority: "HIGH",
+      ai_summary: input.text,
+    });
+    logTool({
+      store_id: storeKey,
+      conversation_id: conversationId,
+      tool_name: "handoff",
+      input_summary: { reason: "ANGRY_TONE" },
+      output_summary: { ticketId: ticket.id },
+      status: "ok",
+      latency_ms: 0,
+    });
+    return {
+      intent: "handoff",
+      toolsCalled: ["handoff"],
+      reply: REPLY_TEMPLATES.handoff,
+      handoff: true,
+      action: "handoff",
+      data: { ticket },
     };
   }
 
@@ -283,7 +357,7 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     return {
       intent: "PRODUCT_SEARCH",
       toolsCalled: ["product_search"],
-      reply: summarizeRecommendations(result.recommendations, language),
+      reply: `${summarizeRecommendations(result.recommendations, language)}\n\nاختار المنتج اللي عايزه وابعتلي رقمه والمقاس.`,
       handoff: false,
       action: "product_results",
       data: { recommendations: result.recommendations, mappingPersisted: true },
@@ -518,7 +592,7 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   return {
     intent: "OTHER",
     toolsCalled: [],
-    reply: replyFor(language, "تمام، ممكن توضحي أكتر؟", "Sure, can you share a bit more detail?"),
+    reply: resolveFallbackReply(input.text, language),
     handoff: false,
     action: "ai_reply",
     data: { intent },
