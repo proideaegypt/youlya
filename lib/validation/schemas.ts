@@ -22,7 +22,7 @@ export const internalMessageTurnSchema = z.object({
   tone: z.enum(["neutral", "angry", "urgent", "confused", "ready_to_buy", "browsing"]),
   remote_jid: z.string().min(1),
   instance_name: z.string().min(1),
-  provider_message_id: z.string().min(1),
+  provider_message_id: z.string().min(1).optional(),
   customer_name: z.string().optional(),
   phone: z.string().optional(),
   address: z.string().optional(),

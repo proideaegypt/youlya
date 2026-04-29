@@ -27,7 +27,7 @@ export type InternalMessageTurnInput = {
   tone: "neutral" | "angry" | "urgent" | "confused" | "ready_to_buy" | "browsing";
   remote_jid: string;
   instance_name: string;
-  provider_message_id: string;
+  provider_message_id?: string;
   customer_name?: string;
   phone?: string;
   address?: string;
@@ -46,6 +46,6 @@ export type MessageTurnResponse = {
   toolsCalled: string[];
   reply: string;
   handoff: boolean;
-  action: "ai_reply" | "product_results" | "order_created" | "handoff" | "error";
+  action: "ai_reply" | "product_results" | "order_created" | "handoff" | "error" | "duplicate_ignored";
   data?: unknown;
 };

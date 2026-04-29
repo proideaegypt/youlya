@@ -160,3 +160,10 @@ Committed current local changes and pushed main branch to GitHub.
 
 PROMPT 21 30/04/26
 User requested Phase 0 order confirmation state machine: add conversation state persistence + flow service + mock order placement + message-turn wiring, keeping Shopify mocked and tests passing.
+
+PROMPT 22 30/04/26
+User requested Phase 0 idempotency for incoming webhook messages: persist processed provider_message_id, short-circuit duplicates in internal turn route, update schema/types, add CONV-086/087 scenarios, keep fail-open behavior on DB errors, and preserve existing test pass status.
+
+RESULT 22 30/04/26
+STATUS: PARTIAL
+Implemented incoming webhook idempotency layer with `processed_messages` migration, fail-open middleware (`checkAndMarkProcessed` + action update), internal turn route duplicate short-circuit response (`duplicate_ignored`), schema/type updates for optional `provider_message_id`, and added CONV-086/CONV-087 scenarios. `npm run typecheck`, `npm test`, and `npm run lint` passed (lint warnings only). Playwright run for legacy CONV-001..CONV-085 currently fails broadly from early scenarios in this environment.

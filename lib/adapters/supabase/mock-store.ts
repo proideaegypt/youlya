@@ -19,6 +19,7 @@ type StoreState = {
   conversationStatus: Map<string, string>;
   unclearCounts: Map<string, number>;
   killSwitchByStore: Map<string, boolean>;
+  processedMessages: Map<string, { conversationId: string; processedAt: string; resultAction?: string }>;
 };
 
 const globalStore = globalThis as typeof globalThis & { __youlyaMockState__?: StoreState };
@@ -35,6 +36,7 @@ function buildState(): StoreState {
     conversationStatus: new Map(),
     unclearCounts: new Map(),
     killSwitchByStore: new Map(),
+    processedMessages: new Map(),
   };
 }
 
