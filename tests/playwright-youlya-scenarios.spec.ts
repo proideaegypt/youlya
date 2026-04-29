@@ -112,6 +112,7 @@ test.describe(`Youlya AI Commerce OS scenarios (${SCENARIO_PREFIX})`, () => {
             remote_jid: '201000000000@s.whatsapp.net',
             instance_name: 'YoulyaTest',
             provider_message_id: uuid(),
+            _preconditions: scenario.preconditions ?? {},
           },
         });
         await request.post(`${APP_URL}/api/internal/messages/turn`, {
@@ -130,6 +131,7 @@ test.describe(`Youlya AI Commerce OS scenarios (${SCENARIO_PREFIX})`, () => {
             remote_jid: '201000000000@s.whatsapp.net',
             instance_name: 'YoulyaTest',
             provider_message_id: uuid(),
+            _preconditions: scenario.preconditions ?? {},
           },
         });
       }
@@ -149,6 +151,7 @@ test.describe(`Youlya AI Commerce OS scenarios (${SCENARIO_PREFIX})`, () => {
           remote_jid: '201000000000@s.whatsapp.net',
           instance_name: 'YoulyaTest',
           provider_message_id: providerMessageId,
+          _preconditions: scenario.preconditions ?? {},
         },
       });
 

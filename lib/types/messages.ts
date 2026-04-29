@@ -38,6 +38,7 @@ export type InternalMessageTurnInput = {
   testMode?: boolean;
   scenarioId?: string;
   storeSlug?: string;
+  _preconditions?: Record<string, unknown>;
 };
 
 export type MessageTurnResponse = {

@@ -126,3 +126,24 @@ Executed all requested static checks. Typecheck and unit tests passed, but lint 
 
 PROMPT 15 29/04/26
 User requested `phase-0-gate-fix-lint-and-rls`: fix Playwright lint blocker, standardize migration RLS phrase to uppercase, audit `.env*` history at commit 6924331, rerun static checks, and release tag v0.9.0-pre-gate-static-pass if passing.
+
+PROMPT 16 29/04/26
+User requested `phase-0-e2e-fix-reply-templates-and-logic`: fix kill-switch/angry-tone/handoff behavior, adjust CONV-085 expected action handling, add static reply templates for Phase 0 intent coverage, and rerun local checks.
+
+RESULT 16 29/04/26
+STATUS: PARTIAL
+Implemented Phase 0 E2E logic/reply fixes in `message-turn-service.ts` (angry-tone immediate handoff, static fallback reply templates, template-based OTHER replies) and updated CONV-085 `action_any` to include `error`. Local checks passed (`npm run typecheck`, `npm test`). VPS E2E run pending in target environment.
+
+PROMPT 17 29/04/26
+User requested `phase-0-e2e-align-scenario-expectations`: update only JSONL expected reply fragments to match current static service outputs, then run targeted VPS Playwright checks and release tag v0.9.2 on success.
+
+RESULT 17 29/04/26
+STATUS: PARTIAL
+Updated only `docs/data/youlya_human_test_scenarios.jsonl` to align `reply_contains_any` with actual static service outputs, including product-results/handoff/unclear/language-fallback fragments. Targeted 4-scenario Playwright run result: 3/4 passed (CONV-001, CONV-050, CONV-082 pass; CONV-081 fails on action mismatch expected handoff vs received product_results). Full 85 not run, and v0.9.2 release tag not created.
+
+PROMPT 18 29/04/26
+User requested `phase-0-e2e-fix-kill-switch-precondition`: implement Option A to pass `_preconditions` from Playwright to API and honor `kill_switch_on` in message-turn service, then run local checks and targeted E2E subset.
+
+RESULT 18 29/04/26
+STATUS: PARTIAL
+Implemented Option A precondition wiring (`_preconditions`) across Playwright payload, internal message-turn schema/type, and kill-switch evaluation in message-turn service. Local checks pass (`npm run typecheck`, `npm test`), targeted E2E subset passes 3/3 (CONV-081/082/001), but full `npm run test:e2e` is still failing broadly (61 failed, 24 passed) due to remaining scenario expectation/reply alignment gaps beyond kill-switch precondition.

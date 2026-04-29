@@ -33,6 +33,7 @@ export const internalMessageTurnSchema = z.object({
   testMode: z.boolean().optional().default(false),
   scenarioId: z.string().optional(),
   storeSlug: z.string().optional(),
+  _preconditions: z.record(z.string(), z.unknown()).optional(),
 });
 
 export const productSearchSchema = z.object({

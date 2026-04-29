@@ -234,7 +234,8 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   const tone = input.tone;
   const cartId = input.cart_id ?? conversationId;
 
-  if (await isKillSwitchEnabled(storeKey)) {
+  const killSwitchOn = input._preconditions?.kill_switch_on === true || (await isKillSwitchEnabled(storeKey));
+  if (killSwitchOn) {
     const ticket = await createHandoffTicket({
       store_id: storeKey,
       conversation_id: conversationId,
