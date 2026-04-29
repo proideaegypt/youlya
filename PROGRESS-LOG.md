@@ -247,6 +247,41 @@ Blockers:
 - None
 Next step:
 - Wire the same auth middleware into remaining protected API routes as Phase 0 hardening continues.
+
+## 2026-04-29 — phase-0-n8n-message-turn-endpoint
+
+Date: 2026-04-29
+Phase: Phase 0 — Youlya Production Hardening
+Task: phase-0-n8n-message-turn-endpoint
+Files changed:
+- `app/api/internal/messages/turn/route.ts`
+- `lib/services/message-turn-service.ts`
+- `lib/services/intent-detector.ts`
+- `lib/middleware/internal-auth.ts`
+- `lib/validation/schemas.ts`
+- `lib/config/env.ts`
+- `lib/types/messages.ts`
+- `vitest.config.ts`
+- `tests/unit/intent-detector.test.ts`
+- `tests/integration/message-turn.test.ts`
+- `PROGRESS-LOG.md`
+- `worktime.md`
+Commands run:
+- `npm run typecheck`
+- `npm test -- tests/unit/intent-detector.test.ts tests/integration/message-turn.test.ts tests/api/message-turn.test.ts`
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+Tests passed:
+- Typecheck pass
+- Unit/API suite pass (11 files, 48 tests)
+- Lint pass with unrelated pre-existing warnings only
+Tests failed/skipped:
+- None
+Blockers:
+- None
+Next step:
+- Update Playwright scenario runner input/auth contract if Phase 0 browser QA is rerun against the strict internal endpoint path.
 - `npm test -- tests/unit/cart-validation.test.ts`
 - `npm test -- tests/unit/confirmation.test.ts`
 Tests passed:

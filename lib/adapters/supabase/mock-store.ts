@@ -15,6 +15,9 @@ type StoreState = {
   toolLogs: Array<Record<string, unknown>>;
   auditLogs: Array<Record<string, unknown>>;
   handoffs: Array<Record<string, unknown>>;
+  conversationStatus: Map<string, string>;
+  unclearCounts: Map<string, number>;
+  killSwitchByStore: Map<string, boolean>;
 };
 
 const globalStore = globalThis as typeof globalThis & { __youlyaMockState__?: StoreState };
@@ -27,6 +30,9 @@ function buildState(): StoreState {
     toolLogs: [],
     auditLogs: [],
     handoffs: [],
+    conversationStatus: new Map(),
+    unclearCounts: new Map(),
+    killSwitchByStore: new Map(),
   };
 }
 

@@ -1,0 +1,29 @@
+[mcp_servers.github]
+command = "github-mcp-server"
+args = []
+env = { GITHUB_TOKEN = "${GITHUB_TOKEN}" }
+
+[mcp_servers.supabase_readonly]
+command = "supabase-mcp-server"
+args = ["--read-only"]
+env = { SUPABASE_ACCESS_TOKEN = "${SUPABASE_ACCESS_TOKEN}" }
+
+[mcp_servers.docs]
+command = "docs-mcp-server"
+args = []
+
+# Enable later only after Phase 0 app endpoints are stable.
+# [mcp_servers.n8n]
+# command = "n8n-mcp-server"
+# args = []
+# env = { N8N_API_KEY = "${N8N_API_KEY}", N8N_BASE_URL = "${N8N_BASE_URL}" }
+
+# Enable later only in dashboard UI phase.
+# [mcp_servers.figma]
+# command = "figma-mcp-server"
+# args = []
+# env = { FIGMA_TOKEN = "${FIGMA_TOKEN}" }
+
+# Shopify direct write MCP disabled by default.
+# Production order creation must go through app ShopifyAdapter.
+

@@ -42,6 +42,10 @@ export function isMockMode() {
 export function assertInternalSecret(req: Request): boolean {
   const env = getServerEnv();
   if (!env.INTERNAL_API_SECRET) return false;
-  const provided = req.headers.get("x-internal-api-secret");
+  const provided =
+    req.headers.get("x-internal-secret") ??
+    req.headers.get("x-internal-api-secret") ??
+    req.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ??
+    null;
   return provided === env.INTERNAL_API_SECRET;
 }

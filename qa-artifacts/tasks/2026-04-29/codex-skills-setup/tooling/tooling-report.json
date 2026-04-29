@@ -1,0 +1,65 @@
+{
+  "essential": {
+    "node": {
+      "status": "found",
+      "details": "v22.22.2"
+    },
+    "npm": {
+      "status": "found",
+      "details": "10.9.7"
+    },
+    "git": {
+      "status": "found",
+      "details": "git version 2.43.0"
+    }
+  },
+  "recommended": {
+    "docker": {
+      "status": "found",
+      "details": "Docker version 29.1.3, build 29.1.3-0ubuntu3~24.04.1"
+    },
+    "docker_compose": {
+      "status": "found",
+      "details": "Docker Compose version v5.1.3"
+    },
+    "supabase": {
+      "status": "missing",
+      "details": "missing"
+    },
+    "shopify": {
+      "status": "missing",
+      "details": "missing"
+    },
+    "npx": {
+      "status": "found",
+      "details": "10.9.7"
+    },
+    "jq": {
+      "status": "found",
+      "details": "jq-1.7"
+    },
+    "rg": {
+      "status": "found",
+      "details": "ripgrep 15.1.0 (rev af60c2de9d)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)"
+    },
+    "gitleaks": {
+      "status": "missing",
+      "details": "missing"
+    }
+  },
+  "playwright": {
+    "playwright_test_cli": {
+      "status": "found",
+      "details": "Version 1.59.1"
+    },
+    "playwright_agent_cli_npx": {
+      "status": "missing",
+      "details": "npm error could not determine executable to run\nnpm error A complete log of this run can be found in: /root/.npm/_logs/2026-04-29T13_25_34_253Z-debug-0.log"
+    },
+    "playwright_agent_cli_global": {
+      "status": "missing",
+      "details": "not available"
+    }
+  },
+  "generated_at": "2026-04-29T13:25:35.093Z"
+}

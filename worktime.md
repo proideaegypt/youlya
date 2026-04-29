@@ -81,3 +81,13 @@ User requested `phase-0-auth-middleware-and-store-context`: replace stubbed auth
 RESULT 8 29/04/26
 STATUS: PASS
 Implemented real middleware modules and route integration for protected tools, added `store_users` migration with RLS and indexes, and added `tests/unit/auth-middleware.test.ts` covering valid/invalid/expired/missing token cases, wrong store access, and role permission checks.
+
+PROMPT 9 29/04/26
+User requested `phase-0-n8n-message-turn-endpoint`: implement the internal AI turn endpoint for n8n with internal auth, kill switch and human-handoff short circuiting, intent detection, product search/select/confirmation/order flows, tool logging, and unit/integration tests.
+
+RESULT 9 29/04/26
+STATUS: PASS
+Implemented the internal message-turn endpoint and state machine, added internal auth middleware, intent detector, updated schemas/types, added unit and integration tests, and validated with `npm run typecheck`, `npm test`, and `npm run lint` (warnings only from unrelated pre-existing files).
+
+PROMPT 10 29/04/26
+User requested: push to github.

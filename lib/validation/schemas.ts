@@ -11,6 +11,30 @@ export const messageTurnSchema = z.object({
   testMode: z.boolean().default(false),
 });
 
+export const internalMessageTurnSchema = z.object({
+  store_id: z.string().min(1),
+  conversation_id: z.string().min(1),
+  customer_id: z.string().min(1),
+  channel: z.literal("whatsapp_evolution"),
+  message_type: z.enum(["text", "voice", "image"]),
+  text: z.string(),
+  language: z.string().min(1),
+  tone: z.enum(["neutral", "angry", "urgent", "confused", "ready_to_buy", "browsing"]),
+  remote_jid: z.string().min(1),
+  instance_name: z.string().min(1),
+  provider_message_id: z.string().min(1),
+  customer_name: z.string().optional(),
+  phone: z.string().optional(),
+  address: z.string().optional(),
+  city: z.string().optional(),
+  shipping_fee: z.number().optional(),
+  total: z.number().optional(),
+  cart_id: z.string().optional(),
+  testMode: z.boolean().optional().default(false),
+  scenarioId: z.string().optional(),
+  storeSlug: z.string().optional(),
+});
+
 export const productSearchSchema = z.object({
   storeSlug: z.string().min(1),
   conversationId: z.string().min(1),
