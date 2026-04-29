@@ -9,8 +9,8 @@ function parseSelection(selectionText: string) {
   return { indexes, size: sizeMatch?.[1]?.toUpperCase() };
 }
 
-export function selectProduct(input: SelectProductInput): SelectProductOutput {
-  const recs = getRecommendations(input.storeSlug, input.conversationId, input.customerId);
+export async function selectProduct(input: SelectProductInput): Promise<SelectProductOutput> {
+  const recs = await getRecommendations(input.storeSlug, input.conversationId, input.customerId);
   if (!recs.length) return { status: "mapping_expired", items: [], missing: ["mapping"], blocked: [] };
 
   const { indexes, size } = parseSelection(input.selectionText);

@@ -46,3 +46,10 @@ User requested task `phase-0-product-mapping-core` under Phase 0 hardening with 
 RESULT 3 29/04/26
 STATUS: PASS
 Hardened product mapping core: added mapping TTL/expiry checks, removed unsafe default index fallback on ambiguous selection, improved index parsing, and added tests for expired mapping, OOS blocking, and multi-item selection.
+
+PROMPT 4 29/04/26
+User requested push of phase-0-product-mapping-core, then implementation and release of phase-0-db-product-mapping-repository with migration, repository adapter, service wiring, tests, seed data, and versioned release workflow.
+
+RESULT 4 29/04/26
+STATUS: PASS
+Pushed v0.1.0 product-mapping-core release, implemented DB-backed product mapping repository contract with store-scoped queries and expiry filtering, wired services/routes with async mapping calls, added repository tests and seed data, and validated required typecheck + targeted unit tests.

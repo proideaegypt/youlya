@@ -169,3 +169,35 @@ Blockers:
 - None for this task scope
 Next step:
 - Move mapping persistence from mock state to DB-backed repository while preserving selection safety checks.
+
+## 2026-04-29 — phase-0-db-product-mapping-repository
+
+Date: 2026-04-29
+Phase: Phase 0 — Youlya Production Hardening
+Task: phase-0-db-product-mapping-repository
+Files changed:
+- `supabase/migrations/20260429180000_last_product_recommendations.sql`
+- `lib/adapters/supabase/product-mapping-repository.ts`
+- `lib/services/product-mapping-service.ts`
+- `lib/services/select-product-service.ts`
+- `app/api/ai/tools/product-search/route.ts`
+- `app/api/ai/tools/select-product/route.ts`
+- `tests/unit/product-mapping-repository.test.ts`
+- `tests/unit/select-product.test.ts`
+- `supabase/seed/product-mapping-seed.ts`
+- `PROGRESS-LOG.md`
+- `worktime.md`
+Commands run:
+- `npm run typecheck`
+- `npm test -- tests/unit/product-mapping-repository.test.ts`
+- `npm test -- tests/unit/select-product.test.ts`
+Tests passed:
+- Typecheck pass
+- Product mapping repository tests pass (4/4)
+- Select product tests pass (4/4)
+Tests failed/skipped:
+- None
+Blockers:
+- None in this task scope
+Next step:
+- Wire repository with real Supabase server client in integration environment while preserving store_id isolation and expiry checks.

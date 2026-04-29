@@ -13,8 +13,8 @@ describe("select product", () => {
       limit: 10,
       testMode: true,
     });
-    persistRecommendations("youlya", "c1", "u1", recs.recommendations);
-    const result = selectProduct({
+    await persistRecommendations("youlya", "c1", "u1", recs.recommendations);
+    const result = await selectProduct({
       storeSlug: "youlya",
       conversationId: "c1",
       customerId: "u1",
@@ -34,9 +34,9 @@ describe("select product", () => {
       limit: 10,
       testMode: true,
     });
-    persistRecommendations("youlya", "c2", "u2", recs.recommendations);
-    expireRecommendations("youlya", "c2", "u2");
-    const result = selectProduct({
+    await persistRecommendations("youlya", "c2", "u2", recs.recommendations);
+    await expireRecommendations("youlya", "c2", "u2");
+    const result = await selectProduct({
       storeSlug: "youlya",
       conversationId: "c2",
       customerId: "u2",
@@ -55,8 +55,8 @@ describe("select product", () => {
       limit: 10,
       testMode: true,
     });
-    persistRecommendations("youlya", "c3", "u3", recs.recommendations);
-    const result = selectProduct({
+    await persistRecommendations("youlya", "c3", "u3", recs.recommendations);
+    const result = await selectProduct({
       storeSlug: "youlya",
       conversationId: "c3",
       customerId: "u3",
@@ -75,8 +75,8 @@ describe("select product", () => {
       limit: 10,
       testMode: true,
     });
-    persistRecommendations("youlya", "c4", "u4", recs.recommendations);
-    const result = selectProduct({
+    await persistRecommendations("youlya", "c4", "u4", recs.recommendations);
+    const result = await selectProduct({
       storeSlug: "youlya",
       conversationId: "c4",
       customerId: "u4",
