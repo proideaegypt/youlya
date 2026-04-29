@@ -265,10 +265,12 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   }
 
   const handoffStatus = getMockState().conversationStatus.get(conversationId);
-  // Clear stale handoff status when _preconditions are present (test isolation)
-  if (input._preconditions && handoffStatus === "human_handoff") {
+  // Clear stale state when _preconditions are present (test isolation)
+  if (input._preconditions) {
     getMockState().conversationStatus.delete(conversationId);
-  } else if (handoffStatus === "human_handoff") {
+    getMockState().unclearCounts.set(conversationId, 0);
+  }
+  if (handoffStatus === "human_handoff" && !input._preconditions) {
     return {
       intent: "handoff",
       toolsCalled: [],
