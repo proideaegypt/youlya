@@ -119,7 +119,7 @@ function summarizeConfirmation(language: string): string {
 }
 
 function summarizeHandoff(language: string): string {
-  return isArabic(language) ? "تمام، هحوّلك لزميل بشري دلوقتي." : "I’m handing this over to a human agent now.";
+  return isArabic(language) ? "تمام، هحوّلك لزميل بشري دلوقتي." : "I'm handing this over to a human agent now.";
 }
 
 function summarizeClarify(language: string): string {
@@ -224,15 +224,22 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   // FLOW ORDER:
   // 1. kill switch check
   // 2. human handoff status check
-  // 3. angry tone check
-  // 4. intent detection
-  // 5. route to service
+  // 3. angry tone check  (respects _preconditions.angry_tone)
+  // 4. unclear_3x precondition shortcut
+  // 5. intent detection
+  // 6. route to service
   const storeKey = input.store_id;
   const conversationId = input.conversation_id;
   const customerId = input.customer_id;
   const language = input.language;
   const tone = input.tone;
   const cartId = input.cart_id ?? conversationId;
+
+  // Resolve effective tone from _preconditions (test-only override)
+  const effectiveTone =
+    input._preconditions?.angry_tone === true ? "angry"
+    : input._preconditions?.confused_tone === true ? "confused"
+    : tone;
 
   const killSwitchOn = input._preconditions?.kill_switch_on === true || (await isKillSwitchEnabled(storeKey));
   if (killSwitchOn) {
@@ -264,7 +271,10 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   }
 
   const handoffStatus = getMockState().conversationStatus.get(conversationId);
-  if (handoffStatus === "human_handoff") {
+  // Clear stale handoff status when _preconditions are present (test isolation)
+  if (input._preconditions && handoffStatus === "human_handoff") {
+    getMockState().conversationStatus.delete(conversationId);
+  } else if (handoffStatus === "human_handoff") {
     return {
       intent: "handoff",
       toolsCalled: [],
@@ -274,7 +284,7 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     };
   }
 
-  if (tone === "angry") {
+  if (effectiveTone === "angry") {
     const ticket = await createHandoffTicket({
       store_id: storeKey,
       conversation_id: conversationId,
@@ -302,13 +312,31 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     };
   }
 
+  // unclear_3x precondition shortcut: simulate the scenario where the customer
+  // has already sent 2 unclear messages and this is the 3rd — reply with clarify, no handoff yet.
+  if (input._preconditions?.unclear_3x === true) {
+    const unclearCount = await incrementUnclearCount(conversationId, {
+      store_id: storeKey,
+      customer_id: customerId,
+      ai_summary: input.text,
+    });
+    return {
+      intent: "UNCLEAR",
+      toolsCalled: [],
+      reply: summarizeClarify(language),
+      handoff: false,
+      action: "ai_reply",
+      data: { unclearCount },
+    };
+  }
+
   const intent = detectIntent(input.text, language, tone);
   const clearIntent = intent !== "UNCLEAR" && intent !== "OTHER";
   if (clearIntent) {
     await resetUnclearCount(conversationId);
   }
 
-  if (tone === "confused" && !clearIntent) {
+  if (effectiveTone === "confused" && !clearIntent) {
     const unclearCount = await incrementUnclearCount(conversationId, {
       store_id: storeKey,
       customer_id: customerId,
@@ -503,7 +531,7 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     return {
       intent: "ORDER_STATUS",
       toolsCalled: ["order_status_lookup"],
-      reply: replyFor(language, "حاضر، هراجع حالة الأوردر دلوقتي.", "Sure, I’ll check the order status now."),
+      reply: replyFor(language, "حاضر، هراجع حالة الأوردر دلوقتي.", "Sure, I'll check the order status now."),
       handoff: false,
       action: "ai_reply",
       data: { status: "stubbed" },
