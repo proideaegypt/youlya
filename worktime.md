@@ -147,3 +147,13 @@ User requested `phase-0-e2e-fix-kill-switch-precondition`: implement Option A to
 RESULT 18 29/04/26
 STATUS: PARTIAL
 Implemented Option A precondition wiring (`_preconditions`) across Playwright payload, internal message-turn schema/type, and kill-switch evaluation in message-turn service. Local checks pass (`npm run typecheck`, `npm test`), targeted E2E subset passes 3/3 (CONV-081/082/001), but full `npm run test:e2e` is still failing broadly (61 failed, 24 passed) due to remaining scenario expectation/reply alignment gaps beyond kill-switch precondition.
+
+PROMPT 19 29/04/26
+User requested `phase-0-e2e-final-jsonl-alignment`: update only JSONL expected action/reply fragments for all CONV/DASH scenarios per provided table, run typecheck, stage JSONL, and release tag v0.9.4.
+
+PROMPT 20 30/04/26
+User requested: push to github.
+
+RESULT 20 30/04/26
+STATUS: PASS
+Committed current local changes and pushed main branch to GitHub.
