@@ -7,7 +7,7 @@ create table if not exists public.order_idempotency_keys (
   unique (store_id, key)
 );
 
-alter table public.order_idempotency_keys enable row level security;
+alter table public.order_idempotency_keys ENABLE ROW LEVEL SECURITY;
 
 drop policy if exists order_idempotency_keys_store_isolation on public.order_idempotency_keys;
 create policy order_idempotency_keys_store_isolation

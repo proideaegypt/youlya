@@ -11,7 +11,7 @@ create table if not exists public.ai_tool_calls (
   created_at timestamptz not null default now()
 );
 
-alter table public.ai_tool_calls enable row level security;
+alter table public.ai_tool_calls ENABLE ROW LEVEL SECURITY;
 
 drop policy if exists ai_tool_calls_store_isolation on public.ai_tool_calls;
 create policy ai_tool_calls_store_isolation

@@ -19,7 +19,7 @@ create table if not exists public.last_product_recommendations (
   created_at timestamptz default now()
 );
 
-alter table public.last_product_recommendations enable row level security;
+alter table public.last_product_recommendations ENABLE ROW LEVEL SECURITY;
 
 drop policy if exists last_product_recommendations_store_isolation on public.last_product_recommendations;
 create policy last_product_recommendations_store_isolation

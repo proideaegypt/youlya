@@ -9,7 +9,7 @@ create table if not exists store_users (
   unique (store_id, user_id)
 );
 
-alter table store_users enable row level security;
+alter table store_users ENABLE ROW LEVEL SECURITY;
 
 drop policy if exists store_users_select_own on store_users;
 create policy store_users_select_own

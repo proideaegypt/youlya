@@ -313,23 +313,23 @@ create index if not exists idx_audit_store_entity on audit_logs(store_id, entity
 create index if not exists idx_failed_events_status on failed_events(status, next_retry_at);
 
 -- Enable RLS. Phase 2 must add authenticated dashboard policies.
-alter table stores enable row level security;
-alter table store_integrations enable row level security;
-alter table customers enable row level security;
-alter table conversations enable row level security;
-alter table messages enable row level security;
-alter table products enable row level security;
-alter table product_variants enable row level security;
-alter table last_product_recommendations enable row level security;
-alter table carts enable row level security;
-alter table cart_items enable row level security;
-alter table orders enable row level security;
-alter table idempotency_keys enable row level security;
-alter table ai_tool_calls enable row level security;
-alter table audit_logs enable row level security;
-alter table handoff_tickets enable row level security;
-alter table webhook_events enable row level security;
-alter table failed_events enable row level security;
+alter table stores ENABLE ROW LEVEL SECURITY;
+alter table store_integrations ENABLE ROW LEVEL SECURITY;
+alter table customers ENABLE ROW LEVEL SECURITY;
+alter table conversations ENABLE ROW LEVEL SECURITY;
+alter table messages ENABLE ROW LEVEL SECURITY;
+alter table products ENABLE ROW LEVEL SECURITY;
+alter table product_variants ENABLE ROW LEVEL SECURITY;
+alter table last_product_recommendations ENABLE ROW LEVEL SECURITY;
+alter table carts ENABLE ROW LEVEL SECURITY;
+alter table cart_items ENABLE ROW LEVEL SECURITY;
+alter table orders ENABLE ROW LEVEL SECURITY;
+alter table idempotency_keys ENABLE ROW LEVEL SECURITY;
+alter table ai_tool_calls ENABLE ROW LEVEL SECURITY;
+alter table audit_logs ENABLE ROW LEVEL SECURITY;
+alter table handoff_tickets ENABLE ROW LEVEL SECURITY;
+alter table webhook_events ENABLE ROW LEVEL SECURITY;
+alter table failed_events ENABLE ROW LEVEL SECURITY;
 
 comment on table last_product_recommendations is 'Safety mapping: resolves customer index selections to Shopify product/variant data. Never replace with LLM memory.';
 comment on table idempotency_keys is 'Prevents duplicate order creation from duplicate webhooks or repeated confirmations.';

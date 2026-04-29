@@ -95,3 +95,34 @@ User requested: push to github.
 RESULT 10 29/04/26
 STATUS: PASS
 Committed local repository changes, rebased `main` on top of `origin/main`, and pushed to GitHub successfully.
+
+PROMPT 11 29/04/26
+User requested `phase-0-playwright-scenario-runner-update`: migrate Playwright scenario runner to strict internal n8n contract payload and response assertions, add 5 critical scenarios, run full Playwright scenario suite, and save QA artifact.
+
+RESULT 11 29/04/26
+STATUS: PARTIAL
+Updated Playwright runner payload/headers/assertions and added CONV-081..CONV-085 critical scenarios; full Playwright run executed but blocked immediately because `INTERNAL_API_SECRET` was undefined in environment, so remaining scenarios did not run.
+
+PROMPT 12 29/04/26
+User requested `fix-playwright-internal-secret-env`: blocker fix only (no app code changes) by adding/updating Playwright config and creating local `.env.test` excluded from git.
+
+RESULT 12 29/04/26
+STATUS: PASS
+Added `playwright.config.ts` with `baseURL` from `APP_URL` and `globalSetup: undefined`, created local `.env.test` for Playwright secret/app URL, and added `.env.test` to `.gitignore` to prevent commit.
+
+PROMPT 13 29/04/26
+User requested Playwright env/test script setup: install dotenv-cli, set `test:e2e` to load `.env.test`, ensure `.env.test` gitignored, run E2E, and report pass/fail with per-scenario action mismatch details.
+
+RESULT 13 29/04/26
+STATUS: PARTIAL
+Installed `dotenv-cli`, updated `test:e2e` script to load `.env.test`, ensured `.env.test` is ignored, created `.env.local` with matching placeholder secret, and ran `npm run test:e2e`; all scenarios failed due to `ECONNREFUSED http://localhost:3000` so no response action values were returned.
+
+PROMPT 14 29/04/26
+User requested `phase-0-gate-check-static`: run security/code-quality/static grep gates (no server/E2E), report Gate A/B/C/D/E and tagging decision for v0.9.0 pre-gate.
+
+RESULT 14 29/04/26
+STATUS: PARTIAL
+Executed all requested static checks. Typecheck and unit tests passed, but lint failed due a `prefer-const` error in Playwright spec and the exact `grep -l "ROW LEVEL SECURITY"` check returned no matches (case/phrase mismatch vs existing lowercase `enable row level security` lines). No release tag pushed.
+
+PROMPT 15 29/04/26
+User requested `phase-0-gate-fix-lint-and-rls`: fix Playwright lint blocker, standardize migration RLS phrase to uppercase, audit `.env*` history at commit 6924331, rerun static checks, and release tag v0.9.0-pre-gate-static-pass if passing.

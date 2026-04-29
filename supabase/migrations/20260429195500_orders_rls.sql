@@ -1,4 +1,4 @@
-alter table public.orders enable row level security;
+alter table public.orders ENABLE ROW LEVEL SECURITY;
 
 drop policy if exists orders_store_isolation on public.orders;
 create policy orders_store_isolation

@@ -11,7 +11,7 @@ create table if not exists public.handoff_tickets (
   closed_at timestamptz
 );
 
-alter table public.handoff_tickets enable row level security;
+alter table public.handoff_tickets ENABLE ROW LEVEL SECURITY;
 
 drop policy if exists handoff_tickets_store_isolation on public.handoff_tickets;
 create policy handoff_tickets_store_isolation
