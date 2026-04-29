@@ -115,6 +115,10 @@ Do not start with full SaaS, marketplace, multi-channel, RAG, billing, or heavy 
 - Bootstrap prompt after skills install: `prompts/00_CODEX_BOOTSTRAP_AFTER_SKILLS_INSTALL.md`
 - Portainer Git deployment guide: `docs/21_PORTAINER_GIT_DEPLOY_FROM_REPO.md`
 
+## Changelog
+
+- **v0.4.0-auth-middleware-and-store-context** — 2026-04-29 — real JWT store context, role guard, and `store_users` RLS
+
 ## Scenario status
 
 The cleaned JSONL contains **90 real scenarios**:
