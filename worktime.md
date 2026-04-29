@@ -157,3 +157,6 @@ User requested: push to github.
 RESULT 20 30/04/26
 STATUS: PASS
 Committed current local changes and pushed main branch to GitHub.
+
+PROMPT 21 30/04/26
+User requested Phase 0 order confirmation state machine: add conversation state persistence + flow service + mock order placement + message-turn wiring, keeping Shopify mocked and tests passing.

@@ -11,6 +11,7 @@ type MappingEntry = {
 type StoreState = {
   mappings: Map<MappingKey, MappingEntry>;
   carts: Map<string, CartItem[]>;
+  conversationFlow: Map<string, { stage: string; cart: CartItem[]; customerInfo: Record<string, unknown> | null }>;
   orderByIdempotency: Map<string, { id: string; name: string }>;
   toolLogs: Array<Record<string, unknown>>;
   auditLogs: Array<Record<string, unknown>>;
@@ -26,6 +27,7 @@ function buildState(): StoreState {
   return {
     mappings: new Map(),
     carts: new Map(),
+    conversationFlow: new Map(),
     orderByIdempotency: new Map(),
     toolLogs: [],
     auditLogs: [],

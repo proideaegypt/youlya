@@ -10,10 +10,12 @@ import { isKillSwitchEnabled } from "@/lib/services/kill-switch-service";
 import { logToolCall } from "@/lib/services/ai-tool-logger";
 import { parseConfirmationMessage } from "@/lib/services/confirmation-parser";
 import { searchProducts } from "@/lib/services/product-search-service";
-import { persistRecommendations } from "@/lib/services/product-mapping-service";
+import { persistRecommendations, resolveVariant } from "@/lib/services/product-mapping-service";
 import { selectProduct } from "@/lib/services/select-product-service";
 import { getCartItems } from "@/lib/services/cart-service";
-import { writeAuditLog } from "@/lib/services/audit-log-service";
+
+import { buildOrderSummary, getCart, getCustomerInfo, getStage, looksLikeAddress, resetConversation, setCart, setCustomerInfo, setStage } from "@/lib/services/conversation-flow-service";
+import { placeOrder } from "@/lib/services/shopify-mock-service";
 import type { CanonicalMessageEvent, InternalMessageTurnInput, MessageTurnResponse } from "@/lib/types/messages";
 import type { ScenarioRecord } from "@/lib/types/scenarios";
 
@@ -233,6 +235,7 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   const customerId = input.customer_id;
   const language = input.language;
   const tone = input.tone;
+  const stage = await getStage(conversationId);
   const cartId = input.cart_id ?? conversationId;
 
   // angry_tone precondition = context metadata only, not a handoff trigger
@@ -348,6 +351,24 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
     await resetUnclearCount(conversationId);
   }
 
+  if (stage === "collecting_address" && looksLikeAddress(input.text)) {
+    const guessed = input.text.split(/[،,]/).map((s) => s.trim()).filter(Boolean);
+    await setCustomerInfo(conversationId, {
+      name: input.customer_name ?? guessed[0],
+      phone: input.phone ?? input.remote_jid,
+      address: input.address ?? input.text,
+    });
+    await setStage(conversationId, "awaiting_confirmation");
+    const summary = await buildOrderSummary(conversationId);
+    return {
+      intent: "COLLECT_ADDRESS",
+      toolsCalled: ["conversation_flow"],
+      reply: `${summary}\n\nتأكدي؟`,
+      handoff: false,
+      action: "ai_reply",
+    };
+  }
+
   if (tone === "confused" && !clearIntent) {
     const unclearCount = await incrementUnclearCount(conversationId, {
       store_id: storeKey,
@@ -406,6 +427,11 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   }
 
   if (intent === "SELECT_PRODUCT") {
+    const parsedSlot = Number(input.text.match(/(?:رقم|number|#)\s*(\d+)/i)?.[1] ?? "0");
+    const parsedSize = input.text.match(/\b(3XL|XL|L|M|S)\b/i)?.[1];
+    if (parsedSlot > 0) {
+      await resolveVariant(conversationId, parsedSlot, parsedSize);
+    }
     const start = Date.now();
     const result = await selectProduct({
       storeSlug: storeKey,
@@ -423,6 +449,10 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
       status: "ok",
       latency_ms: Date.now() - start,
     });
+    if (result.status === "added_to_cart") {
+      await setCart(conversationId, result.items);
+      await setStage(conversationId, "collecting_address");
+    }
     return {
       intent: "SELECT_PRODUCT",
       toolsCalled: ["select_product"],
@@ -434,6 +464,21 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   }
 
   if (intent === "CONFIRM_ORDER") {
+    if (stage === "awaiting_confirmation") {
+      const cart = await getCart(conversationId);
+      const customerInfo = await getCustomerInfo(conversationId);
+      const order = await placeOrder(conversationId, cart, customerInfo);
+      await setStage(conversationId, "ordered");
+      return {
+        intent: "CONFIRM_ORDER",
+        toolsCalled: ["confirm_order", "place_order_mock"],
+        reply: `تم تأكيد الطلب. رقم الطلب ${order.order_name}`,
+        handoff: false,
+        action: "order_created",
+        data: order,
+      };
+    }
+
     const confirmStart = Date.now();
     const confirmation = parseConfirmationMessage(input.text);
     logTool({
@@ -551,36 +596,14 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   }
 
   if (intent === "CANCEL_REQUEST") {
-    const ticket = await createHandoffTicket({
-      store_id: storeKey,
-      conversation_id: conversationId,
-      customer_id: customerId,
-      reason: "API_FAILURE",
-      priority: "HIGH",
-      ai_summary: input.text,
-    });
-    writeAuditLog({
-      action: "order.tag",
-      entityType: "order",
-      entityId: primaryItemTagKey(storeKey, conversationId),
-      metadata: { tag: "Canceled By Youlya AI" },
-    });
-    logTool({
-      store_id: storeKey,
-      conversation_id: conversationId,
-      tool_name: "handoff",
-      input_summary: { reason: "CANCEL_REQUEST" },
-      output_summary: { ticketId: ticket.id },
-      status: "ok",
-      latency_ms: 0,
-    });
+    await resetConversation(conversationId);
+    await setStage(conversationId, "cancelled");
     return {
       intent: "CANCEL_REQUEST",
-      toolsCalled: ["cancel_request", "handoff"],
+      toolsCalled: ["conversation_flow"],
       reply: summarizeHandoff(language),
       handoff: true,
       action: "handoff",
-      data: { ticket, tagged: "Canceled By Youlya AI" },
     };
   }
 

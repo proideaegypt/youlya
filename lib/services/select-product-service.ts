@@ -1,5 +1,5 @@
 import { addCartItems } from "@/lib/services/cart-service";
-import { getRecommendations } from "@/lib/services/product-mapping-service";
+import { getLegacyRecommendations } from "@/lib/services/product-mapping-service";
 import type { CartItem, SelectProductInput, SelectProductOutput } from "@/lib/types/commerce";
 
 function parseSelection(selectionText: string) {
@@ -10,7 +10,7 @@ function parseSelection(selectionText: string) {
 }
 
 export async function selectProduct(input: SelectProductInput): Promise<SelectProductOutput> {
-  const recs = await getRecommendations(input.storeSlug, input.conversationId, input.customerId);
+  const recs = await getLegacyRecommendations(input.storeSlug, input.conversationId, input.customerId);
   if (!recs.length) return { status: "mapping_expired", items: [], missing: ["mapping"], blocked: [] };
 
   const { indexes, size } = parseSelection(input.selectionText);
