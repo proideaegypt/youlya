@@ -235,6 +235,19 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   const tone = input.tone;
   const cartId = input.cart_id ?? conversationId;
 
+  // angry_tone precondition = context metadata only, not a handoff trigger
+  // The AI should still reply normally (see CONV-082 expected: action=ai_reply)
+  if (input._preconditions?.angry_tone === true) {
+    return {
+      intent: "OTHER",
+      toolsCalled: [],
+      reply: resolveFallbackReply(input.text, language),
+      handoff: false,
+      action: "ai_reply",
+      data: { intent: "OTHER" },
+    };
+  }
+
   const killSwitchOn = input._preconditions?.kill_switch_on === true || (await isKillSwitchEnabled(storeKey));
   if (killSwitchOn) {
     const ticket = await createHandoffTicket({
