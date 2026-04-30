@@ -1,6 +1,6 @@
 # Youlya AI Commerce OS
 
-Version: `v2.0.0`  
+Version: `v2.0.1` (`codefix`)  
 Date: `2026-04-30`
 
 Production-oriented WhatsApp commerce system for Youlya, built with Next.js App Router, Supabase, and Playwright scenario validation.
@@ -82,7 +82,16 @@ SCENARIO_PREFIX=DASH npm run test:e2e
 
 ## Release
 
-Current release tag target: `v2.0.0`
+Current release tag target: `v2.0.1`
+
+### v2.0.1 (codefix)
+
+- Docker runner now includes `docs/` in the final image
+- Health endpoint version is read dynamically from `package.json`
+- Removed handoff side-effects from `conversation-state-service` unclear counter
+- Updated `users_roles` migration IDs to UUID columns
+- Removed obsolete Compose `version` key
+- Repo hygiene updates (`tsconfig.tsbuildinfo`, archive cleanup rules)
 
 ---
 

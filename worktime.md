@@ -221,3 +221,6 @@ User requested Phase D (Supabase live integration + production deploy): live cli
 RESULT 32 30/04/26
 STATUS: PASS
 Implemented Phase D live-wiring/config hardening and deployment artifacts, then ran V1–V6 successfully: TypeScript, scenario validation, unit tests, full E2E, Docker build, and health check.
+
+PROMPT 33 30/04/26
+User requested push to GitHub for version 2.0.1 (vername: codefix) and generate README for this version.
