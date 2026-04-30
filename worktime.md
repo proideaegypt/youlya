@@ -214,3 +214,10 @@ User requested push to GitHub with version 2.0.0 for dashboard code and generate
 RESULT 31 30/04/26
 STATUS: PASS
 Updated README to release-oriented project documentation for dashboard/integration code, committed changes, created annotated tag `v2.0.0`, and pushed `main` + tag to GitHub.
+
+PROMPT 32 30/04/26
+User requested Phase D (Supabase live integration + production deploy): live client wiring with test-mode mock fallback, migration/env/docker/health hardening, deploy notes, and full V1-V6 verification.
+
+RESULT 32 30/04/26
+STATUS: PASS
+Implemented Phase D live-wiring/config hardening and deployment artifacts, then ran V1–V6 successfully: TypeScript, scenario validation, unit tests, full E2E, Docker build, and health check.

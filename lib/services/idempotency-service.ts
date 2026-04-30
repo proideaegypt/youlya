@@ -1,5 +1,6 @@
-import { getMockState } from "@/lib/adapters/supabase/mock-store";
 import crypto from "node:crypto";
+import { getMockState } from "@/lib/adapters/supabase/mock-store";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
 
 export function getIdempotentResult(key: string) {
   return getMockState().orderByIdempotency.get(key);
@@ -46,3 +47,62 @@ export function markIdempotencyCreated(store_id: string, key: string, order: { i
   localKeyStore.set(`${store_id}:${key}`, { status: "created", order, createdAt: new Date().toISOString() });
 }
 
+export async function checkOrderIdempotencyKey(
+  store_id: string,
+  key: string,
+): Promise<{ exists: boolean; order?: { id: string; name: string } }> {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) {
+    return checkIdempotencyKey(store_id, key);
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("order_idempotency_keys")
+      .select("shopify_order_id, shopify_order_name")
+      .eq("store_id", store_id)
+      .eq("idempotency_key", key)
+      .maybeSingle();
+
+    if (error || !data?.shopify_order_id) {
+      if (error) console.error("checkOrderIdempotencyKey error", error);
+      return { exists: false };
+    }
+
+    return {
+      exists: true,
+      order: { id: String(data.shopify_order_id), name: String(data.shopify_order_name ?? data.shopify_order_id) },
+    };
+  } catch (error) {
+    console.error("checkOrderIdempotencyKey exception", error);
+    return { exists: false };
+  }
+}
+
+export async function markOrderIdempotencyCreated(
+  store_id: string,
+  key: string,
+  order: { id: string; name: string },
+): Promise<void> {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) {
+    markIdempotencyCreated(store_id, key, order);
+    return;
+  }
+
+  try {
+    const { error } = await supabase.from("order_idempotency_keys").upsert(
+      {
+        store_id,
+        idempotency_key: key,
+        shopify_order_id: order.id,
+        shopify_order_name: order.name,
+        status: "created",
+      },
+      { onConflict: "store_id,idempotency_key" },
+    );
+    if (error) console.error("markOrderIdempotencyCreated error", error);
+  } catch (error) {
+    console.error("markOrderIdempotencyCreated exception", error);
+  }
+}

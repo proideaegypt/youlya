@@ -20,7 +20,7 @@ type ResolvedVariant = {
 };
 
 function hasSupabaseEnv(): boolean {
-  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  return Boolean(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL);
 }
 
 function toLegacyRecommendations(items: ProductSlot[]): ProductRecommendation[] {

@@ -61,6 +61,8 @@ export async function createHandoffTicket(input: HandoffInput): Promise<HandoffT
       metadata: { reason: input.reason, priority: input.priority },
     });
     await persistHumanHandoff({
+      store_id: input.store_id,
+      customer_id: input.customer_id,
       conversation_id: input.conversation_id,
       reason: input.reason,
       requested_at: now,
@@ -90,6 +92,8 @@ export async function createHandoffTicket(input: HandoffInput): Promise<HandoffT
     metadata: { reason: input.reason, priority: input.priority },
   });
   await persistHumanHandoff({
+    store_id: input.store_id,
+    customer_id: input.customer_id,
     conversation_id: input.conversation_id,
     reason: input.reason,
     requested_at: now,
@@ -99,6 +103,8 @@ export async function createHandoffTicket(input: HandoffInput): Promise<HandoffT
 }
 
 async function persistHumanHandoff(input: {
+  store_id?: string;
+  customer_id?: string;
   conversation_id: string;
   reason: string;
   requested_at: string;
@@ -119,6 +125,19 @@ async function persistHumanHandoff(input: {
   }
 
   try {
+    const { error: handoffTicketError } = await supabase.from("handoff_tickets").insert({
+      store_id: input.store_id ?? "youlya",
+      conversation_id: input.conversation_id,
+      customer_id: input.customer_id ?? null,
+      reason: input.reason,
+      priority: "NORMAL",
+      status: "open",
+      ai_summary: input.notes,
+      created_at: input.requested_at,
+      updated_at: input.requested_at,
+    });
+    if (handoffTicketError) console.error("handoff_tickets insert error", handoffTicketError);
+
     const { error } = await supabase.from("human_handoffs").insert({
       conversation_id: input.conversation_id,
       reason: input.reason,

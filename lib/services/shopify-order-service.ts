@@ -1,9 +1,16 @@
 import { getServerEnv } from "@/lib/config/env";
 import { validateCartForOrder } from "@/lib/services/cart-validation-service";
-import { checkIdempotencyKey, generateOrderIdempotencyKey, markIdempotencyCreated } from "@/lib/services/idempotency-service";
+import {
+  checkIdempotencyKey,
+  checkOrderIdempotencyKey,
+  generateOrderIdempotencyKey,
+  markIdempotencyCreated,
+  markOrderIdempotencyCreated,
+} from "@/lib/services/idempotency-service";
 import { getCachedVariantInventory } from "@/lib/services/product-search-service";
 import { writeAuditLog } from "@/lib/services/audit-log-service";
 import { getMockState } from "@/lib/adapters/supabase/mock-store";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { createOrder, ShopifyAPIError, type ShopifyOrder } from "@/lib/adapters/shopify/shopify-client";
 
 export type CreateOrderInput = {
@@ -26,6 +33,31 @@ export type CreateOrderResult =
   | { success: false; missing_fields?: string[]; reason: "validation_failed" | "out_of_stock" | "shopify_error"; message?: string };
 
 const mockOrders = new Map<string, { id: string; name: string }>();
+
+async function persistOrderRecord(input: CreateOrderInput, order: ShopifyOrder, idempotencyKey: string): Promise<void> {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return;
+  try {
+    const { error } = await supabase.from("orders").insert({
+      store_id: input.store_id,
+      conversation_id: input.conversation_id,
+      shopify_order_id: order.id,
+      shopify_order_name: order.name,
+      customer_id: input.customer_name,
+      channel: "whatsapp_evolution",
+      total_price: input.total,
+      currency: "EGP",
+      line_items_json: [{ variant_id: input.variant_id, quantity: input.quantity, price: input.total }],
+      safety_status: "SAFE_TO_CREATE",
+      created_by: "AI",
+      idempotency_key: idempotencyKey,
+      created_at: new Date().toISOString(),
+    });
+    if (error) console.error("orders insert error", error);
+  } catch (error) {
+    console.error("persistOrderRecord exception", error);
+  }
+}
 
 async function createOrderWithRetry(
   orderFn: typeof createOrder,
@@ -70,9 +102,10 @@ export async function createCODOrder(
       quantity: input.quantity,
       address: input.address,
     });
-  const existing = checkIdempotencyKey(input.store_id, key);
-  if (existing.exists && existing.order) {
-    return { success: true, order_name: existing.order.name, shopify_order_id: existing.order.id, duplicate: true };
+  const existing = await checkOrderIdempotencyKey(input.store_id, key);
+  const fallbackExisting = existing.exists ? existing : checkIdempotencyKey(input.store_id, key);
+  if (fallbackExisting.exists && fallbackExisting.order) {
+    return { success: true, order_name: fallbackExisting.order.name, shopify_order_id: fallbackExisting.order.id, duplicate: true };
   }
 
   const inventory = getCachedVariantInventory(input.variant_id);
@@ -108,7 +141,9 @@ export async function createCODOrder(
       ]);
     }
 
+    await markOrderIdempotencyCreated(input.store_id, key, { id: shopifyOrder.id, name: shopifyOrder.name });
     markIdempotencyCreated(input.store_id, key, { id: shopifyOrder.id, name: shopifyOrder.name });
+    await persistOrderRecord(input, shopifyOrder, key);
     mockOrders.set(`${input.store_id}:${key}`, { id: shopifyOrder.id, name: shopifyOrder.name });
     getMockState().auditLogs.push({
       action: "orders.persist",

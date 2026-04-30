@@ -1,23 +1,53 @@
 import { NextResponse } from "next/server";
-import { getServerEnv, isMockMode } from "@/lib/config/env";
+import { getServerEnv } from "@/lib/config/env";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
+
+type CheckStatus = "ok" | "mock" | "error" | "skipped";
 
 export async function GET() {
   const env = getServerEnv();
+  const testMode = env.TEST_MODE === "true" || env.MOCK_MODE === "true";
+
+  let supabase: CheckStatus = "mock";
+  let evolution: CheckStatus = "mock";
+  let shopify: CheckStatus = "mock";
+
+  if (!testMode) {
+    const supabaseClient = getSupabaseServerClient();
+    if (!supabaseClient) {
+      supabase = "error";
+    } else {
+      try {
+        const { error } = await supabaseClient.from("failed_events").select("id").limit(1);
+        supabase = error ? "error" : "ok";
+      } catch {
+        supabase = "error";
+      }
+    }
+
+    if (env.EVOLUTION_MOCK === "true") {
+      evolution = "mock";
+    } else if (!env.EVOLUTION_API_URL || !env.EVOLUTION_API_KEY) {
+      evolution = "skipped";
+    } else {
+      evolution = "ok";
+    }
+
+    if (!env.SHOPIFY_STORE_DOMAIN || !env.SHOPIFY_ADMIN_API_TOKEN) {
+      shopify = "skipped";
+    } else {
+      shopify = "ok";
+    }
+  }
+
   return NextResponse.json({
-    ok: true,
-    mode: isMockMode() ? "mock" : "live_candidate",
-    env: {
-      nodeEnv: env.NODE_ENV,
-      appEnv: env.APP_ENV,
-      allowTestMode: env.ALLOW_TEST_MODE === "true",
-      hasInternalSecret: Boolean(env.INTERNAL_API_SECRET),
-    },
-    adapters: {
-      database: "mock_or_supabase",
-      shopify: isMockMode() ? "mock" : "live_blocked_without_approval",
-      evolution: "mock",
-    },
+    status: "ok",
+    version: "1.0.0",
     timestamp: new Date().toISOString(),
+    checks: {
+      supabase,
+      evolution,
+      shopify,
+    },
   });
 }
-
