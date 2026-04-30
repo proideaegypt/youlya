@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { isAiEnabled } from "@/lib/services/ai-settings-service";
+import { BuildIdentityFooter } from "@/lib/ui/build-identity-footer";
 
 const links = [
   { href: "/dashboard/command-center", label: "لوحة التحكم" },
@@ -39,6 +40,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
           </div>
         </header>
         <div className="p-4 md:p-6">{children}</div>
+        <footer className="border-t border-zinc-800 px-4 py-3 md:px-6">
+          <BuildIdentityFooter />
+        </footer>
       </main>
     </div>
   );

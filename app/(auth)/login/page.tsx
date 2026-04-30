@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
+import { BuildIdentityFooter } from "@/lib/ui/build-identity-footer";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-zinc-950 px-4">
       <div className="w-full max-w-md rounded-xl border border-zinc-800 bg-zinc-900 p-6">
         <div className="mb-6 text-center">
           <div className="text-2xl font-semibold">Youlya</div>
@@ -53,6 +54,9 @@ export default function LoginPage() {
             {loading ? "جاري الدخول..." : "دخول"}
           </button>
         </form>
+      </div>
+      <div className="mt-4 w-full max-w-3xl">
+        <BuildIdentityFooter />
       </div>
     </main>
   );

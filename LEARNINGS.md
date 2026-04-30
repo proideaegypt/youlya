@@ -33,3 +33,11 @@ Problem: `.env.example` contained sensitive-looking real values (keys/passwords/
 Fix: replaced `.env.example` with placeholders only and added `.gitignore` entries for `.env.local`, `.env.production`, and Portainer stack env files.
 
 Rule: environment templates must contain placeholders only; no real credentials or PII-like values in committed templates.
+
+## 2026-04-30 — Version source drift
+
+Problem: `README.md` release version moved to `v2.0.1` while `package.json` stayed at `0.1.0`, causing inconsistent build/runtime identity.
+
+Fix: treat `package.json` as runtime version source, align it to release version, and generate build identity from package + git metadata via `scripts/write-build-info.mjs`.
+
+Rule: every release tag/version update must update `package.json` first, then docs.

@@ -374,3 +374,53 @@ Tests passed: 104 E2E + 55 unit
 Tests failed: 0
 Docker build: PASS
 Next: Phase E — Live Customer Pilot (first real WhatsApp message)
+
+## 2026-04-30 — Phase E deploy automation + build identity
+
+Date: 2026-04-30
+Phase: Phase E
+Task: phase-e-deploy-automation-and-build-identity
+Files changed:
+- package/version alignment and build-info pipeline
+- build-info API route + UI footer integration (dashboard/login)
+- deploy verification/deployment scripts
+- deployment automation docs and release note
+Commands run:
+- discovery commands (repo + host)
+- typecheck/lint/test/validate/scan/build/verify deploy sequence
+Tests passed:
+- (filled in final task result)
+Tests failed/skipped:
+- (filled in final task result)
+Blockers:
+- (filled in final task result)
+Next step:
+- Phase E live deployment confirmation and pilot message
+
+## 2026-04-30 — Phase E execution result
+
+Date: 2026-04-30
+Phase: Phase E
+Task: phase-e-deploy-automation-and-build-identity
+Commands run:
+- npm run typecheck
+- npm run lint
+- npm test
+- npm run validate:scenarios
+- npm run scan:secrets
+- npm run build
+- npm run verify:deploy
+- npm run deploy:production
+Tests passed:
+- Typecheck pass
+- Lint pass (warnings only)
+- Unit tests pass (55/55)
+- Scenario validation pass (104 total)
+- Build pass
+- Verify script pass
+Tests failed/skipped:
+- Deploy failed safely: missing `.env` for docker compose runtime
+Blockers:
+- `/root/youlya/.env` not found on VPS for compose deployment
+Next step:
+- Provide production `.env` on server (out of git), rerun `npm run deploy:production`

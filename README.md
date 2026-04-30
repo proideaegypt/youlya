@@ -60,6 +60,11 @@ npm run test:e2e
 # E2E by prefix (optional)
 SCENARIO_PREFIX=CONV npm run test:e2e
 SCENARIO_PREFIX=DASH npm run test:e2e
+
+# Build identity + deploy automation
+npm run build:info
+npm run verify:deploy
+npm run deploy:production
 ```
 
 ## Key Paths
@@ -92,6 +97,12 @@ Current release tag target: `v2.0.1`
 - Updated `users_roles` migration IDs to UUID columns
 - Removed obsolete Compose `version` key
 - Repo hygiene updates (`tsconfig.tsbuildinfo`, archive cleanup rules)
+
+## Build Identity
+
+- Public build info file: `public/build-info.json`
+- API endpoint: `GET /api/build-info`
+- UI footer visible in dashboard and login.
 
 ---
 
