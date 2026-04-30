@@ -1,20 +1,40 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+LOCK_FILE="/tmp/youlya-deploy.lock"
+exec 9>"${LOCK_FILE}"
+if ! flock -n 9; then
+  echo "Deploy already running. Exiting."
+  exit 1
+fi
+
 DATE_UTC="$(date +%F)"
-TASK_DIR="qa-artifacts/tasks/${DATE_UTC}/phase-e-deploy-automation-and-build-identity/deploy"
+TASK_DIR="qa-artifacts/tasks/${DATE_UTC}/phase-e-pull-based-vps-deploy-agent/deploy"
 RESULT_FILE="${TASK_DIR}/RESULT.md"
 mkdir -p "${TASK_DIR}"
 
 BRANCH="${DEPLOY_BRANCH:-main}"
 CURRENT_BRANCH="$(git branch --show-current 2>/dev/null || echo unknown)"
+COMPOSE_PATH="${COMPOSE_FILE:-docker-compose.yml}"
+COMPOSE_ENV_ARGS=()
+if [ -n "${COMPOSE_ENV_FILE:-}" ] && [ -f "${COMPOSE_ENV_FILE}" ]; then
+  COMPOSE_ENV_ARGS=(--env-file "${COMPOSE_ENV_FILE}")
+elif [ -f ".env" ]; then
+  COMPOSE_ENV_ARGS=()
+elif [ -f ".env.production" ]; then
+  COMPOSE_ENV_ARGS=(--env-file ".env.production")
+elif [ -f ".env.local" ]; then
+  COMPOSE_ENV_ARGS=(--env-file ".env.local")
+fi
 
 {
-  echo "# Deploy Production"
+  echo "# Deploy Production (Pull-Based)"
   echo
   echo "- Date: ${DATE_UTC}"
   echo "- Requested branch: ${BRANCH}"
   echo "- Current branch: ${CURRENT_BRANCH}"
+  echo "- Compose file: ${COMPOSE_PATH}"
+  echo "- Compose env source: ${COMPOSE_ENV_FILE:-auto-detect}"
 } > "${RESULT_FILE}"
 
 if [ "${CURRENT_BRANCH}" != "${BRANCH}" ]; then
@@ -22,41 +42,34 @@ if [ "${CURRENT_BRANCH}" != "${BRANCH}" ]; then
   exit 1
 fi
 
-bash scripts/verify-before-deploy.sh
+if [ "${SKIP_VERIFY:-false}" != "true" ]; then
+  bash scripts/verify-before-deploy.sh
+fi
 
 git fetch --all --tags >> "${RESULT_FILE}" 2>&1
 git pull --ff-only origin "${BRANCH}" >> "${RESULT_FILE}" 2>&1
 
 npm run build:info >> "${RESULT_FILE}" 2>&1
 
-DEPLOY_STRATEGY="none"
-
-if [ -n "${PORTAINER_WEBHOOK_URL:-}" ]; then
-  DEPLOY_STRATEGY="portainer-webhook"
-  echo "Deploy strategy: ${DEPLOY_STRATEGY}" | tee -a "${RESULT_FILE}"
-  curl -fsS -X POST "${PORTAINER_WEBHOOK_URL}" >/dev/null
-  sleep 10
-elif [ -f docker-compose.yml ] && command -v docker >/dev/null 2>&1; then
-  DEPLOY_STRATEGY="docker-compose"
-  echo "Deploy strategy: ${DEPLOY_STRATEGY}" | tee -a "${RESULT_FILE}"
-  docker compose pull || true
-  docker compose build
-  docker compose up -d
-elif command -v pm2 >/dev/null 2>&1; then
-  DEPLOY_STRATEGY="pm2"
-  echo "Deploy strategy: ${DEPLOY_STRATEGY}" | tee -a "${RESULT_FILE}"
-  pm2 restart all
-else
-  echo "No deployment strategy detected (no PORTAINER_WEBHOOK_URL, no docker compose, no pm2)" | tee -a "${RESULT_FILE}"
+if [ ! -f "${COMPOSE_PATH}" ]; then
+  echo "Compose file not found: ${COMPOSE_PATH}" | tee -a "${RESULT_FILE}"
+  exit 1
+fi
+if ! command -v docker >/dev/null 2>&1; then
+  echo "docker command not available" | tee -a "${RESULT_FILE}"
   exit 1
 fi
 
+docker compose "${COMPOSE_ENV_ARGS[@]}" -f "${COMPOSE_PATH}" build >> "${RESULT_FILE}" 2>&1
+docker compose "${COMPOSE_ENV_ARGS[@]}" -f "${COMPOSE_PATH}" up -d >> "${RESULT_FILE}" 2>&1
+
+HEALTH_RESULT="skipped"
+BUILD_INFO_RESULT="skipped"
 if [ -n "${APP_URL:-}" ]; then
   curl -fsS "${APP_URL}/api/health" >> "${RESULT_FILE}" 2>&1
+  HEALTH_RESULT="pass"
   curl -fsS "${APP_URL}/api/build-info" >> "${RESULT_FILE}" 2>&1
-  echo "Health/build-info checks: PASS" | tee -a "${RESULT_FILE}"
-else
-  echo "APP_URL missing; skipped health/build-info checks" | tee -a "${RESULT_FILE}"
+  BUILD_INFO_RESULT="pass"
 fi
 
 COMMIT="$(git rev-parse --short HEAD 2>/dev/null || echo unknown)"
@@ -66,10 +79,12 @@ TAG="$(git tag --points-at HEAD | head -1 || true)"
 {
   echo
   echo "## Summary"
-  echo "- commit deployed: ${COMMIT}"
+  echo "- deployed commit: ${COMMIT}"
   echo "- version: ${VERSION}"
+  echo "- compose file used: ${COMPOSE_PATH}"
   echo "- tag: ${TAG:-none}"
-  echo "- deploy strategy: ${DEPLOY_STRATEGY}"
+  echo "- health result: ${HEALTH_RESULT}"
+  echo "- build-info result: ${BUILD_INFO_RESULT}"
   echo "- deploy result: PASS"
 } >> "${RESULT_FILE}"
 

@@ -65,6 +65,7 @@ SCENARIO_PREFIX=DASH npm run test:e2e
 npm run build:info
 npm run verify:deploy
 npm run deploy:production
+npm run deploy:watch
 ```
 
 ## Key Paths
@@ -103,6 +104,12 @@ Current release tag target: `v2.0.1`
 - Public build info file: `public/build-info.json`
 - API endpoint: `GET /api/build-info`
 - UI footer visible in dashboard and login.
+
+## Pull-Based Deploy Agent
+
+- Portainer webhook is not required.
+- VPS agent checks `origin/main`, verifies, and deploys through Docker Compose.
+- See: `docs/PULL_BASED_DEPLOY_AGENT.md`
 
 ---
 

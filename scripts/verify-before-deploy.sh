@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DATE_UTC="$(date +%F)"
-TASK_DIR="qa-artifacts/tasks/${DATE_UTC}/phase-e-deploy-automation-and-build-identity/verify"
+TASK_DIR="qa-artifacts/tasks/${DATE_UTC}/phase-e-pull-based-vps-deploy-agent/verify"
 RESULT_FILE="${TASK_DIR}/RESULT.md"
 mkdir -p "${TASK_DIR}"
 
@@ -19,7 +19,7 @@ COMMIT="$(git rev-parse --short HEAD 2>/dev/null || echo unknown)"
 } > "${RESULT_FILE}"
 
 if [ ! -d node_modules ]; then
-  npm install
+  npm ci
 fi
 
 run_step() {
@@ -39,7 +39,22 @@ if npm run | grep -q "scan:secrets"; then
 fi
 run_step "build" npm run build
 
-if [ -f Dockerfile ] && command -v docker >/dev/null 2>&1; then
+COMPOSE_PATH="${COMPOSE_FILE:-docker-compose.yml}"
+if [ -f "${COMPOSE_PATH}" ] && command -v docker >/dev/null 2>&1; then
+  COMPOSE_ENV_ARGS=()
+  if [ -n "${COMPOSE_ENV_FILE:-}" ] && [ -f "${COMPOSE_ENV_FILE}" ]; then
+    COMPOSE_ENV_ARGS=(--env-file "${COMPOSE_ENV_FILE}")
+  elif [ -f ".env" ]; then
+    COMPOSE_ENV_ARGS=()
+  elif [ -f ".env.production" ]; then
+    COMPOSE_ENV_ARGS=(--env-file ".env.production")
+  elif [ -f ".env.local" ]; then
+    COMPOSE_ENV_ARGS=(--env-file ".env.local")
+  fi
+
+  run_step "docker-compose-config" docker compose "${COMPOSE_ENV_ARGS[@]}" -f "${COMPOSE_PATH}" config
+  run_step "docker-compose-build" docker compose "${COMPOSE_ENV_ARGS[@]}" -f "${COMPOSE_PATH}" build
+elif [ -f Dockerfile ] && command -v docker >/dev/null 2>&1; then
   run_step "docker-build" docker build -t youlya-app:verify .
 fi
 

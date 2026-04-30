@@ -235,3 +235,10 @@ User requested Phase E task `phase-e-deploy-automation-and-build-identity`: depl
 RESULT 34 30/04/26
 STATUS: PARTIAL
 Implemented Phase E deploy automation + build identity (version alignment, build-info generator/API, dashboard/login footer, verify/deploy scripts, deploy docs, QA artifacts). Full verification passed, but live deploy stopped safely because docker compose requires `/root/youlya/.env` which is missing on VPS.
+
+PROMPT 35 30/04/26
+User requested Phase E task `phase-e-pull-based-vps-deploy-agent`: implement pull-based auto deploy agent (no Portainer webhook), verification/deploy/watch scripts, systemd templates, docs, and final verification/deploy run.
+
+RESULT 35 30/04/26
+STATUS: PARTIAL
+Implemented pull-based VPS deploy agent (no Portainer webhook) with watch script, deploy lock + ff-only pull, compose deployment path, systemd templates, docs, and package scripts. Verification chain passed until compose config gate, which failed due missing `/root/youlya/.env`; deployment was safely skipped.

@@ -15,7 +15,8 @@
     "validate:scenarios": "node scripts/validate-scenarios.mjs",
     "scan:secrets": "node scripts/scan-secrets.mjs",
     "verify:deploy": "bash scripts/verify-before-deploy.sh",
-    "deploy:production": "bash scripts/deploy-production.sh"
+    "deploy:production": "bash scripts/deploy-production.sh",
+    "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
     "youlyaVersionName": "codefix"

@@ -424,3 +424,26 @@ Blockers:
 - `/root/youlya/.env` not found on VPS for compose deployment
 Next step:
 - Provide production `.env` on server (out of git), rerun `npm run deploy:production`
+
+## 2026-04-30 — Phase E pull-based VPS deploy agent
+
+Date: 2026-04-30
+Phase: Phase E
+Task: phase-e-pull-based-vps-deploy-agent
+Files changed:
+- pull-based deploy scripts (`verify-before-deploy`, `deploy-production`, `watch-and-deploy`)
+- systemd service/timer templates under `deploy/systemd/`
+- deploy docs (`docs/PULL_BASED_DEPLOY_AGENT.md`, `docs/DEPLOYMENT_AUTOMATION.md`)
+- package script (`deploy:watch`) + README/release notes
+Commands run:
+- full discovery commands
+- typecheck/lint/test/validate/scan/build/verify sequence
+Tests passed:
+- typecheck/lint/tests/validate/scan/build passed
+Tests failed/skipped:
+- verify blocked at `docker compose config` due missing `/root/youlya/.env`
+- deployment skipped (safety gate)
+Blockers:
+- runtime compose env file missing on VPS
+Next step:
+- provide production env file and rerun `npm run verify:deploy` then `npm run deploy:production`

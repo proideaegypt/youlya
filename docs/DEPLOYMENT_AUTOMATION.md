@@ -18,7 +18,7 @@ This script runs:
 - optional Docker build (if Dockerfile exists and Docker is available)
 
 A report is written to:
-- `qa-artifacts/tasks/YYYY-MM-DD/phase-e-deploy-automation-and-build-identity/verify/RESULT.md`
+- `qa-artifacts/tasks/YYYY-MM-DD/phase-e-pull-based-vps-deploy-agent/verify/RESULT.md`
 
 ## 2) Deploy production
 
@@ -26,19 +26,20 @@ A report is written to:
 ./scripts/deploy-production.sh
 ```
 
-Deploy strategy is auto-detected in this order:
-1. Portainer webhook (`PORTAINER_WEBHOOK_URL`)
-2. Local Docker Compose (`docker-compose.yml`)
-3. PM2 fallback (only if PM2 exists)
+Deploy strategy:
+1. Pull latest code (`git pull --ff-only`)
+2. Docker Compose local deploy (`docker compose build && up -d`)
+3. Health checks (`/api/health`, `/api/build-info`) when `APP_URL` is set
 
 A report is written to:
-- `qa-artifacts/tasks/YYYY-MM-DD/phase-e-deploy-automation-and-build-identity/deploy/RESULT.md`
+- `qa-artifacts/tasks/YYYY-MM-DD/phase-e-pull-based-vps-deploy-agent/deploy/RESULT.md`
 
 ## Required env keys (names only)
 
 - `APP_URL`
-- `PORTAINER_WEBHOOK_URL` (optional)
 - `DEPLOY_BRANCH` (optional, defaults to `main`)
+- `COMPOSE_FILE` (optional custom compose path)
+- `COMPOSE_ENV_FILE` (optional custom env file path)
 - `SUPABASE_URL` or `NEXT_PUBLIC_SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `EVOLUTION_API_URL`
