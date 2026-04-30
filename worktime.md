@@ -210,3 +210,7 @@ Fixed Playwright scenario loader to support optional `SCENARIO_PREFIX` (unset=AL
 
 PROMPT 31 30/04/26
 User requested push to GitHub with version 2.0.0 for dashboard code and generate/update README.
+
+RESULT 31 30/04/26
+STATUS: PASS
+Updated README to release-oriented project documentation for dashboard/integration code, committed changes, created annotated tag `v2.0.0`, and pushed `main` + tag to GitHub.
