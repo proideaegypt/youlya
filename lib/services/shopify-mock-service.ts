@@ -1,27 +1,33 @@
-import type { CartItem } from "@/lib/types/commerce";
-
-type CustomerInfo = {
-  name?: string;
-  phone?: string;
-  address?: string;
-};
+import type { CartItem, CustomerInfo } from "@/lib/services/conversation-flow-service";
 
 export async function placeOrder(
   conversationId: string,
   cart: CartItem[],
-  customerInfo: CustomerInfo | null,
-): Promise<{ order_id: string; order_name: string }> {
+  customerInfo: CustomerInfo,
+  storeId: string,
+): Promise<{ order_id: string; order_name: string; total: number }> {
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
   const payload = {
-    conversationId,
-    cart,
-    customerInfo,
-    createdAt: new Date().toISOString(),
+    line_items: cart.map((item) => ({
+      variant_id: item.variant_id,
+      quantity: 1,
+      title: item.title,
+      size: item.size,
+      price: item.price,
+    })),
+    customer: { name: customerInfo.name, phone: customerInfo.phone },
+    shipping_address: { address1: customerInfo.address },
+    tags: "COD,WhatsApp-AI",
+    note: `WhatsApp order via Youlya AI | conv: ${conversationId}`,
+    financial_status: "pending",
+    store_id: storeId,
   };
-  // Required: mock logs exact payload format for later Shopify adapter wiring.
-  console.log("[shopify-mock] placeOrder payload", JSON.stringify(payload));
+
+  console.log("[MOCK-SHOPIFY] Order payload:", JSON.stringify(payload, null, 2));
 
   return {
     order_id: `MOCK-${Date.now()}`,
-    order_name: "#MOCK-001",
+    order_name: `#MOCK-${Math.floor(Math.random() * 9000) + 1000}`,
+    total,
   };
 }

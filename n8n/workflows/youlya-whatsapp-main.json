@@ -1,0 +1,305 @@
+{
+  "name": "Youlya WhatsApp Main",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "youlya-whatsapp",
+        "httpMethod": "POST",
+        "responseMode": "onReceived"
+      },
+      "id": "Webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        200,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [],
+          "string": [
+            {
+              "value1": "={{$json.data.messageType || $json.data.type}}",
+              "operation": "equal",
+              "value2": "conversation"
+            },
+            {
+              "value1": "={{$json.data.messageType || $json.data.type}}",
+              "operation": "equal",
+              "value2": "extendedTextMessage"
+            },
+            {
+              "value1": "={{$json.data.messageType || $json.data.type}}",
+              "operation": "equal",
+              "value2": "audioMessage"
+            }
+          ]
+        }
+      },
+      "id": "Filter Message Type",
+      "name": "Filter Message Type",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        420,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $json.data || {};\nconst message = data.message || {};\nconst key = data.key || {};\nreturn [{\n  json: {\n    conversation_id: key.remoteJid,\n    customer_id: key.remoteJid,\n    provider_message_id: key.id,\n    text: message.conversation ?? message.extendedTextMessage?.text ?? \"\",\n    message_type: \"text\",\n    channel: \"whatsapp_evolution\",\n    language: \"ar-EG\",\n    tone: \"neutral\",\n    store_id: \"youlya\",\n    remote_jid: key.remoteJid,\n    instance_name: $node[\"Webhook\"].json.instance || \"YoulyaMain\"\n  }\n}];"
+      },
+      "id": "Normalize Message",
+      "name": "Normalize Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.APP_INTERNAL_URL}}/api/internal/messages/turn",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-internal-secret",
+              "value": "={{$env.INTERNAL_API_SECRET}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{$json}}",
+        "options": {
+          "timeout": 45000
+        }
+      },
+      "id": "Call Turn Endpoint",
+      "name": "Call Turn Endpoint",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        900,
+        120
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{$json.action}}",
+                    "rightValue": "duplicate_ignored",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{$json.action}}",
+                    "rightValue": "handoff",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{$json.action}}",
+                    "rightValue": "error",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{$json.action}}",
+                    "rightValue": "ai_disabled",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "fallbackOutput": 4
+      },
+      "id": "Route by Action",
+      "name": "Route by Action",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        1140,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.EVOLUTION_API_URL}}/message/sendText/{{$env.EVOLUTION_INSTANCE}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{$env.EVOLUTION_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"number\": \"{{$node[\"Normalize Message\"].json[\"conversation_id\"]}}\", \"text\": \"{{$json.reply}}\"}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "Send Text",
+      "name": "Send Text",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1360,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.APP_INTERNAL_URL}}/api/internal/dead-letter",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"raw_input\": $json, \"error_message\": $json.error?.message || 'turn endpoint failed', \"conversation_id\": $node[\"Normalize Message\"].json[\"conversation_id\"]}"
+      },
+      "id": "Dead Letter",
+      "name": "Dead Letter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1120,
+        420
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Filter Message Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Message Type": {
+      "main": [
+        [
+          {
+            "node": "Normalize Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Normalize Message": {
+      "main": [
+        [
+          {
+            "node": "Call Turn Endpoint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Turn Endpoint": {
+      "main": [
+        [
+          {
+            "node": "Route by Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Action": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

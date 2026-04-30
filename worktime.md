@@ -181,3 +181,22 @@ User requested kill switch + human handoff management API: add ai_settings/human
 RESULT 24 30/04/26
 STATUS: PASS
 Implemented ai settings + human handoff management API: added Supabase migration for `ai_settings` and `human_handoffs`, added `ai-settings-service` with 30s cache and DB/mock fallback, added admin settings GET/POST and admin handoffs GET routes with internal auth, wired `isAiEnabled` gate into message-turn returning `ai_disabled`, and added CONV-089 scenario. Validation: `npm run typecheck`, `npm test`, `npm run lint` (warnings only).
+
+PROMPT 25 30/04/26
+User requested Phase 0 Product Mapping Persistence: add migration 20260430110000_product_recommendations.sql, implement Supabase-backed product mapping service with mock fallback, wire message-turn product search/select hooks, add CONV-090/091 scenarios, run full 6-step verification, then commit/push and update PROGRESS-LOG on success.
+
+PROMPT 26 30/04/26
+User requested Phase 0 final task: implement conversation flow state machine + mock Shopify order, add migration and CONV-092/093 scenarios, run strict verification (validate, tsc, lint, E2E), then commit/push and update progress log only if all steps pass.
+
+PROMPT 27 30/04/26
+User requested Phase 1 n8n webhook to app integration: add n8n workflow JSON, Evolution webhook receiver route, evolution sender service, n8n env example, CONV-094 scenario, run validation/typecheck/e2e/webhook curl checks, then commit/push and update progress log on full success.
+
+PROMPT 28 30/04/26
+User requested Phase 2 Dashboard MVP: implement login page, dashboard layout/command center/inbox, middleware auth protection, Cairo RTL globals, shadcn setup, and run verification while preserving existing tests.
+
+PROMPT 29 30/04/26
+User requested implementing Phase B (n8n + Evolution wiring) and Phase C (Dashboard MVP) end-to-end with full verification (V1-V5), commit/push, and progress-log update under strict safety/auth/testing constraints.
+
+RESULT 29 30/04/26
+STATUS: PARTIAL
+Implemented/retained Phase B+C scaffolding and ran verification sequence. V1 (tsc), V2 (validate scenarios), V3 (npm test), V4 (CONV e2e) passed; V5 failed with Playwright grep filter returning no tests.

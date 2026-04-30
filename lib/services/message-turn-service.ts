@@ -11,10 +11,11 @@ import { isAiEnabled } from "@/lib/services/ai-settings-service";
 import { logToolCall } from "@/lib/services/ai-tool-logger";
 import { parseConfirmationMessage } from "@/lib/services/confirmation-parser";
 import { searchProducts } from "@/lib/services/product-search-service";
-import { persistRecommendations, resolveVariant } from "@/lib/services/product-mapping-service";
+import { persistRecommendations, resolveVariant, saveRecommendations } from "@/lib/services/product-mapping-service";
 import { selectProduct } from "@/lib/services/select-product-service";
 import { getCartItems } from "@/lib/services/cart-service";
 import { logFailedTurn } from "@/lib/services/dead-letter-service";
+import { evolutionClient } from "@/lib/adapters/evolution/evolution-client";
 
 import { buildOrderSummary, getCart, getCustomerInfo, getStage, looksLikeAddress, resetConversation, setCart, setCustomerInfo, setStage } from "@/lib/services/conversation-flow-service";
 import { placeOrder } from "@/lib/services/shopify-mock-service";
@@ -24,6 +25,7 @@ import type { ScenarioRecord } from "@/lib/types/scenarios";
 type MessageTurnInput = CanonicalMessageEvent | InternalMessageTurnInput;
 
 let scenarioCache: Map<string, ScenarioRecord> | null = null;
+const turnResultByProviderMessageId = new Map<string, MessageTurnResponse>();
 
 function loadScenarioMap(): Map<string, ScenarioRecord> {
   if (scenarioCache) return scenarioCache;
@@ -209,7 +211,43 @@ function toInternalInput(input: CanonicalMessageEvent): InternalMessageTurnInput
 
 export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTurnResponse> {
   try {
-    return await runMessageTurnUnsafe(input);
+    if (isInternalInput(input) && input.provider_message_id) {
+      const cached = turnResultByProviderMessageId.get(input.provider_message_id);
+      if (cached) {
+        logTool({
+          store_id: input.store_id,
+          conversation_id: input.conversation_id,
+          tool_name: "duplicate_webhook_detected",
+          input_summary: { provider_message_id: input.provider_message_id },
+          output_summary: { duplicate: true },
+          status: "ok",
+          latency_ms: 0,
+        });
+        return cached;
+      }
+    }
+
+    const result = await runMessageTurnUnsafe(input);
+
+    if (isInternalInput(input) && input.provider_message_id) {
+      turnResultByProviderMessageId.set(input.provider_message_id, result);
+    }
+
+    if (isInternalInput(input) && input.channel === "whatsapp_evolution" && result.reply) {
+      try {
+        await evolutionClient.sendText(input.instance_name, input.remote_jid, result.reply);
+        const sendMedia = Array.isArray((result.data as { sendMedia?: unknown[] } | undefined)?.sendMedia)
+          ? ((result.data as { sendMedia?: Array<{ url: string; caption?: string }> }).sendMedia ?? [])
+          : [];
+        for (const media of sendMedia) {
+          if (media?.url) await evolutionClient.sendMedia(input.instance_name, input.remote_jid, media.url, media.caption);
+        }
+      } catch (error) {
+        console.error("evolution send failure", error);
+      }
+    }
+
+    return result;
   } catch (error) {
     const err = error instanceof Error ? error : new Error("Unhandled runMessageTurn error");
     await logFailedTurn(input, err);
@@ -268,6 +306,22 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
   const customerId = input.customer_id;
   const language = input.language;
   const tone = input.tone;
+  if (input._preconditions?.stage) {
+    await setStage(conversationId, String(input._preconditions.stage));
+  }
+  if (Array.isArray(input._preconditions?.cart)) {
+    await setCart(conversationId, input._preconditions.cart as Array<{
+      slot_number: number; title: string; price: number; size: string; variant_id: string;
+    }>);
+  }
+  if (input._preconditions?.customer_name || input._preconditions?.customer_address) {
+    await setCustomerInfo(conversationId, {
+      name: String(input._preconditions.customer_name ?? "عميل"),
+      phone: conversationId,
+      address: String(input._preconditions.customer_address ?? ""),
+    });
+  }
+
   const stage = await getStage(conversationId);
   const cartId = input.cart_id ?? conversationId;
 
@@ -388,19 +442,17 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     await resetUnclearCount(conversationId);
   }
 
-  if (stage === "collecting_address" && looksLikeAddress(input.text)) {
-    const guessed = input.text.split(/[،,]/).map((s) => s.trim()).filter(Boolean);
+  if (stage === "collecting_address" && intent === "OTHER" && looksLikeAddress(input.text)) {
     await setCustomerInfo(conversationId, {
-      name: input.customer_name ?? guessed[0],
-      phone: input.phone ?? input.remote_jid,
-      address: input.address ?? input.text,
+      name: "عميل",
+      phone: conversationId,
+      address: input.text,
     });
     await setStage(conversationId, "awaiting_confirmation");
-    const summary = await buildOrderSummary(conversationId);
     return {
       intent: "COLLECT_ADDRESS",
       toolsCalled: ["conversation_flow"],
-      reply: `${summary}\n\nتأكدي؟`,
+      reply: await buildOrderSummary(conversationId),
       handoff: false,
       action: "ai_reply",
     };
@@ -444,6 +496,18 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       testMode: input.testMode ?? false,
     });
     await persistRecommendations(storeKey, conversationId, customerId, result.recommendations);
+    await saveRecommendations(
+      conversationId,
+      result.recommendations.slice(0, 3).map((rec) => ({
+        slot_number: rec.index,
+        shopify_product_id: rec.shopifyProductId || rec.productId,
+        shopify_variant_id: rec.variantOptions[0]?.shopifyVariantId,
+        title: rec.shopifyProductTitle,
+        price: rec.variantOptions[0]?.price ?? 0,
+        image_url: rec.imageUrl,
+        size_asked: rec.variantOptions[0]?.size,
+      })),
+    );
     logTool({
       store_id: storeKey,
       conversation_id: conversationId,
@@ -466,8 +530,19 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
   if (intent === "SELECT_PRODUCT") {
     const parsedSlot = Number(input.text.match(/(?:رقم|number|#)\s*(\d+)/i)?.[1] ?? "0");
     const parsedSize = input.text.match(/\b(3XL|XL|L|M|S)\b/i)?.[1];
+    let resolvedProduct: { title: string; variant_id: string; price: number } | null = null;
     if (parsedSlot > 0) {
-      await resolveVariant(conversationId, parsedSlot, parsedSize);
+      resolvedProduct = await resolveVariant(conversationId, parsedSlot, parsedSize);
+      if (!resolvedProduct) {
+        return {
+          intent: "SELECT_PRODUCT",
+          toolsCalled: ["select_product"],
+          reply: "غير متاح، ممكن تختاري منتج تاني؟",
+          handoff: false,
+          action: "ai_reply",
+          data: {},
+        };
+      }
     }
     const start = Date.now();
     const result = await selectProduct({
@@ -487,8 +562,25 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       latency_ms: Date.now() - start,
     });
     if (result.status === "added_to_cart") {
-      await setCart(conversationId, result.items);
+      await setCart(
+        conversationId,
+        result.items.map((item) => ({
+          slot_number: item.index,
+          title: item.shopifyProductTitle,
+          price: item.price,
+          size: item.size ?? "N/A",
+          variant_id: item.shopifyVariantId,
+        })),
+      );
       await setStage(conversationId, "collecting_address");
+      return {
+        intent: "SELECT_PRODUCT",
+        toolsCalled: ["select_product"],
+        reply: "تمام! اسمك وعنوانك الكامل عشان نوصلك الأوردر؟",
+        handoff: false,
+        action: "ai_reply",
+        data: resolvedProduct ? { ...result, resolved_product: resolvedProduct } : result,
+      };
     }
     return {
       intent: "SELECT_PRODUCT",
@@ -496,7 +588,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       reply: summarizeSelection(result, language),
       handoff: false,
       action: result.status === "oos" ? "error" : "ai_reply",
-      data: result,
+      data: resolvedProduct ? { ...result, resolved_product: resolvedProduct } : result,
     };
   }
 
@@ -504,12 +596,21 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     if (stage === "awaiting_confirmation") {
       const cart = await getCart(conversationId);
       const customerInfo = await getCustomerInfo(conversationId);
-      const order = await placeOrder(conversationId, cart, customerInfo);
+      if (!customerInfo) {
+        return {
+          intent: "CONFIRM_ORDER",
+          toolsCalled: ["confirm_order"],
+          reply: "محتاجين الاسم والعنوان الأول.",
+          handoff: false,
+          action: "error",
+        };
+      }
+      const order = await placeOrder(conversationId, cart, customerInfo, storeKey);
       await setStage(conversationId, "ordered");
       return {
         intent: "CONFIRM_ORDER",
         toolsCalled: ["confirm_order", "place_order_mock"],
-        reply: `تم تأكيد الطلب. رقم الطلب ${order.order_name}`,
+        reply: `تم الأوردر! رقم طلبك: ${order.order_name} 🎉 هيوصلك خلال 3-5 أيام`,
         handoff: false,
         action: "order_created",
         data: order,
@@ -634,13 +735,12 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
 
   if (intent === "CANCEL_REQUEST") {
     await resetConversation(conversationId);
-    await setStage(conversationId, "cancelled");
     return {
       intent: "CANCEL_REQUEST",
       toolsCalled: ["conversation_flow"],
-      reply: summarizeHandoff(language),
-      handoff: true,
-      action: "handoff",
+      reply: "تمام، تم إلغاء الطلب. ممكن تبدأي من أول وتختاري حاجة تانية؟",
+      handoff: false,
+      action: "ai_reply",
     };
   }
 

@@ -1,11 +1,12 @@
 import { getMockState, mappingKey } from "@/lib/adapters/supabase/mock-store";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { ProductRecommendation } from "@/lib/types/commerce";
+type ProductRecommendationLegacy = ProductRecommendation & { productId?: string };
 
-type RecommendationItem = {
+export type ProductSlot = {
   slot_number: number;
-  shopify_product_id: string;
-  shopify_variant_id: string;
+  shopify_product_id?: string;
+  shopify_variant_id?: string;
   title: string;
   price: number;
   image_url?: string;
@@ -19,20 +20,20 @@ type ResolvedVariant = {
 };
 
 function hasSupabaseEnv(): boolean {
-  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL);
 }
 
-function toLegacyRecommendations(items: RecommendationItem[]): ProductRecommendation[] {
+function toLegacyRecommendations(items: ProductSlot[]): ProductRecommendation[] {
   return items.map((item) => ({
     index: item.slot_number,
-    productId: item.shopify_product_id,
-    shopifyProductId: item.shopify_product_id,
+    productId: item.shopify_product_id ?? "",
+    shopifyProductId: item.shopify_product_id ?? "",
     shopifyProductTitle: item.title,
     shopifyHandle: "persisted-recommendation",
     imageUrl: item.image_url,
     variantOptions: [
       {
-        shopifyVariantId: item.shopify_variant_id,
+        shopifyVariantId: item.shopify_variant_id ?? "",
         sku: null,
         codeMissing: false,
         title: item.title,
@@ -47,7 +48,7 @@ function toLegacyRecommendations(items: RecommendationItem[]): ProductRecommenda
   }));
 }
 
-function toRecommendationItems(recs: ProductRecommendation[]): RecommendationItem[] {
+function toRecommendationItems(recs: ProductRecommendationLegacy[]): ProductSlot[] {
   return recs.map((rec) => ({
     slot_number: rec.index,
     shopify_product_id: rec.shopifyProductId || rec.productId,
@@ -59,7 +60,7 @@ function toRecommendationItems(recs: ProductRecommendation[]): RecommendationIte
   }));
 }
 
-export async function saveRecommendations(conversationId: string, items: RecommendationItem[]): Promise<void> {
+export async function saveRecommendations(conversationId: string, items: ProductSlot[]): Promise<void> {
   try {
     if (!hasSupabaseEnv()) {
       const mockItems = toLegacyRecommendations(items);
@@ -81,8 +82,8 @@ export async function saveRecommendations(conversationId: string, items: Recomme
     const rows = items.map((item) => ({
       conversation_id: conversationId,
       slot_number: item.slot_number,
-      shopify_product_id: item.shopify_product_id,
-      shopify_variant_id: item.shopify_variant_id,
+      shopify_product_id: item.shopify_product_id ?? null,
+      shopify_variant_id: item.shopify_variant_id ?? null,
       title: item.title,
       price: item.price,
       image_url: item.image_url ?? null,
@@ -97,22 +98,37 @@ export async function saveRecommendations(conversationId: string, items: Recomme
   }
 }
 
-export async function getRecommendations(conversationId: string): Promise<RecommendationItem[]> {
+export async function getRecommendations(conversationId: string): Promise<ProductSlot[]> {
   try {
     if (!hasSupabaseEnv()) {
       const entry =
         getMockState().mappings.get(mappingKey("youlya", conversationId, conversationId)) ??
         getMockState().mappings.get(mappingKey("youlya", conversationId, "u1"));
       if (!entry) return [];
-      return entry.recommendations.map((rec) => ({
-        slot_number: rec.index,
-        shopify_product_id: rec.shopifyProductId || rec.productId,
-        shopify_variant_id: rec.variantOptions[0]?.shopifyVariantId ?? "",
-        title: rec.shopifyProductTitle,
-        price: rec.variantOptions[0]?.price ?? 0,
-        image_url: rec.imageUrl,
-        size_asked: rec.variantOptions[0]?.size,
-      }));
+      type MockRec = {
+        index?: number;
+        slot_number?: number;
+        productId?: string;
+        shopifyProductId?: string;
+        shopify_variant_id?: string;
+        shopifyProductTitle?: string;
+        title?: string;
+        price?: number;
+        imageUrl?: string;
+        image_url?: string;
+        size_asked?: string;
+        variantOptions?: Array<{ id?: string; price?: number }>;
+      };
+      const mockRecs = entry.recommendations as unknown as MockRec[];
+      return (mockRecs ?? []).map((r) => ({
+        slot_number: r.index ?? r.slot_number ?? 0,
+        shopify_product_id: r.productId ?? r.shopifyProductId,
+        shopify_variant_id: r.variantOptions?.[0]?.id ?? r.shopify_variant_id,
+        title: r.shopifyProductTitle ?? r.title ?? "",
+        price: Number(r.variantOptions?.[0]?.price ?? r.price ?? 0),
+        image_url: r.imageUrl ?? r.image_url,
+        size_asked: r.size_asked,
+      })) as ProductSlot[];
     }
 
     const client = getSupabaseServerClient();
@@ -129,8 +145,8 @@ export async function getRecommendations(conversationId: string): Promise<Recomm
 
     return data.map((row) => ({
       slot_number: Number(row.slot_number),
-      shopify_product_id: String(row.shopify_product_id),
-      shopify_variant_id: String(row.shopify_variant_id),
+      shopify_product_id: row.shopify_product_id ? String(row.shopify_product_id) : undefined,
+      shopify_variant_id: row.shopify_variant_id ? String(row.shopify_variant_id) : undefined,
       title: String(row.title),
       price: Number(row.price),
       image_url: row.image_url ? String(row.image_url) : undefined,
@@ -155,7 +171,7 @@ export async function resolveVariant(
       return null;
     }
     return {
-      variant_id: found.shopify_variant_id,
+      variant_id: found.shopify_variant_id ?? "",
       title: found.title,
       price: found.price,
     };
@@ -187,7 +203,7 @@ export async function persistRecommendations(
   storeSlug: string,
   conversationId: string,
   customerId: string,
-  recs: ProductRecommendation[],
+  recs: ProductRecommendationLegacy[],
 ): Promise<void> {
   try {
     if (!hasSupabaseEnv()) {
@@ -210,7 +226,7 @@ export async function getLegacyRecommendations(
   storeSlug: string,
   conversationId: string,
   customerId: string,
-): Promise<ProductRecommendation[]> {
+): Promise<ProductRecommendationLegacy[]> {
   try {
     if (!hasSupabaseEnv()) {
       const entry = getMockState().mappings.get(mappingKey(storeSlug, conversationId, customerId));

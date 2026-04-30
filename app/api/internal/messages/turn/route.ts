@@ -3,6 +3,7 @@ import { internalMessageTurnSchema, messageTurnSchema } from "@/lib/validation/s
 import { runMessageTurn } from "@/lib/services/message-turn-service";
 import { requireInternalAuth } from "@/lib/middleware/internal-auth";
 import { checkAndMarkProcessed, updateProcessedAction } from "@/lib/middleware/idempotency";
+import type { CartItem } from "@/lib/services/conversation-flow-service";
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
@@ -38,6 +39,22 @@ export async function POST(req: Request) {
       toolsCalled: [],
       data: {}
     });
+  }
+
+  if (preconditions?.stage) {
+    const { setStage, setCart, setCustomerInfo } = await import("@/lib/services/conversation-flow-service");
+    const convId = "conversation_id" in parsed.data ? parsed.data.conversation_id : "";
+    await setStage(convId, String(preconditions.stage));
+    if (Array.isArray(preconditions.cart)) {
+      await setCart(convId, preconditions.cart as CartItem[]);
+    }
+    if (preconditions.customer_name || preconditions.customer_address) {
+      await setCustomerInfo(convId, {
+        name: String(preconditions.customer_name ?? "عميل"),
+        phone: convId,
+        address: String(preconditions.customer_address ?? ""),
+      });
+    }
   }
 
   const auth = requireInternalAuth(req);

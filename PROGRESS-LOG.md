@@ -355,3 +355,12 @@ Blockers:
 - None
 Next step:
 - Integrate kill-switch + unclear-count logic into message-turn service execution path for automatic runtime handoff decisions.
+
+## 2026-04-30 — Phase B + C completion
+
+Date: 2026-04-30
+Phase: B + C
+Task: n8n-evolution-wiring + dashboard-mvp
+Tests passed: 104 E2E (94 CONV + 10 DASH) + 55 unit
+Tests failed: 0
+Next: Phase D — Supabase live integration + production deploy

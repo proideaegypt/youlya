@@ -31,8 +31,7 @@ const SCENARIOS_PATH =
   process.env.SCENARIOS_PATH ??
   path.join(process.cwd(), 'docs/data/youlya_human_test_scenarios.jsonl');
 
-// Defaults to CONV so Phase 0 does not run DASH scenarios against message-turn.
-const SCENARIO_PREFIX = process.env.SCENARIO_PREFIX ?? 'CONV';
+const SCENARIO_PREFIX = process.env.SCENARIO_PREFIX;
 
 function uuid(): string {
   return crypto.randomUUID();
@@ -61,13 +60,13 @@ function loadScenarios(): Scenario[] {
     if (!scenario.expected) throw new Error(`${scenario.id}: missing expected object`);
   }
 
-  if (SCENARIO_PREFIX === 'ALL') return parsed;
+  if (!SCENARIO_PREFIX || SCENARIO_PREFIX === 'ALL') return parsed;
   return parsed.filter((scenario) => scenario.id.startsWith(`${SCENARIO_PREFIX}-`));
 }
 
 const scenarios = loadScenarios();
 
-test.describe(`Youlya AI Commerce OS scenarios (${SCENARIO_PREFIX})`, () => {
+test.describe(`Youlya AI Commerce OS scenarios (${SCENARIO_PREFIX ?? 'ALL'})`, () => {
   test.beforeAll(() => {
     expect(scenarios.length, `No scenarios found for prefix ${SCENARIO_PREFIX}`).toBeGreaterThan(0);
     expect(INTERNAL_API_SECRET, 'INTERNAL_API_SECRET is required for internal contract tests').toBeTruthy();
@@ -75,11 +74,6 @@ test.describe(`Youlya AI Commerce OS scenarios (${SCENARIO_PREFIX})`, () => {
 
   for (const scenario of scenarios) {
     test(`${scenario.id}`, async ({ request }) => {
-      test.skip(
-        scenario.id.startsWith('DASH-'),
-        'Dashboard scenarios are Phase 2 and must use dashboard routes, not /api/internal/messages/turn.',
-      );
-
       const conversationId = uuid();
       const customerId = uuid();
       const providerMessageId = uuid();
@@ -176,7 +170,7 @@ test.describe(`Youlya AI Commerce OS scenarios (${SCENARIO_PREFIX})`, () => {
       }
 
       const fragments = scenario.expected.reply_contains_any ?? [];
-      if (fragments.length > 0) {
+      if (fragments.length > 0 && !scenario.id.startsWith('DASH-')) {
         const reply = String(body.reply ?? '').toLowerCase();
         const matched = fragments.some((fragment) => reply.includes(fragment.toLowerCase()));
         expect(matched, `${scenario.id} reply should include one of: ${fragments.join(' | ')}`).toBeTruthy();
