@@ -1,8 +1,8 @@
 type SendMediaInput = { url: string; caption?: string };
 
 export interface EvolutionClient {
-  sendText(instanceName: string, remoteJid: string, text: string): Promise<void>;
-  sendMedia(instanceName: string, remoteJid: string, url: string, caption?: string): Promise<void>;
+  sendText(instanceName: string, remoteJid: string, text: string, storeSlug?: string): Promise<void>;
+  sendMedia(instanceName: string, remoteJid: string, url: string, caption?: string, storeSlug?: string): Promise<void>;
 }
 
 const RETRIES_MS = [1000, 3000, 10000];
@@ -15,7 +15,7 @@ function shouldRetry(status: number): boolean {
   return status === 408 || status === 429 || status >= 500;
 }
 
-async function createFailedEvent(errorCode: string, errorMessage: string, payload: unknown) {
+async function createFailedEvent(errorCode: string, errorMessage: string, payload: unknown, storeSlug?: string) {
   const appUrl = process.env.APP_INTERNAL_URL;
   const secret = process.env.INTERNAL_API_SECRET;
   if (!appUrl || !secret) return;
@@ -24,7 +24,7 @@ async function createFailedEvent(errorCode: string, errorMessage: string, payloa
       method: "POST",
       headers: { "content-type": "application/json", "x-internal-secret": secret },
       body: JSON.stringify({
-        storeSlug: "youlya",
+        storeSlug: storeSlug ?? "youlya",
         source: "evolution_client",
         provider: "evolution",
         errorCode,
@@ -38,7 +38,13 @@ async function createFailedEvent(errorCode: string, errorMessage: string, payloa
   }
 }
 
-async function sendWithRetry(instanceName: string, remoteJid: string, body: Record<string, unknown>, endpoint: string): Promise<void> {
+async function sendWithRetry(
+  instanceName: string,
+  remoteJid: string,
+  body: Record<string, unknown>,
+  endpoint: string,
+  storeSlug?: string,
+): Promise<void> {
   const apiUrl = process.env.EVOLUTION_API_URL;
   const apiKey = process.env.EVOLUTION_API_KEY;
   const mock = process.env.EVOLUTION_MOCK === "true";
@@ -71,15 +77,21 @@ async function sendWithRetry(instanceName: string, remoteJid: string, body: Reco
   }
 
   console.error("evolution send failed", { endpoint, instanceName, remoteJid, lastError });
-  await createFailedEvent("EVOLUTION_SEND_FAILED", lastError, { endpoint, instanceName, remoteJid, body });
+  await createFailedEvent("EVOLUTION_SEND_FAILED", lastError, { endpoint, instanceName, remoteJid, body }, storeSlug);
 }
 
 export const evolutionClient: EvolutionClient = {
-  async sendText(instanceName: string, remoteJid: string, text: string): Promise<void> {
-    await sendWithRetry(instanceName, remoteJid, { text }, "/message/sendText");
+  async sendText(instanceName: string, remoteJid: string, text: string, storeSlug?: string): Promise<void> {
+    await sendWithRetry(instanceName, remoteJid, { text }, "/message/sendText", storeSlug);
   },
-  async sendMedia(instanceName: string, remoteJid: string, url: string, caption?: string): Promise<void> {
+  async sendMedia(
+    instanceName: string,
+    remoteJid: string,
+    url: string,
+    caption?: string,
+    storeSlug?: string,
+  ): Promise<void> {
     const mediaBody: SendMediaInput = { url, caption };
-    await sendWithRetry(instanceName, remoteJid, mediaBody, "/message/sendMedia");
+    await sendWithRetry(instanceName, remoteJid, mediaBody, "/message/sendMedia", storeSlug);
   },
 };

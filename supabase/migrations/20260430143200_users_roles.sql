@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS public.users_roles (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  store_id text NOT NULL,
-  user_id text NOT NULL,
+  store_id uuid NOT NULL,
+  user_id uuid NOT NULL,
   role text NOT NULL,
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now(),

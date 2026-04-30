@@ -25,7 +25,6 @@ import type { ScenarioRecord } from "@/lib/types/scenarios";
 type MessageTurnInput = CanonicalMessageEvent | InternalMessageTurnInput;
 
 let scenarioCache: Map<string, ScenarioRecord> | null = null;
-const turnResultByProviderMessageId = new Map<string, MessageTurnResponse>();
 
 function loadScenarioMap(): Map<string, ScenarioRecord> {
   if (scenarioCache) return scenarioCache;
@@ -39,6 +38,7 @@ function loadScenarioMap(): Map<string, ScenarioRecord> {
     map.set(parsed.id, parsed);
   }
   scenarioCache = map;
+  if (map.size === 0) throw new Error("scenarioCache loaded empty — check JSONL path");
   return map;
 }
 
@@ -211,39 +211,22 @@ function toInternalInput(input: CanonicalMessageEvent): InternalMessageTurnInput
 
 export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTurnResponse> {
   try {
-    if (isInternalInput(input) && input.provider_message_id) {
-      const cached = turnResultByProviderMessageId.get(input.provider_message_id);
-      if (cached) {
-        logTool({
-          store_id: input.store_id,
-          conversation_id: input.conversation_id,
-          tool_name: "duplicate_webhook_detected",
-          input_summary: { provider_message_id: input.provider_message_id },
-          output_summary: { duplicate: true },
-          status: "ok",
-          latency_ms: 0,
-        });
-        return cached;
-      }
-    }
-
     const result = await runMessageTurnUnsafe(input);
-
-    if (isInternalInput(input) && input.provider_message_id) {
-      turnResultByProviderMessageId.set(input.provider_message_id, result);
-    }
 
     if (isInternalInput(input) && input.channel === "whatsapp_evolution" && result.reply) {
       try {
-        await evolutionClient.sendText(input.instance_name, input.remote_jid, result.reply);
+        await evolutionClient.sendText(input.instance_name, input.remote_jid, result.reply, input.store_id);
         const sendMedia = Array.isArray((result.data as { sendMedia?: unknown[] } | undefined)?.sendMedia)
           ? ((result.data as { sendMedia?: Array<{ url: string; caption?: string }> }).sendMedia ?? [])
           : [];
         for (const media of sendMedia) {
-          if (media?.url) await evolutionClient.sendMedia(input.instance_name, input.remote_jid, media.url, media.caption);
+          if (media?.url) {
+            await evolutionClient.sendMedia(input.instance_name, input.remote_jid, media.url, media.caption, input.store_id);
+          }
         }
       } catch (error) {
         console.error("evolution send failure", error);
+        await logFailedTurn(input, error instanceof Error ? error : new Error("evolution send failure"));
       }
     }
 
@@ -798,8 +781,4 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     action: "ai_reply",
     data: { intent },
   };
-}
-
-function primaryItemTagKey(storeId: string, conversationId: string): string {
-  return `${storeId}:${conversationId}`;
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerEnv } from "@/lib/config/env";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { version } from "@/package.json";
 
 type CheckStatus = "ok" | "mock" | "error" | "skipped";
 
@@ -42,7 +43,7 @@ export async function GET() {
 
   return NextResponse.json({
     status: "ok",
-    version: "1.0.0",
+    version,
     timestamp: new Date().toISOString(),
     checks: {
       supabase,

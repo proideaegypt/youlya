@@ -16,6 +16,8 @@ credentials/
 out/
 build/
 dist/
+tsconfig.tsbuildinfo
+*.zip
 
 # Dependencies
 node_modules/
