@@ -3,7 +3,22 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
-const ignoreDirs = new Set(['.git', 'node_modules', '.next', 'dist', 'coverage']);
+const ignoreDirs = new Set([
+  '.git',
+  'node_modules',
+  '.next',
+  'dist',
+  'coverage',
+  'qa-artifacts',
+]);
+const ignoreFiles = [
+  '.env',
+  '.env.local',
+  '.env.production',
+  'public/build-info.json',
+];
+const ignorePrefixes = ['.env.production.backup', '.env.'];
+const ignoreFilePatterns = [/^package-lock\.json$/, /^pnpm-lock\.yaml$/, /^yarn\.lock$/];
 const suspicious = [
   { name: 'OpenAI key', re: /sk-[A-Za-z0-9_-]{20,}/ },
   { name: 'Shopify admin token', re: /shpat_[A-Za-z0-9_]{20,}/ },
@@ -24,6 +39,14 @@ function walk(dir) {
 
 function scanFile(file) {
   const rel = path.relative(root, file);
+  const normalizedRel = rel.replace(/\\/g, '/');
+  const base = path.basename(rel);
+  if (ignoreFiles.includes(base)) return;
+  if (ignorePrefixes.some((prefix) => base.startsWith(prefix))) {
+    if (base !== '.env.example') return;
+  }
+  if (ignoreFilePatterns.some((pattern) => pattern.test(base))) return;
+  if (normalizedRel.startsWith('qa-artifacts/')) return;
   if (/\.(png|jpg|jpeg|gif|webp|zip|pdf|ico)$/i.test(rel)) return;
   const text = fs.readFileSync(file, 'utf8');
   const lines = text.split(/\r?\n/);

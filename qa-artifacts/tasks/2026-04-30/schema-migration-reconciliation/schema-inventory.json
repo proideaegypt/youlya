@@ -1,0 +1,2383 @@
+{
+  "generated_at": "2026-04-30T23:57:13.439524+00:00",
+  "public_tables": [
+    {
+      "schema": "public",
+      "table": "ai_tool_calls",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "conversation_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "tool_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "input_summary",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'{}'::jsonb",
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "output_summary",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'{}'::jsonb",
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "latency_ms",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "error_code",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "error_message",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 11
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "ai_tool_calls_pkey",
+          "indexdef": "CREATE UNIQUE INDEX ai_tool_calls_pkey ON public.ai_tool_calls USING btree (id)"
+        },
+        {
+          "indexname": "idx_tool_calls_conversation",
+          "indexdef": "CREATE INDEX idx_tool_calls_conversation ON public.ai_tool_calls USING btree (conversation_id, created_at)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "audit_logs",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "actor_type",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "actor_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "action",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "entity_type",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "entity_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "before",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "after",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'{}'::jsonb",
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 11
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "audit_logs_pkey",
+          "indexdef": "CREATE UNIQUE INDEX audit_logs_pkey ON public.audit_logs USING btree (id)"
+        },
+        {
+          "indexname": "idx_audit_store_entity",
+          "indexdef": "CREATE INDEX idx_audit_store_entity ON public.audit_logs USING btree (store_id, entity_type, entity_id, created_at)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "cart_items",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "cart_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "product_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "variant_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "shopify_product_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "shopify_product_title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "shopify_variant_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "sku",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "code_missing",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "false",
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "size",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 11
+        },
+        {
+          "column_name": "color",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 12
+        },
+        {
+          "column_name": "quantity",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "1",
+          "ordinal_position": 13
+        },
+        {
+          "column_name": "unit_price",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 14
+        },
+        {
+          "column_name": "currency",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'EGP'::text",
+          "ordinal_position": 15
+        },
+        {
+          "column_name": "stock_checked_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 16
+        },
+        {
+          "column_name": "stock_quantity_at_check",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 17
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 18
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 19
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "cart_items_pkey",
+          "indexdef": "CREATE UNIQUE INDEX cart_items_pkey ON public.cart_items USING btree (id)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "carts",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "conversation_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "customer_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'open'::text",
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "subtotal",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "shipping_fee",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "total",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "city",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "address",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "customer_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 11
+        },
+        {
+          "column_name": "phone",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 12
+        },
+        {
+          "column_name": "final_summary_message_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 13
+        },
+        {
+          "column_name": "explicit_confirmation_message_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 14
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 15
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 16
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "carts_pkey",
+          "indexdef": "CREATE UNIQUE INDEX carts_pkey ON public.carts USING btree (id)"
+        },
+        {
+          "indexname": "idx_carts_conversation_status",
+          "indexdef": "CREATE INDEX idx_carts_conversation_status ON public.carts USING btree (conversation_id, status)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "conversation_state",
+      "rls_enabled": false,
+      "primary_key": [
+        "conversation_id"
+      ],
+      "columns": [
+        {
+          "column_name": "conversation_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "stage",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'idle'::text",
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "cart_json",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'[]'::jsonb",
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "customer_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "customer_phone",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "customer_address",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 8
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "conversation_state_pkey",
+          "indexdef": "CREATE UNIQUE INDEX conversation_state_pkey ON public.conversation_state USING btree (conversation_id)"
+        },
+        {
+          "indexname": "idx_conversation_state_conversation_id",
+          "indexdef": "CREATE INDEX idx_conversation_state_conversation_id ON public.conversation_state USING btree (conversation_id)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "conversations",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "customer_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "channel",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "external_thread_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'ai_active'::text",
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "last_intent",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "handoff_required",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "false",
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "handoff_reason",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 11
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "conversations_pkey",
+          "indexdef": "CREATE UNIQUE INDEX conversations_pkey ON public.conversations USING btree (id)"
+        },
+        {
+          "indexname": "conversations_store_id_channel_external_thread_id_key",
+          "indexdef": "CREATE UNIQUE INDEX conversations_store_id_channel_external_thread_id_key ON public.conversations USING btree (store_id, channel, external_thread_id)"
+        },
+        {
+          "indexname": "idx_conversations_store_customer",
+          "indexdef": "CREATE INDEX idx_conversations_store_customer ON public.conversations USING btree (store_id, customer_id)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "customers",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "channel",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "external_customer_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "phone",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "city",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "address",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'{}'::jsonb",
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 11
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "customers_pkey",
+          "indexdef": "CREATE UNIQUE INDEX customers_pkey ON public.customers USING btree (id)"
+        },
+        {
+          "indexname": "customers_store_id_channel_external_customer_id_key",
+          "indexdef": "CREATE UNIQUE INDEX customers_store_id_channel_external_customer_id_key ON public.customers USING btree (store_id, channel, external_customer_id)"
+        },
+        {
+          "indexname": "idx_customers_store_phone",
+          "indexdef": "CREATE INDEX idx_customers_store_phone ON public.customers USING btree (store_id, phone)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "failed_events",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "provider",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "source",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "error_code",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "error_message",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "payload",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'{}'::jsonb",
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'open'::text",
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "retry_count",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "next_retry_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 11
+        },
+        {
+          "column_name": "resolved_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 12
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "failed_events_pkey",
+          "indexdef": "CREATE UNIQUE INDEX failed_events_pkey ON public.failed_events USING btree (id)"
+        },
+        {
+          "indexname": "idx_failed_events_status",
+          "indexdef": "CREATE INDEX idx_failed_events_status ON public.failed_events USING btree (status, next_retry_at)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "handoff_tickets",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "conversation_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "customer_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "reason",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "summary",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'open'::text",
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "assigned_to",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "resolved_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 10
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "handoff_tickets_pkey",
+          "indexdef": "CREATE UNIQUE INDEX handoff_tickets_pkey ON public.handoff_tickets USING btree (id)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "idempotency_keys",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "key",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "scope",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'started'::text",
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "result",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "locked_until",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 9
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "idempotency_keys_pkey",
+          "indexdef": "CREATE UNIQUE INDEX idempotency_keys_pkey ON public.idempotency_keys USING btree (id)"
+        },
+        {
+          "indexname": "idempotency_keys_store_id_key_key",
+          "indexdef": "CREATE UNIQUE INDEX idempotency_keys_store_id_key_key ON public.idempotency_keys USING btree (store_id, key)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "last_product_recommendations",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "conversation_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "customer_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "recommendation_index",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "product_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "variant_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "shopify_product_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "shopify_product_title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "shopify_handle",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "shopify_variant_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 11
+        },
+        {
+          "column_name": "sku",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 12
+        },
+        {
+          "column_name": "code_missing",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "false",
+          "ordinal_position": 13
+        },
+        {
+          "column_name": "size",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 14
+        },
+        {
+          "column_name": "color",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 15
+        },
+        {
+          "column_name": "price",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 16
+        },
+        {
+          "column_name": "currency",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'EGP'::text",
+          "ordinal_position": 17
+        },
+        {
+          "column_name": "inventory_at_show_time",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 18
+        },
+        {
+          "column_name": "image_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 19
+        },
+        {
+          "column_name": "used_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 20
+        },
+        {
+          "column_name": "expires_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "(now() + '02:00:00'::interval)",
+          "ordinal_position": 21
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 22
+        },
+        {
+          "column_name": "slot_number",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 23
+        },
+        {
+          "column_name": "title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 24
+        },
+        {
+          "column_name": "size_asked",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 25
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "idx_last_product_recommendations_conversation_id",
+          "indexdef": "CREATE INDEX idx_last_product_recommendations_conversation_id ON public.last_product_recommendations USING btree (conversation_id)"
+        },
+        {
+          "indexname": "idx_recommendations_conversation_index",
+          "indexdef": "CREATE INDEX idx_recommendations_conversation_index ON public.last_product_recommendations USING btree (conversation_id, recommendation_index, expires_at)"
+        },
+        {
+          "indexname": "last_product_recommendations_pkey",
+          "indexdef": "CREATE UNIQUE INDEX last_product_recommendations_pkey ON public.last_product_recommendations USING btree (id)"
+        }
+      ],
+      "policies": [
+        {
+          "policyname": "last_product_recommendations_store_isolation",
+          "permissive": "PERMISSIVE",
+          "roles": [
+            "public"
+          ],
+          "cmd": "ALL",
+          "qual": "(store_id = ((auth.jwt() ->> 'store_id'::text))::uuid)",
+          "with_check": "(store_id = ((auth.jwt() ->> 'store_id'::text))::uuid)"
+        }
+      ]
+    },
+    {
+      "schema": "public",
+      "table": "messages",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "conversation_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "customer_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "direction",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "channel",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "provider_message_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "message_type",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'text'::text",
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "body",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "raw_payload",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'{}'::jsonb",
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 11
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "idx_messages_conversation_created",
+          "indexdef": "CREATE INDEX idx_messages_conversation_created ON public.messages USING btree (conversation_id, created_at)"
+        },
+        {
+          "indexname": "messages_pkey",
+          "indexdef": "CREATE UNIQUE INDEX messages_pkey ON public.messages USING btree (id)"
+        },
+        {
+          "indexname": "messages_store_id_channel_provider_message_id_key",
+          "indexdef": "CREATE UNIQUE INDEX messages_store_id_channel_provider_message_id_key ON public.messages USING btree (store_id, channel, provider_message_id)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "orders",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "conversation_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "customer_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "cart_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "shopify_order_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "shopify_order_gid",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "shopify_order_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'pending'::text",
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "payment_method",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'cod'::text",
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "subtotal",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 11
+        },
+        {
+          "column_name": "shipping_fee",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 12
+        },
+        {
+          "column_name": "total",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 13
+        },
+        {
+          "column_name": "currency",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'EGP'::text",
+          "ordinal_position": 14
+        },
+        {
+          "column_name": "confirmation_message_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 15
+        },
+        {
+          "column_name": "idempotency_key",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 16
+        },
+        {
+          "column_name": "raw_shopify_response",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'{}'::jsonb",
+          "ordinal_position": 17
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 18
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 19
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "idx_orders_store_status",
+          "indexdef": "CREATE INDEX idx_orders_store_status ON public.orders USING btree (store_id, status, created_at)"
+        },
+        {
+          "indexname": "orders_pkey",
+          "indexdef": "CREATE UNIQUE INDEX orders_pkey ON public.orders USING btree (id)"
+        },
+        {
+          "indexname": "orders_store_id_idempotency_key_key",
+          "indexdef": "CREATE UNIQUE INDEX orders_store_id_idempotency_key_key ON public.orders USING btree (store_id, idempotency_key)"
+        },
+        {
+          "indexname": "orders_store_id_shopify_order_id_key",
+          "indexdef": "CREATE UNIQUE INDEX orders_store_id_shopify_order_id_key ON public.orders USING btree (store_id, shopify_order_id)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "product_variants",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "product_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "shopify_variant_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "shopify_variant_gid",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "sku",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "barcode",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "variant_title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "option1_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "option1_value",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "option2_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 11
+        },
+        {
+          "column_name": "option2_value",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 12
+        },
+        {
+          "column_name": "option3_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 13
+        },
+        {
+          "column_name": "option3_value",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 14
+        },
+        {
+          "column_name": "size",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 15
+        },
+        {
+          "column_name": "color",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 16
+        },
+        {
+          "column_name": "price",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "ordinal_position": 17
+        },
+        {
+          "column_name": "currency",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'EGP'::text",
+          "ordinal_position": 18
+        },
+        {
+          "column_name": "inventory_quantity",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 19
+        },
+        {
+          "column_name": "inventory_policy",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 20
+        },
+        {
+          "column_name": "available_for_ai",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "true",
+          "ordinal_position": 21
+        },
+        {
+          "column_name": "code_missing",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "false",
+          "ordinal_position": 22
+        },
+        {
+          "column_name": "last_inventory_checked_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 23
+        },
+        {
+          "column_name": "last_synced_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 24
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 25
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 26
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "idx_variants_store_shopify",
+          "indexdef": "CREATE INDEX idx_variants_store_shopify ON public.product_variants USING btree (store_id, shopify_variant_id)"
+        },
+        {
+          "indexname": "idx_variants_store_sku",
+          "indexdef": "CREATE INDEX idx_variants_store_sku ON public.product_variants USING btree (store_id, sku)"
+        },
+        {
+          "indexname": "product_variants_pkey",
+          "indexdef": "CREATE UNIQUE INDEX product_variants_pkey ON public.product_variants USING btree (id)"
+        },
+        {
+          "indexname": "product_variants_store_id_shopify_variant_id_key",
+          "indexdef": "CREATE UNIQUE INDEX product_variants_store_id_shopify_variant_id_key ON public.product_variants USING btree (store_id, shopify_variant_id)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "products",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "shopify_product_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "shopify_product_gid",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "shopify_title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "shopify_handle",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "vendor",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "product_type",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "tags",
+          "data_type": "ARRAY",
+          "udt_name": "_text",
+          "is_nullable": "NO",
+          "column_default": "'{}'::text[]",
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "image_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 11
+        },
+        {
+          "column_name": "ai_visible",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "true",
+          "ordinal_position": 12
+        },
+        {
+          "column_name": "last_synced_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 13
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 14
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 15
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "idx_products_store_title",
+          "indexdef": "CREATE INDEX idx_products_store_title ON public.products USING btree (store_id, shopify_title)"
+        },
+        {
+          "indexname": "products_pkey",
+          "indexdef": "CREATE UNIQUE INDEX products_pkey ON public.products USING btree (id)"
+        },
+        {
+          "indexname": "products_store_id_shopify_product_id_key",
+          "indexdef": "CREATE UNIQUE INDEX products_store_id_shopify_product_id_key ON public.products USING btree (store_id, shopify_product_id)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "store_integrations",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "provider",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'inactive'::text",
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "config",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'{}'::jsonb",
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "last_checked_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 8
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "store_integrations_pkey",
+          "indexdef": "CREATE UNIQUE INDEX store_integrations_pkey ON public.store_integrations USING btree (id)"
+        },
+        {
+          "indexname": "store_integrations_store_id_provider_key",
+          "indexdef": "CREATE UNIQUE INDEX store_integrations_store_id_provider_key ON public.store_integrations USING btree (store_id, provider)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "stores",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "slug",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "ai_enabled",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "true",
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "kill_switch_enabled",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "false",
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "ai_order_creation_enabled",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "true",
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "require_sku_for_ai_visibility",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "false",
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "max_cart_items",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "5",
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "free_shipping_threshold_egp",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "1200",
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "shipping_cairo_egp",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "70",
+          "ordinal_position": 10
+        },
+        {
+          "column_name": "shipping_alexandria_egp",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "90",
+          "ordinal_position": 11
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 12
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 13
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "stores_pkey",
+          "indexdef": "CREATE UNIQUE INDEX stores_pkey ON public.stores USING btree (id)"
+        },
+        {
+          "indexname": "stores_slug_key",
+          "indexdef": "CREATE UNIQUE INDEX stores_slug_key ON public.stores USING btree (slug)"
+        }
+      ],
+      "policies": []
+    },
+    {
+      "schema": "public",
+      "table": "webhook_events",
+      "rls_enabled": true,
+      "primary_key": [
+        "id"
+      ],
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "ordinal_position": 1
+        },
+        {
+          "column_name": "store_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 2
+        },
+        {
+          "column_name": "provider",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "ordinal_position": 3
+        },
+        {
+          "column_name": "provider_event_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 4
+        },
+        {
+          "column_name": "provider_message_id",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 5
+        },
+        {
+          "column_name": "event_type",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "ordinal_position": 6
+        },
+        {
+          "column_name": "payload",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'{}'::jsonb",
+          "ordinal_position": 7
+        },
+        {
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'received'::text",
+          "ordinal_position": 8
+        },
+        {
+          "column_name": "duplicate_count",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "ordinal_position": 9
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "ordinal_position": 10
+        }
+      ],
+      "indexes": [
+        {
+          "indexname": "webhook_events_pkey",
+          "indexdef": "CREATE UNIQUE INDEX webhook_events_pkey ON public.webhook_events USING btree (id)"
+        },
+        {
+          "indexname": "webhook_events_store_id_provider_provider_event_id_key",
+          "indexdef": "CREATE UNIQUE INDEX webhook_events_store_id_provider_provider_event_id_key ON public.webhook_events USING btree (store_id, provider, provider_event_id)"
+        }
+      ],
+      "policies": []
+    }
+  ],
+  "migration_tables_present": []
+}

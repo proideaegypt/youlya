@@ -1,8 +1,7 @@
 # Secrets — NEVER commit
 .env
-.env.local
-.env.production
-.env.development
+.env.*
+!.env.example
 .env*.local
 *.key
 *.pem

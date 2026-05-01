@@ -1,4 +1,15 @@
 # CODEX.md — Youlya AI Commerce OS
+## Mandatory Release Rule
+
+Before final response, push, or deploy, every Codex task must run:
+
+1. `npm run release:task -- --task "<task-slug>" --type patch|minor`
+2. Fill the generated `RELEASES/vX.Y.Z-version-name.md` with actual task details.
+3. `npm run verify:release`
+4. `npm run verify:deploy` if deployment is involved.
+
+If `verify:release` fails, the task is `PARTIAL` and must not be pushed/deployed.
+
 ## Vibe Code Workflow (MANDATORY — NEVER SKIP)
 
 Every task in this project follows this exact loop — no exceptions:

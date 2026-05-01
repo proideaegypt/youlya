@@ -46,8 +46,11 @@ Default templates are in:
 - `deploy/systemd/youlya-deploy-watch.service`
 - `deploy/systemd/youlya-deploy-watch.timer`
 
-Default working dir is `/opt/youlya`.
-If your repo lives elsewhere, edit `WorkingDirectory` and `ExecStart` before install.
+Current production working dir is `/root/youlya`.
+Service template uses:
+- `WorkingDirectory=/root/youlya`
+- `EnvironmentFile=-/root/youlya/.env.production`
+- `ExecStart=/bin/bash /root/youlya/scripts/watch-and-deploy.sh`
 
 Install commands:
 

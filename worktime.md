@@ -242,3 +242,101 @@ User requested Phase E task `phase-e-pull-based-vps-deploy-agent`: implement pul
 RESULT 35 30/04/26
 STATUS: PARTIAL
 Implemented pull-based VPS deploy agent (no Portainer webhook) with watch script, deploy lock + ff-only pull, compose deployment path, systemd templates, docs, and package scripts. Verification chain passed until compose config gate, which failed due missing `/root/youlya/.env`; deployment was safely skipped.
+
+PROMPT 36 30/04/26
+User requested `fix-production-env-file-path-and-retry-deploy`: fix compose env path blocker (`.env` vs `.env.production`), rerun verify, and deploy only if verification passes and env is production-safe.
+
+RESULT 36 30/04/26
+STATUS: PARTIAL
+Fixed env path via `/root/youlya/.env -> /root/youlya/.env.production`, enforced permissions and service template path, and resolved docker verify failure by excluding `.env` from Docker context. `npm run verify:deploy` passed. Deployment intentionally skipped because `.env.production` was created with placeholders and real production secrets are still missing.
+
+PROMPT TBD 2026-04-30
+Release prep for task add-release-governance-versioning-rule (v2.0.2, add-release-governance-versioning-rule).
+
+RESULT TBD 2026-04-30
+STATUS: PENDING
+Release file generated: RELEASES/v2.0.2-add-release-governance-versioning-rule.md
+
+PROMPT 37 30/04/26
+User confirmed `.env.production` now contains real production secrets and requested continuation from previous task: validate env keys only (no secret values), run `npm run verify:deploy`, if pass run `npm run deploy:production`, run health/build-info curls on `https://admin.youlya365.com`, then install/enable systemd deploy timer from `/root/youlya`, update progress/worktime/deploy QA artifact, and return PASS/PARTIAL/FAIL.
+
+RESULT 37 30/04/26
+STATUS: PARTIAL
+Validated `.env.production` key presence only (no values exposed), required keys are present. `npm run verify:deploy` failed at `scan-secrets` because real secrets in `.env.production` are detected by policy; therefore `npm run deploy:production` was not executed per gate. `curl -fsS https://admin.youlya365.com/api/health` and `/api/build-info` both failed with TLS certificate expiry (`curl: (60)`). Systemd timer install/enable not executed because deploy+health pass condition was not met. Updated deploy QA artifact and progress log.
+
+PROMPT TBD 2026-04-30
+Release prep for task phase-e-production-deploy-real-secrets-validation (v2.0.3, production-deploy-real-secrets-validation).
+
+RESULT TBD 2026-04-30
+STATUS: PENDING
+Release file generated: RELEASES/v2.0.3-production-deploy-real-secrets-validation.md
+
+PROMPT 38 01/05/26
+User requested task fix-secret-scan-policy-and-tls-readiness: exclude server-local env files from secret scan safely, enforce env tracking checks in verify/deploy, add TLS readiness check without -k, document certbot renewal, run verification chain, release patch workflow, and update logs/artifacts.
+
+PROMPT TBD 2026-04-30
+Release prep for task fix-secret-scan-policy-and-tls-readiness (v2.0.4, secret-scan-policy-and-tls-readiness).
+
+RESULT TBD 2026-04-30
+STATUS: PENDING
+Release file generated: RELEASES/v2.0.4-secret-scan-policy-and-tls-readiness.md
+
+RESULT 38 01/05/26
+STATUS: PARTIAL
+Implemented deploy safety hardening for secret scanning and TLS readiness: excluded server-local ignored env files from secret scanning, added env tracking guard + production env key-name validation, reordered verify-before-deploy gates, added strict TLS readiness script and renewal runbook, and completed release governance to v2.0.4. Verification results: check:env:tracking PASS, check:env:production PASS, scan:secrets PASS, verify:release PASS, verify:deploy FAIL at build (sandbox EPERM/Turbopack), check:tls FAIL (DNS resolution for admin.youlya365.com). Deployment not executed.
+
+PROMPT 39 01/05/26
+User requested task fix-production-build-runtime-and-dns-readiness: diagnose and fix production build runtime blocker (Turbopack EPERM) and DNS/TLS readiness for admin.youlya365.com, keep verify gates strict, deploy only if verify+TLS pass, then update release/log artifacts.
+
+PROMPT TBD 2026-04-30
+Release prep for task fix-production-build-runtime-and-dns-readiness (v2.0.5, production-build-runtime-and-dns-readiness).
+
+RESULT TBD 2026-04-30
+STATUS: PENDING
+Release file generated: RELEASES/v2.0.5-production-build-runtime-and-dns-readiness.md
+
+RESULT 39 01/05/26
+STATUS: PARTIAL
+Resolved production build runtime blocker by switching to webpack build (`next build --webpack`) and confirmed `npm run build` + full `npm run verify:deploy` PASS on VPS permissions. Added DNS/TLS go-live doc and hardened verify logs to avoid compose env value leakage. DNS resolves `admin.youlya365.com` to `109.199.121.20`, but `npm run check:tls` fails with invalid/expired certificate. `certbot` exists, `nginx` not installed, so deploy was not executed.
+
+PROMPT 40 01/05/26
+User requested task fix-tls-termination-with-caddy: diagnose current TLS/proxy path and fix production TLS blocker safely, preferring existing proxy if active; only add Docker Caddy proxy if safe and ports/proxy are free.
+
+PROMPT TBD 2026-04-30
+Release prep for task fix-tls-termination-with-caddy (v2.0.6, tls-termination-with-caddy).
+
+RESULT TBD 2026-04-30
+STATUS: PENDING
+Release file generated: RELEASES/v2.0.6-tls-termination-with-caddy.md
+
+RESULT 40 01/05/26
+STATUS: PASS
+Resolved TLS blocker using existing Apache reverse proxy path (no Caddy added due active Apache on 80/443). Issued dedicated cert for admin.youlya365.com, configured Apache TLS+reverse proxy to app on 127.0.0.1:3000, passed verify/deploy gates, passed strict TLS/health/build-info checks, and enabled systemd deploy-watch timer.
+
+PROMPT TBD 2026-04-30
+Release prep for task investigate-supabase-health-subcheck (v2.0.7, investigate-supabase-health-subcheck).
+
+RESULT TBD 2026-04-30
+STATUS: PENDING
+Release file generated: RELEASES/v2.0.7-investigate-supabase-health-subcheck.md
+
+RESULT 41 01/05/26
+STATUS: PASS
+Investigated live Supabase health sub-check failure and found missing production schema tables (`stores`, `failed_events`) causing `PGRST205`. Applied non-destructive migration bootstrap to production Postgres, restored required tables, and verified live `/api/health` now reports `checks.supabase: ok`. Ran full verification chain successfully and completed release governance to v2.0.7.
+
+PROMPT 41 01/05/26
+User requested task investigate-supabase-health-subcheck: identify why live /api/health reports checks.supabase=error, apply minimal safe fix, run full verification/deploy gates as needed, then update release and QA logs.
+
+PROMPT 42 01/05/26
+User requested task schema-migration-reconciliation: inventory production schema, compare against repo migrations and app table expectations, create safe forward-only reconciliation migration only if needed, validate gates, and update release/progress/qa artifacts.
+
+PROMPT TBD 2026-05-01
+Release prep for task schema-migration-reconciliation (v2.0.8, schema-migration-reconciliation).
+
+RESULT TBD 2026-05-01
+STATUS: PENDING
+Release file generated: RELEASES/v2.0.8-schema-migration-reconciliation.md
+
+RESULT 42 01/05/26
+STATUS: PASS
+Completed schema migration reconciliation for production Supabase/Postgres. Added schema inventory + reconcile scripts, identified seven missing app-referenced tables, created and applied forward-only non-destructive reconciliation migration, and regenerated report showing no missing app-referenced tables. Ran full verification, release governance to v2.0.8, deployed production, and verified live health/build-info pass with checks.supabase=ok.

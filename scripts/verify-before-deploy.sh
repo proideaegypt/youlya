@@ -30,12 +30,30 @@ run_step() {
   echo "PASS: ${name}" | tee -a "${RESULT_FILE}"
 }
 
+run_step_no_output() {
+  local name="$1"
+  shift
+  echo "Running: ${name}" | tee -a "${RESULT_FILE}"
+  "$@" >/dev/null 2>&1
+  echo "PASS: ${name}" | tee -a "${RESULT_FILE}"
+}
+
+if npm run | grep -q "check:env:tracking"; then
+  run_step "check-env-tracking" npm run check:env:tracking
+fi
+if npm run | grep -q "check:env:production"; then
+  run_step "check-env-production" npm run check:env:production
+fi
 run_step "typecheck" npm run typecheck
 run_step "lint" npm run lint
 run_step "unit-tests" npm test
 run_step "validate-scenarios" npm run validate:scenarios
 if npm run | grep -q "scan:secrets"; then
   run_step "scan-secrets" npm run scan:secrets
+fi
+
+if npm run | grep -q "verify:release"; then
+  run_step "verify-release" npm run verify:release
 fi
 run_step "build" npm run build
 
@@ -52,7 +70,8 @@ if [ -f "${COMPOSE_PATH}" ] && command -v docker >/dev/null 2>&1; then
     COMPOSE_ENV_ARGS=(--env-file ".env.local")
   fi
 
-  run_step "docker-compose-config" docker compose "${COMPOSE_ENV_ARGS[@]}" -f "${COMPOSE_PATH}" config
+  # Avoid leaking resolved env vars into qa artifacts/logs.
+  run_step_no_output "docker-compose-config" docker compose "${COMPOSE_ENV_ARGS[@]}" -f "${COMPOSE_PATH}" config
   run_step "docker-compose-build" docker compose "${COMPOSE_ENV_ARGS[@]}" -f "${COMPOSE_PATH}" build
 elif [ -f Dockerfile ] && command -v docker >/dev/null 2>&1; then
   run_step "docker-build" docker build -t youlya-app:verify .

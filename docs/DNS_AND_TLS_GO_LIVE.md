@@ -1,0 +1,69 @@
+# DNS and TLS Go-Live Checklist
+
+## Required DNS record
+
+- `admin.youlya365.com` must resolve to the VPS public IPv4.
+- Current expected IPv4 for this VPS: `109.199.121.20`.
+
+Example target:
+
+```text
+admin.youlya365.com -> 109.199.121.20
+```
+
+A CNAME/proxy setup is acceptable only if it terminates TLS correctly for `admin.youlya365.com` and forwards to this VPS.
+
+## Propagation check
+
+After DNS changes, wait for propagation and verify:
+
+```bash
+getent hosts admin.youlya365.com
+nslookup admin.youlya365.com
+```
+
+## TLS readiness check
+
+When DNS resolves correctly, run:
+
+```bash
+npm run check:tls
+```
+
+Do not use `curl -k` for production success checks.
+
+## If TLS still fails
+
+Follow `docs/TLS_CERTIFICATE_RENEWAL.md`.
+
+If your setup uses Apache + certbot on this VPS (current production setup), use:
+
+```bash
+certbot certificates
+certbot certonly --apache --cert-name admin.youlya365.com -d admin.youlya365.com --force-renewal
+apachectl configtest
+systemctl reload apache2
+npm run check:tls
+```
+
+If your setup uses nginx and certbot on this VPS, typical commands are:
+
+```bash
+certbot certificates
+certbot renew --dry-run
+certbot renew
+systemctl reload nginx
+```
+
+If issuing a new cert with nginx integration:
+
+```bash
+certbot --nginx -d admin.youlya365.com
+systemctl reload nginx
+```
+
+## Current live note (2026-05-01)
+
+- `admin.youlya365.com` is terminated by Apache on this VPS.
+- Dedicated certificate path: `/etc/letsencrypt/live/admin.youlya365.com/`.
+- Apache vhost file: `/etc/apache2/sites-available/admin.youlya365.com.conf`.

@@ -1,7 +1,59 @@
 # Youlya AI Commerce OS
 
-Version: `v2.0.1` (`codefix`)  
-Date: `2026-04-30`
+## Current Release
+
+| Field | Value |
+|---|---|
+| Version | v2.0.8 |
+| Version Name | schema-migration-reconciliation |
+| Task | schema-migration-reconciliation |
+| Release File | RELEASES/v2.0.8-schema-migration-reconciliation.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.0.7 |
+| Version Name | investigate-supabase-health-subcheck |
+| Task | investigate-supabase-health-subcheck |
+| Release File | RELEASES/v2.0.7-investigate-supabase-health-subcheck.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.0.6 |
+| Version Name | tls-termination-with-caddy |
+| Task | fix-tls-termination-with-caddy |
+| Release File | RELEASES/v2.0.6-tls-termination-with-caddy.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.0.5 |
+| Version Name | production-build-runtime-and-dns-readiness |
+| Task | fix-production-build-runtime-and-dns-readiness |
+| Release File | RELEASES/v2.0.5-production-build-runtime-and-dns-readiness.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.0.4 |
+| Version Name | secret-scan-policy-and-tls-readiness |
+| Task | fix-secret-scan-policy-and-tls-readiness |
+| Release File | RELEASES/v2.0.4-secret-scan-policy-and-tls-readiness.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.0.3 |
+| Version Name | production-deploy-real-secrets-validation |
+| Task | phase-e-production-deploy-real-secrets-validation |
+| Release File | RELEASES/v2.0.3-production-deploy-real-secrets-validation.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.0.2 |
+| Version Name | add-release-governance-versioning-rule |
+| Task | add-release-governance-versioning-rule |
+| Release File | RELEASES/v2.0.2-add-release-governance-versioning-rule.md |
+
+
+Version: `v2.0.8` (`schema-migration-reconciliation`)  
+Date: `2026-05-01`
 
 Production-oriented WhatsApp commerce system for Youlya, built with Next.js App Router, Supabase, and Playwright scenario validation.
 
@@ -63,7 +115,11 @@ SCENARIO_PREFIX=DASH npm run test:e2e
 
 # Build identity + deploy automation
 npm run build:info
+npm run check:env:tracking
+npm run check:env:production
+npm run scan:secrets
 npm run verify:deploy
+npm run check:tls
 npm run deploy:production
 npm run deploy:watch
 ```
@@ -88,7 +144,7 @@ npm run deploy:watch
 
 ## Release
 
-Current release tag target: `v2.0.1`
+Current release tag target: `v2.0.2`
 
 ### v2.0.1 (codefix)
 

@@ -1,10 +1,10 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.0.1",
+  "version": "2.0.8",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run build:info && next build",
+    "build": "npm run build:info && next build --webpack",
     "build:info": "node scripts/write-build-info.mjs",
     "start": "next start",
     "lint": "eslint .",
@@ -14,12 +14,17 @@
     "test:e2e": "dotenv -e .env.test -- npx playwright test tests/playwright-youlya-scenarios.spec.ts --reporter=list",
     "validate:scenarios": "node scripts/validate-scenarios.mjs",
     "scan:secrets": "node scripts/scan-secrets.mjs",
+    "check:env:tracking": "git status --ignored --short .env .env.local .env.production .env.test \".env.production.backup*\" \".env.*\" | node scripts/check-env-files-not-tracked.mjs",
+    "check:env:production": "node scripts/check-production-env.mjs",
+    "check:tls": "bash scripts/check-tls-readiness.sh",
+    "release:task": "node scripts/release-task.mjs",
+    "verify:release": "node scripts/verify-release.mjs",
     "verify:deploy": "bash scripts/verify-before-deploy.sh",
     "deploy:production": "bash scripts/deploy-production.sh",
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "codefix"
+    "youlyaVersionName": "schema-migration-reconciliation"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.2",

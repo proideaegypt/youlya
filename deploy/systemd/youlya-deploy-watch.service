@@ -4,7 +4,7 @@ After=network-online.target docker.service
 
 [Service]
 Type=oneshot
-WorkingDirectory=/opt/youlya
-EnvironmentFile=-/opt/youlya/.env.production
-ExecStart=/bin/bash /opt/youlya/scripts/watch-and-deploy.sh
+WorkingDirectory=/root/youlya
+EnvironmentFile=-/root/youlya/.env.production
+ExecStart=/bin/bash /root/youlya/scripts/watch-and-deploy.sh
 User=root

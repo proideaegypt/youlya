@@ -447,3 +447,384 @@ Blockers:
 - runtime compose env file missing on VPS
 Next step:
 - provide production env file and rerun `npm run verify:deploy` then `npm run deploy:production`
+
+## 2026-04-30 — Env path fix + verify retry
+
+Date: 2026-04-30
+Phase: Phase E
+Task: fix-production-env-file-path-and-retry-deploy
+Actions:
+- Enforced `.gitignore` env patterns
+- Created `/root/youlya/.env.production` placeholder file (no secrets)
+- Linked `/root/youlya/.env` to `/root/youlya/.env.production`
+- Set env file mode to 600
+- Updated systemd service template paths to `/root/youlya`
+- Fixed Docker build context issue by adding `.dockerignore` to exclude `.env`
+- Reran `npm run verify:deploy` successfully
+Result:
+- Verify PASS
+- Deploy SKIPPED intentionally (placeholder secrets; safe policy)
+Next step:
+- Populate real production env values (out-of-git), then run `npm run deploy:production`
+
+## 2026-04-30 — add-release-governance-versioning-rule
+
+Date: 2026-04-30
+Phase:
+Task: add-release-governance-versioning-rule
+Version: v2.0.2
+Version Name: add-release-governance-versioning-rule
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-04-30 — add-release-governance-versioning-rule
+
+Date: 2026-04-30
+Phase: Phase E
+Task: add-release-governance-versioning-rule
+Version: v2.0.2
+Version Name: add-release-governance-versioning-rule
+Files changed:
+- docs/RELEASE_GOVERNANCE.md
+- scripts/release-task.mjs
+- scripts/verify-release.mjs
+- scripts/verify-before-deploy.sh
+- package.json
+- README.md
+- RELEASES/v2.0.2-add-release-governance-versioning-rule.md
+- CODEX.md
+- AGENTS.md
+- CLAUDE.md
+Commands run:
+- npm run release:task -- --task "add-release-governance-versioning-rule" --type patch
+- npm run verify:release
+- npm run typecheck
+- npm run lint
+- npm test
+- npm run validate:scenarios
+- npm run scan:secrets
+- npm run build
+- npm run verify:release
+Tests passed:
+- typecheck/lint/tests/validate/scan/build/verify-release passed
+Tests failed/skipped:
+- none
+Blockers:
+- none
+Next step:
+- enforce release:task + verify:release on every future task before push/deploy
+
+## 2026-04-30 — phase-e-production-deploy-real-secrets-validation
+
+Date: 2026-04-30
+Phase: Phase 1B/1E deployment operations
+Task: phase-e-production-deploy-real-secrets-validation
+Files changed:
+- `qa-artifacts/tasks/2026-04-30/phase-e-production-deploy-real-secrets-validation/deploy/RESULT.md`
+- `PROGRESS-LOG.md`
+- `worktime.md`
+- Release file generated/updated in `RELEASES/` via release governance
+Commands run:
+- env key validation on `.env.production` (keys only, no values printed)
+- `npm run verify:deploy`
+- `curl -fsS https://admin.youlya365.com/api/health`
+- `curl -fsS https://admin.youlya365.com/api/build-info`
+Tests passed:
+- `.env.production` required key presence check passed
+Tests failed/skipped:
+- `npm run verify:deploy` failed at `scan-secrets` due detection of real secrets in `.env.production`
+- `npm run deploy:production` skipped (gated by verify failure)
+- health/build-info curls failed with TLS certificate expiry (`curl: (60)`)
+- systemd timer install/enable skipped because deploy+health gate not met
+Blockers:
+- Current verify gate blocks deployment when real secrets exist in tracked scan scope (`.env.production`)
+- Production endpoint certificate is expired for `admin.youlya365.com`
+Next step:
+- Adjust deploy secret-scanning policy for local/server-only `.env.production` (or move runtime secrets to host env file outside repo scan scope), renew TLS cert, rerun verify/deploy/health, then enable timer.
+
+## 2026-04-30 — phase-e-production-deploy-real-secrets-validation
+
+Date: 2026-04-30
+Phase:
+Task: phase-e-production-deploy-real-secrets-validation
+Version: v2.0.3
+Version Name: production-deploy-real-secrets-validation
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-04-30 — fix-secret-scan-policy-and-tls-readiness
+
+Date: 2026-04-30
+Phase:
+Task: fix-secret-scan-policy-and-tls-readiness
+Version: v2.0.4
+Version Name: secret-scan-policy-and-tls-readiness
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — fix-secret-scan-policy-and-tls-readiness
+
+Date: 2026-05-01
+Phase: Phase 1 integrations and deployment readiness
+Task: fix-secret-scan-policy-and-tls-readiness
+Files changed:
+- scripts/scan-secrets.mjs
+- scripts/check-env-files-not-tracked.mjs
+- scripts/check-production-env.mjs
+- scripts/check-tls-readiness.sh
+- scripts/verify-before-deploy.sh
+- package.json
+- docs/TLS_CERTIFICATE_RENEWAL.md
+- README.md
+- RELEASES/v2.0.4-secret-scan-policy-and-tls-readiness.md
+- qa-artifacts/tasks/2026-05-01/fix-secret-scan-policy-and-tls-readiness/RESULT.md
+- worktime.md
+Commands run:
+- npm run check:env:tracking
+- npm run check:env:production
+- npm run scan:secrets
+- npm run verify:release
+- npm run verify:deploy
+- npm run check:tls
+- npm run release:task -- --task "fix-secret-scan-policy-and-tls-readiness" --type patch
+- npm run verify:release
+Tests passed:
+- env tracking check pass
+- production env key check pass
+- secret scan pass
+- verify:release pass (post-bump v2.0.4)
+Tests failed/skipped:
+- verify:deploy failed at build step due sandbox EPERM in Turbopack process bind
+- check:tls failed due DNS resolution for admin.youlya365.com
+Blockers:
+- TLS endpoint unresolved from current environment
+- verify build step blocked by sandbox process restrictions
+Next step:
+- Run verify/deploy and TLS checks on target VPS/network with DNS + certificate validity confirmed before production deploy.
+
+## 2026-04-30 — fix-production-build-runtime-and-dns-readiness
+
+Date: 2026-04-30
+Phase:
+Task: fix-production-build-runtime-and-dns-readiness
+Version: v2.0.5
+Version Name: production-build-runtime-and-dns-readiness
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — fix-production-build-runtime-and-dns-readiness
+
+Date: 2026-05-01
+Phase: Phase 1 integrations and deployment readiness
+Task: fix-production-build-runtime-and-dns-readiness
+Files changed:
+- package.json
+- scripts/verify-before-deploy.sh
+- docs/DNS_AND_TLS_GO_LIVE.md
+- RELEASES/v2.0.5-production-build-runtime-and-dns-readiness.md
+- README.md
+- qa-artifacts/tasks/2026-05-01/fix-production-build-runtime-and-dns-readiness/baseline/RESULT.md
+- qa-artifacts/tasks/2026-05-01/fix-production-build-runtime-and-dns-readiness/RESULT.md
+- worktime.md
+Commands run:
+- npm run build
+- npm run check:env:tracking
+- npm run check:env:production
+- npm run scan:secrets
+- npm run verify:release
+- npm run typecheck
+- npm run lint
+- npm test
+- npm run validate:scenarios
+- npm run build
+- npm run verify:deploy
+- getent hosts admin.youlya365.com
+- nslookup admin.youlya365.com
+- dig admin.youlya365.com A +short
+- dig admin.youlya365.com AAAA +short
+- npm run check:tls
+- certbot --version
+- systemctl status nginx --no-pager
+- npm run release:task -- --task "fix-production-build-runtime-and-dns-readiness" --type patch
+- npm run verify:release
+Tests passed:
+- Build passes with webpack mode.
+- Full verify gate passes on VPS permissions (`verify:deploy` PASS).
+- DNS resolves `admin.youlya365.com` to VPS IPv4.
+- Release verification passes for v2.0.5.
+Tests failed/skipped:
+- TLS readiness fails due invalid/expired certificate.
+- Deployment intentionally skipped.
+Blockers:
+- TLS certificate invalid/expired for `https://admin.youlya365.com`.
+- `nginx` service not present on VPS, so `certbot --nginx` path is not currently available.
+Next step:
+- Fix TLS termination/certificate path for `admin.youlya365.com`, re-run `npm run check:tls`, then run `npm run deploy:production` only after TLS and verify gates are both PASS.
+
+## 2026-04-30 — fix-tls-termination-with-caddy
+
+Date: 2026-04-30
+Phase:
+Task: fix-tls-termination-with-caddy
+Version: v2.0.6
+Version Name: tls-termination-with-caddy
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — fix-tls-termination-with-caddy
+
+Date: 2026-05-01
+Phase: Phase 1 integrations and deployment readiness
+Task: fix-tls-termination-with-caddy
+Files changed:
+- package.json
+- scripts/verify-before-deploy.sh
+- docker-compose.yml
+- RELEASES/v2.0.6-tls-termination-with-caddy.md
+- README.md
+- docs/DNS_AND_TLS_GO_LIVE.md
+- docs/PULL_BASED_DEPLOY_AGENT.md
+- qa-artifacts/tasks/2026-05-01/fix-tls-termination-with-caddy/baseline/RESULT.md
+- qa-artifacts/tasks/2026-05-01/fix-tls-termination-with-caddy/RESULT.md
+- worktime.md
+Commands run:
+- discovery: listeners/docker/systemd/certbot/DNS/TLS
+- certbot certonly --apache for admin.youlya365.com
+- apache configtest + reload + site enable
+- docker compose config
+- npm run verify:deploy
+- npm run deploy:production
+- npm run check:tls
+- curl -fsS https://admin.youlya365.com/api/health
+- curl -fsS https://admin.youlya365.com/api/build-info
+- systemd timer install/enable/status
+- npm run release:task -- --task "fix-tls-termination-with-caddy" --type patch
+- npm run verify:release
+Tests passed:
+- verify:deploy PASS
+- deploy:production PASS
+- check:tls PASS
+- health/build-info checks PASS over valid TLS
+Tests failed/skipped:
+- No blocking failures after Apache TLS fix
+Blockers:
+- None for this task
+Next step:
+- Keep Apache certificate renewal monitored and timer-based pull deploy active.
+
+## 2026-04-30 — investigate-supabase-health-subcheck
+
+Date: 2026-04-30
+Phase:
+Task: investigate-supabase-health-subcheck
+Version: v2.0.7
+Version Name: investigate-supabase-health-subcheck
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — investigate-supabase-health-subcheck
+
+Date: 2026-05-01
+Phase: Phase 1 integrations and deployment readiness
+Task: investigate-supabase-health-subcheck
+Files changed:
+- RELEASES/v2.0.7-investigate-supabase-health-subcheck.md
+- qa-artifacts/tasks/2026-05-01/investigate-supabase-health-subcheck/RESULT.md
+- PROGRESS-LOG.md
+- worktime.md
+- package.json (version bump via release governance)
+Commands run:
+- verify-release + live health/build-info checks
+- source env key presence checks (SET/MISSING only)
+- migration/table discovery + runtime Supabase probe
+- production Postgres schema existence checks
+- non-destructive migration bootstrap apply
+- full verification chain (typecheck/lint/test/scenarios/secrets/build/verify:deploy)
+- release governance: release:task + verify:release
+- deploy:production
+Tests passed:
+- Full verification chain PASS
+- Live `/api/health` now reports `checks.supabase: ok`
+- Live `/api/build-info` PASS
+- deploy:production PASS (live version aligned to v2.0.7)
+Tests failed/skipped:
+- Migration replay encountered one later compatibility conflict after core tables were already created; task objective was satisfied without destructive changes.
+Blockers:
+- None for this task goal
+Next step:
+- Plan a controlled migration reconciliation task to align remaining later migrations cleanly on production DB.
+
+## 2026-05-01 — schema-migration-reconciliation
+
+Date: 2026-05-01
+Phase:
+Task: schema-migration-reconciliation
+Version: v2.0.8
+Version Name: schema-migration-reconciliation
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — schema-migration-reconciliation
+
+Date: 2026-05-01
+Phase: Phase 1 integrations and deployment readiness
+Task: schema-migration-reconciliation
+Files changed:
+- scripts/schema-inventory.mjs
+- scripts/schema-reconcile-check.mjs
+- supabase/migrations/20260501030000_schema_reconciliation_phase_e.sql
+- RELEASES/v2.0.8-schema-migration-reconciliation.md
+- qa-artifacts/tasks/2026-05-01/schema-migration-reconciliation/baseline/RESULT.md
+- qa-artifacts/tasks/2026-05-01/schema-migration-reconciliation/schema-inventory.json
+- qa-artifacts/tasks/2026-05-01/schema-migration-reconciliation/reconcile-report.md
+- qa-artifacts/tasks/2026-05-01/schema-migration-reconciliation/RESULT.md
+- README.md
+- PROGRESS-LOG.md
+- worktime.md
+- package.json (version bump via release governance)
+Commands run:
+- discovery + migration inventory commands
+- `node scripts/schema-inventory.mjs`
+- `node scripts/schema-reconcile-check.mjs`
+- applied migration: `supabase/migrations/20260501030000_schema_reconciliation_phase_e.sql`
+- full verification chain + release governance + deploy
+Tests passed:
+- Reconcile report: zero missing app-referenced tables after fix
+- verify:deploy PASS
+- deploy:production PASS
+- live health PASS (`checks.supabase=ok`)
+- live build-info PASS (`v2.0.8`)
+Tests failed/skipped:
+- none (one transient post-deploy 500 during restart window recovered immediately)
+Blockers:
+- none
+Next step:
+- plan follow-up migration hygiene task to rationalize duplicate/legacy migration variants and prevent replay-order conflicts.
