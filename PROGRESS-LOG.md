@@ -1483,3 +1483,143 @@ Next step:
 - Apply `20260502050000_fix_conversation_id_text.sql` to production Postgres when direct access is available
 - Configure real internal test WhatsApp numbers for live end-to-end pilot
 - Re-run full pilot with actual WhatsApp message after n8n + Evolution integration is confirmed
+
+## 2026-05-02 — restore-and-validate-n8n-workflows
+
+Date: 2026-05-02
+Phase:
+Task: restore-and-validate-n8n-workflows
+Version: v2.5.3
+Version Name: restore-and-validate-n8n-workflows
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-02 — configure-n8n-mcp-clients
+
+Date: 2026-05-02
+Phase: Setup / tooling
+Task: configure-n8n-mcp-clients
+Files changed:
+- Updated `/root/.mcp.json`
+- Updated `/root/youlya/.mcp.json`
+- Updated `/root/.config/opencode/opencode.json`
+- Updated `worktime.md`
+- Updated `PROGRESS-LOG.md`
+Commands run:
+- env inspection (`pwd`, `git status --short`, `git log -1 --oneline`)
+- config discovery (`claude mcp --help`, `codex mcp --help`, `opencode mcp --help`)
+- config verification (`claude mcp list/get`, `codex mcp list/get`, `opencode mcp list`)
+- `codex mcp add n8n-mcp -- npx n8n-mcp` with env-backed API values
+Tests passed:
+- Codex MCP list shows `n8n-mcp` enabled
+- Claude MCP project server `n8n-mcp` shows connected
+- OpenCode MCP server `n8n-mcp` shows connected
+Tests failed/skipped:
+- None
+Blockers:
+- None
+Next step:
+- Use the shared n8n MCP server from Codex, Claude, and OpenCode for workflow inspection/automation tasks.
+
+## 2026-05-02 — configure-n8n-mcp-clients
+
+Date: 2026-05-02
+Phase:
+Task: configure-n8n-mcp-clients
+Version: v2.5.4
+Version Name: configure-n8n-mcp-clients
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-02 — wire-n8n-api-and-mcp-agent-tooling
+
+Date: 2026-05-02
+Phase:
+Task: wire-n8n-api-and-mcp-agent-tooling
+Version: v2.5.5
+Version Name: wire-n8n-api-and-mcp-agent-tooling
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-02 — create-and-activate-youlya-whatsapp-main-in-n8n
+
+Date: 2026-05-02
+Phase:
+Task: create-and-activate-youlya-whatsapp-main-in-n8n
+Version: v2.5.6
+Version Name: create-and-activate-youlya-whatsapp-main-in-n8n
+Files changed:
+- Added `qa-artifacts/tasks/2026-05-02/create-and-activate-youlya-whatsapp-main-in-n8n/RESULT.md`
+- Updated `RELEASES/v2.5.6-create-and-activate-youlya-whatsapp-main-in-n8n.md`
+- Updated `worktime.md`
+- Updated `PROGRESS-LOG.md`
+Commands run:
+- env discovery and workflow inspection (`rg`, `find`, `sed`, `node`)
+- n8n API list/create/activate calls against `/api/v1/workflows`
+- release task generation: `npm run release:task -- --task "create-and-activate-youlya-whatsapp-main-in-n8n" --type patch`
+- release verification: `npm run verify:release`
+Tests passed:
+- Workflow created successfully in live n8n
+- Workflow activated successfully in live n8n
+- Workflow readback shows `active: true`, `isArchived: false`
+- Webhook path verified as `youlya-whatsapp`
+Tests failed/skipped:
+- Real WhatsApp inbound test skipped by instruction
+Blockers:
+- Local repo env check does not expose `APP_INTERNAL_URL` and `EVOLUTION_INSTANCE`; confirm runtime env on the n8n host before first inbound test
+Next step:
+- Use the activated `Youlya WhatsApp Main` workflow for a controlled internal WhatsApp test once runtime env confirmation is complete
+
+## 2026-05-02 — quarantine-unsafe-n8n-raw-exports-and-enforce-canonical-workflow
+
+Date: 2026-05-02
+Phase:
+Task: quarantine-unsafe-n8n-raw-exports-and-enforce-canonical-workflow
+Version: v2.5.7
+Version Name: quarantine-unsafe-n8n-raw-exports-and-enforce-canonical-workflow
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-02 — implement-shopify-product-variant-sync-and-n8n-daily-workflow
+
+Date: 2026-05-02
+Phase:
+Task: implement-shopify-product-variant-sync-and-n8n-daily-workflow
+Version: v2.6.0
+Version Name: implement-shopify-product-variant-sync-and-n8n-daily-workflow
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-02 — first-test
+
+Date: 2026-05-02
+Phase:
+Task: first-test
+Version: v2.6.1
+Version Name: first-test
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:

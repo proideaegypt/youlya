@@ -4,6 +4,55 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.6.1 |
+| Version Name | first-test |
+| Task | first-test |
+| Release File | RELEASES/v2.6.1-first-test.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.6.0 |
+| Version Name | implement-shopify-product-variant-sync-and-n8n-daily-workflow |
+| Task | implement-shopify-product-variant-sync-and-n8n-daily-workflow |
+| Release File | RELEASES/v2.6.0-implement-shopify-product-variant-sync-and-n8n-daily-workflow.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.5.7 |
+| Version Name | quarantine-unsafe-n8n-raw-exports-and-enforce-canonical-workflow |
+| Task | quarantine-unsafe-n8n-raw-exports-and-enforce-canonical-workflow |
+| Release File | RELEASES/v2.5.7-quarantine-unsafe-n8n-raw-exports-and-enforce-canonical-workflow.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.5.6 |
+| Version Name | create-and-activate-youlya-whatsapp-main-in-n8n |
+| Task | create-and-activate-youlya-whatsapp-main-in-n8n |
+| Release File | RELEASES/v2.5.6-create-and-activate-youlya-whatsapp-main-in-n8n.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.5.5 |
+| Version Name | wire-n8n-api-and-mcp-agent-tooling |
+| Task | wire-n8n-api-and-mcp-agent-tooling |
+| Release File | RELEASES/v2.5.5-wire-n8n-api-and-mcp-agent-tooling.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.5.4 |
+| Version Name | configure-n8n-mcp-clients |
+| Task | configure-n8n-mcp-clients |
+| Release File | RELEASES/v2.5.4-configure-n8n-mcp-clients.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.5.3 |
+| Version Name | restore-and-validate-n8n-workflows |
+| Task | restore-and-validate-n8n-workflows |
+| Release File | RELEASES/v2.5.3-restore-and-validate-n8n-workflows.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.5.2 |
 | Version Name | persist-dashboard-ui-preferences |
 | Task | persist-dashboard-ui-preferences |

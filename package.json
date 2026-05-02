@@ -1,6 +1,6 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.5.2",
+  "version": "2.6.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -18,6 +18,13 @@
     "test:e2e:dashboard:api": "PLAYWRIGHT_SWARM_TASK_SLUG=dashboard-v3-youlya-home-wear-redesign dotenv -e .env.playwright -- playwright test tests/playwright/dashboard-api-health-swarm.spec.ts",
     "test:e2e:dashboard:swarm": "PLAYWRIGHT_SWARM_TASK_SLUG=dashboard-v3-youlya-home-wear-redesign dotenv -e .env.playwright -- playwright test tests/playwright/dashboard-*.spec.ts",
     "qa:collect": "PLAYWRIGHT_SWARM_TASK_SLUG=dashboard-v3-youlya-home-wear-redesign node scripts/collect-playwright-swarm-report.mjs",
+    "check:n8n:env": "node scripts/check-n8n-env.mjs",
+    "n8n:list": "node scripts/n8n-list-workflows.mjs",
+    "n8n:export": "node scripts/n8n-export-workflows.mjs",
+    "validate:n8n": "node scripts/validate-n8n-workflows.mjs",
+    "shopify:sync": "node scripts/sync-shopify-products.mjs --mode full",
+    "shopify:sync:inventory": "node scripts/sync-shopify-products.mjs --mode inventory",
+    "shopify:sync:dry-run": "node scripts/sync-shopify-products.mjs --mode full --dry-run",
     "validate:scenarios": "node scripts/validate-scenarios.mjs",
     "scan:secrets": "node scripts/scan-secrets.mjs",
     "check:env:tracking": "git status --ignored --short .env .env.local .env.production .env.test \".env.production.backup*\" \".env.*\" | node scripts/check-env-files-not-tracked.mjs",
@@ -31,7 +38,7 @@
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "internal-whatsapp-n8n-pilot"
+    "youlyaVersionName": "first-test"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
