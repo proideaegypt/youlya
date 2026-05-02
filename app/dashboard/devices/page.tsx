@@ -44,6 +44,7 @@ export default function DevicesPage() {
               <Switch
                 checked={d.on}
                 onCheckedChange={(v) => setIntegrations((prev) => prev.map((x) => (x.id === d.id ? { ...x, on: v } : x)))}
+                aria-label={`Toggle ${d.name}`}
               />
             </div>
           </div>

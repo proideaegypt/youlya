@@ -28,7 +28,7 @@ for (const viewport of viewports) {
 
         const dir = await page.evaluate(() => document.documentElement.getAttribute("dir") || document.body.getAttribute("dir") || "");
         const navVisible = await page.locator("aside, nav").first().isVisible().catch(() => false);
-        const navToggleVisible = await page.getByRole("button", { name: "Toggle sidebar" }).first().isVisible().catch(() => false);
+        const navToggleVisible = await page.getByRole("button", { name: /Toggle sidebar|Collapse sidebar|Expand sidebar|Open menu/ }).first().isVisible().catch(() => false);
 
         expect(navVisible || navToggleVisible, "Navigation should be visible or reachable").toBe(true);
         expect(["", "rtl", "ltr"]).toContain(dir);

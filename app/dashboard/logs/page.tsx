@@ -54,7 +54,7 @@ const typeLabel = (type: string) => {
 };
 
 export default function DashboardLogsPage() {
-  const [filter, setFilter] = useState<"all" | "info" | "warning" | "error">("all");
+  const [filter, _setFilter] = useState<"all" | "info" | "warning" | "error">("all");
   const [search, setSearch] = useState("");
 
   const filteredLogs = sampleLogs.filter((log) => {
@@ -79,6 +79,7 @@ export default function DashboardLogsPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="h-10 rounded-full border border-border bg-background pl-9 pr-3 text-sm"
+              aria-label="Search logs"
             />
           </div>
         </div>

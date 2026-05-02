@@ -25,7 +25,7 @@ test("dashboard navigation links work", async ({ page }) => {
 
 test("command center shows AI/Kill switch context", async ({ page }) => {
   await page.goto("/dashboard/command-center");
-  const hasHeading = await page.getByRole("heading").filter({ hasText: /لوحة القيادة|لوحة التحكم|Command Center/ }).isVisible();
+  const hasHeading = await page.getByRole("heading").filter({ hasText: /YOULYA|لوحة التحكم|Command Center/ }).isVisible();
   expect(hasHeading, "Command center heading should be visible").toBe(true);
   const hasKillSwitch = await page.locator("body").filter({ hasText: /Kill switch|النظام يعمل|Kill Switch/ }).isVisible();
   expect(hasKillSwitch, "Kill switch context should be visible").toBe(true);
@@ -35,7 +35,7 @@ test("inbox page shows list or meaningful empty state", async ({ page }) => {
   await page.goto("/dashboard/inbox");
   await expect(page.getByText("طلبات التحويل للبشر")).toBeVisible();
   const hasEmpty = await page.getByText("لا يوجد تحويلات مفتوحة").isVisible().catch(() => false);
-  const hasItems = (await page.locator("section article.rounded-xl.border").count()) > 0;
+  const hasItems = (await page.locator("li.rounded-xl.border").count()) > 0;
   expect(hasEmpty || hasItems).toBe(true);
 });
 

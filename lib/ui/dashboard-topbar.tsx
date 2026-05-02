@@ -21,7 +21,7 @@ interface TopbarProps {
   onLanguageChange: (lang: "ar" | "en") => void;
 }
 
-export function Topbar({ onMenuClick, aiEnabled, language, onLanguageChange }: TopbarProps) {
+export function Topbar({ onMenuClick, language, onLanguageChange }: TopbarProps) {
   const [q, setQ] = useState("");
 
   return (
@@ -55,7 +55,7 @@ export function Topbar({ onMenuClick, aiEnabled, language, onLanguageChange }: T
         <div className="flex items-center gap-2">
           {/* Notifications */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="relative rounded-full p-2 hover:bg-muted focus:outline-none focus:ring-2">
+            <DropdownMenuTrigger className="relative rounded-full p-2 hover:bg-muted focus:outline-none focus:ring-2" aria-label="Open notifications">
               <Bell className="size-5" aria-hidden />
               <span className="sr-only">Open notifications</span>
               <span className="absolute right-1 top-1 inline-flex items-center justify-center text-[10px] bg-red-500 text-white rounded-full h-4 min-w-4 px-1">
@@ -75,7 +75,7 @@ export function Topbar({ onMenuClick, aiEnabled, language, onLanguageChange }: T
 
           {/* Settings */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="rounded-full p-2 hover:bg-muted focus:outline-none focus:ring-2">
+            <DropdownMenuTrigger className="rounded-full p-2 hover:bg-muted focus:outline-none focus:ring-2" aria-label="Open settings">
               <Settings className="size-5" aria-hidden />
               <span className="sr-only">Open settings</span>
             </DropdownMenuTrigger>
@@ -99,7 +99,7 @@ export function Topbar({ onMenuClick, aiEnabled, language, onLanguageChange }: T
 
           {/* User dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="rounded-full p-1.5 hover:bg-muted focus:outline-none focus:ring-2">
+            <DropdownMenuTrigger className="rounded-full p-1.5 hover:bg-muted focus:outline-none focus:ring-2" aria-label="Open user menu">
               <Avatar className="size-8">
                 <AvatarFallback className="text-xs font-semibold">YH</AvatarFallback>
               </Avatar>

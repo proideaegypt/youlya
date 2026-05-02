@@ -55,12 +55,14 @@ export default function OrdersPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="h-10 rounded-full border border-border bg-background pl-9 pr-3 text-sm"
+              aria-label="Search orders"
             />
           </div>
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value as typeof filter)}
             className="h-10 rounded-full border border-border bg-background px-3 text-sm"
+            aria-label="Filter orders by status"
           >
             <option value="all">All</option>
             <option value="confirmed">Confirmed</option>

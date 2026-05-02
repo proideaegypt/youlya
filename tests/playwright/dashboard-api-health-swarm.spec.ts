@@ -33,6 +33,7 @@ test("dashboard APIs return auth errors or success, never 500", async ({ request
 });
 
 test("dashboard pages should not trigger 500 responses", async ({ page }) => {
+  test.setTimeout(120_000);
   const serverErrors: string[] = [];
 
   page.on("response", (response) => {

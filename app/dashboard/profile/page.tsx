@@ -3,7 +3,6 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Switch } from "@/components/ui/switch"
 import { useState } from "react"
-import { BuildIdentityFooter } from "@/lib/ui/build-identity-footer"
 
 export default function ProfilePage() {
   const [notifications, setNotifications] = useState(true)
@@ -31,11 +30,11 @@ export default function ProfilePage() {
           <h3 className="mb-3 font-medium text-foreground">Preferences</h3>
           <div className="flex items-center justify-between py-2">
             <span className="text-sm text-foreground">Notifications</span>
-            <Switch checked={notifications} onCheckedChange={setNotifications} />
+            <Switch checked={notifications} onCheckedChange={setNotifications} aria-label="Toggle notifications" />
           </div>
           <div className="flex items-center justify-between py-2">
             <span className="text-sm text-foreground">Dark mode</span>
-            <Switch checked={darkMode} onCheckedChange={setDarkMode} />
+            <Switch checked={darkMode} onCheckedChange={setDarkMode} aria-label="Toggle dark mode" />
           </div>
         </div>
 

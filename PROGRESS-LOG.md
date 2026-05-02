@@ -1329,3 +1329,69 @@ Tests passed:
 Tests failed/skipped:
 Blockers:
 Next step:
+
+## 2026-05-02 — phase-e-internal-whatsapp-n8n-pilot
+
+Date: 2026-05-02
+Phase:
+Task: phase-e-internal-whatsapp-n8n-pilot
+Version: v2.4.2
+Version Name: internal-whatsapp-n8n-pilot
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-02 — v2.4.2 phase-e-internal-whatsapp-n8n-pilot
+
+Date: 2026-05-02
+Phase: Phase E internal pilot readiness
+Task: phase-e-internal-whatsapp-n8n-pilot
+Files changed:
+- docs/PHASE_E_INTERNAL_WHATSAPP_N8N_PILOT.md
+- qa-artifacts/manual-tests/2026-05-02/internal-whatsapp-n8n-pilot.md
+- qa-artifacts/tasks/2026-05-02/phase-e-internal-whatsapp-n8n-pilot/*
+- scripts/internal-pilot-smoke.mjs
+- RELEASES/v2.4.2-internal-whatsapp-n8n-pilot.md
+- PROGRESS-LOG.md
+- worktime.md
+Commands run:
+- discovery + route/doc inventory + live health/build checks
+- env readiness SET/MISSING check for required Phase E keys
+- npm run typecheck
+- npm run lint
+- npm test
+- npm run validate:scenarios
+- npm run scan:secrets
+- npm run verify:release
+- npm run build
+- npm run verify:deploy
+- npm run test:e2e:dashboard:swarm
+- npm run qa:collect
+- APP_URL=https://admin.youlya365.com node scripts/internal-pilot-smoke.mjs
+- npm run release:task -- --task "phase-e-internal-whatsapp-n8n-pilot" --type patch
+Tests passed:
+- typecheck/lint/tests/scenario/secrets/verify-release/build/verify-deploy pass
+- live health/build endpoints pass
+Tests failed/skipped:
+- dashboard swarm failed (29 failures) due route/spec mismatch after smart-home route expansion
+Blockers:
+- Swarm regression must be fixed for clean automated dashboard QA signal
+Next step:
+- Proceed with controlled manual pilot via new runbook/template and schedule dedicated swarm-alignment fix task.
+
+## 2026-05-02 — smart-home-pixel-parity-dashboard-port
+
+Date: 2026-05-02
+Phase:
+Task: smart-home-pixel-parity-dashboard-port
+Version: v2.5.0
+Version Name: smart-home-pixel-parity-dashboard-port
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:

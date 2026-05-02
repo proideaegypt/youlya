@@ -1,5 +1,5 @@
 import { AiToggleCard } from "@/app/dashboard/toggle-card";
-import { Settings, Shield, Link2, Paintbrush, Globe, Info } from "lucide-react";
+import { Settings, Shield, Link2, Paintbrush, Info } from "lucide-react";
 
 const integrations = [
   { name: "Supabase", status: "Connected", tone: "success" as const },

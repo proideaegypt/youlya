@@ -1,140 +1,68 @@
 #!/usr/bin/env node
-/**
- * Internal Pilot Smoke Test
- *
- * Verifies internal endpoints are reachable and responding correctly
- * without creating real orders or side effects.
- *
- * Run: node scripts/internal-pilot-smoke.mjs
- */
 
-const BASE_URL = process.env.APP_URL || "https://admin.youlya365.com";
+const appUrl = process.env.APP_URL || "http://127.0.0.1:3000";
+const internalSecret = process.env.INTERNAL_API_SECRET;
 
-async function smoke(name, method, path, opts = {}) {
-  const url = `${BASE_URL}${path}`;
-  const start = Date.now();
+async function call(path, options = {}) {
+  const response = await fetch(`${appUrl}${path}`, options);
+  let data = null;
   try {
-    const res = await fetch(url, {
-      method,
-      headers: {
-        ...(opts.headers || {}),
-      },
-      ...(opts.body ? { body: JSON.stringify(opts.body) } : {}),
-    });
-    const duration = Date.now() - start;
-    const text = await res.text();
-    let json = null;
-    try {
-      json = JSON.parse(text);
-    } catch {
-      json = null;
-    }
-    return {
-      name,
-      url,
-      status: res.status,
-      ok: res.ok,
-      duration,
-      json,
-      text: text.length > 500 ? text.slice(0, 500) + "..." : text,
-    };
-  } catch (err) {
-    return {
-      name,
-      url,
-      status: 0,
-      ok: false,
-      duration: Date.now() - start,
-      error: err.message,
-    };
+    data = await response.json();
+  } catch {
+    data = null;
   }
-}
-
-function print(result) {
-  const icon = result.ok ? "✓" : "✗";
-  const status = result.status || "ERR";
-  console.log(`${icon} ${result.name} [${status}] ${result.duration}ms`);
-  if (!result.ok) {
-    if (result.error) {
-      console.log(`  Error: ${result.error}`);
-    } else {
-      console.log(`  Response: ${result.text}`);
-    }
-  }
+  return { ok: response.ok, status: response.status, data };
 }
 
 async function main() {
-  console.log(`Internal Pilot Smoke Test`);
-  console.log(`Base URL: ${BASE_URL}`);
-  console.log(`Time: ${new Date().toISOString()}`);
-  console.log("");
+  const headers = { "content-type": "application/json" };
+  if (internalSecret) headers["x-internal-api-secret"] = internalSecret;
 
-  const results = [];
+  const health = await call("/api/health");
+  const buildInfo = await call("/api/build-info");
 
-  // Public health endpoints
-  results.push(await smoke("Health", "GET", "/api/health"));
-  results.push(await smoke("Build Info", "GET", "/api/build-info"));
+  const basePayload = {
+    scenarioId: "INTERNAL-PILOT-SMOKE-001",
+    storeSlug: "youlya",
+    channel: "whatsapp_evolution",
+    locale: "ar-EG",
+    messageType: "text",
+    text: "هاي",
+    testMode: true,
+    conversation_id: "pilot-smoke-conversation",
+    provider_message_id: "pilot-smoke-provider-msg-001",
+    _preconditions: {
+      force_duplicate: false,
+    },
+  };
 
-  // Dashboard APIs (should return 401 without auth)
-  results.push(await smoke("Dashboard Stats (no auth)", "GET", "/api/dashboard/stats"));
-  results.push(await smoke("Dashboard Logs (no auth)", "GET", "/api/dashboard/logs"));
-  results.push(await smoke("Dashboard Orders (no auth)", "GET", "/api/dashboard/orders"));
-  results.push(await smoke("Dashboard Settings (no auth)", "GET", "/api/dashboard/settings"));
-
-  // Internal APIs (should return 401 without secret)
-  results.push(await smoke("Internal Messages Turn (no secret)", "POST", "/api/internal/messages/turn", {
-    body: { message: "test", store_id: "youlya" },
-    headers: { "Content-Type": "application/json" },
-  }));
-
-  results.push(await smoke("Internal Failed Events (no secret)", "GET", "/api/internal/failed-events"));
-
-  // Evolution webhook (should return 401 without auth)
- results.push(await smoke("Evolution Webhook (no auth)", "POST", "/api/webhooks/evolution", {
-    body: { event: "messages.upsert", data: { message: { conversation: "test", messageTimestamp: Date.now() } } },
-    headers: { "Content-Type": "application/json" },
-  }));
-
-  // AI Tools (should return 401 without auth)
-  results.push(await smoke("AI Product Search (no auth)", "POST", "/api/ai/tools/product-search", {
-    body: { query: "بيجامة" },
-    headers: { "Content-Type": "application/json" },
-  }));
-
-  console.log("");
-  console.log("Results:");
-  console.log("--------");
-  for (const r of results) {
-    print(r);
-  }
-
-  const passed = results.filter((r) => r.ok).length;
-  const failed = results.filter((r) => !r.ok).length;
-
-  console.log("");
-  console.log(`Passed: ${passed}`);
-  console.log(`Failed: ${failed}`);
-
-  // Expect public endpoints to pass, auth-required endpoints to return 401
-  const unexpectedFailures = results.filter((r) => {
-    if (r.name.includes("(no auth)") || r.name.includes("(no secret)")) {
-      return r.status !== 401 && r.status !== 403;
-    }
-    return !r.ok;
+  const firstTurn = await call("/api/internal/messages/turn", {
+    method: "POST",
+    headers,
+    body: JSON.stringify(basePayload),
   });
 
-  if (unexpectedFailures.length > 0) {
-    console.log("");
-    console.log("Unexpected failures (not 401/403 for auth endpoints):");
-    for (const r of unexpectedFailures) {
-      console.log(`  - ${r.name}: ${r.status}`);
-    }
-    process.exit(1);
-  }
+  const duplicateTurn = await call("/api/internal/messages/turn", {
+    method: "POST",
+    headers,
+    body: JSON.stringify(basePayload),
+  });
 
-  console.log("");
-  console.log("All checks passed.");
-  process.exit(0);
+  const output = {
+    appUrl,
+    health: { ok: health.ok, status: health.status },
+    buildInfo: { ok: buildInfo.ok, status: buildInfo.status, version: buildInfo.data?.version ?? null },
+    firstTurn: { ok: firstTurn.ok, status: firstTurn.status, action: firstTurn.data?.action ?? null },
+    duplicateTurn: { ok: duplicateTurn.ok, status: duplicateTurn.status, action: duplicateTurn.data?.action ?? null },
+  };
+
+  console.log(JSON.stringify(output, null, 2));
+
+  const hasFailure = !health.ok || !buildInfo.ok || !firstTurn.ok || !duplicateTurn.ok;
+  if (hasFailure) process.exit(1);
 }
 
-main();
+main().catch((error) => {
+  console.error(error?.message || String(error));
+  process.exit(1);
+});

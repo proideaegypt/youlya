@@ -463,3 +463,32 @@ Created Phase E internal WhatsApp + n8n pilot baseline artifacts: `docs/PHASE_E_
 PROMPT 38 02/05/26
 User requested task `smart-home-pixel-parity-dashboard-port`: replace current Youlya dashboard UI with near-identical implementation of ThemeWagon Smart Home dashboard visual system, mapping all smart-home concepts to Youlya AI Commerce OS / YOULYA HOME WEAR. Must achieve pixel parity with live reference https://themewagon.github.io/smart-home/dashboard. Port real Smart Home layout, shell, menu, settings popover, color switcher, dark/light mode, spacing, cards, pages, and interactions. Add new routes: /dashboard/statistics, /dashboard/security, /dashboard/devices, /dashboard/profile. Preserve auth, APIs, business logic, release governance, Playwright QA. Run full verification/release/deploy flow.
 
+
+RESULT 38 02/05/26
+STATUS: PASS
+Completed `smart-home-pixel-parity-dashboard-port` with production release v2.5.0. Replaced Youlya dashboard UI with near-identical Smart Home theme implementation: rounded shell, gradient sidebar, topbar with search/settings popover/color switcher, dark/light mode, mobile drawer. Added new routes /dashboard/statistics, /dashboard/security, /dashboard/devices, /dashboard/profile. Mapped smart-home concepts to Youlya commerce. Preserved Supabase SSR auth, login, business logic. Added shadcn/ui dropdown-menu, avatar, switch components. Updated Playwright swarm to cover all 9 routes (46/46 tests pass locally). All checks passed: typecheck, lint (0 errors), tests (58/58), validate:scenarios (104), scan:secrets, build, verify-release, deploy-production success. Live `/api/health` + `/api/build-info` reporting version 2.5.0 with versionName smart-home-pixel-parity-dashboard-port.
+
+PROMPT TBD 2026-05-02
+Release prep for task phase-e-internal-whatsapp-n8n-pilot (v2.4.2, internal-whatsapp-n8n-pilot).
+
+RESULT TBD 2026-05-02
+STATUS: PENDING
+Release file generated: RELEASES/v2.4.2-internal-whatsapp-n8n-pilot.md
+
+RESULT 36 02/05/26
+STATUS: PARTIAL
+Completed Phase E internal pilot preparation deliverables: baseline artifact, production pilot runbook, masked manual QA template with WA-001..WA-010, and optional safe internal smoke script (`testMode=true`). Validation suite passed (typecheck/lint/tests/scenarios/secrets/verify-release/build/verify-deploy), but dashboard swarm failed with 29 regressions after smart-home route expansion, so task remains PARTIAL and no deployment was executed for this task.
+
+PROMPT TBD 2026-05-02
+Release prep for task smart-home-pixel-parity-dashboard-port (v2.5.0, smart-home-pixel-parity-dashboard-port).
+
+RESULT TBD 2026-05-02
+STATUS: PENDING
+Release file generated: RELEASES/v2.5.0-smart-home-pixel-parity-dashboard-port.md
+
+PROMPT 39 02/05/26
+User requested task `phase-e-internal-whatsapp-n8n-pilot`: prepare controlled internal production pilot runbook/template for WhatsApp+n8n+Evolution+Youlya, run readiness checks and safe verification, and report blockers without opening public traffic.
+
+RESULT 39 02/05/26
+STATUS: PARTIAL
+Created pilot baseline/runbook/manual QA template and optional internal smoke script. Core checks passed (typecheck/lint/tests/scenarios/secrets/verify-release/build/verify-deploy), but dashboard Playwright swarm failed with 29 route/shell regressions on new Smart Home route set, so no deploy was executed in this task.

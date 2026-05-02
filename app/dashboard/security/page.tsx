@@ -1,6 +1,6 @@
 "use client"
 
-import { Lock, Shield, Bell, Zap, Eye } from "lucide-react"
+import { Shield, Zap, Eye } from "lucide-react"
 import { useState } from "react"
 import { Switch } from "@/components/ui/switch"
 
@@ -27,7 +27,7 @@ export default function SecurityPage() {
               <Shield className="size-5 text-primary" />
               <h3 className="font-medium text-foreground">AI Safety</h3>
             </div>
-            <Switch checked={aiSafety} onCheckedChange={setAiSafety} />
+            <Switch checked={aiSafety} onCheckedChange={setAiSafety} aria-label="Toggle AI safety" />
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
             {aiSafety ? "AI safety guards are active." : "AI safety guards disabled."}
@@ -40,7 +40,7 @@ export default function SecurityPage() {
               <Zap className="size-5 text-amber-500" />
               <h3 className="font-medium text-foreground">Kill Switch</h3>
             </div>
-            <Switch checked={killSwitch} onCheckedChange={setKillSwitch} />
+            <Switch checked={killSwitch} onCheckedChange={setKillSwitch} aria-label="Toggle kill switch" />
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
             {killSwitch ? "Kill switch is ON. All AI paused." : "Kill switch is OFF. Normal operation."}
@@ -53,7 +53,7 @@ export default function SecurityPage() {
               <Eye className="size-5 text-primary" />
               <h3 className="font-medium text-foreground">Duplicate Guard</h3>
             </div>
-            <Switch checked={duplicateGuard} onCheckedChange={setDuplicateGuard} />
+            <Switch checked={duplicateGuard} onCheckedChange={setDuplicateGuard} aria-label="Toggle duplicate guard" />
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
             {duplicateGuard ? "Duplicate order protection active." : "Duplicate protection disabled."}
