@@ -20,12 +20,13 @@ export function AiToggleCard({ initialEnabled }: { initialEnabled: boolean }) {
   }
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-      <div className="mb-3 text-sm text-zinc-400">AI Kill Switch</div>
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-4">
+      <div className="mb-1 text-sm font-semibold">AI Settings</div>
+      <div className="mb-3 text-xs text-[var(--muted)]">AI Kill Switch</div>
       <button
         onClick={toggle}
         disabled={loading}
-        className={`rounded-lg border px-4 py-2 font-medium ${enabled ? "border-emerald-500 text-emerald-400" : "border-red-500 text-red-400"}`}
+        className={`rounded-xl border px-4 py-2 font-semibold ${enabled ? "border-emerald-500 text-emerald-600 dark:text-emerald-400" : "border-red-500 text-red-500 dark:text-red-400"}`}
       >
         {enabled ? "AI مفعل" : "AI متوقف"}
       </button>

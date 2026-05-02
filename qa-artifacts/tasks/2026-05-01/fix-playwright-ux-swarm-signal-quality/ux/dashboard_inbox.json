@@ -1,0 +1,66 @@
+{
+  "route": "/dashboard/inbox",
+  "heading": "",
+  "hasH1": false,
+  "title": "Youlya Dashboard",
+  "bodyTextLength": 277,
+  "sidebarVisible": true,
+  "contentVisible": true,
+  "shellPresent": true,
+  "footerBuildIdentityVisible": true,
+  "hasArabicText": true,
+  "direction": "rtl",
+  "hasHorizontalOverflow": false,
+  "hasErrorOverlay": false,
+  "hasWeakEmptyState": false,
+  "consoleErrors": [],
+  "realFailedRequests": [],
+  "ignoredNetworkNoise": [
+    {
+      "url": "https://admin.youlya365.com/dashboard/logs?_rsc=1n4r8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/settings?_rsc=1n4r8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=352w6",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/orders?_rsc=352w6",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/settings?_rsc=352w6",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/logs?_rsc=352w6",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/command-center?_rsc=352w6",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    }
+  ],
+  "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-01/fix-playwright-ux-swarm-signal-quality/ux/screenshots/dashboard_inbox.png",
+  "uxIssues": [
+    "Missing h1/main page heading"
+  ]
+}

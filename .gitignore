@@ -41,3 +41,5 @@ Thumbs.db
 
 # Local test env
 .env.test
+.env.playwright
+tests/playwright/.auth/

@@ -1,6 +1,6 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.0.8",
+  "version": "2.4.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,10 +12,17 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "dotenv -e .env.test -- npx playwright test tests/playwright-youlya-scenarios.spec.ts --reporter=list",
+    "test:e2e:dashboard:ux": "PLAYWRIGHT_SWARM_TASK_SLUG=dashboard-v3-youlya-home-wear-redesign dotenv -e .env.playwright -- playwright test tests/playwright/dashboard-ux-swarm.spec.ts",
+    "test:e2e:dashboard:functional": "PLAYWRIGHT_SWARM_TASK_SLUG=dashboard-v3-youlya-home-wear-redesign dotenv -e .env.playwright -- playwright test tests/playwright/dashboard-functional-swarm.spec.ts",
+    "test:e2e:dashboard:a11y": "PLAYWRIGHT_SWARM_TASK_SLUG=dashboard-v3-youlya-home-wear-redesign dotenv -e .env.playwright -- playwright test tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+    "test:e2e:dashboard:api": "PLAYWRIGHT_SWARM_TASK_SLUG=dashboard-v3-youlya-home-wear-redesign dotenv -e .env.playwright -- playwright test tests/playwright/dashboard-api-health-swarm.spec.ts",
+    "test:e2e:dashboard:swarm": "PLAYWRIGHT_SWARM_TASK_SLUG=dashboard-v3-youlya-home-wear-redesign dotenv -e .env.playwright -- playwright test tests/playwright/dashboard-*.spec.ts",
+    "qa:collect": "PLAYWRIGHT_SWARM_TASK_SLUG=dashboard-v3-youlya-home-wear-redesign node scripts/collect-playwright-swarm-report.mjs",
     "validate:scenarios": "node scripts/validate-scenarios.mjs",
     "scan:secrets": "node scripts/scan-secrets.mjs",
     "check:env:tracking": "git status --ignored --short .env .env.local .env.production .env.test \".env.production.backup*\" \".env.*\" | node scripts/check-env-files-not-tracked.mjs",
     "check:env:production": "node scripts/check-production-env.mjs",
+    "check:migration:safe": "node scripts/check-safe-migration-sql.mjs",
     "check:tls": "bash scripts/check-tls-readiness.sh",
     "release:task": "node scripts/release-task.mjs",
     "verify:release": "node scripts/verify-release.mjs",
@@ -24,16 +31,29 @@
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "schema-migration-reconciliation"
+    "youlyaVersionName": "internal-whatsapp-n8n-pilot"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
+    "@radix-ui/react-avatar": "^1.1.11",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-switch": "^1.2.6",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.52.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.14.0",
     "next": "16.2.4",
     "next-themes": "^0.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "recharts": "^3.8.1",
     "server-only": "^0.0.1",
+    "stylis-plugin-rtl": "^2.1.1",
+    "tailwind-merge": "^3.5.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {

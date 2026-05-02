@@ -828,3 +828,504 @@ Blockers:
 - none
 Next step:
 - plan follow-up migration hygiene task to rationalize duplicate/legacy migration variants and prevent replay-order conflicts.
+
+## 2026-05-01 — schema-migration-reconciliation
+
+Date: 2026-05-01
+Phase:
+Task: schema-migration-reconciliation
+Version: v2.0.9
+Version Name: schema-migration-reconciliation
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — schema-migration-reconciliation (hardened safety gate)
+
+Date: 2026-05-01
+Phase: Phase 1 integrations and deployment readiness
+Task: schema-migration-reconciliation
+Files changed:
+- scripts/check-safe-migration-sql.mjs
+- package.json
+- docs/SCHEMA_MIGRATION_RECONCILIATION.md
+- RELEASES/v2.0.9-schema-migration-reconciliation.md
+- qa-artifacts/tasks/2026-05-01/schema-migration-reconciliation/RESULT.md
+- qa-artifacts/tasks/2026-05-01/schema-migration-reconciliation/baseline/RESULT.md
+- qa-artifacts/tasks/2026-05-01/schema-migration-reconciliation/schema-inventory.json
+- qa-artifacts/tasks/2026-05-01/schema-migration-reconciliation/reconcile-report.md
+- PROGRESS-LOG.md
+- worktime.md
+- package.json (version bump to v2.0.9)
+Commands run:
+- discovery + migration scan
+- `node scripts/schema-inventory.mjs`
+- `node scripts/schema-reconcile-check.mjs`
+- `npm run check:migration:safe -- supabase/migrations/20260501030000_schema_reconciliation_phase_e.sql`
+- full verification chain
+- release governance + deploy
+Tests passed:
+- Schema inventory/reconcile scripts PASS
+- verify:deploy PASS
+- deploy:production PASS
+- live health/build-info PASS on v2.0.9
+Tests failed/skipped:
+- Safety checker intentionally failed existing reconciliation migration on forbidden `cascade` pattern; no production SQL applied in hardened run.
+Blockers:
+- None for pilot; safety policy now enforced automatically.
+Next step:
+- Author a v2 migration file variant that satisfies strict forbidden-SQL policy (no `cascade`) for future replayability while keeping production unchanged.
+
+## 2026-05-01 — add-dashboard-login-route
+
+Date: 2026-05-01
+Phase:
+Task: add-dashboard-login-route
+Version: v2.0.10
+Version Name: add-dashboard-login-route
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — fix-dashboard-login-submit-and-session
+
+Date: 2026-05-01
+Phase:
+Task: fix-dashboard-login-submit-and-session
+Version: v2.0.11
+Version Name: dashboard-login-submit-and-session
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — fix-dashboard-login-submit-and-session
+
+Date: 2026-05-01
+Phase: Phase 1E — Production live hardening
+Task: fix-dashboard-login-submit-and-session
+Files changed:
+- `lib/supabase/browser.ts`
+- `app/login/login-form.tsx`
+- `app/dashboard/layout.tsx`
+- `tests/unit/supabase-browser-client.test.ts`
+- `tests/unit/root-page.test.ts`
+- `qa-artifacts/tasks/2026-05-01/fix-dashboard-login-submit-and-session/baseline/RESULT.md`
+- `qa-artifacts/tasks/2026-05-01/fix-dashboard-login-submit-and-session/RESULT.md`
+- `RELEASES/v2.0.11-dashboard-login-submit-and-session.md`
+- `worktime.md`
+Commands run:
+- discovery and production route/build checks (`curl -I /login`, `/dashboard`, `/api/build-info`)
+- `npm run typecheck`
+- `npm run lint`
+- `npm test`
+- `npm run validate:scenarios`
+- `npm run scan:secrets`
+- `npm run verify:release`
+- `npm run build`
+- `npm run verify:deploy`
+- `npm run release:task -- --task "fix-dashboard-login-submit-and-session" --type patch`
+Tests passed:
+- typecheck pass
+- lint pass (warnings only)
+- unit/integration/api tests pass (58/58)
+- scenario validation pass
+- secret scan pass
+- verify:release pass
+- build pass
+- verify:deploy pass
+Tests failed/skipped:
+- No Playwright live login automation executed in this task scope.
+Blockers:
+- None in code path; manual browser login QA still required with real user credentials.
+Next step:
+- Deploy release `v2.0.11`, then run manual login QA on `https://admin.youlya365.com/login`.
+
+## 2026-05-01 — add-dashboard-login-route
+
+Date: 2026-05-01
+Phase: Phase 2 dashboard MVP hardening (auth route access fix)
+Task: add-dashboard-login-route
+Files changed:
+- `app/page.tsx`
+- `app/login/page.tsx`
+- `app/login/login-form.tsx`
+- `app/(auth)/login/page.tsx` (removed)
+- `qa-artifacts/tasks/2026-05-01/add-dashboard-login-route/baseline/RESULT.md`
+- `qa-artifacts/tasks/2026-05-01/add-dashboard-login-route/RESULT.md`
+- `RELEASES/v2.0.10-add-dashboard-login-route.md`
+- `worktime.md`
+Commands run:
+- Discovery commands + mandatory doc reads
+- `npm run typecheck`
+- `npm run lint`
+- `npm test`
+- `npm run validate:scenarios`
+- `npm run scan:secrets`
+- `npm run verify:release`
+- `npm run build`
+- `npm run verify:deploy`
+- `npm run release:task -- --task "add-dashboard-login-route" --type patch`
+- `npm run verify:release`
+- `npm run deploy:production`
+- `curl -fsS https://admin.youlya365.com/api/health`
+- `curl -fsS https://admin.youlya365.com/api/build-info`
+- `curl -I https://admin.youlya365.com/`
+- `curl -I https://admin.youlya365.com/login`
+- `curl -I https://admin.youlya365.com/dashboard`
+Tests passed:
+- typecheck pass
+- lint pass (warnings only)
+- unit/integration tests pass (55/55)
+- scenario validation pass
+- secrets scan pass
+- verify:release pass
+- build pass
+- verify:deploy pass
+- deploy script pass
+Blockers:
+- None blocking this task.
+Next step:
+- Hardening follow-up: replace cookie-name-only dashboard auth guard with server-side Supabase `getUser()` session verification.
+
+## 2026-05-01 — dashboard-playwright-qa-swarm-and-n8n-manual-test-support
+
+Date: 2026-05-01
+Phase:
+Task: dashboard-playwright-qa-swarm-and-n8n-manual-test-support
+Version: v2.1.0
+Version Name: dashboard-playwright-qa-swarm-and-n8n-manual-test-support
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — dashboard-playwright-qa-swarm-and-n8n-manual-test-support
+
+Date: 2026-05-01
+Phase: Phase 2 dashboard MVP QA hardening
+Task: dashboard-playwright-qa-swarm-and-n8n-manual-test-support
+Files changed:
+- `.env.playwright.example`
+- `.gitignore`
+- `playwright.config.ts`
+- `tests/playwright/auth.setup.ts`
+- `tests/playwright/helpers.ts`
+- `tests/playwright/dashboard-ux-swarm.spec.ts`
+- `tests/playwright/dashboard-functional-swarm.spec.ts`
+- `tests/playwright/dashboard-a11y-rtl-swarm.spec.ts`
+- `tests/playwright/dashboard-api-health-swarm.spec.ts`
+- `scripts/collect-playwright-swarm-report.mjs`
+- `docs/N8N_WHATSAPP_MANUAL_TEST_RUNBOOK.md`
+- `qa-artifacts/manual-tests/2026-05-01/n8n-whatsapp-pilot-template.md`
+- `qa-artifacts/tasks/2026-05-01/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/baseline/RESULT.md`
+- `qa-artifacts/tasks/2026-05-01/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/RESULT.md`
+- `RELEASES/v2.1.0-dashboard-playwright-qa-swarm-and-n8n-manual-test-support.md`
+- `README.md`
+- `PROGRESS-LOG.md`
+- `worktime.md`
+- `package.json`
+Commands run:
+- Discovery commands + production health/build-info curls.
+- `npm run typecheck`
+- `npm run lint`
+- `npm test`
+- `npm run validate:scenarios`
+- `npm run scan:secrets`
+- `npm run verify:release`
+- `npm run build`
+- `npm run verify:deploy`
+- `npm run release:task -- --task "dashboard-playwright-qa-swarm-and-n8n-manual-test-support" --type minor`
+- `npm run verify:release`
+- `npm run deploy:production`
+- `curl -fsS https://admin.youlya365.com/api/health`
+- `curl -fsS https://admin.youlya365.com/api/build-info`
+Tests passed:
+- Typecheck pass
+- Lint pass (warnings only)
+- Unit/integration tests pass (58/58)
+- Scenario validation pass (104 total)
+- Secret scan pass
+- Verify release pass
+- Build pass
+- Verify deploy pass
+- Deploy production pass
+Tests failed/skipped:
+- Dashboard Playwright swarm execution skipped because `.env.playwright` is missing on VPS.
+Blockers:
+- Missing local dashboard auth env file (`.env.playwright`) for authenticated swarm runtime.
+Next step:
+- Add local `.env.playwright` with admin credentials on VPS, run `npm run test:e2e:dashboard:swarm`, then run `npm run qa:collect` to generate final QA report with screenshots/findings.
+
+## 2026-05-01 — fix-playwright-ux-swarm-signal-quality
+
+Date: 2026-05-01
+Phase:
+Task: fix-playwright-ux-swarm-signal-quality
+Version: v2.1.1
+Version Name: playwright-ux-swarm-signal-quality
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — v2.1.1 fix-playwright-ux-swarm-signal-quality
+
+Date: 2026-05-01
+Phase: Phase 2 QA hardening (dashboard swarm signal quality)
+Task: fix-playwright-ux-swarm-signal-quality
+Files changed:
+- tests/playwright/helpers.ts
+- tests/playwright/dashboard-ux-swarm.spec.ts
+- scripts/collect-playwright-swarm-report.mjs
+- package.json
+- qa-artifacts/tasks/2026-05-01/fix-playwright-ux-swarm-signal-quality/*
+- RELEASES/v2.1.1-playwright-ux-swarm-signal-quality.md
+- worktime.md
+Commands run:
+- npm run test:e2e:dashboard:swarm
+- npm run qa:collect
+- npm run typecheck
+- npm run lint
+- npm test
+- npm run validate:scenarios
+- npm run scan:secrets
+- npm run verify:release
+- npm run build
+- npm run verify:deploy
+- npm run release:task -- --task "fix-playwright-ux-swarm-signal-quality" --type patch
+Tests passed:
+- Dashboard Playwright swarm: 24/24 passed
+- Collector generated final QA report for task slug path
+- typecheck/lint(unit warnings only)/unit tests/scenario validation/secret scan/build/verify-deploy passed
+Key outcomes:
+- `_rsc` aborted request noise moved to ignored framework/network bucket
+- Real network failures remain blocking/asserted
+- Missing `h1` now reported per route as UX issue without timeout failure
+- Final QA report includes missing h1 list, real failures, ignored noise count, screenshot index, and UX priority classes
+Blockers:
+- None
+Next step:
+- Dashboard UX redesign can now use clean QA signals from swarm reports.
+
+## 2026-05-01 — dashboard-v3-youlya-home-wear-redesign
+
+Date: 2026-05-01
+Phase:
+Task: dashboard-v3-youlya-home-wear-redesign
+Version: v2.2.0
+Version Name: dashboard-v3-youlya-home-wear-redesign
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — v2.2.0 dashboard-v3-youlya-home-wear-redesign
+
+Date: 2026-05-01
+Phase: Phase 2 Dashboard UX redesign
+Task: dashboard-v3-youlya-home-wear-redesign
+Files changed:
+- app/layout.tsx
+- app/globals.css
+- app/dashboard/layout.tsx
+- app/dashboard/command-center/page.tsx
+- app/dashboard/inbox/page.tsx
+- app/dashboard/orders/page.tsx
+- app/dashboard/logs/page.tsx
+- app/dashboard/settings/page.tsx
+- app/dashboard/toggle-card.tsx
+- app/login/page.tsx
+- app/login/login-form.tsx
+- lib/ui/build-identity-footer.tsx
+- lib/ui/youlya-logo.tsx
+- lib/ui/dashboard-shell.tsx
+- lib/ui/dashboard-sidebar.tsx
+- lib/ui/dashboard-topbar.tsx
+- lib/ui/theme-toggle.tsx
+- lib/ui/language-toggle.tsx
+- lib/ui/status-badge.tsx
+- lib/ui/kpi-card.tsx
+- lib/ui/chart-card.tsx
+- lib/ui/empty-state.tsx
+- lib/ui/animated-panel.tsx
+- tests/playwright/dashboard-functional-swarm.spec.ts
+- tests/playwright/dashboard-a11y-rtl-swarm.spec.ts
+- docs/DASHBOARD_BRAND_ASSETS_SETUP.md
+- docs/DASHBOARD_DESIGN_SYSTEM.md
+- RELEASES/v2.2.0-dashboard-v3-youlya-home-wear-redesign.md
+- qa-artifacts/tasks/2026-05-01/dashboard-v3-youlya-home-wear-redesign/*
+- package.json
+- README.md
+- worktime.md
+Commands run:
+- npm run test:e2e:dashboard:swarm
+- npm run qa:collect
+- npm run typecheck
+- npm run lint
+- npm test
+- npm run validate:scenarios
+- npm run scan:secrets
+- npm run verify:release
+- npm run build
+- npm run verify:deploy
+- npm run release:task -- --task "dashboard-v3-youlya-home-wear-redesign" --type minor
+- npm run deploy:production
+- curl -fsS https://admin.youlya365.com/api/health
+- curl -fsS https://admin.youlya365.com/api/build-info
+Tests passed:
+- Dashboard swarm pass: 24/24
+- Missing h1 routes: 0
+- Real network failures: 0
+- Typecheck/lint/tests/scenario validation/secret scan/build/verify release/verify deploy: pass
+- Production health/build-info checks: pass on v2.2.0
+Blockers:
+- Official logo image files are still not present under `public/brand/`.
+Next step:
+- Add official `youlya-logo-light.jpeg` and `youlya-logo-dark.jpeg` assets to enable full brand image rendering.
+
+## 2026-05-01 — add-official-youlya-brand-logo-assets
+
+Date: 2026-05-01
+Phase:
+Task: add-official-youlya-brand-logo-assets
+Version: v2.2.1
+Version Name: add-official-youlya-brand-logo-assets
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — v2.2.1 add-official-youlya-brand-logo-assets
+
+Date: 2026-05-01
+Phase: Phase 2 dashboard identity completion
+Task: add-official-youlya-brand-logo-assets
+Files changed:
+- public/brand/youlya-logo-light.jpeg
+- public/brand/youlya-logo-dark.jpeg
+- docs/DASHBOARD_BRAND_ASSETS_SETUP.md
+- RELEASES/v2.2.1-add-official-youlya-brand-logo-assets.md
+- qa-artifacts/tasks/2026-05-01/add-official-youlya-brand-logo-assets/*
+- PROGRESS-LOG.md
+- worktime.md
+Commands run:
+- discovery + asset checks (`file`, `find`, `ls`)
+- npm run test:e2e:dashboard:swarm
+- npm run qa:collect
+- npm run typecheck
+- npm run lint
+- npm test
+- npm run validate:scenarios
+- npm run scan:secrets
+- npm run verify:release
+- npm run build
+- npm run verify:deploy
+- npm run release:task -- --task "add-official-youlya-brand-logo-assets" --type patch
+- npm run deploy:production
+- curl -fsS https://admin.youlya365.com/api/health
+- curl -fsS https://admin.youlya365.com/api/build-info
+Tests passed:
+- Dashboard swarm 24/24 pass
+- Real network failures 0
+- verify-deploy pass
+- live health/build-info pass on v2.2.1
+Blockers:
+- None
+Next step:
+- Continue UI refinement tasks; brand logo blocker is closed.
+
+## 2026-05-01 — port-next-link-dashboard-system-to-youlya-commerce
+
+Date: 2026-05-01
+Phase:
+Task: port-next-link-dashboard-system-to-youlya-commerce
+Version: v2.3.0
+Version Name: port-next-link-dashboard-system-to-youlya-commerce
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-01 — port-smart-home-theme-to-youlya-admin-dashboard
+
+Date: 2026-05-01
+Phase:
+Task: port-smart-home-theme-to-youlya-admin-dashboard
+Version: v2.4.0
+Version Name: port-smart-home-theme-to-youlya-admin-dashboard
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-02 — Port Smart Home Theme to Youlya Admin Dashboard (v2.4.0)
+
+Status: COMPLETE
+
+Completed:
+- Ported ThemeWagon Smart Home Next.js theme to Youlya dashboard
+- Replaced MUI with Tailwind CSS + CSS variable design system
+- Added lucide-react, class-variance-authority, clsx, tailwind-merge
+- Redesigned login page with Smart Home card style
+- Built new gradient sidebar with collapse/expand, logo, logout
+- Built new topbar with search, AI status, notifications, user
+- Redesigned command-center with welcome gradient card + KPI widgets + charts
+- Redesigned inbox with message-style handoff list + conversation preview
+- Redesigned orders with stats cards + filterable data table
+- Redesigned logs with summary cards + filterable log entries
+- Redesigned settings with AI controls + integration health + system status
+- Updated globals.css with Smart Home CSS variable tokens
+- Updated theme provider/toggle for class-based theming
+- Preserved Supabase SSR auth, all APIs, business logic
+- Updated Playwright tests for new UI patterns
+- Playwright dashboard swarm: 24/24 passed
+- Deployed to production: v2.4.0
+
+Files changed:
+- app/globals.css, app/layout.tsx, app/login/*
+- app/dashboard/command-center, inbox, orders, logs, settings
+- lib/ui/dashboard-shell, sidebar, topbar, theme-provider, theme-toggle, language-toggle
+- lib/ui/build-identity-footer, youlya-logo, status-badge, empty-state
+- lib/utils.ts (new cn helper)
+- tsconfig.json, package.json
+- tests/playwright/dashboard-a11y-rtl-swarm.spec.ts
+- tests/playwright/dashboard-functional-swarm.spec.ts
+
+Next action:
+- Monitor production dashboard UX feedback
+- Consider adding statistics/profile routes
+
+## 2026-05-02 — phase-e-internal-whatsapp-n8n-pilot
+
+Date: 2026-05-02
+Phase:
+Task: phase-e-internal-whatsapp-n8n-pilot
+Version: v2.4.1
+Version Name: internal-whatsapp-n8n-pilot
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:

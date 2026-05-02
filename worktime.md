@@ -340,3 +340,126 @@ Release file generated: RELEASES/v2.0.8-schema-migration-reconciliation.md
 RESULT 42 01/05/26
 STATUS: PASS
 Completed schema migration reconciliation for production Supabase/Postgres. Added schema inventory + reconcile scripts, identified seven missing app-referenced tables, created and applied forward-only non-destructive reconciliation migration, and regenerated report showing no missing app-referenced tables. Ran full verification, release governance to v2.0.8, deployed production, and verified live health/build-info pass with checks.supabase=ok.
+
+PROMPT 43 01/05/26
+User requested hardened schema-migration-reconciliation run with mandatory automated forbidden-SQL checks before any production SQL apply, plus reconciliation docs/artifacts and release governance.
+
+PROMPT TBD 2026-05-01
+Release prep for task schema-migration-reconciliation (v2.0.9, schema-migration-reconciliation).
+
+RESULT TBD 2026-05-01
+STATUS: PENDING
+Release file generated: RELEASES/v2.0.9-schema-migration-reconciliation.md
+
+RESULT 43 01/05/26
+STATUS: PASS
+Completed hardened schema-migration-reconciliation run with automated forbidden-SQL gate. Added `check-safe-migration-sql` script + package command, regenerated schema inventory/reconcile artifacts, confirmed no critical drift, and enforced no additional production SQL apply when safety check flagged `cascade` in existing reconciliation migration. Completed release governance to v2.0.9, deployed, and verified live /api/health and /api/build-info pass.
+
+PROMPT 44 01/05/26
+User requested task add-dashboard-login-route: fix production dashboard access by adding/aligning login route, redirect root to dashboard, preserve dashboard auth guard, run verification/release/deploy gates, update QA/progress/release/worktime artifacts, and report production route/health checks.
+
+PROMPT 45 01/05/26
+User requested task fix-dashboard-login-submit-and-session: debug production login submit/session issue, ensure Supabase auth login works with SSR dashboard guard, run release/verify/deploy gates, and document QA/results.
+
+PROMPT TBD 2026-05-01
+Release prep for task add-dashboard-login-route (v2.0.10, add-dashboard-login-route).
+
+RESULT TBD 2026-05-01
+STATUS: PENDING
+Release file generated: RELEASES/v2.0.10-add-dashboard-login-route.md
+
+PROMPT TBD 2026-05-01
+Release prep for task fix-dashboard-login-submit-and-session (v2.0.11, dashboard-login-submit-and-session).
+
+RESULT TBD 2026-05-01
+STATUS: PENDING
+Release file generated: RELEASES/v2.0.11-dashboard-login-submit-and-session.md
+
+RESULT 44 01/05/26
+STATUS: PASS
+Implemented dashboard access routing fix by replacing root placeholder with `/dashboard` redirect and creating explicit `/login` route (`app/login/page.tsx` + client form) using Supabase anon auth only, while preserving dashboard auth guard redirect behavior. Completed full validation/release/deploy gates, generated `RELEASES/v2.0.10-add-dashboard-login-route.md`, and verified live routes/health/build-info endpoints.
+
+RESULT 45 01/05/26
+STATUS: PASS
+Implemented task fix-dashboard-login-submit-and-session with SSR-compatible Supabase browser auth client, fixed login submit redirect flow, and replaced dashboard layout cookie heuristic with server-side Supabase `getUser()` guard. Added focused tests for root redirect and browser auth client behavior, completed release governance to v2.0.11, passed verify-release and verify-deploy gates, deployed production successfully, and verified live health/build-info/routes.
+
+PROMPT 45 01/05/26
+User requested task dashboard-playwright-qa-swarm-and-n8n-manual-test-support: build Playwright dashboard QA swarm infrastructure (auth setup, multi-project config, UX/functional/a11y/API swarms, report collector, env template), add manual n8n+WhatsApp runbook and artifact templates, run verification gates, release governance, deploy, and report results.
+
+PROMPT TBD 2026-05-01
+Release prep for task dashboard-playwright-qa-swarm-and-n8n-manual-test-support (v2.1.0, dashboard-playwright-qa-swarm-and-n8n-manual-test-support).
+
+RESULT TBD 2026-05-01
+STATUS: PENDING
+Release file generated: RELEASES/v2.1.0-dashboard-playwright-qa-swarm-and-n8n-manual-test-support.md
+
+RESULT 45 01/05/26
+STATUS: PASS
+Delivered dashboard Playwright QA swarm infrastructure (auth setup, UX/functional/a11y/API swarm specs, multi-project config, env template, collector script), added n8n+WhatsApp manual runbook/template, completed release governance to v2.1.0 and deployed successfully with live health/build-info checks passing. Live dashboard swarm execution is pending local `.env.playwright` credentials.
+
+PROMPT 33 01/05/26
+User requested task `fix-playwright-ux-swarm-signal-quality` on production VPS: clean Playwright dashboard swarm QA signal by ignoring expected Next.js RSC aborted prefetch noise, avoid h1 timeout failures by reporting missing heading as UX issue, improve per-route UX markdown reports, update swarm collector summary fields/priorities, run swarm + qa collect + full verification/release/deploy flow, and update logs/artifacts.
+
+PROMPT TBD 2026-05-01
+Release prep for task fix-playwright-ux-swarm-signal-quality (v2.1.1, playwright-ux-swarm-signal-quality).
+
+RESULT TBD 2026-05-01
+STATUS: PENDING
+Release file generated: RELEASES/v2.1.1-playwright-ux-swarm-signal-quality.md
+
+RESULT 33 01/05/26
+STATUS: PASS
+Implemented `fix-playwright-ux-swarm-signal-quality` and released v2.1.1. Added ignorable Next.js `_rsc` abort filtering for UX swarm, separated ignored network noise from real failures, replaced blocking h1 lookup with non-blocking heading detection + UX issue reporting, expanded per-route UX markdown/json outputs, and upgraded collector final report fields/priorities. Validation/deploy chain passed including dashboard swarm (24/24), qa:collect, typecheck, lint, tests, scenarios, secrets, verify-release, build, verify-deploy, deploy-production, and live `/api/health` + `/api/build-info` checks.
+
+PROMPT 34 01/05/26
+User requested task `dashboard-v3-youlya-home-wear-redesign`: redesign production dashboard UI/UX to modern bilingual Arabic/English YOULYA HOME WEAR interface with pink/charcoal brand system, responsive shell, dark/light theme, improved pages (command center/inbox/orders/logs/settings/login), maintain existing auth/session/API/business logic, pass dashboard Playwright swarm + release governance + deploy + docs/log updates.
+
+PROMPT TBD 2026-05-01
+Release prep for task dashboard-v3-youlya-home-wear-redesign (v2.2.0, dashboard-v3-youlya-home-wear-redesign).
+
+RESULT TBD 2026-05-01
+STATUS: PENDING
+Release file generated: RELEASES/v2.2.0-dashboard-v3-youlya-home-wear-redesign.md
+
+RESULT 34 01/05/26
+STATUS: PASS
+Completed `dashboard-v3-youlya-home-wear-redesign` and released/deployed v2.2.0. Implemented branded bilingual responsive dashboard shell and redesigned command center/inbox/orders/logs/settings/login UI with theme/language toggles, new reusable UI components, and preserved auth/session/business APIs. Added dashboard design system docs and brand asset setup note. Validation passed including post-deploy Playwright dashboard swarm (24/24), qa collector (0 real failures, 0 missing h1), verify-release, verify-deploy, deploy-production, and live health/build-info checks on production.
+
+PROMPT 35 01/05/26
+User requested task `add-official-youlya-brand-logo-assets`: locate and install official YOULYA logo files into `public/brand/youlya-logo-light.jpeg` and `public/brand/youlya-logo-dark.jpeg`, verify dashboard/logo rendering and swarm quality, run full verification/release/deploy flow if assets exist, otherwise return PARTIAL with exact upload instructions.
+
+PROMPT TBD 2026-05-01
+Release prep for task add-official-youlya-brand-logo-assets (v2.2.1, add-official-youlya-brand-logo-assets).
+
+RESULT TBD 2026-05-01
+STATUS: PENDING
+Release file generated: RELEASES/v2.2.1-add-official-youlya-brand-logo-assets.md
+
+RESULT 35 01/05/26
+STATUS: PASS
+Completed `add-official-youlya-brand-logo-assets` with production release v2.2.1. Verified official logo files exist at `public/brand/youlya-logo-light.jpeg` and `public/brand/youlya-logo-dark.jpeg`, validated component path usage/fallback behavior, and confirmed QA + deployment health: dashboard swarm 24/24, collector clean (0 real failures), full verify pipeline pass, deploy pass, and live `/api/health` + `/api/build-info` reporting version 2.2.1.
+
+PROMPT 36 02/05/26
+User requested task `port-next-link-dashboard-system-to-youlya-commerce`: replace current Youlya dashboard UI/UX with high-quality dashboard system adapted from Next-Link reference, add MUI + Recharts dependencies, port components (shell/sidebar/topbar/kpi-card/section-card/charts), redesign all dashboard pages (command-center/inbox/orders/logs/settings), maintain Youlya brand/colors/RTL/i18n/auth/business logic, run Playwright swarm + full verification/release/deploy flow, and update docs/artifacts.
+
+RESULT 36 02/05/26
+STATUS: PASS
+Completed `port-next-link-dashboard-system-to-youlya-commerce` with production release v2.3.0. Added MUI + Recharts dependencies, created MUI theme provider with Youlya brand colors, implemented i18n dictionary (AR/EN), enhanced KPI cards with sparklines, created section-card for task lists, built Recharts dashboard-charts component, and redesigned all dashboard pages with Next-Link quality while preserving Youlya commerce domain. Validation passed: Playwright dashboard swarm 24/24, qa:collect clean, typecheck/lint/tests pass, verify-release/verify-deploy pass, deploy-production success, live `/api/health` + `/api/build-info` reporting version 2.3.0. Fixed docker-compose healthcheck interpolation issue during deploy.
+
+PROMPT 37 02/05/26
+User requested task `port-smart-home-theme-to-youlya-admin-dashboard`: replace current Youlya dashboard UI/UX with polished admin dashboard adapted from Smart Home Next.js theme, convert smart-home concepts to YOULYA HOME WEAR AI commerce dashboard concepts, preserve auth/APIs/business logic/deployment/release governance/Playwright QA, run full verification/release/deploy flow, and update docs/artifacts.
+
+RESULT 37 02/05/26
+STATUS: PASS
+Completed `port-smart-home-theme-to-youlya-admin-dashboard` with production release v2.4.0. Ported Smart Home theme design system (CSS variables, gradient sidebar, card layouts, lucide-react icons) to Youlya dashboard. Replaced MUI with Tailwind CSS + CSS tokens. Redesigned login, command-center, inbox, orders, logs, and settings pages with theme widgets and polished UI. Added cn utility, updated theme provider/toggle, built new sidebar/topbar/shell. Updated Playwright tests for new UI patterns. Validation passed: Playwright dashboard swarm 24/24, qa:collect clean, typecheck/lint/tests/validate/scenarios/secrets/build all pass, verify-release/verify-deploy pass, deploy-production success, live `/api/health` + `/api/build-info` reporting version 2.4.0.
+
+PROMPT 38 02/05/26
+User asked "What did we do so far?" and then "Continue if you have next steps." Current in-flight work is Phase E internal WhatsApp + n8n pilot baseline (docs, QA template, smoke script, lint fixes) and preparing for commit/deploy.
+
+RESULT 38 02/05/26
+STATUS: PASS
+Created Phase E internal WhatsApp + n8n pilot baseline artifacts: `docs/PHASE_E_INTERNAL_WHATSAPP_N8N_PILOT.md` runbook, `qa-artifacts/manual-tests/2026-05-02/internal-whatsapp-n8n-pilot.md` 10-scenario manual test template (WA-001 to WA-010), `scripts/internal-pilot-smoke.mjs` optional smoke test script. Fixed lint errors in `lib/ui/dashboard-sidebar.tsx` (moved localStorage read to useState initializer) and `lib/ui/theme-toggle.tsx` (eslint-disable for next-themes hydration guard). Added `reference/` to `eslint.config.mjs` globalIgnores. All checks passed: typecheck, lint (0 errors), tests (58/58), validate:scenarios (104), scan:secrets, build, Playwright dashboard swarm (24/24), qa:collect clean. Release v2.4.1 generated and verified. verify:deploy passed all steps except docker-compose-build timed out due to script I/O redirection; direct `docker compose build` succeeded.
+
+PROMPT 38 02/05/26
+User requested task `smart-home-pixel-parity-dashboard-port`: replace current Youlya dashboard UI with near-identical implementation of ThemeWagon Smart Home dashboard visual system, mapping all smart-home concepts to Youlya AI Commerce OS / YOULYA HOME WEAR. Must achieve pixel parity with live reference https://themewagon.github.io/smart-home/dashboard. Port real Smart Home layout, shell, menu, settings popover, color switcher, dark/light mode, spacing, cards, pages, and interactions. Add new routes: /dashboard/statistics, /dashboard/security, /dashboard/devices, /dashboard/profile. Preserve auth, APIs, business logic, release governance, Playwright QA. Run full verification/release/deploy flow.
+

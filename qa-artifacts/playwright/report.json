@@ -1,0 +1,1026 @@
+{
+  "config": {
+    "configFile": "/root/youlya/playwright.config.ts",
+    "rootDir": "/root/youlya/tests/playwright",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "auth-setup",
+        "name": "auth-setup",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/auth\\.setup\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "dashboard-ux-swarm",
+        "name": "dashboard-ux-swarm",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/dashboard-ux-swarm\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "dashboard-functional-swarm",
+        "name": "dashboard-functional-swarm",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/dashboard-functional-swarm\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "dashboard-a11y-rtl-swarm",
+        "name": "dashboard-a11y-rtl-swarm",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/dashboard-a11y-rtl-swarm\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "dashboard-api-health-swarm",
+        "name": "dashboard-api-health-swarm",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/dashboard-api-health-swarm\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "qa-artifacts/playwright/report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "auth.setup.ts",
+      "file": "auth.setup.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "authenticate admin dashboard user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "auth-setup",
+              "projectName": "auth-setup",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5350,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:00:33.776Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "17e3fe6f4d9d8bd79c6b-a8c5bc4de993690ab51d",
+          "file": "auth.setup.ts",
+          "line": 7,
+          "column": 6
+        }
+      ]
+    },
+    {
+      "title": "dashboard-ux-swarm.spec.ts",
+      "file": "dashboard-ux-swarm.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "ux audit /dashboard/command-center",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7566,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:00:43.402Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-0aa0a8321f681b72e7de",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 21,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/inbox",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5923,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:00:51.383Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-fefc760bdc10d19ee311",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 21,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/orders",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6161,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:00:57.341Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-157ec5418d76a21da1de",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 21,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/logs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5737,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:01:03.547Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-7a071eeaf7974ef5560b",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 21,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/settings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7158,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:01:09.373Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-1334385751793d25122b",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 21,
+          "column": 7
+        }
+      ]
+    },
+    {
+      "title": "dashboard-functional-swarm.spec.ts",
+      "file": "dashboard-functional-swarm.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "dashboard navigation links work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11770,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:00:43.297Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-975cdc5a99315f9d86ca",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "command center shows AI/Kill switch context",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3034,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:00:55.387Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-74b666896daddd4bbe03",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 22,
+          "column": 5
+        },
+        {
+          "title": "inbox page shows list or meaningful empty state",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:00:58.480Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-fd67806365ed9864b991",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 30,
+          "column": 5
+        },
+        {
+          "title": "orders and logs pages render non-blank states",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7430,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:01:02.970Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-51deb4c6db8298c032ff",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 38,
+          "column": 5
+        },
+        {
+          "title": "settings page controls inspected safely",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "safety",
+                  "description": "Dangerous mutations disabled (TEST_SAFE_DASHBOARD_MUTATIONS!=true)"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3261,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:01:10.456Z",
+                  "annotations": [
+                    {
+                      "type": "safety",
+                      "description": "Dangerous mutations disabled (TEST_SAFE_DASHBOARD_MUTATIONS!=true)"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-53ed7b964a46b73b698a",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 47,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "dashboard-a11y-rtl-swarm.spec.ts",
+      "file": "dashboard-a11y-rtl-swarm.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "desktop",
+          "file": "dashboard-a11y-rtl-swarm.spec.ts",
+          "line": 14,
+          "column": 8,
+          "specs": [
+            {
+              "title": "a11y/rtl /dashboard/command-center",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 6928,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-02T01:01:16.363Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-a43ae60caf69eaef5c6c",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 6315,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-02T01:01:23.680Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-44cb2e3a194bce904e85",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 6673,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-02T01:01:30.123Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-af6bb8c737676784f2b8",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            }
+          ]
+        },
+        {
+          "title": "tablet",
+          "file": "dashboard-a11y-rtl-swarm.spec.ts",
+          "line": 14,
+          "column": 8,
+          "specs": [
+            {
+              "title": "a11y/rtl /dashboard/command-center",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4942,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-02T01:01:36.845Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-ee8c4d97c7d542db4065",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 5294,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-02T01:01:41.909Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-818cd54dcc7959fdc9ae",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3836,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-02T01:01:47.430Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-18328da78536343ee623",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            }
+          ]
+        },
+        {
+          "title": "mobile",
+          "file": "dashboard-a11y-rtl-swarm.spec.ts",
+          "line": 14,
+          "column": 8,
+          "specs": [
+            {
+              "title": "a11y/rtl /dashboard/command-center",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4464,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-02T01:01:51.303Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-d26abf187a70f9191c34",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4324,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-02T01:01:55.803Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-647b89535fffbdae373d",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4617,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-02T01:02:00.167Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-26b9ca1643a8277bd1e4",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "dashboard-api-health-swarm.spec.ts",
+      "file": "dashboard-api-health-swarm.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "health endpoint status ok",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-api-health-swarm",
+              "projectName": "dashboard-api-health-swarm",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1001,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:01:19.989Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eee53a811de157a8a0b3-9d8bf0e4a5f15098cdec",
+          "file": "dashboard-api-health-swarm.spec.ts",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "build-info endpoint has version metadata",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-api-health-swarm",
+              "projectName": "dashboard-api-health-swarm",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 241,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:01:21.308Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eee53a811de157a8a0b3-6d54124f6276697be13a",
+          "file": "dashboard-api-health-swarm.spec.ts",
+          "line": 19,
+          "column": 5
+        },
+        {
+          "title": "dashboard APIs return auth errors or success, never 500",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-api-health-swarm",
+              "projectName": "dashboard-api-health-swarm",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 988,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:01:21.818Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eee53a811de157a8a0b3-e11da4cffb8dc80ab8a3",
+          "file": "dashboard-api-health-swarm.spec.ts",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "title": "dashboard pages should not trigger 500 responses",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-api-health-swarm",
+              "projectName": "dashboard-api-health-swarm",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21405,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-02T01:01:22.986Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eee53a811de157a8a0b3-fadfd490d1b40f0085f1",
+          "file": "dashboard-api-health-swarm.spec.ts",
+          "line": 35,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-02T01:00:31.887Z",
+    "duration": 93136.482,
+    "expected": 24,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

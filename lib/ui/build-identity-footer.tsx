@@ -53,5 +53,5 @@ export function BuildIdentityFooter() {
     return `${info.appName} · v${info.version}${versionName} · commit ${commit}${tag} · built ${formatBuiltAt(info.builtAt)}${dirty}${mode}`;
   }, [failed, info]);
 
-  return <p className="text-center text-xs text-zinc-500">{text}</p>;
+  return <p className="text-center text-xs text-muted-foreground">{text}</p>;
 }

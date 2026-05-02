@@ -4,6 +4,76 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.4.1 |
+| Version Name | internal-whatsapp-n8n-pilot |
+| Task | phase-e-internal-whatsapp-n8n-pilot |
+| Release File | RELEASES/v2.4.1-internal-whatsapp-n8n-pilot.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.4.0 |
+| Version Name | port-smart-home-theme-to-youlya-admin-dashboard |
+| Task | port-smart-home-theme-to-youlya-admin-dashboard |
+| Release File | RELEASES/v2.4.0-port-smart-home-theme-to-youlya-admin-dashboard.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.3.0 |
+| Version Name | port-next-link-dashboard-system-to-youlya-commerce |
+| Task | port-next-link-dashboard-system-to-youlya-commerce |
+| Release File | RELEASES/v2.3.0-port-next-link-dashboard-system-to-youlya-commerce.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.2.1 |
+| Version Name | add-official-youlya-brand-logo-assets |
+| Task | add-official-youlya-brand-logo-assets |
+| Release File | RELEASES/v2.2.1-add-official-youlya-brand-logo-assets.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.2.0 |
+| Version Name | dashboard-v3-youlya-home-wear-redesign |
+| Task | dashboard-v3-youlya-home-wear-redesign |
+| Release File | RELEASES/v2.2.0-dashboard-v3-youlya-home-wear-redesign.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.1.1 |
+| Version Name | playwright-ux-swarm-signal-quality |
+| Task | fix-playwright-ux-swarm-signal-quality |
+| Release File | RELEASES/v2.1.1-playwright-ux-swarm-signal-quality.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.1.0 |
+| Version Name | dashboard-playwright-qa-swarm-and-n8n-manual-test-support |
+| Task | dashboard-playwright-qa-swarm-and-n8n-manual-test-support |
+| Release File | RELEASES/v2.1.0-dashboard-playwright-qa-swarm-and-n8n-manual-test-support.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.0.11 |
+| Version Name | dashboard-login-submit-and-session |
+| Task | fix-dashboard-login-submit-and-session |
+| Release File | RELEASES/v2.0.11-dashboard-login-submit-and-session.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.0.10 |
+| Version Name | add-dashboard-login-route |
+| Task | add-dashboard-login-route |
+| Release File | RELEASES/v2.0.10-add-dashboard-login-route.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.0.9 |
+| Version Name | schema-migration-reconciliation |
+| Task | schema-migration-reconciliation |
+| Release File | RELEASES/v2.0.9-schema-migration-reconciliation.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.0.8 |
 | Version Name | schema-migration-reconciliation |
 | Task | schema-migration-reconciliation |
@@ -52,7 +122,7 @@
 | Release File | RELEASES/v2.0.2-add-release-governance-versioning-rule.md |
 
 
-Version: `v2.0.8` (`schema-migration-reconciliation`)  
+Version: `v2.0.9` (`schema-migration-reconciliation`)  
 Date: `2026-05-01`
 
 Production-oriented WhatsApp commerce system for Youlya, built with Next.js App Router, Supabase, and Playwright scenario validation.
@@ -71,6 +141,11 @@ Production-oriented WhatsApp commerce system for Youlya, built with Next.js App 
   - Orders + safety view
   - Logs
   - Settings
+- Dashboard v3 redesign:
+  - YOULYA HOME WEAR brand palette and responsive shell
+  - Arabic/English toggle with RTL/LTR direction switching
+  - Theme toggle (light/dark) and componentized KPI/chart/empty states
+  - Design system doc: `docs/DASHBOARD_DESIGN_SYSTEM.md`
 
 ## Tech Stack
 
@@ -112,6 +187,14 @@ npm run test:e2e
 # E2E by prefix (optional)
 SCENARIO_PREFIX=CONV npm run test:e2e
 SCENARIO_PREFIX=DASH npm run test:e2e
+
+# Dashboard QA swarms (requires .env.playwright local file)
+npm run test:e2e:dashboard:ux
+npm run test:e2e:dashboard:functional
+npm run test:e2e:dashboard:a11y
+npm run test:e2e:dashboard:api
+npm run test:e2e:dashboard:swarm
+npm run qa:collect
 
 # Build identity + deploy automation
 npm run build:info
