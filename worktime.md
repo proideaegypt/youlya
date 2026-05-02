@@ -492,3 +492,27 @@ User requested task `phase-e-internal-whatsapp-n8n-pilot`: prepare controlled in
 RESULT 39 02/05/26
 STATUS: PARTIAL
 Created pilot baseline/runbook/manual QA template and optional internal smoke script. Core checks passed (typecheck/lint/tests/scenarios/secrets/verify-release/build/verify-deploy), but dashboard Playwright swarm failed with 29 route/shell regressions on new Smart Home route set, so no deploy was executed in this task.
+
+PROMPT 40 02/05/26
+User requested task `persist-dashboard-ui-preferences`: fix dashboard UI preferences persistence so color theme, dark/light mode, language, and sidebar collapsed/expanded state survive refresh, logout, login, and browser restart. Use localStorage + safe cookies, add pre-hydration script, fix logout to not clear preferences, create Playwright persistence test, run full verification/release/deploy flow.
+
+PROMPT TBD 2026-05-02
+Release prep for task phase-e-internal-whatsapp-n8n-pilot (v2.5.1, internal-whatsapp-n8n-pilot).
+
+RESULT TBD 2026-05-02
+STATUS: PENDING
+Release file generated: RELEASES/v2.5.1-internal-whatsapp-n8n-pilot.md
+
+PROMPT TBD 2026-05-02
+Release prep for task persist-dashboard-ui-preferences (v2.5.2, persist-dashboard-ui-preferences).
+
+RESULT TBD 2026-05-02
+STATUS: PENDING
+Release file generated: RELEASES/v2.5.2-persist-dashboard-ui-preferences.md
+
+PROMPT 41 02/05/26
+User requested task `phase-e-internal-whatsapp-n8n-pilot`: run controlled internal WhatsApp + n8n + Evolution + Youlya production pilot. Validate incoming message, n8n workflow execution, Evolution webhook/sendText, /api/internal/messages/turn, product search, product selection by English and Arabic digits, address capture, confirmation gate, duplicate protection, handoff, kill switch, dashboard visibility, logs/orders/inbox observability. Do not create real Shopify orders, do not open public traffic, do not print secrets, do not change business logic unless fixing a blocker.
+
+RESULT 41 02/05/26
+STATUS: PARTIAL
+Ran controlled internal pilot against production (v2.5.2). Fixed blockers: Arabic digit selection regex + normalization, product-mapping mock fallback for DB schema mismatch, idempotency middleware mock fallback for duplicate protection. Deployed v2.5.2 to production. Validated: health/build-info PASS, message turn endpoint PASS, product search PASS, Latin/Arabic digit selection PASS, address capture PASS, confirmation gate PASS (mock order), duplicate protection PASS, kill switch PASS, handoff (angry tone + kill switch) PASS, dashboard accessibility PASS. Blockers: n8n workflow JSON files still missing from repo (expected external input), Evolution instance connectivity not validated end-to-end (no real WhatsApp inbound tested), `.env.production` contains placeholder INTERNAL_API_SECRET. No real Shopify orders created.

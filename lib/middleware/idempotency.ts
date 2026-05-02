@@ -6,16 +6,26 @@ type CheckResult = {
   previousAction?: string;
 };
 
-export async function checkAndMarkProcessed(provider_message_id: string, conversation_id: string): Promise<CheckResult> {
-  const supabase = getSupabaseServerClient();
+function checkMockProcessed(provider_message_id: string): CheckResult {
+  const existing = getMockState().processedMessages.get(provider_message_id);
+  if (existing) return { alreadyProcessed: true, previousAction: existing.resultAction };
+  return { alreadyProcessed: false };
+}
 
+function markMockProcessed(provider_message_id: string, conversation_id: string) {
+  getMockState().processedMessages.set(provider_message_id, {
+    conversationId: conversation_id,
+    processedAt: new Date().toISOString(),
+  });
+}
+
+export async function checkAndMarkProcessed(provider_message_id: string, conversation_id: string): Promise<CheckResult> {
+  const mockResult = checkMockProcessed(provider_message_id);
+  if (mockResult.alreadyProcessed) return mockResult;
+
+  const supabase = getSupabaseServerClient();
   if (!supabase) {
-    const existing = getMockState().processedMessages.get(provider_message_id);
-    if (existing) return { alreadyProcessed: true, previousAction: existing.resultAction };
-    getMockState().processedMessages.set(provider_message_id, {
-      conversationId: conversation_id,
-      processedAt: new Date().toISOString(),
-    });
+    markMockProcessed(provider_message_id, conversation_id);
     return { alreadyProcessed: false };
   }
 
@@ -28,6 +38,7 @@ export async function checkAndMarkProcessed(provider_message_id: string, convers
 
     if (selectError) {
       console.error("idempotency select error", selectError);
+      markMockProcessed(provider_message_id, conversation_id);
       return { alreadyProcessed: false };
     }
 
@@ -42,27 +53,28 @@ export async function checkAndMarkProcessed(provider_message_id: string, convers
     });
     if (insertError) {
       console.error("idempotency insert error", insertError);
+      markMockProcessed(provider_message_id, conversation_id);
       return { alreadyProcessed: false };
     }
 
+    markMockProcessed(provider_message_id, conversation_id);
     return { alreadyProcessed: false };
   } catch (error) {
     console.error("idempotency checkAndMarkProcessed exception", error);
+    markMockProcessed(provider_message_id, conversation_id);
     return { alreadyProcessed: false };
   }
 }
 
 export async function updateProcessedAction(provider_message_id: string, result_action: string): Promise<void> {
-  const supabase = getSupabaseServerClient();
-
-  if (!supabase) {
-    const entry = getMockState().processedMessages.get(provider_message_id);
-    if (entry) {
-      entry.resultAction = result_action;
-      getMockState().processedMessages.set(provider_message_id, entry);
-    }
-    return;
+  const entry = getMockState().processedMessages.get(provider_message_id);
+  if (entry) {
+    entry.resultAction = result_action;
+    getMockState().processedMessages.set(provider_message_id, entry);
   }
+
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return;
 
   try {
     const { error } = await supabase

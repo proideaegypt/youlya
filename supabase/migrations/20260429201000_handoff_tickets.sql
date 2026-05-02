@@ -1,7 +1,7 @@
 create table if not exists public.handoff_tickets (
   id uuid primary key default gen_random_uuid(),
   store_id uuid not null references public.stores(id) on delete cascade,
-  conversation_id uuid not null,
+  conversation_id text not null,
   reason text not null,
   priority text not null,
   status text not null default 'open',

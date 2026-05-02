@@ -4,7 +4,7 @@
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
 - heading: الطلبات
-- bodyTextLength: 649
+- bodyTextLength: 696
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -15,7 +15,7 @@
 - screenshot: /root/youlya/qa-artifacts/tasks/2026-05-02/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/ux/screenshots/dashboard_orders.png
 - consoleErrorCount: 0
 - realFailedRequestCount: 0
-- ignoredNetworkNoiseCount: 8
+- ignoredNetworkNoiseCount: 4
 
 ## UX Issues
 
@@ -23,12 +23,8 @@
 
 ## Ignored Framework/Network Noise
 
-- [0] GET https://admin.youlya365.com/dashboard/command-center?_rsc=11hkw (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/inbox?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=11hkw (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/settings?_rsc=11hkw (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/orders?_rsc=10l79 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/inbox?_rsc=10l79 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/settings?_rsc=10l79 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=10l79 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/command-center?_rsc=10l79 (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/devices?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/inbox?_rsc=11hkw (net::ERR_ABORTED)
 

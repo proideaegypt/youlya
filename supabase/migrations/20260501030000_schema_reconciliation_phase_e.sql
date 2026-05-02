@@ -10,7 +10,7 @@ create extension if not exists pgcrypto;
 -- Incoming provider idempotency ledger used by lib/middleware/idempotency.ts
 create table if not exists public.processed_messages (
   provider_message_id text primary key,
-  conversation_id uuid not null,
+  conversation_id text not null,
   processed_at timestamptz not null default now(),
   result_action text
 );
@@ -51,7 +51,7 @@ end $$;
 -- Dead-letter capture table used by lib/services/dead-letter-service.ts
 create table if not exists public.dead_letter_log (
   id uuid primary key default gen_random_uuid(),
-  conversation_id uuid,
+  conversation_id text,
   provider_message_id text,
   raw_input jsonb not null,
   error_message text not null,
@@ -79,7 +79,7 @@ alter table public.ai_settings disable row level security;
 
 create table if not exists public.human_handoffs (
   id uuid primary key default gen_random_uuid(),
-  conversation_id uuid not null,
+  conversation_id text not null,
   reason text not null,
   requested_at timestamptz not null default now(),
   resolved_at timestamptz,

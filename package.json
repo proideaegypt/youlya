@@ -1,6 +1,6 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.5.0",
+  "version": "2.5.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -31,7 +31,7 @@
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "smart-home-pixel-parity-dashboard-port"
+    "youlyaVersionName": "internal-whatsapp-n8n-pilot"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

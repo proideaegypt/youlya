@@ -1,0 +1,23 @@
+{
+  "route": "/dashboard/statistics",
+  "heading": "الإحصائيات",
+  "hasH1": true,
+  "title": "YOULYA HOME WEAR Dashboard",
+  "bodyTextLength": 436,
+  "sidebarVisible": true,
+  "contentVisible": true,
+  "shellPresent": true,
+  "footerBuildIdentityVisible": false,
+  "hasArabicText": true,
+  "direction": "rtl",
+  "hasHorizontalOverflow": false,
+  "hasErrorOverlay": false,
+  "hasWeakEmptyState": false,
+  "consoleErrors": [],
+  "realFailedRequests": [],
+  "ignoredNetworkNoise": [],
+  "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-02/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/ux/screenshots/dashboard_statistics.png",
+  "uxIssues": [
+    "Missing build identity"
+  ]
+}

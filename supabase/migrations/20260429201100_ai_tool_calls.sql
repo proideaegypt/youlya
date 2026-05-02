@@ -1,7 +1,7 @@
 create table if not exists public.ai_tool_calls (
   id uuid primary key default gen_random_uuid(),
   store_id uuid not null references public.stores(id) on delete cascade,
-  conversation_id uuid not null,
+  conversation_id text not null,
   tool_name text not null,
   input_summary jsonb not null default '{}'::jsonb,
   output_summary jsonb not null default '{}'::jsonb,

@@ -13,7 +13,7 @@ ALTER TABLE ai_settings DISABLE ROW LEVEL SECURITY;
 
 CREATE TABLE IF NOT EXISTS human_handoffs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  conversation_id UUID NOT NULL,
+  conversation_id TEXT NOT NULL,
   reason TEXT NOT NULL,
   requested_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   resolved_at TIMESTAMPTZ,

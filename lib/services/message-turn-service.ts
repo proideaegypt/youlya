@@ -172,6 +172,10 @@ function resolveFallbackReply(text: string, language: string): string {
     : "I need a bit more detail to help you.";
 }
 
+function normalizeArabicDigits(str: string): string {
+  return str.replace(/[٠-٩]/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0x0660 + 0x0030));
+}
+
 function buildIdempotencyKey(input: InternalMessageTurnInput): string {
   const providerMessageId = input.provider_message_id ?? "missing-provider-message-id";
   return crypto.createHash("sha256").update(`${input.store_id}:${input.conversation_id}:${providerMessageId}`).digest("hex");
@@ -511,7 +515,8 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
   }
 
   if (intent === "SELECT_PRODUCT") {
-    const parsedSlot = Number(input.text.match(/(?:رقم|number|#)\s*(\d+)/i)?.[1] ?? "0");
+    const slotMatch = input.text.match(/(?:رقم|number|#)\s*([0-9٠-٩]+)/i);
+    const parsedSlot = Number(normalizeArabicDigits(slotMatch?.[1] ?? "0"));
     const parsedSize = input.text.match(/\b(3XL|XL|L|M|S)\b/i)?.[1];
     let resolvedProduct: { title: string; variant_id: string; price: number } | null = null;
     if (parsedSlot > 0) {

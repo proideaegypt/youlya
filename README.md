@@ -4,6 +4,20 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.5.2 |
+| Version Name | persist-dashboard-ui-preferences |
+| Task | persist-dashboard-ui-preferences |
+| Release File | RELEASES/v2.5.2-persist-dashboard-ui-preferences.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.5.1 |
+| Version Name | internal-whatsapp-n8n-pilot |
+| Task | phase-e-internal-whatsapp-n8n-pilot |
+| Release File | RELEASES/v2.5.1-internal-whatsapp-n8n-pilot.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.5.0 |
 | Version Name | smart-home-pixel-parity-dashboard-port |
 | Task | smart-home-pixel-parity-dashboard-port |

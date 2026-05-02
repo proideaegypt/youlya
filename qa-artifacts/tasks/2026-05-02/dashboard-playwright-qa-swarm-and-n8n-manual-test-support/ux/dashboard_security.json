@@ -1,0 +1,23 @@
+{
+  "route": "/dashboard/security",
+  "heading": "الأمان",
+  "hasH1": true,
+  "title": "YOULYA HOME WEAR Dashboard",
+  "bodyTextLength": 639,
+  "sidebarVisible": true,
+  "contentVisible": true,
+  "shellPresent": true,
+  "footerBuildIdentityVisible": false,
+  "hasArabicText": true,
+  "direction": "rtl",
+  "hasHorizontalOverflow": false,
+  "hasErrorOverlay": false,
+  "hasWeakEmptyState": false,
+  "consoleErrors": [],
+  "realFailedRequests": [],
+  "ignoredNetworkNoise": [],
+  "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-02/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/ux/screenshots/dashboard_security.png",
+  "uxIssues": [
+    "Missing build identity"
+  ]
+}

@@ -21,7 +21,7 @@ const productKeywords = [
   "do you have",
 ];
 
-const selectPatterns = [/رقم\s*\d+/i, /#\s*\d+/i, /number\s*\d+/i];
+const selectPatterns = [/رقم\s*[0-9٠-٩]+/i, /#\s*[0-9٠-٩]+/i, /number\s*[0-9٠-٩]+/i];
 const confirmPatterns = [/أيوه/i, /تأكيد/i, /\byes\b/i, /\bconfirm\b/i, /go ahead/i, /أكدي/i];
 const cancelPatterns = [/الغاء/i, /إلغاء/i, /مش عايز/i, /مش عايزة/i, /\bcancel\b/i, /stop/i];
 const orderStatusPatterns = [/طلبي/i, /أوردر/i, /order status/i, /where is my order/i, /tracking/i, /فين/i];

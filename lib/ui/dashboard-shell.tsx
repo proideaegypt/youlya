@@ -4,6 +4,16 @@ import { useEffect, useState } from "react";
 import { Sidebar } from "@/lib/ui/dashboard-sidebar";
 import { Topbar } from "@/lib/ui/dashboard-topbar";
 import { BuildIdentityFooter } from "@/lib/ui/build-identity-footer";
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
+import {
+  YOULYA_LANGUAGE_KEY,
+  getStoredPreference,
+  setStoredPreference,
+  setPreferenceCookie,
+  COOKIE_LANGUAGE,
+  applyDocumentLanguage,
+  isValidLanguage,
+} from "@/lib/ui/preferences";
 
 export function DashboardShell({
   children,
@@ -15,19 +25,24 @@ export function DashboardShell({
 }) {
   const [language, setLanguage] = useState<"ar" | "en">(() => {
     if (typeof window === "undefined") return "ar";
-    const saved = window.localStorage.getItem("youlya_lang");
-    return saved === "en" ? "en" : "ar";
+    const saved = getStoredPreference(YOULYA_LANGUAGE_KEY, "");
+    return isValidLanguage(saved) ? saved : "ar";
   });
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    window.localStorage.setItem("youlya_lang", language);
-    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
-    document.documentElement.lang = language === "ar" ? "ar" : "en";
+    setStoredPreference(YOULYA_LANGUAGE_KEY, language);
+    setPreferenceCookie(COOKIE_LANGUAGE, language);
+    applyDocumentLanguage(language);
   }, [language]);
 
   const handleLogout = async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
+    try {
+      const supabase = getSupabaseBrowserClient();
+      await supabase.auth.signOut();
+    } catch {
+      // ignore sign-out errors; still redirect
+    }
     window.location.href = "/login";
   };
 

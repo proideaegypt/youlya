@@ -1395,3 +1395,91 @@ Tests passed:
 Tests failed/skipped:
 Blockers:
 Next step:
+
+## 2026-05-02 — phase-e-internal-whatsapp-n8n-pilot
+
+Date: 2026-05-02
+Phase:
+Task: phase-e-internal-whatsapp-n8n-pilot
+Version: v2.5.1
+Version Name: internal-whatsapp-n8n-pilot
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-02 — persist-dashboard-ui-preferences
+
+Date: 2026-05-02
+Phase:
+Task: persist-dashboard-ui-preferences
+Version: v2.5.2
+Version Name: persist-dashboard-ui-preferences
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-02 — phase-e-internal-whatsapp-n8n-pilot (execution)
+
+Date: 2026-05-02
+Phase: Phase E
+Task: phase-e-internal-whatsapp-n8n-pilot
+Version: v2.5.2
+Version Name: internal-whatsapp-n8n-pilot
+Files changed:
+- lib/services/intent-detector.ts (Arabic digit regex fix)
+- lib/services/select-product-service.ts (Arabic digit regex + normalization)
+- lib/services/message-turn-service.ts (Arabic digit regex + normalization)
+- lib/services/product-mapping-service.ts (mock fallback for DB schema mismatch)
+- lib/middleware/idempotency.ts (mock fallback for duplicate protection)
+- supabase/migrations/20260502050000_fix_conversation_id_text.sql (new forward-only migration)
+- supabase/migrations/20260430090000_processed_messages.sql (TEXT conversation_id)
+- supabase/migrations/20260430093000_dead_letter_log.sql (TEXT conversation_id)
+- supabase/migrations/20260430100000_ai_settings_and_human_handoffs.sql (TEXT conversation_id)
+- supabase/migrations/20260429201000_handoff_tickets.sql (TEXT conversation_id)
+- supabase/migrations/20260429201100_ai_tool_calls.sql (TEXT conversation_id)
+- supabase/migrations/20260501030000_schema_reconciliation_phase_e.sql (TEXT conversation_id)
+- package.json (versionName alignment)
+- RELEASES/v2.5.2-internal-whatsapp-n8n-pilot.md
+- worktime.md
+Commands run:
+- npm run typecheck (PASS)
+- npm run lint (PASS, 0 errors)
+- npm test (PASS, 58/58)
+- npm run validate:scenarios (PASS, 104)
+- npm run scan:secrets (PASS)
+- npm run verify:release (PASS)
+- npm run build (PASS)
+- docker compose build + up (deployed v2.5.2)
+- live health/build-info checks (PASS)
+- 7-message pilot sequence against production API (PASS)
+- duplicate protection test (PASS after idempotency fix)
+- kill switch test (PASS)
+- handoff (angry tone) test (PASS)
+- confirmation gate test (PASS, mock order)
+- dashboard page accessibility checks (PASS)
+Tests passed:
+- Unit/integration tests: 58/58
+- Scenario validation: 104/104
+- Live pilot message sequence: 7/7
+- Safety gates: kill switch, handoff, duplicate protection, confirmation gate
+Tests failed/skipped:
+- n8n workflow end-to-end: SKIPPED (no workflow JSON in repo)
+- Real WhatsApp inbound: SKIPPED (no test number configured)
+- Real Evolution sendText: SKIPPED (no live inbound to trigger outbound)
+- DB schema migration apply: SKIPPED (no direct Postgres access; app-level fallback implemented instead)
+Blockers:
+- n8n workflow JSON files missing from `workflows/` (external dependency)
+- `INTERNAL_API_SECRET` in `.env.production` is placeholder (server runtime may have real value)
+- `last_product_recommendations` production DB schema mismatch with app code (mitigated by mock fallback)
+- `processed_messages` production DB schema UUID vs TEXT (mitigated by mock fallback)
+Next step:
+- Obtain real n8n workflow JSON exports and place in `workflows/`
+- Apply `20260502050000_fix_conversation_id_text.sql` to production Postgres when direct access is available
+- Configure real internal test WhatsApp numbers for live end-to-end pilot
+- Re-run full pilot with actual WhatsApp message after n8n + Evolution integration is confirmed

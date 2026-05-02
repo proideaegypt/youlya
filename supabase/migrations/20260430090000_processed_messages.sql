@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS processed_messages (
   provider_message_id TEXT PRIMARY KEY,
-  conversation_id UUID NOT NULL,
+  conversation_id TEXT NOT NULL,
   processed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   result_action TEXT
 );

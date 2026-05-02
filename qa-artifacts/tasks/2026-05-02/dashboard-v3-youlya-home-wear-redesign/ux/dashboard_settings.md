@@ -23,12 +23,12 @@
 
 ## Ignored Framework/Network Noise
 
+- [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=1c9xt (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/command-center?_rsc=1c9xt (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/orders?_rsc=1c9xt (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/inbox?_rsc=1c9xt (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/settings?_rsc=1r8oa (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/inbox?_rsc=1r8oa (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/orders?_rsc=1r8oa (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/inbox?_rsc=1r8oa (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=1r8oa (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/command-center?_rsc=1r8oa (net::ERR_ABORTED)
 

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS dead_letter_log (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  conversation_id UUID,
+  conversation_id TEXT,
   provider_message_id TEXT,
   raw_input JSONB NOT NULL,
   error_message TEXT NOT NULL,

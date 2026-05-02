@@ -60,17 +60,21 @@ function toRecommendationItems(recs: ProductRecommendationLegacy[]): ProductSlot
   }));
 }
 
+function saveToMockState(conversationId: string, items: ProductSlot[]) {
+  const mockItems = toLegacyRecommendations(items);
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+  getMockState().mappings.set(mappingKey("youlya", conversationId, conversationId), {
+    recommendations: mockItems,
+    createdAt: now.toISOString(),
+    expiresAt: expiresAt.toISOString(),
+  });
+}
+
 export async function saveRecommendations(conversationId: string, items: ProductSlot[]): Promise<void> {
   try {
+    saveToMockState(conversationId, items);
     if (!hasSupabaseEnv()) {
-      const mockItems = toLegacyRecommendations(items);
-      const now = new Date();
-      const expiresAt = new Date(now.getTime() + 2 * 60 * 60 * 1000);
-      getMockState().mappings.set(mappingKey("youlya", conversationId, conversationId), {
-        recommendations: mockItems,
-        createdAt: now.toISOString(),
-        expiresAt: expiresAt.toISOString(),
-      });
       return;
     }
 
@@ -98,41 +102,45 @@ export async function saveRecommendations(conversationId: string, items: Product
   }
 }
 
+function readMockState(conversationId: string): ProductSlot[] {
+  const entry =
+    getMockState().mappings.get(mappingKey("youlya", conversationId, conversationId)) ??
+    getMockState().mappings.get(mappingKey("youlya", conversationId, "u1"));
+  if (!entry) return [];
+  type MockRec = {
+    index?: number;
+    slot_number?: number;
+    productId?: string;
+    shopifyProductId?: string;
+    shopify_variant_id?: string;
+    shopifyProductTitle?: string;
+    title?: string;
+    price?: number;
+    imageUrl?: string;
+    image_url?: string;
+    size_asked?: string;
+    variantOptions?: Array<{ id?: string; price?: number }>;
+  };
+  const mockRecs = entry.recommendations as unknown as MockRec[];
+  return (mockRecs ?? []).map((r) => ({
+    slot_number: r.index ?? r.slot_number ?? 0,
+    shopify_product_id: r.productId ?? r.shopifyProductId,
+    shopify_variant_id: r.variantOptions?.[0]?.id ?? r.shopify_variant_id,
+    title: r.shopifyProductTitle ?? r.title ?? "",
+    price: Number(r.variantOptions?.[0]?.price ?? r.price ?? 0),
+    image_url: r.imageUrl ?? r.image_url,
+    size_asked: r.size_asked,
+  })) as ProductSlot[];
+}
+
 export async function getRecommendations(conversationId: string): Promise<ProductSlot[]> {
   try {
     if (!hasSupabaseEnv()) {
-      const entry =
-        getMockState().mappings.get(mappingKey("youlya", conversationId, conversationId)) ??
-        getMockState().mappings.get(mappingKey("youlya", conversationId, "u1"));
-      if (!entry) return [];
-      type MockRec = {
-        index?: number;
-        slot_number?: number;
-        productId?: string;
-        shopifyProductId?: string;
-        shopify_variant_id?: string;
-        shopifyProductTitle?: string;
-        title?: string;
-        price?: number;
-        imageUrl?: string;
-        image_url?: string;
-        size_asked?: string;
-        variantOptions?: Array<{ id?: string; price?: number }>;
-      };
-      const mockRecs = entry.recommendations as unknown as MockRec[];
-      return (mockRecs ?? []).map((r) => ({
-        slot_number: r.index ?? r.slot_number ?? 0,
-        shopify_product_id: r.productId ?? r.shopifyProductId,
-        shopify_variant_id: r.variantOptions?.[0]?.id ?? r.shopify_variant_id,
-        title: r.shopifyProductTitle ?? r.title ?? "",
-        price: Number(r.variantOptions?.[0]?.price ?? r.price ?? 0),
-        image_url: r.imageUrl ?? r.image_url,
-        size_asked: r.size_asked,
-      })) as ProductSlot[];
+      return readMockState(conversationId);
     }
 
     const client = getSupabaseServerClient();
-    if (!client) return [];
+    if (!client) return readMockState(conversationId);
     const { data, error } = await client
       .from("last_product_recommendations")
       .select("slot_number,shopify_product_id,shopify_variant_id,title,price,image_url,size_asked")
@@ -140,10 +148,10 @@ export async function getRecommendations(conversationId: string): Promise<Produc
       .order("slot_number", { ascending: true });
     if (error || !data) {
       if (error) console.error("getRecommendations failed", error.message);
-      return [];
+      return readMockState(conversationId);
     }
 
-    return data.map((row) => ({
+    const dbResults = data.map((row) => ({
       slot_number: Number(row.slot_number),
       shopify_product_id: row.shopify_product_id ? String(row.shopify_product_id) : undefined,
       shopify_variant_id: row.shopify_variant_id ? String(row.shopify_variant_id) : undefined,
@@ -152,9 +160,10 @@ export async function getRecommendations(conversationId: string): Promise<Produc
       image_url: row.image_url ? String(row.image_url) : undefined,
       size_asked: row.size_asked ? String(row.size_asked) : undefined,
     }));
+    return dbResults.length > 0 ? dbResults : readMockState(conversationId);
   } catch (error) {
     console.error("getRecommendations failed", error);
-    return [];
+    return readMockState(conversationId);
   }
 }
 

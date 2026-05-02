@@ -19,6 +19,14 @@ import {
   Sparkles,
 } from "lucide-react";
 import { YoulyaLogo } from "@/lib/ui/youlya-logo";
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
+import {
+  YOULYA_SIDEBAR_KEY,
+  COOKIE_SIDEBAR,
+  getStoredPreference,
+  setStoredPreference,
+  setPreferenceCookie,
+} from "@/lib/ui/preferences";
 
 type NavItem = {
   href: string;
@@ -51,19 +59,26 @@ export function Sidebar({
   const pathname = usePathname();
   const [open, setOpen] = useState(() => {
     if (typeof window === "undefined") return true;
-    const saved = localStorage.getItem("youlya-sidebar-open");
-    return saved ? saved === "1" : true;
+    const saved = getStoredPreference(YOULYA_SIDEBAR_KEY, "");
+    return saved === "true" ? false : true;
   });
 
   useEffect(() => {
-    localStorage.setItem("youlya-sidebar-open", open ? "1" : "0");
+    const collapsed = open ? "false" : "true";
+    setStoredPreference(YOULYA_SIDEBAR_KEY, collapsed);
+    setPreferenceCookie(COOKIE_SIDEBAR, collapsed);
   }, [open]);
 
   const handleLogout = async () => {
     if (onLogout) {
       onLogout();
     } else {
-      await fetch("/api/auth/logout", { method: "POST" });
+      try {
+        const supabase = getSupabaseBrowserClient();
+        await supabase.auth.signOut();
+      } catch {
+        // ignore
+      }
       window.location.href = "/login";
     }
   };

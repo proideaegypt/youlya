@@ -3,7 +3,7 @@
   "heading": "صندوق الرسائل",
   "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 418,
+  "bodyTextLength": 888,
   "sidebarVisible": true,
   "contentVisible": true,
   "shellPresent": true,
@@ -17,19 +17,7 @@
   "realFailedRequests": [],
   "ignoredNetworkNoise": [
     {
-      "url": "https://admin.youlya365.com/dashboard/logs?_rsc=1n4r8",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
       "url": "https://admin.youlya365.com/dashboard/settings?_rsc=1n4r8",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/orders?_rsc=1n4r8",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
@@ -41,7 +29,13 @@
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/logs?_rsc=352w6",
+      "url": "https://admin.youlya365.com/dashboard/logs?_rsc=1n4r8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=352w6",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
@@ -53,7 +47,19 @@
       "statusText": "net::ERR_ABORTED"
     },
     {
+      "url": "https://admin.youlya365.com/dashboard/logs?_rsc=352w6",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
       "url": "https://admin.youlya365.com/dashboard/settings?_rsc=352w6",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/command-center?_rsc=352w6",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"

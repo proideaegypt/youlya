@@ -4,7 +4,7 @@
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
 - heading: صندوق الرسائل
-- bodyTextLength: 418
+- bodyTextLength: 888
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -15,7 +15,7 @@
 - screenshot: /root/youlya/qa-artifacts/tasks/2026-05-02/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_inbox.png
 - consoleErrorCount: 0
 - realFailedRequestCount: 0
-- ignoredNetworkNoiseCount: 7
+- ignoredNetworkNoiseCount: 8
 
 ## UX Issues
 
@@ -23,11 +23,12 @@
 
 ## Ignored Framework/Network Noise
 
-- [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=1n4r8 (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/settings?_rsc=1n4r8 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/orders?_rsc=1n4r8 (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/command-center?_rsc=1n4r8 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=352w6 (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=1n4r8 (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/inbox?_rsc=352w6 (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/orders?_rsc=352w6 (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=352w6 (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/settings?_rsc=352w6 (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/command-center?_rsc=352w6 (net::ERR_ABORTED)
 

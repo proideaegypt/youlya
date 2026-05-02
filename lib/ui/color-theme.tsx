@@ -1,6 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  COOKIE_COLOR,
+  YOULYA_COLOR_KEY,
+  getStoredPreference,
+  setStoredPreference,
+  setPreferenceCookie,
+  applyDocumentColorTheme,
+  isValidColorTheme,
+  type ValidColor,
+} from "@/lib/ui/preferences";
 
 const BRANDS = [
   { key: "pink", label: "Pink", color: "#efb6c1" },
@@ -12,19 +22,21 @@ const BRANDS = [
 ] as const;
 
 export function ColorThemePicker() {
-  const [current, setCurrent] = useState<string>("pink");
+  const [current, setCurrent] = useState<ValidColor>(() => {
+    const saved = getStoredPreference(YOULYA_COLOR_KEY, "");
+    return isValidColorTheme(saved) ? saved : "pink";
+  });
 
   useEffect(() => {
-    const saved = typeof window !== "undefined" ? localStorage.getItem("youlya-brand") || "pink" : "pink";
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setCurrent(saved);
-    document.documentElement.setAttribute("data-brand", saved);
-  }, []);
+    applyDocumentColorTheme(current);
+  }, [current]);
 
   function setBrand(key: string) {
+    if (!isValidColorTheme(key)) return;
     setCurrent(key);
-    document.documentElement.setAttribute("data-brand", key);
-    localStorage.setItem("youlya-brand", key);
+    applyDocumentColorTheme(key);
+    setStoredPreference(YOULYA_COLOR_KEY, key);
+    setPreferenceCookie(COOKIE_COLOR, key);
   }
 
   return (

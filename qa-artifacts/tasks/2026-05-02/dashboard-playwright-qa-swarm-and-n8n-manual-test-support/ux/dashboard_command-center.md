@@ -3,8 +3,8 @@
 - route: /dashboard/command-center
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
-- heading: لوحة القيادة
-- bodyTextLength: 765
+- heading: أهلاً بك في YOULYA HOME WEAR
+- bodyTextLength: 1224
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -23,7 +23,7 @@
 
 ## Ignored Framework/Network Noise
 
-- [0] GET https://admin.youlya365.com/dashboard/settings?_rsc=1sjum (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=1sjum (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/profile?_rsc=1sjum (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/orders?_rsc=1sjum (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/inbox?_rsc=1sjum (net::ERR_ABORTED)
 

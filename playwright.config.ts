@@ -44,5 +44,11 @@ export default defineConfig({
       dependencies: ["auth-setup"],
       use: { storageState: "tests/playwright/.auth/admin.json" },
     },
+    {
+      name: "dashboard-preferences-persistence",
+      testMatch: /dashboard-preferences-persistence\.spec\.ts/,
+      dependencies: ["auth-setup"],
+      use: { storageState: "tests/playwright/.auth/admin.json" },
+    },
   ],
 });

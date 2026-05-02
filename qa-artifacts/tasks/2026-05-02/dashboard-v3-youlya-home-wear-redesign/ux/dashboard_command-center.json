@@ -23,13 +23,37 @@
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=1sjum",
+      "url": "https://admin.youlya365.com/dashboard/settings?_rsc=1sjum",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/settings?_rsc=1sjum",
+      "url": "https://admin.youlya365.com/dashboard/logs?_rsc=1sjum",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/orders?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/settings?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/logs?_rsc=h7hf8",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
