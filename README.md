@@ -4,6 +4,13 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.8.0 |
+| Version Name | products-intelligence-page-with-photos-ai-orders-and-channel-insights |
+| Task | products-intelligence-page-with-photos-ai-orders-and-channel-insights |
+| Release File | RELEASES/v2.8.0-products-intelligence-page-with-photos-ai-orders-and-channel-insights.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.7.1 |
 | Version Name | activate-n8n-daily-shopify-product-sync |
 | Task | activate-n8n-daily-shopify-product-sync |
@@ -357,7 +364,20 @@ npm run deploy:watch
 
 ## Release
 
-Current release tag target: `v2.7.0`
+Current release tag target: `v2.8.0`
+
+### v2.8.0 (products-intelligence-page-with-photos-ai-orders-and-channel-insights)
+
+- Added Products Intelligence dashboard at `/dashboard/products-intelligence`
+- Sidebar menu item: ذكاء المنتجات / Products Intelligence with Brain icon
+- Read-only API routes: overview, products, channels, product/[id] detail
+- Product Gallery: photo cards with variant counts, AI visibility, availability, missing SKU, OOS
+- Deterministic AI notes from metrics (no LLM calls)
+- Channel Performance and Most Ordered by AI with meaningful empty states
+- Product Detail Drawer: variants matrix, AI visibility reasons, order summary
+- KPIs: total products/variants, AI-visible, missing SKU, OOS, intelligence score
+- Playwright swarm updated for new route and APIs
+- No Shopify mutations, no fake data, no PII exposure
 
 ### v2.7.0 (products-sync-observability-dashboard)
 
