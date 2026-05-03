@@ -343,7 +343,40 @@ npm run deploy:watch
 
 ## Release
 
-Current release tag target: `v2.6.4`
+Current release tag target: `v2.6.10`
+
+### v2.6.10 (run-approved-shopify-cache-sync-and-validate-product-search)
+
+- Shopify product cache sync proven read-only and executed safely
+- Product search now uses Supabase cache with exact Shopify product IDs and variant IDs
+- Added `shopify:assert-readonly` guard script for automated safety checks
+- Added n8n daily workflow and runtime env tooling
+- Fixed product mapping mock fallback and schema compatibility
+- Updated dashboard Playwright swarm and QA artifacts
+
+### v2.6.9 (run-first-shopify-product-cache-sync-and-validate-search)
+
+- First controlled Shopify product cache sync into Supabase
+- Verified product search cache returns exact Shopify product IDs and variant IDs
+- Verified selection mapping resolves exact Shopify variant IDs from persisted recommendations
+
+### v2.6.8 (prove-shopify-sync-is-read-only-before-first-full-sync)
+
+- Created automated read-only guard (`scripts/assert-shopify-sync-readonly.mjs`)
+- Statically scanned all Shopify sync files for forbidden mutations
+- Confirmed adapter uses GraphQL `query GetProducts` only
+- Confirmed dry-run mode reads Shopify with zero Supabase writes
+
+### v2.6.7 (stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages)
+
+- Added guard node before Normalize Message to stop WhatsApp reply loops
+- Hardened Normalize Message against outgoing Evolution messages
+- Fixed Prepare Reply to compute `number` before `shouldSend`
+
+### v2.6.6 (n8n-send-text-blank-number-final)
+
+- Hardened `Youlya WhatsApp Main` so Normalize Message reads actual Evolution webhook payload
+- Prepare Reply guarantees a `number` value for Send Text node
 
 ### v2.6.4 (register-youlya-n8n-production-webhook)
 
