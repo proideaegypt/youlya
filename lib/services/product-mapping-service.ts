@@ -92,7 +92,6 @@ export async function saveRecommendations(conversationId: string, items: Product
       price: item.price,
       image_url: item.image_url ?? null,
       size_asked: item.size_asked ?? null,
-      updated_at: new Date().toISOString(),
     }));
 
     const { error } = await client.from("last_product_recommendations").insert(rows);
@@ -113,23 +112,25 @@ function readMockState(conversationId: string): ProductSlot[] {
     productId?: string;
     shopifyProductId?: string;
     shopify_variant_id?: string;
+    shopifyVariantId?: string;
     shopifyProductTitle?: string;
     title?: string;
     price?: number;
     imageUrl?: string;
     image_url?: string;
     size_asked?: string;
-    variantOptions?: Array<{ id?: string; price?: number }>;
+    size?: string;
+    variantOptions?: Array<{ id?: string; shopifyVariantId?: string; price?: number; size?: string }>;
   };
   const mockRecs = entry.recommendations as unknown as MockRec[];
   return (mockRecs ?? []).map((r) => ({
     slot_number: r.index ?? r.slot_number ?? 0,
     shopify_product_id: r.productId ?? r.shopifyProductId,
-    shopify_variant_id: r.variantOptions?.[0]?.id ?? r.shopify_variant_id,
+    shopify_variant_id: r.variantOptions?.[0]?.shopifyVariantId ?? r.variantOptions?.[0]?.id ?? r.shopify_variant_id,
     title: r.shopifyProductTitle ?? r.title ?? "",
     price: Number(r.variantOptions?.[0]?.price ?? r.price ?? 0),
     image_url: r.imageUrl ?? r.image_url,
-    size_asked: r.size_asked,
+    size_asked: r.size_asked ?? r.variantOptions?.[0]?.size,
   })) as ProductSlot[];
 }
 

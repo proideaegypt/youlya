@@ -4,6 +4,27 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.6.10 |
+| Version Name | run-approved-shopify-cache-sync-and-validate-product-search |
+| Task | run-approved-shopify-cache-sync-and-validate-product-search |
+| Release File | RELEASES/v2.6.10-run-approved-shopify-cache-sync-and-validate-product-search.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.6.9 |
+| Version Name | run-first-shopify-product-cache-sync-and-validate-search |
+| Task | run-first-shopify-product-cache-sync-and-validate-search |
+| Release File | RELEASES/v2.6.9-run-first-shopify-product-cache-sync-and-validate-search.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.6.8 |
+| Version Name | prove-shopify-sync-is-read-only-before-first-full-sync |
+| Task | prove-shopify-sync-is-read-only-before-first-full-sync |
+| Release File | RELEASES/v2.6.8-prove-shopify-sync-is-read-only-before-first-full-sync.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.6.7 |
 | Version Name | stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages |
 | Task | stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages |

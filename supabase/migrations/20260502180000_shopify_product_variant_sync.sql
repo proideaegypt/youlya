@@ -72,7 +72,7 @@ end $$;
 create table if not exists public.product_variants (
   id uuid primary key default gen_random_uuid(),
   store_id text not null default 'youlya',
-  product_id uuid references public.products(id) on delete cascade,
+  product_id uuid references public.products(id),
   shopify_variant_id text not null,
   shopify_variant_gid text,
   shopify_product_id text not null,

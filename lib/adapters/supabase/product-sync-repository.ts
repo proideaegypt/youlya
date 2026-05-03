@@ -20,7 +20,6 @@ export type VariantSyncRow = {
   product_id?: string;
   shopify_variant_id: string;
   shopify_variant_gid?: string;
-  shopify_product_id: string;
   sku?: string;
   barcode?: string;
   variant_title?: string;
@@ -131,10 +130,10 @@ export class ProductSyncRepository {
       shopify_handle: p.handle,
       vendor: p.vendor,
       product_type: p.productType,
-      status: p.status,
+      status: p.status?.toLowerCase() || "active",
       tags: p.tags,
       image_url: p.imageUrl,
-      ai_visible: p.status === "active",
+      ai_visible: p.status?.toLowerCase() === "active",
       last_synced_at: new Date().toISOString(),
     }));
 
@@ -170,7 +169,6 @@ export class ProductSyncRepository {
         product_id: productIdMap.get(v.shopifyProductId),
         shopify_variant_id: v.shopifyVariantId,
         shopify_variant_gid: v.shopifyVariantGid,
-        shopify_product_id: v.shopifyProductId,
         sku: v.sku,
         barcode: v.barcode,
         variant_title: v.title,

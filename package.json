@@ -1,6 +1,6 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.6.7",
+  "version": "2.6.10",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -22,6 +22,7 @@
     "n8n:list": "node scripts/n8n-list-workflows.mjs",
     "n8n:export": "node scripts/n8n-export-workflows.mjs",
     "validate:n8n": "node scripts/validate-n8n-workflows.mjs",
+    "shopify:assert-readonly": "node scripts/assert-shopify-sync-readonly.mjs",
     "shopify:sync": "npx tsx scripts/sync-shopify-products.ts --mode full",
     "shopify:sync:inventory": "npx tsx scripts/sync-shopify-products.ts --mode inventory",
     "shopify:sync:dry-run": "npx tsx scripts/sync-shopify-products.ts --mode full --dry-run",
@@ -38,7 +39,7 @@
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages"
+    "youlyaVersionName": "run-approved-shopify-cache-sync-and-validate-product-search"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

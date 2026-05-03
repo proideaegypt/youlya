@@ -1837,3 +1837,45 @@ Blockers:
 - None for the loop-guard fix.
 Next step:
 - Optional manual real WhatsApp message if final end-to-end confirmation is needed.
+
+## 2026-05-03 — prove-shopify-sync-is-read-only-before-first-full-sync
+
+Date: 2026-05-03
+Phase:
+Task: prove-shopify-sync-is-read-only-before-first-full-sync
+Version: v2.6.8
+Version Name: prove-shopify-sync-is-read-only-before-first-full-sync
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-03 — run-first-shopify-product-cache-sync-and-validate-search
+
+Date: 2026-05-03
+Phase:
+Task: run-first-shopify-product-cache-sync-and-validate-search
+Version: v2.6.9
+Version Name: run-first-shopify-product-cache-sync-and-validate-search
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-03 — run-approved-shopify-cache-sync-and-validate-product-search
+
+Date: 2026-05-03
+Phase:
+Task: run-approved-shopify-cache-sync-and-validate-product-search
+Version: v2.6.10
+Version Name: run-approved-shopify-cache-sync-and-validate-product-search
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:

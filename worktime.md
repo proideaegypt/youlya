@@ -712,3 +712,46 @@ STATUS: PASS
 TASK: stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages
 Summary: Added a guard node before Normalize Message, hardened Normalize Message against outgoing Evolution messages, fixed Prepare Reply to compute `number` before `shouldSend`, and verified synthetic executions `9106`/`9107` stopped at the guard while `9108` reached Send Text with `number: 201000000000`.
 Release file generated: RELEASES/v2.6.7-stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages.md
+
+PROMPT TBD 2026-05-03
+Release prep for task prove-shopify-sync-is-read-only-before-first-full-sync (v2.6.8, prove-shopify-sync-is-read-only-before-first-full-sync).
+
+RESULT TBD 2026-05-03
+STATUS: PENDING
+Release file generated: RELEASES/v2.6.8-prove-shopify-sync-is-read-only-before-first-full-sync.md
+
+PROMPT 52 03/05/26
+TASK: prove-shopify-sync-is-read-only-before-first-full-sync
+GOAL: Before running the first Shopify product cache sync, prove that the sync cannot delete, update, or mutate Shopify products. The only allowed Shopify operation is reading products/variants/inventory from Shopify and writing/upserting to Supabase cache.
+
+RESULT 52 03/05/26
+STATUS: PASS
+TASK: prove-shopify-sync-is-read-only-before-first-full-sync
+READONLY GUARD: PASS (scripts/assert-shopify-sync-readonly.mjs created, all 5 sync files clean)
+FORBIDDEN MUTATIONS: None found
+SHOPIFY ADAPTER: GraphQL query GetProducts only, no mutations
+SYNC SERVICE: Reads Shopify, writes only to Supabase cache; dryRun=true skips all writes
+DRY RUN: PASS (252 products, 1082 variants read, zero writes)
+DB BEFORE: 252 products, 1082 variants, last_synced_at 2026-05-03T17:54:41.161+00:00
+FILES CHANGED: scripts/assert-shopify-sync-readonly.mjs (new), package.json (+shopify:assert-readonly), RELEASES/v2.6.8-*.md, qa-artifacts/tasks/2026-05-03/prove-shopify-sync-is-read-only-before-first-full-sync/RESULT.md
+RELEASE: v2.6.8 verified
+FULL SYNC: Blocked pending explicit approval
+NEXT STEP: Await explicit owner approval before running npm run shopify:sync
+
+PROMPT TBD 2026-05-03
+Release prep for task run-first-shopify-product-cache-sync-and-validate-search (v2.6.9, run-first-shopify-product-cache-sync-and-validate-search).
+
+RESULT TBD 2026-05-03
+STATUS: PENDING
+Release file generated: RELEASES/v2.6.9-run-first-shopify-product-cache-sync-and-validate-search.md
+
+PROMPT 53 03/05/26
+TASK: run-approved-shopify-cache-sync-and-validate-product-search
+GOAL: Run one approved Shopify product cache sync into Supabase, then validate that product search and selection mapping work from the Supabase cache using exact Shopify product IDs and variant IDs. Owner approved running npm run shopify:sync. This task may upsert Supabase cache only and must not mutate Shopify.
+
+PROMPT TBD 2026-05-03
+Release prep for task run-approved-shopify-cache-sync-and-validate-product-search (v2.6.10, run-approved-shopify-cache-sync-and-validate-product-search).
+
+RESULT TBD 2026-05-03
+STATUS: PENDING
+Release file generated: RELEASES/v2.6.10-run-approved-shopify-cache-sync-and-validate-product-search.md

@@ -1,5 +1,6 @@
 import type { ProductRecommendation, ProductSearchInput, ProductSearchOutput } from "@/lib/types/commerce";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { resolveStoreUuid } from "@/lib/adapters/supabase/store-resolver";
 
 export const mockCatalog: ProductRecommendation[] = [
   {
@@ -38,12 +39,15 @@ async function searchSupabaseCache(storeSlug: string, query: string, limit: numb
   const client = getSupabaseServerClient();
   if (!client) return null;
 
+  const storeUuid = await resolveStoreUuid(storeSlug);
+  if (!storeUuid) return null;
+
   try {
     // Search products by title match
     const { data: initialProducts, error: productError } = await client
       .from("products")
       .select("id,shopify_product_id,shopify_product_gid,shopify_title,shopify_handle,image_url")
-      .eq("store_id", storeSlug)
+      .eq("store_id", storeUuid)
       .eq("status", "active")
       .eq("ai_visible", true)
       .ilike("shopify_title", `%${query}%`)
@@ -55,7 +59,7 @@ async function searchSupabaseCache(storeSlug: string, query: string, limit: numb
       const { data: allProducts, error: allError } = await client
         .from("products")
         .select("id,shopify_product_id,shopify_product_gid,shopify_title,shopify_handle,image_url")
-        .eq("store_id", storeSlug)
+        .eq("store_id", storeUuid)
         .eq("status", "active")
         .eq("ai_visible", true)
         .limit(limit);
@@ -72,7 +76,7 @@ async function searchSupabaseCache(storeSlug: string, query: string, limit: numb
     const { data: variants, error: variantError } = await client
       .from("product_variants")
       .select("product_id,shopify_variant_id,shopify_variant_gid,sku,variant_title,size,color,price,inventory_quantity,available_for_ai,code_missing")
-      .eq("store_id", storeSlug)
+      .eq("store_id", storeUuid)
       .in("product_id", productIds)
       .eq("available_for_ai", true)
       .order("price", { ascending: true });

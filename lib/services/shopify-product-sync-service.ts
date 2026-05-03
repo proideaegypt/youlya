@@ -1,5 +1,6 @@
 import { fetchAllShopifyProducts } from "@/lib/adapters/shopify/shopify-product-sync-adapter";
 import { ProductSyncRepository, type GenericSupabaseClient } from "@/lib/adapters/supabase/product-sync-repository";
+import { resolveStoreUuid } from "@/lib/adapters/supabase/store-resolver";
 import { createClient } from "@supabase/supabase-js";
 
 export type SyncMode = "full" | "inventory";
@@ -42,6 +43,26 @@ export async function syncShopifyProducts({
 }): Promise<SyncResult> {
   const startedAt = new Date().toISOString();
   const startTime = Date.now();
+
+  const storeUuid = await resolveStoreUuid(storeId);
+  if (!storeUuid) {
+    return {
+      ok: false,
+      mode,
+      source,
+      storeId,
+      syncedProducts: 0,
+      syncedVariants: 0,
+      missingSkuCount: 0,
+      unavailableCount: 0,
+      durationMs: Date.now() - startTime,
+      startedAt,
+      finishedAt: new Date().toISOString(),
+      dryRun,
+      errorCode: "STORE_NOT_FOUND",
+      safeMessage: `Store not found for identifier: ${storeId}`,
+    };
+  }
 
   try {
     const client = getSupabaseServiceClient();
@@ -95,7 +116,7 @@ export async function syncShopifyProducts({
     }
 
     // Upsert products
-    const productResult = await repo.upsertProducts(storeId, fetchResult.products);
+    const productResult = await repo.upsertProducts(storeUuid, fetchResult.products);
     if (productResult.errors.length > 0) {
       return {
         ok: false,
@@ -117,13 +138,13 @@ export async function syncShopifyProducts({
 
     // Get product ID map for foreign key linking
     const shopifyProductIds = fetchResult.products.map((p) => p.shopifyProductId);
-    const productIdMap = await repo.getProductIdMap(storeId, shopifyProductIds);
+    const productIdMap = await repo.getProductIdMap(storeUuid, shopifyProductIds);
 
     // Flatten variants
     const allVariants = fetchResult.products.flatMap((p) => p.variants);
 
     // Upsert variants
-    const variantResult = await repo.upsertVariants(storeId, productIdMap, allVariants);
+    const variantResult = await repo.upsertVariants(storeUuid, productIdMap, allVariants);
     if (variantResult.errors.length > 0) {
       return {
         ok: false,
