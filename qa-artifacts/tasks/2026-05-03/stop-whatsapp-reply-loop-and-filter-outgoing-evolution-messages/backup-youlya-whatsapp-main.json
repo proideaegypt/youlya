@@ -1,6 +1,11 @@
 {
-  "active": false,
+  "updatedAt": "2026-05-03T17:33:40.573Z",
+  "createdAt": "2026-05-02T15:17:18.252Z",
+  "id": "joqfame4HXG775JO",
   "name": "Youlya WhatsApp Main",
+  "description": null,
+  "active": false,
+  "isArchived": false,
   "nodes": [
     {
       "parameters": {
@@ -17,7 +22,7 @@
         200,
         200
       ],
-      "webhookId": "youlya-whatsapp-main-webhook"
+      "webhookId": "e6d3ffde-7f15-44bf-abcc-a746096665ac"
     },
     {
       "parameters": {
@@ -273,5 +278,72 @@
     "executionOrder": "v1",
     "callerPolicy": "workflowsFromSameOwner",
     "availableInMCP": false
-  }
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": null,
+  "versionId": "2e5fd408-8e09-41a0-a95e-31cae0c3f113",
+  "activeVersionId": null,
+  "versionCounter": 52,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-05-02T15:17:18.252Z",
+      "createdAt": "2026-05-02T15:17:18.252Z",
+      "role": "workflow:owner",
+      "workflowId": "joqfame4HXG775JO",
+      "projectId": "mOtgNeJlBhvmEWsM",
+      "project": {
+        "updatedAt": "2026-04-29T13:15:06.032Z",
+        "createdAt": "2025-12-02T09:11:28.665Z",
+        "id": "mOtgNeJlBhvmEWsM",
+        "name": "ahmed proideaegypt@gmail.com <proideaegypt@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+        "projectRelations": [
+          {
+            "updatedAt": "2025-12-02T09:11:28.665Z",
+            "createdAt": "2025-12-02T09:11:28.665Z",
+            "userId": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+            "projectId": "mOtgNeJlBhvmEWsM",
+            "user": {
+              "updatedAt": "2026-05-03T14:01:33.198Z",
+              "createdAt": "2025-12-02T09:11:28.117Z",
+              "id": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+              "email": "proideaegypt@gmail.com",
+              "firstName": "ahmed",
+              "lastName": "proideaegypt@gmail.com",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-12-02T10:40:00.411Z",
+                "personalization_survey_n8n_version": "1.122.4",
+                "companySize": "<20",
+                "companyType": "ecommerce",
+                "role": "business-owner",
+                "reportedSource": "google"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "TAfiadIWix0pNAti",
+                "userActivatedAt": 1765298870918,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1768746437011
+                }
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2026-05-02",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
 }

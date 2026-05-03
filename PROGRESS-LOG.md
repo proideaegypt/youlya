@@ -1803,3 +1803,37 @@ Blockers:
 - None for the blank-number fix.
 Next step:
 - Optional manual real WhatsApp message for end-to-end confirmation.
+
+## 2026-05-03 — stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages
+
+Date: 2026-05-03
+Phase: Phase 1
+Task: stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages
+Version: v2.6.7
+Version Name: stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages
+Files changed:
+- n8n/workflows/youlya-whatsapp-main.json
+- qa-artifacts/tasks/2026-05-03/stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages/Youlya WhatsApp Main.json
+- qa-artifacts/tasks/2026-05-03/stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages/backup-youlya-whatsapp-main.json
+- qa-artifacts/tasks/2026-05-03/stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages/RESULT.md
+- RELEASES/v2.6.7-stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages.md
+- worktime.md
+Commands run:
+- `npm run n8n:export -- --id \"joqfame4HXG775JO\" --out \"qa-artifacts/tasks/2026-05-03/stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages\"`
+- n8n API `deactivate` / `PUT` / `activate` for workflow `joqfame4HXG775JO`
+- `npm run validate:n8n`
+- synthetic webhook POSTs to `https://ai.youlya365.com/webhook/youlya-whatsapp`
+- n8n execution checks for `9106`, `9107`, and `9108`
+- `npm run release:task -- --task \"stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages\" --type patch`
+Tests passed:
+- Workflow was deactivated before edits and reactivated only after the guard was verified.
+- Guard node `Guard Inbound Customer Message` stopped `fromMe=true` executions at the webhook edge.
+- Inbound execution normalized `remote_jid=201000000000@s.whatsapp.net` and `send_number=201000000000`.
+- `Prepare Reply` emitted `shouldSend: true` with a real `number`.
+- `Send Text` attempted with `number: 201000000000` and no blank-recipient path remained.
+Tests failed/skipped:
+- Evolution returned HTTP 400 for the synthetic dummy recipient because the destination number does not exist, which is expected.
+Blockers:
+- None for the loop-guard fix.
+Next step:
+- Optional manual real WhatsApp message if final end-to-end confirmation is needed.

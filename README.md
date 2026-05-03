@@ -4,6 +4,13 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.6.7 |
+| Version Name | stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages |
+| Task | stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages |
+| Release File | RELEASES/v2.6.7-stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.6.6 |
 | Version Name | n8n-send-text-blank-number-final |
 | Task | fix-n8n-send-text-blank-number-final |

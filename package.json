@@ -1,6 +1,6 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.6.6",
+  "version": "2.6.7",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -22,9 +22,9 @@
     "n8n:list": "node scripts/n8n-list-workflows.mjs",
     "n8n:export": "node scripts/n8n-export-workflows.mjs",
     "validate:n8n": "node scripts/validate-n8n-workflows.mjs",
-    "shopify:sync": "node scripts/sync-shopify-products.mjs --mode full",
-    "shopify:sync:inventory": "node scripts/sync-shopify-products.mjs --mode inventory",
-    "shopify:sync:dry-run": "node scripts/sync-shopify-products.mjs --mode full --dry-run",
+    "shopify:sync": "npx tsx scripts/sync-shopify-products.ts --mode full",
+    "shopify:sync:inventory": "npx tsx scripts/sync-shopify-products.ts --mode inventory",
+    "shopify:sync:dry-run": "npx tsx scripts/sync-shopify-products.ts --mode full --dry-run",
     "validate:scenarios": "node scripts/validate-scenarios.mjs",
     "scan:secrets": "node scripts/scan-secrets.mjs",
     "check:env:tracking": "git status --ignored --short .env .env.local .env.production .env.test \".env.production.backup*\" \".env.*\" | node scripts/check-env-files-not-tracked.mjs",
@@ -38,7 +38,7 @@
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "n8n-send-text-blank-number-final"
+    "youlyaVersionName": "stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

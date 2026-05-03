@@ -703,3 +703,12 @@ Summary: Hardened `Youlya WhatsApp Main` so Normalize Message reads the actual E
 PROMPT 6 03/05/26
 TASK: run-first-shopify-product-cache-sync-and-validate-search
 GOAL: Run the first controlled Shopify product/variant/inventory sync into Supabase, then validate that product search uses the Supabase cache with exact Shopify product IDs and variant IDs.
+
+PROMPT 51 03/05/26
+Release prep for task stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages (v2.6.7, stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages).
+
+RESULT 51 03/05/26
+STATUS: PASS
+TASK: stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages
+Summary: Added a guard node before Normalize Message, hardened Normalize Message against outgoing Evolution messages, fixed Prepare Reply to compute `number` before `shouldSend`, and verified synthetic executions `9106`/`9107` stopped at the guard while `9108` reached Send Text with `number: 201000000000`.
+Release file generated: RELEASES/v2.6.7-stop-whatsapp-reply-loop-and-filter-outgoing-evolution-messages.md
