@@ -4,6 +4,20 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.7.1 |
+| Version Name | activate-n8n-daily-shopify-product-sync |
+| Task | activate-n8n-daily-shopify-product-sync |
+| Release File | RELEASES/v2.7.1-activate-n8n-daily-shopify-product-sync.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.7.0 |
+| Version Name | products-sync-observability-dashboard |
+| Task | products-sync-observability-dashboard |
+| Release File | RELEASES/v2.7.0-products-sync-observability-dashboard.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.6.10 |
 | Version Name | run-approved-shopify-cache-sync-and-validate-product-search |
 | Task | run-approved-shopify-cache-sync-and-validate-product-search |
@@ -343,7 +357,23 @@ npm run deploy:watch
 
 ## Release
 
-Current release tag target: `v2.6.10`
+Current release tag target: `v2.7.0`
+
+### v2.7.0 (products-sync-observability-dashboard)
+
+- Added Products & Inventory dashboard module at `/dashboard/products`
+- 6 tabs: Overview, Catalog Cache, Variants, Sync Health, Search QA, Mapping Inspector
+- Overview KPIs: total products/variants, AI-visible, available, OOS, missing SKU
+- Charts: variant distribution pie, AI visibility funnel, health scores
+- Catalog Cache: paginated product table with Shopify links
+- Variants: paginated table with filters (all, OOS, missing SKU, AI visible, low stock)
+- Sync Health: sync status, counts, n8n workflow status, manual sync docs
+- Search QA: internal search test form with product/variant ID inspection
+- Mapping Inspector: last_product_recommendations with masked customer IDs
+- Read-only dashboard API routes with auth cookie checks
+- Updated sidebar navigation and Playwright swarm specs
+- Fixed Dockerfile builder stage to install all dependencies
+- Optimized `.dockerignore` for faster builds
 
 ### v2.6.10 (run-approved-shopify-cache-sync-and-validate-product-search)
 
