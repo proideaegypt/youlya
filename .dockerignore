@@ -1,1 +1,15 @@
 .env
+node_modules
+.git
+.next
+test-results
+qa-artifacts/playwright
+*.md
+!README.md
+!docs/**/*.md
+RELEASES
+tests
+playwright.config.ts
+vitest.config.ts
+eslint.config.mjs
+.github
