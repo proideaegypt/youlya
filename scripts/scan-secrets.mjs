@@ -16,6 +16,7 @@ const ignoreFiles = [
   '.env.local',
   '.env.production',
   'public/build-info.json',
+  '.mcp.json',
 ];
 const ignorePrefixes = ['.env.production.backup', '.env.'];
 const ignoreFilePatterns = [/^package-lock\.json$/, /^pnpm-lock\.yaml$/, /^yarn\.lock$/];

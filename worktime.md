@@ -597,3 +597,52 @@ Release prep for task first-test (v2.6.1, first-test).
 RESULT TBD 2026-05-02
 STATUS: PENDING
 Release file generated: RELEASES/v2.6.1-first-test.md
+
+PROMPT TBD 2026-05-02
+Release prep for task configure-n8n-runtime-env-for-youlya-whatsapp-workflow (v2.6.2, configure-n8n-runtime-env-for-youlya-whatsapp-workflow).
+
+RESULT TBD 2026-05-02
+STATUS: PENDING
+Release file generated: RELEASES/v2.6.2-configure-n8n-runtime-env-for-youlya-whatsapp-workflow.md
+
+PROMPT 47 02/05/26
+User requested task configure-n8n-runtime-env-for-youlya-whatsapp-workflow: fix n8n runtime environment variables so the active Youlya WhatsApp workflow can call the Youlya app and Evolution API successfully. Steps: discovery, read source env safely, locate n8n compose file, backup, add env vars, recreate n8n service, verify runtime env, verify health, confirm workflow active, document result.
+
+RESULT 47 02/05/26
+STATUS: PASS
+Configured n8n runtime env by injecting APP_INTERNAL_URL, INTERNAL_API_SECRET, EVOLUTION_API_URL, EVOLUTION_API_KEY, EVOLUTION_INSTANCE into /root/n8n/docker-compose.yml, recreated n8n-n8n-1 safely with preserved db/volumes. All 5 env vars verified SET in container. Workflow joqfame4HXG775JO confirmed active with unique webhook path. Youlya health/build-info PASS. Discovered webhook node uses legacy typeVersion 2 path format, so actual working URL includes workflow ID prefix; documented as next-step risk. verify:release PASS. QA artifact saved.
+
+PROMPT TBD 2026-05-02
+Release prep for task fix-n8n-route-by-action-switch-node (v2.6.3, n8n-route-by-action-switch-node).
+
+RESULT TBD 2026-05-02
+STATUS: PENDING
+Release file generated: RELEASES/v2.6.3-n8n-route-by-action-switch-node.md
+
+PROMPT 48 02/05/26
+User requested task fix-n8n-route-by-action-switch-node: fix the active Youlya WhatsApp Main workflow where the real WhatsApp test failed at "Route by Action" with "Cannot read properties of undefined (reading 'caseSensitive')". Replace the fragile Switch node with Code + IF flow (Prepare Reply -> Should Send Reply -> Send Text). Backup workflow first, patch via n8n API, validate, document, no real WhatsApp test automatically.
+
+RESULT 48 02/05/26
+STATUS: PASS
+Backed up workflow joqfame4HXG775JO via n8n API to sanitized JSON. Deactivated workflow, replaced Route by Action (Switch typeVersion 3) with Prepare Reply (Code) and Should Send Reply (IF typeVersion 2), updated Send Text body to use upstream $json.number/$json.reply, reactivated workflow. Validation: webhook path preserved, env refs preserved, no hardcoded secrets, no Switch node remains, connections correct. verify:release PASS. QA artifact saved. Manual WhatsApp retest pending.
+PROMPT 47 03/05/26
+User requested task register-youlya-n8n-production-webhook: fix n8n production webhook registration for POST https://ai.youlya365.com/webhook/youlya-whatsapp returning 404. Steps: discovery (list workflows), backup, verify/fix webhook node params (path=youlya-whatsapp, method=POST, responseMode=onReceived), activate workflow, curl test, investigate if still 404, report findings.
+
+
+PROMPT TBD 2026-05-03
+Release prep for task register-youlya-n8n-production-webhook (v2.6.4, register-youlya-n8n-production-webhook).
+
+RESULT TBD 2026-05-03
+STATUS: PENDING
+Release file generated: RELEASES/v2.6.4-register-youlya-n8n-production-webhook.md
+RESULT 47 03/05/26
+STATUS: PASS
+Fixed production n8n webhook registration for POST /webhook/youlya-whatsapp. Root cause: webhook node lacked webhookId, causing n8n to register under workflow-ID-prefixed path instead of simple path. Added webhookId UUID, updated typeVersion to 2.1, added options: {}, deactivated/activated workflow. Updated canonical repo workflow JSON. Backup saved. Curl test returns HTTP 200. n8n executions are created. Release v2.6.4 verified.
+
+
+PROMPT 49 03/05/26
+Release prep for task allow-n8n-workflow-env-access-for-youlya-workflow (v2.6.5, allow-n8n-workflow-env-access-for-youlya-workflow).
+
+RESULT 49 03/05/26
+STATUS: PARTIAL
+Enabled `N8N_BLOCK_ENV_ACCESS_IN_NODE=false` in the live n8n compose file, backed it up, restarted only the n8n service, verified the flag is set inside the container, and confirmed the synthetic webhook starts an execution with `Call Turn Endpoint` and `Send Text` reached. No `access to env vars denied` logs remain. Separate downstream issue remains: public Apache front door returned HTTP 500 on the external webhook URL, and the `Send Text` node failed because the Evolution instance `next-link-main` does not exist. Repo `verify:deploy` also failed on pre-existing lint errors in `lib/adapters/supabase/product-sync-repository.ts`, `lib/services/product-search-service.ts`, and `lib/services/shopify-product-sync-service.ts`.

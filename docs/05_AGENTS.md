@@ -90,6 +90,14 @@ Must test:
 - audio/image branches.
 - error path.
 
+Agent Rules for n8n Tasks:
+- For every n8n task, run `npm run check:n8n:env` first.
+- Use n8n MCP/API read-only first (`npm run n8n:list`).
+- Export workflow before editing (`npm run n8n:export -- --name "..."`).
+- Validate workflow JSON before pilot (`npm run validate:n8n`).
+- Never hardcode n8n, Evolution, or internal secrets in workflow JSON.
+- Do not run real WhatsApp tests until workflows validate PASS.
+
 ### ShopifyAgent
 Owns:
 - product sync.

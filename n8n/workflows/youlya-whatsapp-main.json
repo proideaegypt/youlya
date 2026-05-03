@@ -5,16 +5,18 @@
       "parameters": {
         "path": "youlya-whatsapp",
         "httpMethod": "POST",
-        "responseMode": "onReceived"
+        "responseMode": "onReceived",
+        "options": {}
       },
       "id": "Webhook",
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
+      "typeVersion": 2.1,
       "position": [
         200,
         200
-      ]
+      ],
+      "webhookId": "e6d3ffde-7f15-44bf-abcc-a746096665ac"
     },
     {
       "parameters": {

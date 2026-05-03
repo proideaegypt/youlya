@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+!.env.*.example
 .env*.local
 *.key
 *.pem
@@ -9,6 +10,12 @@
 *.pfx
 secrets/
 credentials/
+# MCP configs with live tokens
+.mcp.json
+configs/mcp/*.json
+!configs/mcp/*.example.json
+!configs/mcp/*.example.toml
+!configs/mcp/*.example.jsonc
 
 # Build outputs
 .next/
@@ -43,3 +50,9 @@ Thumbs.db
 .env.test
 .env.playwright
 tests/playwright/.auth/
+
+# Unsafe raw n8n workflow exports (quarantined outside repo)
+workflows/*.json
+!workflows/README.md
+n8n/raw-exports/
+*.n8n-raw.json

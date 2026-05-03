@@ -4,6 +4,27 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.6.4 |
+| Version Name | register-youlya-n8n-production-webhook |
+| Task | register-youlya-n8n-production-webhook |
+| Release File | RELEASES/v2.6.4-register-youlya-n8n-production-webhook.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.6.3 |
+| Version Name | n8n-route-by-action-switch-node |
+| Task | fix-n8n-route-by-action-switch-node |
+| Release File | RELEASES/v2.6.3-n8n-route-by-action-switch-node.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.6.2 |
+| Version Name | configure-n8n-runtime-env-for-youlya-whatsapp-workflow |
+| Task | configure-n8n-runtime-env-for-youlya-whatsapp-workflow |
+| Release File | RELEASES/v2.6.2-configure-n8n-runtime-env-for-youlya-whatsapp-workflow.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.6.1 |
 | Version Name | first-test |
 | Task | first-test |
@@ -179,18 +200,20 @@
 | Release File | RELEASES/v2.0.2-add-release-governance-versioning-rule.md |
 
 
-Version: `v2.0.9` (`schema-migration-reconciliation`)  
-Date: `2026-05-01`
+Version: `v2.6.4` (`register-youlya-n8n-production-webhook`)  
+Date: `2026-05-03`
 
-Production-oriented WhatsApp commerce system for Youlya, built with Next.js App Router, Supabase, and Playwright scenario validation.
+Production-oriented WhatsApp commerce system for Youlya, built with Next.js App Router, Supabase, n8n orchestration, and Playwright scenario validation.
 
 ## What Is Included
 
 - Internal turn endpoint: `POST /api/internal/messages/turn`
 - n8n + Evolution wiring (webhook receiver + sender adapter)
+- n8n canonical workflow (`Youlya WhatsApp Main`) with production webhook `POST /webhook/youlya-whatsapp`
 - Idempotency + duplicate protection
 - Failed events / dead-letter style capture
 - Product mapping persistence + mock fallback
+- Shopify product/variant sync adapter + daily sync workflow
 - Conversation flow state machine + mock order placement
 - Dashboard MVP (RTL Arabic):
   - Command Center
@@ -198,6 +221,7 @@ Production-oriented WhatsApp commerce system for Youlya, built with Next.js App 
   - Orders + safety view
   - Logs
   - Settings
+  - Statistics / Security / Devices / Profile
 - Dashboard v3 redesign:
   - YOULYA HOME WEAR brand palette and responsive shell
   - Arabic/English toggle with RTL/LTR direction switching
@@ -284,9 +308,17 @@ npm run deploy:watch
 
 ## Release
 
-Current release tag target: `v2.0.2`
+Current release tag target: `v2.6.4`
 
-### v2.0.1 (codefix)
+### v2.6.4 (register-youlya-n8n-production-webhook)
+
+- Fixed production n8n webhook registration for `POST /webhook/youlya-whatsapp`
+- Root cause: webhook node lacked `webhookId`, causing n8n to register under a workflow-ID-prefixed path
+- Added `webhookId` UUID, updated `typeVersion` to `2.1`, added `"options": {}`
+- Updated canonical repo workflow JSON to prevent future import regressions
+- Production webhook now returns HTTP 200 and triggers n8n executions correctly
+
+### v2.6.1 (first-test)
 
 - Docker runner now includes `docs/` in the final image
 - Health endpoint version is read dynamically from `package.json`

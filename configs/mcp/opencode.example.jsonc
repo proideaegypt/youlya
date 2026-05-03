@@ -1,0 +1,21 @@
+// OpenCode MCP Config Example — n8n
+// Place in ~/.config/opencode/opencode.json or project .opencode.json
+// OpenCode loads MCP servers from its own config format.
+// NEVER commit real tokens.
+{
+  "mcp_servers": {
+    "n8n-mcp": {
+      "command": "npx",
+      "args": ["n8n-mcp"],
+      "env": {
+        "MCP_MODE": "stdio",
+        "LOG_LEVEL": "error",
+        "DISABLE_CONSOLE_OUTPUT": "true",
+        "N8N_API_URL": "https://ai.youlya365.com/",
+        "N8N_API_KEY": "YOUR_N8N_API_KEY_HERE"
+      },
+      "enabled": false,
+      "timeout": 60
+    }
+  }
+}

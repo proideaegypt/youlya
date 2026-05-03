@@ -1,12 +1,12 @@
 # Verify Before Deploy
 
-- Date: 2026-05-02
+- Date: 2026-05-03
 - Branch: main
-- Commit: 37b94b5
+- Commit: 2f03968
 
 Running: check-env-tracking
 
-> youlya-phase0-app@2.6.0 check:env:tracking
+> youlya-phase0-app@2.6.5 check:env:tracking
 > git status --ignored --short .env .env.local .env.production .env.test ".env.production.backup*" ".env.*" | node scripts/check-env-files-not-tracked.mjs
 
 .env.local: ignored
@@ -19,7 +19,7 @@ ENV tracking check passed.
 PASS: check-env-tracking
 Running: check-env-production
 
-> youlya-phase0-app@2.6.0 check:env:production
+> youlya-phase0-app@2.6.5 check:env:production
 > node scripts/check-production-env.mjs
 
 Checked .env.production keys only (values not printed).
@@ -29,13 +29,13 @@ Production env key check passed.
 PASS: check-env-production
 Running: typecheck
 
-> youlya-phase0-app@2.6.0 typecheck
+> youlya-phase0-app@2.6.5 typecheck
 > tsc --noEmit
 
 PASS: typecheck
 Running: lint
 
-> youlya-phase0-app@2.6.0 lint
+> youlya-phase0-app@2.6.4 lint
 > eslint .
 
 

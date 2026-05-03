@@ -1,0 +1,29 @@
+# Codex MCP Config Example — n8n
+# Place in ~/.codex/config.toml or project .codex/config.toml
+# IMPORTANT: Codex TOML does not support ${ENV} interpolation natively.
+# You must either:
+#   1. Export env vars in your shell before starting Codex:
+#        export N8N_API_URL=https://ai.youlya365.com/
+#        export N8N_API_KEY=your-key
+#        codex
+#   2. Or use a wrapper script that injects values.
+#   3. Or add via CLI: codex mcp add n8n-mcp -- npx n8n-mcp
+#        (Codex stores CLI-added servers separately.)
+# NEVER commit real tokens to this file.
+
+[mcp_servers.n8n]
+command = "npx"
+args = ["n8n-mcp"]
+enabled = false
+tool_timeout_sec = 60
+env = { MCP_MODE = "stdio", LOG_LEVEL = "error", DISABLE_CONSOLE_OUTPUT = "true", N8N_API_URL = "https://ai.youlya365.com/", N8N_API_KEY = "YOUR_N8N_API_KEY_HERE" }
+
+# To enable after verifying env vars:
+# enabled = true
+# env.N8N_API_KEY must be set to your real key (via shell export or CLI add).
+
+# [mcp_servers.supabase_readonly]
+# command = "npx"
+# args = ["@supabase/mcp-server-supabase"]
+# enabled = false
+# env = { SUPABASE_PROJECT_REF = "your-project-ref", SUPABASE_ACCESS_TOKEN = "your-token" }

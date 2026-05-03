@@ -1,4 +1,5 @@
 import type { ProductRecommendation, ProductSearchInput, ProductSearchOutput } from "@/lib/types/commerce";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
 
 export const mockCatalog: ProductRecommendation[] = [
   {
@@ -33,11 +34,112 @@ export const mockCatalog: ProductRecommendation[] = [
   },
 ];
 
+async function searchSupabaseCache(storeSlug: string, query: string, limit: number): Promise<ProductRecommendation[] | null> {
+  const client = getSupabaseServerClient();
+  if (!client) return null;
+
+  try {
+    // Search products by title match
+    let { data: products, error: productError } = await client
+      .from("products")
+      .select("id,shopify_product_id,shopify_product_gid,shopify_title,shopify_handle,image_url")
+      .eq("store_id", storeSlug)
+      .eq("status", "active")
+      .eq("ai_visible", true)
+      .ilike("shopify_title", `%${query}%`)
+      .limit(limit);
+
+    if (productError || !products || products.length === 0) {
+      // Fallback: try broader search or return null
+      const { data: allProducts, error: allError } = await client
+        .from("products")
+        .select("id,shopify_product_id,shopify_product_gid,shopify_title,shopify_handle,image_url")
+        .eq("store_id", storeSlug)
+        .eq("status", "active")
+        .eq("ai_visible", true)
+        .limit(limit);
+
+      if (allError || !allProducts || allProducts.length === 0) {
+        return null;
+      }
+      products = allProducts;
+    }
+
+    const productIds = products.map((p) => p.id);
+
+    // Fetch variants for these products
+    const { data: variants, error: variantError } = await client
+      .from("product_variants")
+      .select("product_id,shopify_variant_id,shopify_variant_gid,sku,variant_title,size,color,price,inventory_quantity,available_for_ai,code_missing")
+      .eq("store_id", storeSlug)
+      .in("product_id", productIds)
+      .eq("available_for_ai", true)
+      .order("price", { ascending: true });
+
+    if (variantError || !variants) {
+      return null;
+    }
+
+    // Group variants by product
+    const variantMap = new Map<string, typeof variants>();
+    for (const v of variants) {
+      const pid = v.product_id;
+      if (!variantMap.has(pid)) variantMap.set(pid, []);
+      variantMap.get(pid)!.push(v);
+    }
+
+    const recommendations: ProductRecommendation[] = [];
+    let index = 1;
+
+    for (const product of products) {
+      const productVariants = variantMap.get(product.id) || [];
+      if (productVariants.length === 0) continue;
+
+      recommendations.push({
+        index,
+        productId: String(product.id),
+        shopifyProductId: product.shopify_product_gid || `gid://shopify/Product/${product.shopify_product_id}`,
+        shopifyProductTitle: product.shopify_title,
+        shopifyHandle: product.shopify_handle || "",
+        imageUrl: product.image_url || undefined,
+        variantOptions: productVariants.map((v) => ({
+          shopifyVariantId: v.shopify_variant_gid || `gid://shopify/ProductVariant/${v.shopify_variant_id}`,
+          sku: v.sku || null,
+          codeMissing: v.code_missing ?? false,
+          title: v.variant_title || "",
+          size: v.size || undefined,
+          color: v.color || undefined,
+          price: Number(v.price) || 0,
+          currency: "EGP",
+          inventoryQuantity: v.inventory_quantity ?? 0,
+          available: v.available_for_ai ?? false,
+        })),
+      });
+      index += 1;
+      if (recommendations.length >= limit) break;
+    }
+
+    return recommendations;
+  } catch (err) {
+    console.error("searchSupabaseCache failed", err);
+    return null;
+  }
+}
+
 export async function searchProducts(input: ProductSearchInput): Promise<ProductSearchOutput> {
   const query = input.query.toLowerCase();
+  const limit = input.limit ?? 10;
+
+  // Try Supabase cache first
+  const cacheResults = await searchSupabaseCache(input.storeSlug, query, limit);
+  if (cacheResults && cacheResults.length > 0) {
+    return { recommendations: cacheResults, mappingPersisted: true };
+  }
+
+  // Fallback to mock catalog for development/test
   const filtered = mockCatalog
     .filter((p) => p.shopifyProductTitle.toLowerCase().includes(query) || query.includes("عايزة") || query.includes("show"))
-    .slice(0, input.limit ?? 10)
+    .slice(0, limit)
     .map((p, i) => ({ ...p, index: i + 1 }));
   return { recommendations: filtered.length ? filtered : mockCatalog.slice(0, 3), mappingPersisted: true };
 }

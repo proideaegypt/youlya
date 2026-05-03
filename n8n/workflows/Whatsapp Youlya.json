@@ -1,0 +1,1791 @@
+{
+  "updatedAt": "2026-02-01T23:43:55.984Z",
+  "createdAt": "2026-01-25T01:42:59.602Z",
+  "id": "aWKe4yyoC1vDpeTj",
+  "name": "Whatsapp Youlya",
+  "description": "",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.chatInput }}",
+                    "rightValue": "audioMessage|",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    },
+                    "id": "audio-check"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.chatInput }}",
+                    "rightValue": "imageMessage|",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    },
+                    "id": "image-check"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.chatInput }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty"
+                    },
+                    "id": "text-check"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -2224,
+        7888
+      ],
+      "id": "9c64fffa-80df-47e1-ab6f-734e0ddd8c89",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.item.json.body;\n\nconsole.log('=== EXTRACT AUDIO MESSAGE ID ===');\nconsole.log('Full body:', JSON.stringify(body, null, 2));\n\nlet messageId;\nlet instanceName;\nlet remoteJid;\n\n// Extract messageId\nif (body.keyId) {\n  messageId = body.keyId;\n  console.log('✓ Using keyId:', messageId);\n} else if (body.chatInput && body.chatInput.includes('|')) {\n  const parts = body.chatInput.split('|');\n  messageId = parts[1];\n  console.log('✓ Extracted from chatInput:', messageId);\n} else {\n  throw new Error('❌ Cannot find messageId. Body: ' + JSON.stringify(body));\n}\n\n// Extract instanceName\nif (body.instanceName) {\n  instanceName = body.instanceName;\n} else if (body.instance) {\n  instanceName = body.instance;\n} else {\n  instanceName = 'Youlya';\n  console.log('⚠️ Using default instanceName: Youlya');\n}\n\n// Extract remoteJid\nremoteJid = body.remoteJid;\n\nconsole.log('✅ OUTPUT:', { messageId, instanceName, remoteJid });\nconsole.log('================================');\n\nreturn [{\n  json: {\n    messageId: messageId,\n    instanceName: instanceName,\n    remoteJid: remoteJid,\n    originalBody: body\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2000,
+        7712
+      ],
+      "id": "33b57939-9a63-44cb-af57-0669a6125135",
+      "name": "Extract Audio Message ID",
+      "notesInFlow": true,
+      "notes": "Extracts messageId from webhook data for audio"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.item.json.body;\n\nconsole.log('=== EXTRACT IMAGE MESSAGE ID ===');\nconsole.log('Full body:', JSON.stringify(body, null, 2));\n\nlet messageId;\nlet instanceName;\nlet remoteJid;\n\n// Extract messageId\nif (body.keyId) {\n  messageId = body.keyId;\n  console.log('✓ Using keyId:', messageId);\n} else if (body.chatInput && body.chatInput.includes('|')) {\n  const parts = body.chatInput.split('|');\n  messageId = parts[1];\n  console.log('✓ Extracted from chatInput:', messageId);\n} else {\n  throw new Error('❌ Cannot find messageId. Body: ' + JSON.stringify(body));\n}\n\n// Extract instanceName\nif (body.instanceName) {\n  instanceName = body.instanceName;\n} else if (body.instance) {\n  instanceName = body.instance;\n} else {\n  instanceName = 'Youlya';\n  console.log('⚠️ Using default instanceName: Youlya');\n}\n\n// Extract remoteJid\nremoteJid = body.remoteJid;\n\nconsole.log('✅ OUTPUT:', { messageId, instanceName, remoteJid });\nconsole.log('================================');\n\nreturn [{\n  json: {\n    messageId: messageId,\n    instanceName: instanceName,\n    remoteJid: remoteJid,\n    originalBody: body\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2000,
+        7904
+      ],
+      "id": "88cd4a03-b127-4cf4-a54c-50611b882319",
+      "name": "Extract Image Message ID",
+      "notesInFlow": true,
+      "notes": "Extracts messageId from webhook data for image"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {
+          "language": "ar"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -1328,
+        7712
+      ],
+      "id": "93ce75fa-eba6-4e3a-9605-c7e1dc29cf65",
+      "name": "Transcribe a recording"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f35809b-3889-4ef7-a8d5-a4d934842631",
+              "name": "Text",
+              "value": "={{ $json.body.chatInput }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1104,
+        8096
+      ],
+      "id": "f0ab4bd3-5976-4847-9587-db08aaaa84c3",
+      "name": "Text"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f35809b-3889-4ef7-a8d5-a4d934842631",
+              "name": "Text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1104,
+        7712
+      ],
+      "id": "9c96ded8-d5a7-481d-83bd-f805515acd21",
+      "name": "Voice"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "text": "=What's in this image?",
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -1328,
+        7904
+      ],
+      "id": "f40224dc-ff58-425a-bef2-78c1655dd779",
+      "name": "Analyze image"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f35809b-3889-4ef7-a8d5-a4d934842631",
+              "name": "Text",
+              "value": "=# The author provided the image and the text \n\n## Image Description\n{{ $json.content }}\n\n\n\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1104,
+        7904
+      ],
+      "id": "e015836d-9d0a-44c6-92d5-6be7665d312a",
+      "name": "Image + Text"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "إنشاء طلب جديد في Shopify كـ 'دفع عند الاستلام'. مطلوب: product_variant_id, الكمية, اسم العميل, الإيميل, العنوان.",
+        "authentication": "accessToken",
+        "additionalFields": {
+          "billingAddressUi": {
+            "billingAddressValues": {
+              "firstName": "={{ $fromAI('First_Name', '', 'string') }}",
+              "lastName": "={{ $fromAI('Last_Name', '', 'string') }}",
+              "country": "=Egypt",
+              "address2": "={{ $fromAI('Address_Line_2', '', 'string') }}",
+              "city": "={{ $fromAI('City', '', 'string') }}",
+              "province": "={{ $fromAI('Province', '', 'string') }}",
+              "phone": "={{ $('Webhook1').item.json.body.remoteJid.split('@')[0] }}"
+            }
+          },
+          "email": "={{ $fromAI('Email', '', 'string') }}",
+          "note": "دفع عند الاستلام - YoulyaAI",
+          "shippingAddressUi": {
+            "shippingAddressValues": {
+              "firstName": "={{ $fromAI('First_Name', '', 'string') }}",
+              "lastName": "={{ $fromAI('Last_Name', '', 'string') }}",
+              "country": "={{ $fromAI('Country', '', 'string') }}",
+              "address1": "={{ $fromAI('Address_Line_1', '', 'string') }}",
+              "address2": "={{ $fromAI('Address_Line_2', '', 'string') }}",
+              "city": "={{ $fromAI('City', '', 'string') }}",
+              "province": "={{ $fromAI('Province', '', 'string') }}",
+              "zip": "2222",
+              "phone": "={{ $('Webhook1').item.json.body.remoteJid.split('@')[0] }}"
+            }
+          },
+          "sourceName": "Youlya WhatsApp AI",
+          "tags": "Whatsapp,cod,YoulyaAI"
+        },
+        "limeItemsUi": {
+          "lineItemValues": [
+            {
+              "variantId": "={{ $fromAI('lineItemValues0_Variant_ID', ``, 'string') }}",
+              "title": "={{ $fromAI('lineItemValues0_Title', ``, 'string') }}",
+              "grams": "={{ $fromAI('lineItemValues0_Grams', ``, 'string') }}",
+              "quantity": "={{ $fromAI('lineItemValues0_Quantity', ``, 'number') }}",
+              "price": "={{ $fromAI('lineItemValues0_Price', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.shopifyTool",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        8144
+      ],
+      "id": "69832053-6df1-4a7f-b9a8-cba4c2afd1cb",
+      "name": "Create Order COD"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "تحديث طلب موجود. يمكن تعديل العنوان، الإيميل، أو الملاحظات. مطلوب: رقم الأوردر.",
+        "authentication": "accessToken",
+        "operation": "update",
+        "orderId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Order_ID', ``, 'string') }}",
+        "updateFields": {
+          "email": "={{ $fromAI('new_email', '', 'string') }}",
+          "note": "={{ $fromAI('update_note', '', 'string') }}",
+          "tags": "=New Note By YoulyaAI"
+        }
+      },
+      "type": "n8n-nodes-base.shopifyTool",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        8144
+      ],
+      "id": "0cff34bd-75f7-4ea9-9390-946ffd890d62",
+      "name": "Update Order"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "إلغاء طلب موجود (قبل الشحن فقط). مطلوب: رقم الأوردر.",
+        "authentication": "accessToken",
+        "operation": "update",
+        "orderId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Order_ID', ``, 'string') }}",
+        "updateFields": {
+          "note": "ملغى من العميل عبر WhatsApp - YoulyaAI",
+          "tags": "cancelled By Client YoulyaAI,whatsapp"
+        }
+      },
+      "type": "n8n-nodes-base.shopifyTool",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        8144
+      ],
+      "id": "f79a6c86-8056-4ab0-97d2-09eada5cd203",
+      "name": "Cancel Order"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "البحث عن جميع طلبات العميل باستخدام الإيميل أو رقم الموبايل. يرجع قائمة بكل الأوردرات مع رقم الأوردر (#22259)، الحالة، المنتجات، والعنوان.",
+        "authentication": "accessToken",
+        "operation": "getAll",
+        "options": {
+          "status": "any"
+        }
+      },
+      "type": "n8n-nodes-base.shopifyTool",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        8144
+      ],
+      "id": "47e58322-d8dd-46f5-aacf-0ae0b8247ba9",
+      "name": "Get Customer Orders"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "الحصول على تفاصيل أوردر محدد باستخدام رقم الأوردر الرقمي (Order ID). مطلوب: Order ID الرقمي وليس رقم الأوردر مثل #22259.",
+        "authentication": "accessToken",
+        "operation": "get",
+        "orderId": "={{ $fromAI('order_id', '', 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.shopifyTool",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        8144
+      ],
+      "id": "7de78fbd-df86-4aff-86e9-b3cbaa5ef013",
+      "name": "Get Specific Order"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Text }}",
+        "options": {
+          "systemMessage": "👤 الهوية\nإنتِ هايدي – مساعدة مبيعات لـ Youlya (ملابس نوم حريمي فاخرة).\nهدفك: مساعدة العميلات تختار منتجات وتعمل أوردر COD بسرعة ولطف.\n\n✅ قواعد الرد (إلزامي)\nكل رد = رسالة واحدة فقط (ما تكتبيش أكتر من رسالة في نفس الرد).\nطول الرسالة: 2–3 أسطر قصيرة فقط.\nممنوع تكرار أي جملة/سؤال داخل نفس الرسالة. لو عندك سؤالين، اكتبيهم مرة واحدة فقط ثم توقفي.\nممنوع إعادة صياغة نفس المعنى مرتين في نفس الرسالة.\nلو محتاجة معلومات ناقصة: اسألي مرة واحدة فقط عن الحقول الناقصة (بدون تكرار).\n\n⛔ ممنوعات (CRITICAL)\nممنوع تقولي: \"بعتلك صور\" / \"هبعتلك موديلات\" / \"أرسلت صور\".\n→ الصور بيبعتها النظام تلقائيًا بعد استخدام الأداة.\nممنوع تخمني أي معلومة عن المنتج (سعر/مقاس/لون/توافر). لازم تعتمدّي على نتائج الأدوات فقط.\nممنوع تسألي عن رقم الموبايل (موجود في النظام).\nممنوع تكرري سؤال العميلة جاوبت عليه في نفس المحادثة.\nممنوع تكتبي رسائل طويلة أو فقرات.\nممنوع تقولي \"رقم الطلب\" أو \"اتسجل\" أو \"#[ID]\" إلا إذا تم استدعاء أداة Create Order COD بنجاح وظهر Order ID/Name في نتيجة الأداة.\n\n👩 الاسم\nاسألي عن الاسم مرة واحدة فقط في بداية المحادثة لو الاسم مش معروف.\nالنص الثابت:\n\"أهلاً 💜 أنا هايدي من Youlya\nممكن أعرف اسمك عشان أساعدك أحسن؟\"\nاستخدام الاسم: نادر جدًا (مرة أو مرتين). استخدمي غالبًا: \"يا قمر\" / \"يا جميلة\".\n\n🛠 الأدوات\n1) Call \"Shopify Search → WhatsApp\"\nمتى تستخدميها:\nأي طلب موديلات/ألوان/نوع: \"بيجامات شتوي\"، \"بوركيني أسود\"، \"عايزة قطن\"…\nحتى لو طلبت عروض: \"عايزة عرض 2+1\".\nالخطوات (إلزامي):\nاستدعي الأداة بالـ query المناسب.\nبعد رجوع الأداة: اكتبي سطر واحد فقط (بدون أي إضافة):\n\"شوفي الموديلات وقوليلي رقم الموديل + المقاس 💜\"\nممنوع إضافة أي سطر تاني بعد الخطوة 3.\n\n2) Create Order COD\nقبل استخدام الأداة لازم تجمعي:\nالاسم الكامل\nالمحافظة + المدينة\nالعنوان التفصيلي\nالإيميل (اختياري)\nبعد نجاح الأداة فقط (وظهور Order ID/Name):\n\"تمام 💚 أوردرك اتسجل\nرقم الأوردر: [ORDER_NAME]\nهنكلمك قريب 💜\"\nاستبدلي [ORDER_NAME] بالرقم الفعلي اللي ظهر من الأداة.\n\n3–6) Get / Update / Cancel Orders\nاستخدميهم حسب طلب العميلة (متابعة/تعديل/إلغاء/استعلام).\n\n📏 المقاسات\n45–55 كجم: S\n55–65 كجم: M\n65–75 كجم: L\n75–85 كجم: XL\n85–95 كجم: XXL\n95+ كجم: 3XL\nOne Size:\n\"الموديل ده One Size 💜\nيلبس من 60 لـ 90 كيلو\nتحبي أحجزهولك؟\"\n\n💰 الشحن (سياسة + الرد)\nبنوصّل لكل مصر.\nلو العميلة سألت عن الشحن في أي وقت (حتى قبل الأوردر): ردي بالقواعد دي في 2–3 سطور فقط.\nقواعد الشحن:\n- القاهرة: 70 جنيه.\n- الإسكندرية: 90 جنيه.\n- باقي المحافظات: بيتحدد حسب شركة الشحن/المنطقة (اسألي عن المحافظة لو مش واضحة).\n- فوق 1400 جنيه: الشحن مجاني.\n- مدة التوصيل: حسب شركة الشحن.\n\nنص جاهز لو سألت عن الشحن:\n\"بنوصّل لكل مصر 💜\nالقاهرة 70ج، الإسكندرية 90ج، وفوق 1400ج الشحن مجاني.\nتحبي التوصيل فين (القاهرة ولا إسكندرية ولا محافظة تانية)؟\"\n\nFree Shipping Nudge (استخدميه لو الإجمالي قريب من 1400 أو لو العميلة بتسأل عن الشحن):\n\"طلبك [المبلغ] 💜\nلو ضفتي [الفرق] جنيه الشحن يبقى مجاني 🚚\"\n\n🎁 عرض \"اشتري 2 واخدي 1\"\nلو العميلة قالت \"عايزة عرض 2+1\":\nاستخدمي الأداة بالـ query: \"عرض اشتري 2 واخدي 1\"\nبعد رجوع الأداة (سطرين كحد أقصى):\n\"شوفي الموديلات وقوليلي 3 قطع\n(رقم + مقاس لكل واحدة) 💜\"\n\n🔁 الإرجاع\n3 أيام من الاستلام\nالمنتج بحالته الأصلية\nالمخفضات/اللانجيري: غير قابلة للإرجاع\nالنص: \"لو في مشكلة، ارفضي الاستلام قدام المندوب 💜\"\n\n🚀 Upselling\nاقتراح واحد فقط بعد الاختيار.\nلو قالت \"لأ\": توقفي فورًا.\n\n🛡 Fallback\nلو مفيش نتائج:\n\"للأسف مفيش موديلات بالوصف ده 💜\nتحبي تغيري المواصفات؟\"\nلو مشكلة تقنية:\n\"حصلت لخبطة بسيطة 🙏\nجربي تكتبي طلبك تاني.\"\nلو غير واضح:\n\"ممكن توضحيلي أكتر؟ 💜\nتحبي بيجامات ولا بوركيني؟\"\n\n🎯 الهدف\nمساعدة العميلة تختار وتعمل أوردر بسرعة ولطف من غير تكرار ومن غير إزعاج.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -320,
+        7920
+      ],
+      "id": "00ee1d6d-0f8e-4592-bf64-fe165d81d1d1",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -2672,
+        8752
+      ],
+      "id": "dec79c2b-ca55-475f-a8b6-63309ee69144",
+      "name": "OpenRouter Chat Model"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook1').item.json.body.remoteJid }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -2672,
+        8320
+      ],
+      "id": "060c39ec-ae3e-4a3a-be38-e8f459dc7f59",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        16,
+        8144
+      ],
+      "id": "4d8e9bb1-aa7d-45e8-b221-ad6fed2ae4d6",
+      "name": "Think1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-customer-service",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2672,
+        7712
+      ],
+      "id": "6123659b-b6dd-40d8-8692-44c8c4cbcb32",
+      "name": "Webhook1",
+      "webhookId": "d6a8ec9a-70fd-4989-9e16-da74c1856b23"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evo.youlya365.com/chat/getBase64FromMediaMessage/{{$json.instanceName}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": {\n    \"key\": {\n      \"id\": \"{{$json.messageId}}\"\n    }\n  },\n  \"convertToMp4\": false\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1776,
+        7904
+      ],
+      "id": "a4ba3ac7-7e07-4701-987e-28d30e5c49ea",
+      "name": "HTTP Get Base64"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "mimeType": "image/jpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -1552,
+        7904
+      ],
+      "id": "32c971e5-3d43-4dd5-abd5-8587c0ad6849",
+      "name": "To Binary (Image)"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evo.youlya365.com/chat/getBase64FromMediaMessage/{{$json.instanceName}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": {\n    \"key\": {\n      \"id\": \"{{$json.messageId}}\"\n    }\n  },\n  \"convertToMp4\": false\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1776,
+        7712
+      ],
+      "id": "e3437a12-1aaa-41b0-ad33-cabe3a0a6113",
+      "name": "HTTP Get Base66"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "mimeType": "audio/ogg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -1552,
+        7712
+      ],
+      "id": "b399aebe-0d93-4c96-a0a9-c2c8065e94ab",
+      "name": "To Binary (Audio)"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "translatedText",
+              "value": "={{ $('AI Agent').last().json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "803e0bdc-c6bc-43d4-88e7-23cd8e8d0233",
+      "name": "Pick Translation",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1504,
+        7920
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook1').item.json.body.chatInput }}",
+                    "rightValue": "audioMessage|",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    },
+                    "id": "audio-check"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook1').item.json.body.chatInput }}",
+                    "rightValue": "imageMessage|",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    },
+                    "id": "image-check"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook1').item.json.body.chatInput }}",
+                    "rightValue": "=const s = ($json.body?.chatInput ?? '').toString();\nreturn [{ json: { isText: !(s.startsWith('imageMessage|') || s.startsWith('audioMessage|')) } }];\n",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notContains"
+                    },
+                    "id": "text-check"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1280,
+        7904
+      ],
+      "id": "aa039242-b038-4343-a2e6-ac813b7bee0b",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evo.youlya365.com/message/sendText/{{ $('Webhook1').item.json.body.instanceName }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Webhook1').item.json.body.remoteJid.split('@')[0]  }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.translatedText }}"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "id": "ddf92307-05b0-40fa-aaef-48a2b6057b86",
+      "name": "Evolution SendText",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1728,
+        7920
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// === SMART PRODUCT DETECTOR v2.0: Detection Only (No Sending) ===\n// SubWorkflow already sends images - this just detects if products were returned\n\nconst aiOutput = $('AI Agent').last()?.json?.output || '';\n\nconsole.log('\\n' + '='.repeat(70));\nconsole.log('PRODUCT DETECTOR v2.0 - DETECTION ONLY');\nconsole.log('='.repeat(70));\nconsole.log('Output length:', aiOutput.length);\n\n// Extract ALL markdown images with Shopify CDN\nconst shopifyPattern = /!\\[([^\\]]*)\\]\\((https:\\/\\/cdn\\.shopify\\.com\\/[^)]+)\\)/g;\nconst matches = [...aiOutput.matchAll(shopifyPattern)];\n\nconsole.log('Shopify images found:', matches.length);\n\nif (matches.length > 0) {\n  console.log('\\n✅ PRODUCTS DETECTED!');\n  console.log(`Found ${matches.length} product images`);\n  console.log('Images already sent by SubWorkflow ✅');\n  \n  // Extract just the text after products (if any)\n  let textAfterProducts = aiOutput;\n  \n  // Remove all image markdown\n  textAfterProducts = textAfterProducts.replace(shopifyPattern, '');\n  \n  // Remove product details blocks (السعر, المقاسات, etc.)\n  textAfterProducts = textAfterProducts\n    .replace(/السعر[:\\s]*(?:\\*{1,2})?\\s*\\d+\\s*جنيه/gi, '')\n    .replace(/الألوان[\\s]*(?:المتاحة)?[:\\s*]*[^\\n]+/gi, '')\n    .replace(/المقاسات[:\\s*]*[^\\n]+/gi, '')\n    .replace(/الخامة[:\\s*]*[^\\n]+/gi, '')\n    .replace(/📝[\\s]*[^\\n]+/gi, '')\n    .replace(/---+/g, '')\n    .replace(/\\n{3,}/g, '\\n\\n')\n    .trim();\n\n  console.log('Text after products (if any):', textAfterProducts.substring(0, 100));\n  \n  console.log('='.repeat(70) + '\\n');\n  \n  // Return single response indicating products were sent\n  return [{\n    json: {\n      isProduct: true,\n      productCount: matches.length,\n      productsAlreadySent: true,\n      // Include any text that came AFTER the products (like follow-up questions)\n      followUpText: textAfterProducts || '',\n      text: textAfterProducts || `تم عرض ${matches.length} منتج`\n    }\n  }];\n}\n\n// NO PRODUCTS - text only\nconsole.log('\\n📝 No Shopify images - Text response');\nconsole.log('='.repeat(70) + '\\n');\n\nreturn [{\n  json: { \n    isProduct: false,\n    productsAlreadySent: false,\n    isTextResponse: true,\n    text: aiOutput\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        608,
+        7920
+      ],
+      "id": "23448ec6-6eb0-49d9-991f-cd493c5d8821",
+      "name": "Product Detector",
+      "notesInFlow": true,
+      "notes": "Simple: Has Shopify image? Send as images"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "04066fc1-fb5b-41c3-947f-4907eb7b14f7",
+                    "leftValue": "={{ $json.isProduct }}",
+                    "rightValue": false,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        832,
+        7920
+      ],
+      "id": "e17e4ec5-a654-4abd-8ae4-05df96b4ee05",
+      "name": "Route Products or Text",
+      "notesInFlow": true,
+      "notes": "Output 0 (Images) = Products | Output 1+ = Text"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evo.youlya365.com/message/sendMedia/{{ $('Webhook1').item.json.body.instanceName }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  \"number\": $('Webhook1').item.json.body.remoteJid.split('@')[0],\n  \"mediatype\": \"image\",\n  \"media\": $json.image,\n  \"caption\": $json.caption\n} }}",
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "timeout": 20000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2448,
+        9152
+      ],
+      "id": "a512ea0e-dee5-4bb4-af9d-15d9ef4febc2",
+      "name": "Send Product Image",
+      "notesInFlow": true,
+      "notes": "Connected to Switch output 0 (Images)"
+    },
+    {
+      "parameters": {
+        "amount": 6
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -2224,
+        9232
+      ],
+      "id": "2131b455-b757-4978-9bea-77f6f4b7d8dc",
+      "name": "Wait 3s",
+      "webhookId": "8b37896e-3b46-4148-8a52-80c4082eae94"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1056,
+        7920
+      ],
+      "id": "e81b0178-a34a-4182-a89e-599296dfdddf",
+      "name": "Set Text"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "677182cc-ac47-41f2-8a3d-cd1015f95c54",
+      "name": "Loop Products",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -2672,
+        9152
+      ],
+      "notesInFlow": true,
+      "notes": "Loop through products one-by-one to send media sequentially."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evo.youlya365.com/message/sendText/{{ $('Webhook1').item.json.body.instanceName }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Webhook1').item.json.body.remoteJid.split('@')[0] }}"
+            },
+            {
+              "name": "text",
+              "value": "تحبي ابعت ليكي موديلات تانيه و لا تحبي اساعدك و نختار مع بعض من المنتجات دي و اعملك اوردر"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "id": "81b496a0-594f-4c08-99db-d181df76d080",
+      "name": "Post Products Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -2448,
+        8960
+      ],
+      "notesInFlow": true,
+      "notes": "Sent once after all product images are sent."
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -880,
+        8144
+      ],
+      "id": "c7cca5bf-148d-4fc7-97c4-cffe5cafa370",
+      "name": "OpenAI Chat Model1"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "YPezWGcyOVUl0bMjusPtd",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/YPezWGcyOVUl0bMjusPtd",
+          "cachedResultName": "Sales Assistant - SubWorkflow"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}",
+            "instanceName": "={{ $('Webhook1').item.json.body.instanceName }}",
+            "remoteJid": "={{ $('Webhook1').item.json.body.remoteJid }}\n"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "remoteJid",
+              "displayName": "remoteJid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "instanceName",
+              "displayName": "instanceName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        8144
+      ],
+      "id": "ba58f123-5cb4-43a8-9bb3-d52c4ad5e69c",
+      "name": "Call 'Shopify Search → WhatsApp",
+      "notes": "⚠️ IMPORTANT: After importing sub-workflow, update 'workflowId' to the new workflow ID"
+    },
+    {
+      "parameters": {
+        "mode": "delete",
+        "deleteMode": "all"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        -2672,
+        7296
+      ],
+      "id": "053a4fbd-ccbc-47df-a830-6be34e65a681",
+      "name": "Chat Memory Manager1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook1').item.json.body.remoteJid }}",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -752,
+        8144
+      ],
+      "id": "5ac6b1eb-7e8d-4abe-885d-3e4a9609d8af",
+      "name": "Postgres Chat Memory"
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "n8n_chat_histories",
+          "mode": "list",
+          "cachedResultName": "n8n_chat_histories"
+        },
+        "deleteCommand": "delete",
+        "where": {
+          "values": [
+            {
+              "column": "id",
+              "condition": "IS NOT NULL"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2672,
+        8528
+      ],
+      "id": "15c5dc92-7037-4b19-a86b-86be63a4e205",
+      "name": "Delete table or rows"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "hvuUOC4pNgiYqSJ5b06ko",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/hvuUOC4pNgiYqSJ5b06ko",
+          "cachedResultName": "Log AI Issue - SubWorkflow"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('timestamp', ``, 'string') }}",
+            "remoteJid": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('remoteJid', ``, 'string') }}",
+            "customerName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('customerName', ``, 'string') }}",
+            "issueType": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('issueType', ``, 'string') }}",
+            "userMessage": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('userMessage', ``, 'string') }}",
+            "agentReply": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('agentReply', ``, 'string') }}",
+            "details": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('details', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "remoteJid",
+              "displayName": "remoteJid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "issueType",
+              "displayName": "issueType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "userMessage",
+              "displayName": "userMessage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "agentReply",
+              "displayName": "agentReply",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "details",
+              "displayName": "details",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        272,
+        8144
+      ],
+      "id": "0eec7093-8aed-442c-b4e1-a41cf2b1fc7d",
+      "name": "Log Ai Issue"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c25cbc93-fefa-4975-a7f2-48fa2e053c49",
+              "leftValue": "={{ $json.body.chatInput }}",
+              "rightValue": "Del",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -2448,
+        7712
+      ],
+      "id": "b285f270-d3c0-4376-8e4a-ed1cf73045fe",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "n8n_chat_histories",
+          "mode": "list",
+          "cachedResultName": "n8n_chat_histories"
+        },
+        "deleteCommand": "delete",
+        "where": {
+          "values": [
+            {
+              "column": "session_id",
+              "value": "={{ $json.body.remoteJid }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2224,
+        7520
+      ],
+      "id": "18d2bdc4-1388-472f-a3e9-f0767a001ea8",
+      "name": "Delete table or rows1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evo.youlya365.com/message/sendText/{{ $('Webhook1').item.json.body.instanceName }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Webhook1').item.json.body.remoteJid.split('@')[0]  }}"
+            },
+            {
+              "name": "text",
+              "value": "تم مسح البيانات من ال AI AGENT 🤖 تقدر تبدأ من محادثة جديدة"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "id": "687708d0-dcd6-47ea-9950-02e3371a4a23",
+      "name": "Evolution SendText1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -2000,
+        7520
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        400,
+        8144
+      ],
+      "id": "4d503b9e-b23f-47b1-ba5d-c97cd21d02fb",
+      "name": "Code Tool"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        336,
+        8416
+      ],
+      "id": "73e51bb3-c646-4797-8c46-4ef6259f2b2c",
+      "name": "Code Tool1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "40521H2tm2skX3zk",
+          "mode": "list",
+          "cachedResultName": "Youlya",
+          "cachedResultUrl": "/projects/mOtgNeJlBhvmEWsM/datatables/40521H2tm2skX3zk"
+        },
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}"
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1.1,
+      "position": [
+        16,
+        8384
+      ],
+      "id": "855a4be6-4acf-4970-9889-83f10523b61a",
+      "name": "Get Rows From Youlya"
+    }
+  ],
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Extract Audio Message ID",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract Image Message ID",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "Voice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Voice": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze image": {
+      "main": [
+        [
+          {
+            "node": "Image + Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image + Text": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Order COD": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Order": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancel Order": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Customer Orders": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Specific Order": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Audio Message ID": {
+      "main": [
+        [
+          {
+            "node": "HTTP Get Base66",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Image Message ID": {
+      "main": [
+        [
+          {
+            "node": "HTTP Get Base64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Get Base64": {
+      "main": [
+        [
+          {
+            "node": "To Binary (Image)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "To Binary (Image)": {
+      "main": [
+        [
+          {
+            "node": "Analyze image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Get Base66": {
+      "main": [
+        [
+          {
+            "node": "To Binary (Audio)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "To Binary (Audio)": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick Translation": {
+      "main": [
+        [
+          {
+            "node": "Evolution SendText",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Pick Translation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [
+          {
+            "node": "Pick Translation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product Detector": {
+      "main": [
+        [
+          {
+            "node": "Route Products or Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Products or Text": {
+      "main": [
+        [
+          {
+            "node": "Set Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Product Image": {
+      "main": [
+        [
+          {
+            "node": "Wait 3s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Text": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Products": {
+      "main": [
+        [
+          {
+            "node": "Post Products Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Product Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 3s": {
+      "main": [
+        [
+          {
+            "node": "Loop Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Product Detector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Shopify Search → WhatsApp": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Ai Issue": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Delete table or rows1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete table or rows1": {
+      "main": [
+        [
+          {
+            "node": "Evolution SendText1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Tool1": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Get Rows From Youlya": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "e905ab7a-eb10-42b6-a71d-302132a5766d",
+  "activeVersionId": null,
+  "versionCounter": 338,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-01-25T01:42:59.602Z",
+      "createdAt": "2026-01-25T01:42:59.602Z",
+      "role": "workflow:owner",
+      "workflowId": "aWKe4yyoC1vDpeTj",
+      "projectId": "mOtgNeJlBhvmEWsM",
+      "project": {
+        "updatedAt": "2026-04-29T13:15:06.032Z",
+        "createdAt": "2025-12-02T09:11:28.665Z",
+        "id": "mOtgNeJlBhvmEWsM",
+        "name": "ahmed proideaegypt@gmail.com <proideaegypt@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+        "projectRelations": [
+          {
+            "updatedAt": "2025-12-02T09:11:28.665Z",
+            "createdAt": "2025-12-02T09:11:28.665Z",
+            "userId": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+            "projectId": "mOtgNeJlBhvmEWsM",
+            "user": {
+              "updatedAt": "2026-05-02T03:01:17.735Z",
+              "createdAt": "2025-12-02T09:11:28.117Z",
+              "id": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+              "email": "proideaegypt@gmail.com",
+              "firstName": "ahmed",
+              "lastName": "proideaegypt@gmail.com",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-12-02T10:40:00.411Z",
+                "personalization_survey_n8n_version": "1.122.4",
+                "companySize": "<20",
+                "companyType": "ecommerce",
+                "role": "business-owner",
+                "reportedSource": "google"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "TAfiadIWix0pNAti",
+                "userActivatedAt": 1765298870918,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1768746437011
+                }
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2026-05-01",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2025-12-27T12:54:51.832Z",
+      "createdAt": "2025-12-27T12:54:51.832Z",
+      "id": "SHSxOdeILanmm6JG",
+      "name": "new"
+    },
+    {
+      "updatedAt": "2026-01-07T14:50:02.739Z",
+      "createdAt": "2026-01-07T14:50:02.739Z",
+      "id": "BgFe5eZQGDxtgWc5",
+      "name": "Voice Working"
+    },
+    {
+      "updatedAt": "2026-01-07T14:50:02.760Z",
+      "createdAt": "2026-01-07T14:50:02.760Z",
+      "id": "uAJdcbgVG58a7fbL",
+      "name": "Text Working"
+    },
+    {
+      "updatedAt": "2026-01-07T14:50:02.808Z",
+      "createdAt": "2026-01-07T14:50:02.808Z",
+      "id": "4whMD9qrIqSMJHko",
+      "name": "working products"
+    }
+  ],
+  "activeVersion": null
+}

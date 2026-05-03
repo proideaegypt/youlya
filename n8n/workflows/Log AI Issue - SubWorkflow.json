@@ -1,0 +1,403 @@
+{
+  "updatedAt": "2026-01-30T06:40:42.357Z",
+  "createdAt": "2026-01-30T06:37:46.233Z",
+  "id": "hvuUOC4pNgiYqSJ5b06ko",
+  "name": "Log AI Issue - SubWorkflow",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"timestamp\": \"2026-01-30T08:30:00.000Z\",\n  \"remoteJid\": \"2010xxxxxxx@s.whatsapp.net\",\n  \"customerName\": \"Sara\",\n  \"issueType\": \"size_conflict\",\n  \"userMessage\": \"طيب هاعمل اوردر مقاس L من polar dream planet hoodie 6720\",\n  \"agentReply\": \"الموديل ده One Size بس يا قمر 💜 ومفيش منه مقاسات تانية...\",\n  \"details\": \"Customer requested size L for Polar Dream Blanket Hoodie 6720 which is One Size only.\"\n}\n"
+      },
+      "id": "9fc394b5-b9ae-487c-94f2-6e4f734aada4",
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "PFgXduNXbNB1Ue0C",
+          "mode": "list",
+          "cachedResultName": "AI_Issues",
+          "cachedResultUrl": "/projects/mOtgNeJlBhvmEWsM/datatables/PFgXduNXbNB1Ue0C"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "remoteJid",
+              "displayName": "remoteJid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "issueType",
+              "displayName": "issueType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "userMessage",
+              "displayName": "userMessage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "agentReply",
+              "displayName": "agentReply",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "details",
+              "displayName": "details",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "90740054-1474-4bc0-bc0e-10f226872469",
+      "name": "Log to AI_Issues",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        288,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { ok: true } }];"
+      },
+      "id": "3d3ed2a6-682d-4f2d-8045-c662bdf1dbc9",
+      "name": "Return OK",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Log to AI_Issues",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log to AI_Issues": {
+      "main": [
+        [
+          {
+            "node": "Return OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "a3306e24-2b03-4edb-85c1-d397d9262e6e",
+  "activeVersionId": "a3306e24-2b03-4edb-85c1-d397d9262e6e",
+  "versionCounter": 33,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-01-30T06:37:46.233Z",
+      "createdAt": "2026-01-30T06:37:46.233Z",
+      "role": "workflow:owner",
+      "workflowId": "hvuUOC4pNgiYqSJ5b06ko",
+      "projectId": "mOtgNeJlBhvmEWsM",
+      "project": {
+        "updatedAt": "2026-04-29T13:15:06.032Z",
+        "createdAt": "2025-12-02T09:11:28.665Z",
+        "id": "mOtgNeJlBhvmEWsM",
+        "name": "ahmed proideaegypt@gmail.com <proideaegypt@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+        "projectRelations": [
+          {
+            "updatedAt": "2025-12-02T09:11:28.665Z",
+            "createdAt": "2025-12-02T09:11:28.665Z",
+            "userId": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+            "projectId": "mOtgNeJlBhvmEWsM",
+            "user": {
+              "updatedAt": "2026-05-02T03:01:17.735Z",
+              "createdAt": "2025-12-02T09:11:28.117Z",
+              "id": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+              "email": "proideaegypt@gmail.com",
+              "firstName": "ahmed",
+              "lastName": "proideaegypt@gmail.com",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-12-02T10:40:00.411Z",
+                "personalization_survey_n8n_version": "1.122.4",
+                "companySize": "<20",
+                "companyType": "ecommerce",
+                "role": "business-owner",
+                "reportedSource": "google"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "TAfiadIWix0pNAti",
+                "userActivatedAt": 1765298870918,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1768746437011
+                }
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2026-05-01",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2026-01-30T06:40:44.362Z",
+    "createdAt": "2026-01-30T06:40:42.359Z",
+    "versionId": "a3306e24-2b03-4edb-85c1-d397d9262e6e",
+    "workflowId": "hvuUOC4pNgiYqSJ5b06ko",
+    "nodes": [
+      {
+        "parameters": {
+          "inputSource": "jsonExample",
+          "jsonExample": "{\n  \"timestamp\": \"2026-01-30T08:30:00.000Z\",\n  \"remoteJid\": \"2010xxxxxxx@s.whatsapp.net\",\n  \"customerName\": \"Sara\",\n  \"issueType\": \"size_conflict\",\n  \"userMessage\": \"طيب هاعمل اوردر مقاس L من polar dream planet hoodie 6720\",\n  \"agentReply\": \"الموديل ده One Size بس يا قمر 💜 ومفيش منه مقاسات تانية...\",\n  \"details\": \"Customer requested size L for Polar Dream Blanket Hoodie 6720 which is One Size only.\"\n}\n"
+        },
+        "id": "9fc394b5-b9ae-487c-94f2-6e4f734aada4",
+        "name": "When Executed by Another Workflow",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "dataTableId": {
+            "__rl": true,
+            "value": "PFgXduNXbNB1Ue0C",
+            "mode": "list",
+            "cachedResultName": "AI_Issues",
+            "cachedResultUrl": "/projects/mOtgNeJlBhvmEWsM/datatables/PFgXduNXbNB1Ue0C"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "timestamp",
+                "displayName": "timestamp",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "remoteJid",
+                "displayName": "remoteJid",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "customerName",
+                "displayName": "customerName",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "issueType",
+                "displayName": "issueType",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "userMessage",
+                "displayName": "userMessage",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "agentReply",
+                "displayName": "agentReply",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "details",
+                "displayName": "details",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "id": "90740054-1474-4bc0-bc0e-10f226872469",
+        "name": "Log to AI_Issues",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1,
+        "position": [
+          288,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "return [{ json: { ok: true } }];"
+        },
+        "id": "3d3ed2a6-682d-4f2d-8045-c662bdf1dbc9",
+        "name": "Return OK",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          560,
+          0
+        ]
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Log to AI_Issues",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Log to AI_Issues": {
+        "main": [
+          [
+            {
+              "node": "Return OK",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Youlya Egypt",
+    "name": "Version a3306e24",
+    "description": "",
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-01-30T06:40:44.360Z",
+        "id": 150,
+        "workflowId": "hvuUOC4pNgiYqSJ5b06ko",
+        "versionId": "a3306e24-2b03-4edb-85c1-d397d9262e6e",
+        "event": "activated",
+        "userId": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07"
+      }
+    ]
+  }
+}

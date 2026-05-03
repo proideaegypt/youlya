@@ -1623,3 +1623,95 @@ Tests passed:
 Tests failed/skipped:
 Blockers:
 Next step:
+
+## 2026-05-02 — configure-n8n-runtime-env-for-youlya-whatsapp-workflow
+
+Date: 2026-05-02
+Phase:
+Task: configure-n8n-runtime-env-for-youlya-whatsapp-workflow
+Version: v2.6.2
+Version Name: configure-n8n-runtime-env-for-youlya-whatsapp-workflow
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-02 — fix-n8n-route-by-action-switch-node
+
+Date: 2026-05-02
+Phase:
+Task: fix-n8n-route-by-action-switch-node
+Version: v2.6.3
+Version Name: n8n-route-by-action-switch-node
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-03 — register-youlya-n8n-production-webhook
+
+Date: 2026-05-03
+Phase:
+Task: register-youlya-n8n-production-webhook
+Version: v2.6.4
+Version Name: register-youlya-n8n-production-webhook
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-03 — allow-n8n-workflow-env-access-for-youlya-workflow
+
+Date: 2026-05-03
+Phase: VPS n8n production config
+Task: allow-n8n-workflow-env-access-for-youlya-workflow
+Version: v2.6.5
+Version Name: allow-n8n-workflow-env-access-for-youlya-workflow
+Files changed:
+- `/root/n8n/docker-compose.yml`
+- `/root/n8n/docker-compose.yml.backup.20260503163751`
+- `RELEASES/v2.6.5-allow-n8n-workflow-env-access-for-youlya-workflow.md`
+- `worktime.md`
+- `PROGRESS-LOG.md`
+Commands run:
+- `docker ps --format 'table {{.Names}}\\t{{.Image}}\\t{{.Ports}}\\t{{.Status}}' | grep -E 'n8n|youlya|evolution' || true`
+- `docker exec n8n-n8n-1 sh -lc 'for k in N8N_BLOCK_ENV_ACCESS_IN_NODE APP_INTERNAL_URL INTERNAL_API_SECRET EVOLUTION_API_URL EVOLUTION_API_KEY EVOLUTION_INSTANCE; do if [ -n \"$(printenv $k)\" ]; then echo \"$k=SET\"; else echo \"$k=MISSING\"; fi; done'`
+- `docker inspect n8n-n8n-1 --format 'project={{index .Config.Labels "com.docker.compose.project"}}'`
+- `docker inspect n8n-n8n-1 --format 'working_dir={{index .Config.Labels "com.docker.compose.project.working_dir"}}'`
+- `docker inspect n8n-n8n-1 --format 'config_files={{index .Config.Labels "com.docker.compose.project.config_files"}}'`
+- `find /root /opt /srv -maxdepth 5 \\( -name "docker-compose.yml" -o -name "compose.yml" \\) 2>/dev/null | grep -i n8n || true`
+- `cp /root/n8n/docker-compose.yml "/root/n8n/docker-compose.yml.backup.$(date +%Y%m%d%H%M%S)"`
+- `docker compose config >/tmp/n8n-compose-config.out && docker compose up -d n8n >/tmp/n8n-compose-up.out && echo OK`
+- `docker exec n8n-n8n-1 sh -lc 'echo "N8N_BLOCK_ENV_ACCESS_IN_NODE=$(printenv N8N_BLOCK_ENV_ACCESS_IN_NODE)"'`
+- `curl -i -X POST https://ai.youlya365.com/webhook/youlya-whatsapp -H 'Content-Type: application/json' -d '{...synthetic payload...}'`
+- `curl -i -X POST http://127.0.0.1:5678/webhook/youlya-whatsapp -H 'Content-Type: application/json' -d '{...synthetic payload...}'`
+- `docker logs --tail 80 n8n-n8n-1`
+- `docker exec n8n-db-1 sh -lc 'PGPASSWORD=n8npass psql -U n8n -d n8n -Atc ...'`
+- `npm run release:task -- --task "allow-n8n-workflow-env-access-for-youlya-workflow" --type patch`
+- `npm run verify:release`
+- `npm run verify:deploy`
+- `npm run lint`
+Tests passed:
+- n8n compose config validated.
+- n8n service restarted successfully.
+- env flag verified as `false` inside the container.
+- direct local webhook test returned `200 Workflow was started`.
+- execution record confirmed for `Youlya WhatsApp Main`.
+- no `access to env vars denied` log entries found after the change.
+- release verification passed.
+Tests failed/skipped:
+- public webhook URL returned HTTP 500 from Apache during the synthetic test.
+- `Send Text` failed with a 404 because the Evolution instance `next-link-main` does not exist.
+- deploy verification failed on pre-existing repo lint errors in `lib/adapters/supabase/product-sync-repository.ts`, `lib/services/product-search-service.ts`, and `lib/services/shopify-product-sync-service.ts`.
+Blockers:
+- External front door needs separate proxy investigation if the public URL must be used for validation.
+- Evolution instance mismatch is a downstream workflow issue, not an env-access issue.
+- Repo lint errors block `verify:deploy`.
+Next step:
+- If needed, fix the Apache proxy path or the Evolution instance configuration, then rerun the public webhook test.

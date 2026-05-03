@@ -1,0 +1,861 @@
+{
+  "timestamp": "2026-05-02T15:10:37.123Z",
+  "apiUrl": "https://ai.youlya365.com",
+  "totalWorkflows": 100,
+  "workflows": [
+    {
+      "id": "0P3zTcPCu8mXYK6t",
+      "name": "youlya",
+      "active": false,
+      "updatedAt": "2026-01-07T14:46:29.917Z",
+      "nodeCount": 13,
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "aZ0656eYrpPlnCyy",
+      "name": "youlya 1",
+      "active": false,
+      "updatedAt": "2026-01-07T14:46:20.276Z",
+      "nodeCount": 13,
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "pcJsZNEnzDl3R6Vt",
+      "name": "Whatsapp Audio Image Youlya (Optimized)",
+      "active": false,
+      "updatedAt": "2026-01-29T05:44:06.849Z",
+      "nodeCount": 46,
+      "tags": [
+        "new",
+        "Voice Working",
+        "Text Working",
+        "working products"
+      ]
+    },
+    {
+      "id": "P0EDRLDSBwVYC1wV",
+      "name": "Youlya SEO Audit & Suggest Final",
+      "active": false,
+      "updatedAt": "2026-01-17T11:47:03.697Z",
+      "nodeCount": 9,
+      "tags": [
+        "worked gpt 4 mini"
+      ]
+    },
+    {
+      "id": "Bexc2J1tSiDiR0rt",
+      "name": "Rowan Tree Hotel - Direct Booking Agent (OPTIMIZED)",
+      "active": false,
+      "updatedAt": "2026-01-18T14:25:15.685Z",
+      "nodeCount": 37,
+      "tags": [
+        "Voice Working",
+        "Text Working",
+        "working products"
+      ]
+    },
+    {
+      "id": "6qC8wXUm0e1QVRkI",
+      "name": "chatbot shopify v0.1",
+      "active": false,
+      "updatedAt": "2026-01-18T14:32:49.775Z",
+      "nodeCount": 7,
+      "tags": [
+        "VIP"
+      ]
+    },
+    {
+      "id": "nYuaWF1xfAJi2LOE",
+      "name": "Shopify Search -> WhatsApp (Fixed) copy",
+      "active": false,
+      "updatedAt": "2026-01-18T14:38:25.292Z",
+      "nodeCount": 24,
+      "tags": [
+        "working all products"
+      ]
+    },
+    {
+      "id": "aWKe4yyoC1vDpeTj",
+      "name": "Whatsapp Youlya",
+      "active": false,
+      "updatedAt": "2026-02-01T23:43:55.984Z",
+      "nodeCount": 44,
+      "tags": [
+        "new",
+        "Voice Working",
+        "Text Working",
+        "working products"
+      ]
+    },
+    {
+      "id": "65wzo4mbW0gZeBHT",
+      "name": "VIP Automatic re-engagement for inactive Shopify customers via Beex",
+      "active": false,
+      "updatedAt": "2026-01-07T14:48:39.183Z",
+      "nodeCount": 20,
+      "tags": []
+    },
+    {
+      "id": "MEDYLVYU2wIsZeRG",
+      "name": "AI-Powered WhatsApp Chatbot for Text, Voice, Images, and PDF with RAG",
+      "active": false,
+      "updatedAt": "2025-12-23T00:33:01.013Z",
+      "nodeCount": 35,
+      "tags": []
+    },
+    {
+      "id": "fMQIAAo9yksvpeIs",
+      "name": "AI-powered product research & SEO content automation",
+      "active": false,
+      "updatedAt": "2026-01-07T14:48:45.924Z",
+      "nodeCount": 17,
+      "tags": []
+    },
+    {
+      "id": "7L3Qlk0VLCbQAE6a",
+      "name": "youlya3",
+      "active": false,
+      "updatedAt": "2025-12-27T23:32:24.878Z",
+      "nodeCount": 13,
+      "tags": []
+    },
+    {
+      "id": "bXju3pmkp3v15kZQ",
+      "name": "ukr",
+      "active": false,
+      "updatedAt": "2025-12-27T23:32:02.246Z",
+      "nodeCount": 8,
+      "tags": []
+    },
+    {
+      "id": "8ZflCl6FN7NuiwCN",
+      "name": "Recover Shopify Abandoned Carts with Email, SMS, WhatsApp & Facebook Retargeting",
+      "active": false,
+      "updatedAt": "2025-12-23T00:33:23.969Z",
+      "nodeCount": 54,
+      "tags": []
+    },
+    {
+      "id": "D4hG3PYQjHeLIs2M",
+      "name": "Search Product - Shopify",
+      "active": false,
+      "updatedAt": "2025-12-27T08:03:03.828Z",
+      "nodeCount": 5,
+      "tags": []
+    },
+    {
+      "id": "cLIVJVUZdVNRYIsj",
+      "name": "Shopify Order Confirmation via WhatsApp",
+      "active": false,
+      "updatedAt": "2026-01-07T14:46:16.983Z",
+      "nodeCount": 11,
+      "tags": []
+    },
+    {
+      "id": "i9JItJqP2SNzPbJ8",
+      "name": "Send WooCommerce discount coupons to customers via WhatsApp using Rapiwa API",
+      "active": false,
+      "updatedAt": "2026-01-07T14:42:45.035Z",
+      "nodeCount": 16,
+      "tags": []
+    },
+    {
+      "id": "ALwcnOqfd42yq3zb",
+      "name": "AI-powered restaurant order chatbot with GPT-4o for POS integration",
+      "active": false,
+      "updatedAt": "2026-01-18T14:25:15.685Z",
+      "nodeCount": 19,
+      "tags": []
+    },
+    {
+      "id": "2UdBcUd0yHW1FXgu",
+      "name": "Youlya - Phase 1: Webhook & Inbound",
+      "active": false,
+      "updatedAt": "2026-04-29T13:21:28.755Z",
+      "nodeCount": 13,
+      "tags": []
+    },
+    {
+      "id": "jiLAGk9UxMoWOKQa",
+      "name": "Send Rapiwa WhatsApp apology & reorder link when Shopify order is cancelled",
+      "active": false,
+      "updatedAt": "2026-01-07T14:43:31.672Z",
+      "nodeCount": 15,
+      "tags": []
+    },
+    {
+      "id": "hylIQ1U9jzjzVekI",
+      "name": "Chat with a database using AI",
+      "active": false,
+      "updatedAt": "2026-01-07T14:48:09.379Z",
+      "nodeCount": 7,
+      "tags": []
+    },
+    {
+      "id": "LpeJHYIHKt2ahNgZ",
+      "name": "Customer support WhatsApp bot with Google Docs knowledge base and Gemini AI",
+      "active": false,
+      "updatedAt": "2026-01-07T14:44:27.969Z",
+      "nodeCount": 14,
+      "tags": []
+    },
+    {
+      "id": "JViFUbQ16gCIbBzj",
+      "name": "Voice appointment booking & confirmation system with Vapi, Gemini & Google Calendar",
+      "active": false,
+      "updatedAt": "2026-01-18T14:25:15.685Z",
+      "nodeCount": 13,
+      "tags": []
+    },
+    {
+      "id": "1wj3gyApXpT4nzDp",
+      "name": "AI-Powered E-commerce Customer Support Chatbot with GPT-4 & Supabase 2",
+      "active": false,
+      "updatedAt": "2025-12-22T07:07:37.215Z",
+      "nodeCount": 27,
+      "tags": []
+    },
+    {
+      "id": "nK1E8tNhtqrxPnC8",
+      "name": "Automate Shopify abandoned cart WhatsApp reminders with product links via Rapiwa 2",
+      "active": false,
+      "updatedAt": "2026-01-07T14:42:40.950Z",
+      "nodeCount": 19,
+      "tags": []
+    },
+    {
+      "id": "ETEmDwRR28PQLg1x",
+      "name": "Automated WhatsApp welcome messages for sales leads with Google Sheets & Rapiwa",
+      "active": false,
+      "updatedAt": "2026-01-07T14:42:37.292Z",
+      "nodeCount": 17,
+      "tags": []
+    },
+    {
+      "id": "dDqRxJhlHyFs4MjW",
+      "name": "Restaurant reservation management with OpenAI GPT and Google Sheets 3",
+      "active": false,
+      "updatedAt": "2026-01-07T14:47:18.803Z",
+      "nodeCount": 15,
+      "tags": []
+    },
+    {
+      "id": "AGugOW0BunSrtgcq25RuQ",
+      "name": "Support Director Agent with Customer Support Team",
+      "active": false,
+      "updatedAt": "2026-02-02T05:40:55.478Z",
+      "nodeCount": 18,
+      "tags": []
+    },
+    {
+      "id": "DtlvBxzXUD1PSl8imHb3d",
+      "name": "Shopify to Data Table Sync - FINAL FIX",
+      "active": false,
+      "updatedAt": "2026-02-10T16:23:10.390Z",
+      "nodeCount": 7,
+      "tags": []
+    },
+    {
+      "id": "FGSYWXnCDv71XJQX",
+      "name": "AI Shopify product descriptions: GPT-4o Vision + Claude + Analytics",
+      "active": false,
+      "updatedAt": "2026-01-17T12:03:38.235Z",
+      "nodeCount": 43,
+      "tags": []
+    },
+    {
+      "id": "Nh1sHFcS5ADEXpUT",
+      "name": "VIPSend Rapiwa WhatsApp apology & reorder link when Shopify order is cancelled",
+      "active": true,
+      "updatedAt": "2026-01-18T14:35:27.455Z",
+      "nodeCount": 15,
+      "tags": []
+    },
+    {
+      "id": "E6kqqxeALfQCEFuL",
+      "name": "Youlya SEO Audit & Suggest",
+      "active": false,
+      "updatedAt": "2026-01-15T20:19:02.647Z",
+      "nodeCount": 9,
+      "tags": []
+    },
+    {
+      "id": "E6PCamzizwxrZ33x",
+      "name": "WhatsApp number verify & confirmation system with Rapiwa API and Google Sheets",
+      "active": false,
+      "updatedAt": "2026-01-07T14:43:01.568Z",
+      "nodeCount": 17,
+      "tags": []
+    },
+    {
+      "id": "jr88Dwpr8IgKWgFt",
+      "name": "AI-powered WhatsApp chatbot for text, voice, images, and PDF with RAG",
+      "active": false,
+      "updatedAt": "2026-01-07T14:44:24.155Z",
+      "nodeCount": 35,
+      "tags": []
+    },
+    {
+      "id": "Pcv5OIfJQLHgtGp6",
+      "name": "Recover Abandoned Shopify Carts with Email Follow-ups, HubSpot CRM & Google Sheets Tracking",
+      "active": false,
+      "updatedAt": "2026-01-07T14:43:35.403Z",
+      "nodeCount": 13,
+      "tags": []
+    },
+    {
+      "id": "otEFESMcDlhlPEwU",
+      "name": "Smart Search with AI Agent",
+      "active": true,
+      "updatedAt": "2026-01-26T01:59:04.972Z",
+      "nodeCount": 5,
+      "tags": []
+    },
+    {
+      "id": "DFlZOcYQ4rqpTRWD",
+      "name": "VIP Create a voice-enabled AI assistant with Groq, SerpAPI and TTS",
+      "active": false,
+      "updatedAt": "2026-01-07T14:48:20.586Z",
+      "nodeCount": 8,
+      "tags": []
+    },
+    {
+      "id": "luKzLA4Vg3W7jNL0",
+      "name": "Automate restaurant orders with AI dish recommendations using Gemini and Telegram",
+      "active": false,
+      "updatedAt": "2026-01-07T14:48:24.201Z",
+      "nodeCount": 21,
+      "tags": []
+    },
+    {
+      "id": "0modnvNGo68Gyjhp",
+      "name": "Restaurant GPT-4 receptionist for bookings & delivery using Vapi, Telegram, Airtable 2",
+      "active": false,
+      "updatedAt": "2026-01-07T14:47:49.839Z",
+      "nodeCount": 122,
+      "tags": []
+    },
+    {
+      "id": "nlHQG79i3inidmcV",
+      "name": "Generate multilingual Shopify product descriptions with Gemini 2.5 Vision AI",
+      "active": false,
+      "updatedAt": "2026-01-07T14:44:38.643Z",
+      "nodeCount": 8,
+      "tags": []
+    },
+    {
+      "id": "a2Hn0nsChgg5ABF3",
+      "name": "Smart Search with AI Agent Data table",
+      "active": true,
+      "updatedAt": "2026-01-29T06:42:41.689Z",
+      "nodeCount": 12,
+      "tags": []
+    },
+    {
+      "id": "9KA3JmfYYATb57Fv",
+      "name": "Search Product",
+      "active": false,
+      "updatedAt": "2025-12-27T08:03:06.994Z",
+      "nodeCount": 5,
+      "tags": []
+    },
+    {
+      "id": "1PXcOcEAg4dlsLdt",
+      "name": "Recover Shopify abandoned carts with email, SMS, WhatsApp & Facebook retargeting",
+      "active": false,
+      "updatedAt": "2026-01-07T14:44:54.153Z",
+      "nodeCount": 54,
+      "tags": []
+    },
+    {
+      "id": "4FtMfz71IPCtThzY",
+      "name": "Hotel guest journey automation with Gmail & Google Sheets 3",
+      "active": false,
+      "updatedAt": "2026-01-18T14:25:15.685Z",
+      "nodeCount": 22,
+      "tags": []
+    },
+    {
+      "id": "nU8JcJcVEY09tdaC",
+      "name": "VIPHandle WhatsApp customer inquiries with AI and intent routing",
+      "active": false,
+      "updatedAt": "2026-01-07T14:49:05.894Z",
+      "nodeCount": 20,
+      "tags": []
+    },
+    {
+      "id": "bFEl2N5vJMr0kriX",
+      "name": "Query and monitor Shopify orders via Telegram bot commands",
+      "active": false,
+      "updatedAt": "2026-01-07T14:44:50.335Z",
+      "nodeCount": 11,
+      "tags": []
+    },
+    {
+      "id": "NNme_DJaEd7CTYXfk78Bn",
+      "name": "chatbot shopify v0.1",
+      "active": true,
+      "updatedAt": "2026-01-24T23:38:15.585Z",
+      "nodeCount": 14,
+      "tags": []
+    },
+    {
+      "id": "5X2AZXW87R3p8Yso",
+      "name": "ERP AI chatbot for Odoo sales module with OpenAI 3",
+      "active": false,
+      "updatedAt": "2026-01-07T14:45:16.537Z",
+      "nodeCount": 16,
+      "tags": []
+    },
+    {
+      "id": "eLgTOErhaP2m9vxy",
+      "name": "Create Order",
+      "active": false,
+      "updatedAt": "2025-12-27T08:03:11.875Z",
+      "nodeCount": 4,
+      "tags": []
+    },
+    {
+      "id": "1vM9fRyMlEBB2tpJ",
+      "name": "Automate Shopify SEO content creation with GPT-4o & Claude multi-agent system",
+      "active": true,
+      "updatedAt": "2026-05-02T13:56:48.172Z",
+      "nodeCount": 92,
+      "tags": []
+    },
+    {
+      "id": "KSnhWXLydRRbRnAb",
+      "name": "ukr copy",
+      "active": false,
+      "updatedAt": "2025-12-27T08:03:00.730Z",
+      "nodeCount": 8,
+      "tags": []
+    },
+    {
+      "id": "efQBrZNaFM49wJA6",
+      "name": "Search Product",
+      "active": false,
+      "updatedAt": "2025-12-27T08:02:10.936Z",
+      "nodeCount": 6,
+      "tags": []
+    },
+    {
+      "id": "Nj8njWwGD1LhnUEf",
+      "name": "Dynamically generate a webpage from user request using OpenAI structured output",
+      "active": false,
+      "updatedAt": "2026-01-07T14:43:43.232Z",
+      "nodeCount": 7,
+      "tags": []
+    },
+    {
+      "id": "Os7SJaxXRyMqzFfm",
+      "name": "Recover Shopify abandoned carts with email, SMS, WhatsApp & Facebook retargeting 3",
+      "active": false,
+      "updatedAt": "2026-01-13T13:56:19.681Z",
+      "nodeCount": 54,
+      "tags": []
+    },
+    {
+      "id": "7iryjNJpRbffwaYh",
+      "name": "Automatically send WhatsApp discount codes to Shopify customers using Rapiwa",
+      "active": false,
+      "updatedAt": "2026-01-07T14:42:49.369Z",
+      "nodeCount": 17,
+      "tags": []
+    },
+    {
+      "id": "HwNN84xaefN21PWx",
+      "name": "Automated Facebook message response with GPT-4o and Airtable inventory matching",
+      "active": false,
+      "updatedAt": "2026-01-07T14:46:49.377Z",
+      "nodeCount": 22,
+      "tags": []
+    },
+    {
+      "id": "BEklfW41Kpg18cBx",
+      "name": "E-commerce assistant for Shopify & WooCommerce with GPT-4o, Gemini & RAG",
+      "active": false,
+      "updatedAt": "2026-01-13T13:56:30.129Z",
+      "nodeCount": 32,
+      "tags": []
+    },
+    {
+      "id": "nYpENLbODpccVUwS",
+      "name": "Create a Two-Way WhatsApp + Telegram Integration for 10k+ Customer Support Chats",
+      "active": false,
+      "updatedAt": "2025-12-23T00:32:59.282Z",
+      "nodeCount": 30,
+      "tags": []
+    },
+    {
+      "id": "6AMrf8J1bhV5Sppx",
+      "name": "VIPScrape Shopify store data with RapidAPI and save to Google Sheets",
+      "active": false,
+      "updatedAt": "2026-01-14T20:07:07.501Z",
+      "nodeCount": 11,
+      "tags": []
+    },
+    {
+      "id": "nj8MNfeSRKJAl9mZ",
+      "name": "Voice AI chatbot with OpenAI, RAG (Qdrant) & Guardrails for WordPress",
+      "active": false,
+      "updatedAt": "2026-01-07T14:46:54.905Z",
+      "nodeCount": 34,
+      "tags": []
+    },
+    {
+      "id": "1OgrUJtJegGdpmFO",
+      "name": "Query and Monitor Shopify Orders via Telegram Bot Commands",
+      "active": false,
+      "updatedAt": "2025-12-23T00:33:05.847Z",
+      "nodeCount": 11,
+      "tags": []
+    },
+    {
+      "id": "hlo6IXSNROXVt5Md",
+      "name": "Shopify order fulfillment & send tracking link via WhatsApp using Rapiwa API",
+      "active": false,
+      "updatedAt": "2026-01-07T14:43:19.217Z",
+      "nodeCount": 17,
+      "tags": []
+    },
+    {
+      "id": "f1d0NiisSrTpYSr1",
+      "name": "VIP Generating SEO-optimized product descriptions for Shopify and Google Shopping using AI 2",
+      "active": false,
+      "updatedAt": "2026-01-07T14:45:34.892Z",
+      "nodeCount": 17,
+      "tags": []
+    },
+    {
+      "id": "iREN2lTQfO7EZFPp",
+      "name": "VIP Recover Shopify abandoned carts with email, SMS, WhatsApp & Facebook retargeting 2",
+      "active": false,
+      "updatedAt": "2026-01-14T20:05:26.789Z",
+      "nodeCount": 54,
+      "tags": []
+    },
+    {
+      "id": "6WWxZKO3rOWz1fXh",
+      "name": "Automate Shopify Product Posting to Social Media with GPT-4.1-Mini & Data Tracking",
+      "active": false,
+      "updatedAt": "2026-01-07T14:44:42.249Z",
+      "nodeCount": 16,
+      "tags": []
+    },
+    {
+      "id": "23X3brg063EQiBww",
+      "name": "Youlya Cust Service copy",
+      "active": false,
+      "updatedAt": "2025-12-27T23:32:08.171Z",
+      "nodeCount": 19,
+      "tags": []
+    },
+    {
+      "id": "8LguFvODg9NCWiXU",
+      "name": "Automate Shopify SEO Content Creation with GPT-4o & Claude Multi-Agent System",
+      "active": false,
+      "updatedAt": "2025-12-23T00:33:15.648Z",
+      "nodeCount": 92,
+      "tags": []
+    },
+    {
+      "id": "0iTTJMO4MeyFA5VT",
+      "name": "Youlya1",
+      "active": false,
+      "updatedAt": "2025-12-27T23:32:11.188Z",
+      "nodeCount": 12,
+      "tags": []
+    },
+    {
+      "id": "aGvrqIGTgau6lpxA",
+      "name": "AI-Powered WhatsApp Customer Support for Shopify Brands with LLM Agents 2",
+      "active": false,
+      "updatedAt": "2025-12-23T00:34:18.648Z",
+      "nodeCount": 30,
+      "tags": []
+    },
+    {
+      "id": "afxOiXR81b7d6O8r",
+      "name": "My workflow",
+      "active": false,
+      "updatedAt": "2026-01-13T13:56:15.627Z",
+      "nodeCount": 12,
+      "tags": []
+    },
+    {
+      "id": "g1iYzwEqJ2JxuS3W",
+      "name": "Multi-agent SEO optimized blog writing system with hyperlinks for E-Commmerce",
+      "active": false,
+      "updatedAt": "2026-01-07T14:45:02.520Z",
+      "nodeCount": 75,
+      "tags": []
+    },
+    {
+      "id": "kqQw9SDq9CjpHg45",
+      "name": "Monitor website performance with PageSpeed Insights and send alerts to Google Sheets",
+      "active": false,
+      "updatedAt": "2026-01-17T12:00:39.446Z",
+      "nodeCount": 20,
+      "tags": []
+    },
+    {
+      "id": "mv0ZorjSDVUE0jYW",
+      "name": "Smart Shopify agent: AI-powered abandoned cart recovery 2",
+      "active": false,
+      "updatedAt": "2026-01-14T13:52:13.156Z",
+      "nodeCount": 17,
+      "tags": []
+    },
+    {
+      "id": "iJf1ai05SPikzuTu",
+      "name": "Generating SEO-optimized product descriptions for Shopify and Google Shopping using AI 2",
+      "active": false,
+      "updatedAt": "2026-01-13T13:56:17.984Z",
+      "nodeCount": 17,
+      "tags": []
+    },
+    {
+      "id": "AB6I9fObb5aVvzpd",
+      "name": "Restaurant reservation management with OpenAI GPT and Google Sheets",
+      "active": false,
+      "updatedAt": "2026-01-07T14:46:36.304Z",
+      "nodeCount": 15,
+      "tags": []
+    },
+    {
+      "id": "CjIAqyb9hJxMd7yv",
+      "name": "Youlya Apply SEO Updates (After Approval)",
+      "active": false,
+      "updatedAt": "2026-01-15T21:28:03.356Z",
+      "nodeCount": 9,
+      "tags": []
+    },
+    {
+      "id": "KPNDVR2EXeJPrktG",
+      "name": "Youlya SEO Audit & Suggest (Jan 15 at 17:14:32)",
+      "active": false,
+      "updatedAt": "2026-01-15T20:18:32.935Z",
+      "nodeCount": 9,
+      "tags": []
+    },
+    {
+      "id": "HUG7kTl6iTEO8m2A",
+      "name": "Restaurant order & delivery system for WhatsApp with GPT-4o and Supabase",
+      "active": false,
+      "updatedAt": "2026-01-07T14:48:58.290Z",
+      "nodeCount": 55,
+      "tags": []
+    },
+    {
+      "id": "bDOEiChtNItFeSVO",
+      "name": "Recover Shopify Abandoned Carts with Email, SMS, WhatsApp & Facebook Retargeting 2",
+      "active": false,
+      "updatedAt": "2025-12-22T17:49:44.185Z",
+      "nodeCount": 54,
+      "tags": []
+    },
+    {
+      "id": "3Okgbq2tcwQxq4We",
+      "name": "E-commerce assistant for Shopify & WooCommerce with GPT-4o, Gemini & RAG copy",
+      "active": false,
+      "updatedAt": "2026-01-13T13:56:27.736Z",
+      "nodeCount": 32,
+      "tags": []
+    },
+    {
+      "id": "3Z2gPn7Y6S0hULZi",
+      "name": "Create a Branded AI-Powered Website Chatbot",
+      "active": false,
+      "updatedAt": "2025-12-23T00:33:28.755Z",
+      "nodeCount": 24,
+      "tags": []
+    },
+    {
+      "id": "kYnMQ0dDixaGyQDB",
+      "name": "AI-Powered E-commerce Customer Support Chatbot with GPT-4 & Supabase",
+      "active": false,
+      "updatedAt": "2025-12-23T00:33:31.282Z",
+      "nodeCount": 27,
+      "tags": []
+    },
+    {
+      "id": "bMzquXQCybflpmT9",
+      "name": "Shopify VIP alerts: AI summary & Slack notification for big orders",
+      "active": false,
+      "updatedAt": "2026-01-11T10:01:41.523Z",
+      "nodeCount": 13,
+      "tags": []
+    },
+    {
+      "id": "MfSJ0sGeGy5kC0rq",
+      "name": "Automate Shopify abandoned cart WhatsApp reminders with product links via Rapiwa 3",
+      "active": false,
+      "updatedAt": "2026-01-13T13:56:21.568Z",
+      "nodeCount": 19,
+      "tags": []
+    },
+    {
+      "id": "430PrSqqGNsfZoFy",
+      "name": "Generate multilingual Shopify product descriptions with Gemini 2.5 Vision AI 4",
+      "active": false,
+      "updatedAt": "2026-01-18T14:27:15.503Z",
+      "nodeCount": 8,
+      "tags": []
+    },
+    {
+      "id": "hvuUOC4pNgiYqSJ5b06ko",
+      "name": "Log AI Issue - SubWorkflow",
+      "active": true,
+      "updatedAt": "2026-01-30T06:40:42.357Z",
+      "nodeCount": 3,
+      "tags": []
+    },
+    {
+      "id": "GV4ASTzwzjQ30ean",
+      "name": "Page Speed Insight",
+      "active": false,
+      "updatedAt": "2026-01-17T12:04:02.727Z",
+      "nodeCount": 17,
+      "tags": []
+    },
+    {
+      "id": "FkG8lS2RijnxmHfe",
+      "name": "AI-Powered E-commerce Customer Support Chatbot with GPT-4 & Supabase 3",
+      "active": false,
+      "updatedAt": "2025-12-22T07:07:30.078Z",
+      "nodeCount": 27,
+      "tags": []
+    },
+    {
+      "id": "2y2DUb1Uf5EXnznQ",
+      "name": "VVVIP Automated product inquiry responder with GPT-4 and Google Sheets",
+      "active": false,
+      "updatedAt": "2026-01-11T10:00:53.292Z",
+      "nodeCount": 10,
+      "tags": []
+    },
+    {
+      "id": "fsqLFdMzcBPQ7HbP",
+      "name": "VIP Smart Shopify agent: AI-powered abandoned cart recovery",
+      "active": false,
+      "updatedAt": "2026-01-18T14:36:47.100Z",
+      "nodeCount": 16,
+      "tags": []
+    },
+    {
+      "id": "Aj9OcrTtdtuiLxDp",
+      "name": "Transform Shopify products into SEO blog content with DeepSeek AI and Google Sheets",
+      "active": false,
+      "updatedAt": "2026-01-07T14:44:58.254Z",
+      "nodeCount": 22,
+      "tags": []
+    },
+    {
+      "id": "c4m3kqhmouFOnJhq",
+      "name": "youlya4",
+      "active": false,
+      "updatedAt": "2026-01-07T14:46:27.289Z",
+      "nodeCount": 20,
+      "tags": []
+    },
+    {
+      "id": "jb2sRyFY4rp8YLib",
+      "name": "Recover Shopify abandoned carts with email, SMS, WhatsApp & Facebook retargeting 2",
+      "active": false,
+      "updatedAt": "2026-01-07T14:43:39.160Z",
+      "nodeCount": 54,
+      "tags": []
+    },
+    {
+      "id": "kUfIh8vqLCvdUlIn",
+      "name": "Low Stock & Sold Out Watcher for Shopify",
+      "active": false,
+      "updatedAt": "2025-12-23T00:34:22.282Z",
+      "nodeCount": 15,
+      "tags": []
+    },
+    {
+      "id": "1UNBKDCbCCTSVE8l",
+      "name": "Hotel guest journey automation with Gmail & Google Sheets",
+      "active": false,
+      "updatedAt": "2026-01-07T14:47:03.159Z",
+      "nodeCount": 22,
+      "tags": []
+    },
+    {
+      "id": "4Kx3FINyRH03PyK2",
+      "name": "Hotel receptionist with WhatsApp, Gemini model-switching, Redis & Google Sheets",
+      "active": false,
+      "updatedAt": "2026-01-18T14:25:15.685Z",
+      "nodeCount": 18,
+      "tags": []
+    },
+    {
+      "id": "8NKVF5RDJCKBBpdF",
+      "name": "Page Speed Insight",
+      "active": true,
+      "updatedAt": "2026-01-18T01:46:01.514Z",
+      "nodeCount": 17,
+      "tags": []
+    },
+    {
+      "id": "8bUwfc3cUNqln1xy",
+      "name": "Restaurant GPT-4 receptionist for bookings & delivery using Vapi, Telegram, Airtable",
+      "active": false,
+      "updatedAt": "2026-01-07T14:44:15.635Z",
+      "nodeCount": 122,
+      "tags": []
+    },
+    {
+      "id": "9bzesdreR2CeDPA5",
+      "name": "Automated restaurant call handling & table booking system with VAPI and PostgreSQL",
+      "active": false,
+      "updatedAt": "2026-01-18T14:25:15.685Z",
+      "nodeCount": 9,
+      "tags": []
+    },
+    {
+      "id": "Jo1nkF9i02dSkLVT",
+      "name": "VIP Automate Shopify abandoned cart WhatsApp reminders with product links via Rapiwa",
+      "active": false,
+      "updatedAt": "2026-01-11T20:36:22.360Z",
+      "nodeCount": 19,
+      "tags": []
+    }
+  ],
+  "matchedWorkflows": [
+    {
+      "id": "aWKe4yyoC1vDpeTj",
+      "name": "Whatsapp Youlya",
+      "active": false,
+      "updatedAt": "2026-02-01T23:43:55.984Z",
+      "nodeCount": 44,
+      "tags": [
+        "new",
+        "Voice Working",
+        "Text Working",
+        "working products"
+      ]
+    },
+    {
+      "id": "hvuUOC4pNgiYqSJ5b06ko",
+      "name": "Log AI Issue - SubWorkflow",
+      "active": true,
+      "updatedAt": "2026-01-30T06:40:42.357Z",
+      "nodeCount": 3,
+      "tags": []
+    }
+  ],
+  "searchTerms": [
+    "Whatsapp Youlya",
+    "WhatsApp Youlya",
+    "Sales Assistant",
+    "SubWorkflow",
+    "youlya-whatsapp"
+  ]
+}
