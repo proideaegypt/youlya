@@ -6,6 +6,11 @@ const dashboardApis = [
   "/api/dashboard/orders",
   "/api/dashboard/logs",
   "/api/dashboard/settings",
+  "/api/dashboard/products/overview",
+  "/api/dashboard/products/catalog",
+  "/api/dashboard/products/variants",
+  "/api/dashboard/products/sync-health",
+  "/api/dashboard/products/mapping-inspector",
 ];
 
 test("health endpoint status ok", async ({ request }) => {
@@ -42,7 +47,7 @@ test("dashboard pages should not trigger 500 responses", async ({ page }) => {
     }
   });
 
-  for (const route of ["/dashboard/command-center", "/dashboard/inbox", "/dashboard/orders", "/dashboard/logs", "/dashboard/settings", "/dashboard/statistics", "/dashboard/security", "/dashboard/devices", "/dashboard/profile"]) {
+  for (const route of ["/dashboard/command-center", "/dashboard/inbox", "/dashboard/products", "/dashboard/orders", "/dashboard/logs", "/dashboard/settings", "/dashboard/statistics", "/dashboard/security", "/dashboard/devices", "/dashboard/profile"]) {
     await page.goto(route, { waitUntil: "networkidle" });
   }
 

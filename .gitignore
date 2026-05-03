@@ -56,3 +56,4 @@ workflows/*.json
 !workflows/README.md
 n8n/raw-exports/
 *.n8n-raw.json
+.env.playwright.example
