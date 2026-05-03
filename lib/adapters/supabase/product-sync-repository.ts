@@ -42,7 +42,7 @@ export type VariantSyncRow = {
   last_synced_at: string;
 };
 
-type GenericSupabaseClient = {
+export type GenericSupabaseClient = {
   from: (table: string) => {
     upsert: (values: Record<string, unknown>[], options?: Record<string, unknown>) => Promise<{ error: { message: string } | null }>;
     select: (columns: string, options?: Record<string, unknown>) => {
@@ -71,6 +71,48 @@ type GenericSupabaseClient = {
     };
     delete: () => {
       eq: (column: string, value: unknown) => Promise<{ error: { message: string } | null }>;
+    };
+  };
+};
+
+type ProductLookupClient = {
+  from: (table: string) => {
+    select: (columns: string) => {
+      eq: (column: string, value: unknown) => {
+        in: (column: string, values: unknown[]) => Promise<{ data: Array<{ shopify_product_id: unknown; id: unknown }> | null; error: { message: string } | null }>;
+      };
+    };
+  };
+};
+
+type CountSingleEqClient = {
+  from: (table: string) => {
+    select: (columns: string, options?: Record<string, unknown>) => {
+      eq: (column: string, value: unknown) => Promise<{ count: number | null; error: { message: string } | null }>;
+    };
+  };
+};
+
+type CountDoubleEqClient = {
+  from: (table: string) => {
+    select: (columns: string, options?: Record<string, unknown>) => {
+      eq: (column: string, value: unknown) => {
+        eq: (column: string, value: unknown) => Promise<{ count: number | null; error: { message: string } | null }>;
+      };
+    };
+  };
+};
+
+type SyncTimeClient = {
+  from: (table: string) => {
+    select: (columns: string) => {
+      eq: (column: string, value: unknown) => {
+        order: (column: string, options?: Record<string, unknown>) => {
+          limit: (n: number) => {
+            maybeSingle: () => Promise<{ data: { last_synced_at: string } | null; error: { message: string } | null }>;
+          };
+        };
+      };
     };
   };
 };
@@ -165,7 +207,8 @@ export class ProductSyncRepository {
   async getProductIdMap(storeId: string, shopifyProductIds: string[]): Promise<Map<string, string>> {
     if (!this.client || shopifyProductIds.length === 0) return new Map();
 
-    const { data, error } = await (this.client as any)
+    const client = this.client as unknown as ProductLookupClient;
+    const { data, error } = await client
       .from("products")
       .select("id,shopify_product_id")
       .eq("store_id", storeId)
@@ -182,7 +225,8 @@ export class ProductSyncRepository {
 
   async countProducts(storeId: string): Promise<number> {
     if (!this.client) return 0;
-    const { count, error } = await (this.client as any)
+    const client = this.client as unknown as CountSingleEqClient;
+    const { count, error } = await client
       .from("products")
       .select("*", { count: "exact", head: true })
       .eq("store_id", storeId);
@@ -192,7 +236,8 @@ export class ProductSyncRepository {
 
   async countVariants(storeId: string): Promise<number> {
     if (!this.client) return 0;
-    const { count, error } = await (this.client as any)
+    const client = this.client as unknown as CountSingleEqClient;
+    const { count, error } = await client
       .from("product_variants")
       .select("*", { count: "exact", head: true })
       .eq("store_id", storeId);
@@ -202,7 +247,8 @@ export class ProductSyncRepository {
 
   async countMissingSkus(storeId: string): Promise<number> {
     if (!this.client) return 0;
-    const { count, error } = await (this.client as any)
+    const client = this.client as unknown as CountDoubleEqClient;
+    const { count, error } = await client
       .from("product_variants")
       .select("*", { count: "exact", head: true })
       .eq("store_id", storeId)
@@ -213,7 +259,8 @@ export class ProductSyncRepository {
 
   async getLastSyncTime(storeId: string): Promise<string | null> {
     if (!this.client) return null;
-    const { data, error } = await (this.client as any)
+    const client = this.client as unknown as SyncTimeClient;
+    const { data, error } = await client
       .from("products")
       .select("last_synced_at")
       .eq("store_id", storeId)

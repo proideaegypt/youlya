@@ -4,7 +4,7 @@
  * Manual script to trigger Shopify product sync.
  * Supports --mode full|inventory, --dry-run, --store-id
  */
-import { syncShopifyProducts } from "../lib/services/shopify-product-sync-service.js";
+import { syncShopifyProducts } from "../lib/services/shopify-product-sync-service.ts";
 
 const args = process.argv.slice(2);
 let mode = "full";

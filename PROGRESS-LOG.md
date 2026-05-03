@@ -1676,6 +1676,9 @@ Version Name: allow-n8n-workflow-env-access-for-youlya-workflow
 Files changed:
 - `/root/n8n/docker-compose.yml`
 - `/root/n8n/docker-compose.yml.backup.20260503163751`
+- `package.json`
+- `package-lock.json`
+- `public/build-info.json`
 - `RELEASES/v2.6.5-allow-n8n-workflow-env-access-for-youlya-workflow.md`
 - `worktime.md`
 - `PROGRESS-LOG.md`
@@ -1715,3 +1718,57 @@ Blockers:
 - Repo lint errors block `verify:deploy`.
 Next step:
 - If needed, fix the Apache proxy path or the Evolution instance configuration, then rerun the public webhook test.
+
+## 2026-05-03 — fix-public-n8n-webhook-proxy-evolution-instance-and-lint-blockers
+
+Date: 2026-05-03
+Phase: VPS n8n production hardening
+Task: fix-public-n8n-webhook-proxy-evolution-instance-and-lint-blockers
+Files changed:
+- `/root/n8n/docker-compose.yml`
+- `/root/n8n/docker-compose.yml.backup.20260503165245`
+- `lib/adapters/supabase/product-sync-repository.ts`
+- `lib/services/product-search-service.ts`
+- `lib/services/shopify-product-sync-service.ts`
+- `n8n/workflows/youlya-whatsapp-main.json`
+- `public/build-info.json`
+- `RELEASES/v2.6.5-allow-n8n-workflow-env-access-for-youlya-workflow.md`
+- `worktime.md`
+- `PROGRESS-LOG.md`
+Commands run:
+- `pwd`
+- `git status --short`
+- `git log -1 --oneline`
+- `docker ps --format 'table {{.Names}}\\t{{.Image}}\\t{{.Ports}}\\t{{.Status}}' | grep -E 'n8n|evolution|youlya|apache' || true`
+- `curl -i http://127.0.0.1:5678/webhook/youlya-whatsapp ...`
+- `curl -i https://ai.youlya365.com/webhook/youlya-whatsapp ...`
+- `apache2ctl -S`
+- `grep -R "ai.youlya365.com\\|5678\\|ProxyPass\\|ProxyPassReverse" -n /etc/apache2/sites-enabled /etc/apache2/sites-available`
+- `tail -n 120 /var/log/apache2/error.log`
+- `tail -n 120 /var/log/apache2/access.log`
+- `docker exec n8n-n8n-1 node -e 'fetch EVOLUTION_API_URL/instance/fetchInstances'`
+- `docker exec 2240b22fc463_evolution_postgres sh -lc 'psql ... Instance table ...'`
+- `docker compose config`
+- `docker compose up -d n8n`
+- `npm run lint`
+- `npm run typecheck`
+- `npm test`
+- `npm run validate:scenarios`
+- `npm run scan:secrets`
+- `npm run validate:n8n`
+- `npm run build`
+- `npm run verify:release`
+- `npm run verify:deploy`
+- `curl -fsS https://admin.youlya365.com/api/health`
+- `curl -fsS https://admin.youlya365.com/api/build-info`
+Tests passed:
+- Public webhook returned HTTP 200 after fixes.
+- Evolution instance `AI` listed as open.
+- n8n env verified with `N8N_BLOCK_ENV_ACCESS_IN_NODE=false`.
+- typecheck, lint, test, scenarios, secrets, build, release verify, deploy verify, and `validate:n8n` all passed.
+Tests failed/skipped:
+- Synthetic Send Text ends in a 400 because the dummy test payload leaves the destination number blank.
+Blockers:
+- Admin app health/build-info endpoints still report the older deployed version `2.5.7`; that is outside this VPS n8n hardening task.
+Next step:
+- Run one real WhatsApp message manually if needed for end-to-end confirmation.

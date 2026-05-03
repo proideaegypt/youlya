@@ -40,7 +40,7 @@ async function searchSupabaseCache(storeSlug: string, query: string, limit: numb
 
   try {
     // Search products by title match
-    let { data: products, error: productError } = await client
+    const { data: initialProducts, error: productError } = await client
       .from("products")
       .select("id,shopify_product_id,shopify_product_gid,shopify_title,shopify_handle,image_url")
       .eq("store_id", storeSlug)
@@ -49,6 +49,7 @@ async function searchSupabaseCache(storeSlug: string, query: string, limit: numb
       .ilike("shopify_title", `%${query}%`)
       .limit(limit);
 
+    let products = initialProducts;
     if (productError || !products || products.length === 0) {
       // Fallback: try broader search or return null
       const { data: allProducts, error: allError } = await client

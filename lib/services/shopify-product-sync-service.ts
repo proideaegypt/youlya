@@ -1,5 +1,5 @@
 import { fetchAllShopifyProducts } from "@/lib/adapters/shopify/shopify-product-sync-adapter";
-import { ProductSyncRepository } from "@/lib/adapters/supabase/product-sync-repository";
+import { ProductSyncRepository, type GenericSupabaseClient } from "@/lib/adapters/supabase/product-sync-repository";
 import { createClient } from "@supabase/supabase-js";
 
 export type SyncMode = "full" | "inventory";
@@ -45,7 +45,7 @@ export async function syncShopifyProducts({
 
   try {
     const client = getSupabaseServiceClient();
-    const repo = new ProductSyncRepository(client as any);
+    const repo = new ProductSyncRepository(client as unknown as GenericSupabaseClient | null);
 
     // For inventory-only mode, we still fetch all products for now
     // (future: implement incremental inventory-only GraphQL query)
