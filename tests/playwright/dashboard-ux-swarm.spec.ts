@@ -13,6 +13,7 @@ const routes = [
   "/dashboard/command-center",
   "/dashboard/inbox",
   "/dashboard/products",
+  "/dashboard/products-intelligence",
   "/dashboard/orders",
   "/dashboard/logs",
   "/dashboard/settings",

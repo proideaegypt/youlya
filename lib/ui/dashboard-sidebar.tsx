@@ -18,6 +18,7 @@ import {
   ChevronLast,
   Sparkles,
   Package,
+  Brain,
 } from "lucide-react";
 import { YoulyaLogo } from "@/lib/ui/youlya-logo";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
@@ -40,6 +41,7 @@ const navItems: NavItem[] = [
   { href: "/dashboard/command-center", labelAr: "لوحة التحكم", labelEn: "Command Center", icon: LayoutDashboard },
   { href: "/dashboard/inbox", labelAr: "الرسائل", labelEn: "Messages", icon: MessageCircle },
   { href: "/dashboard/products", labelAr: "المنتجات والمخزون", labelEn: "Products & Inventory", icon: Package },
+  { href: "/dashboard/products-intelligence", labelAr: "ذكاء المنتجات", labelEn: "Products Intelligence", icon: Brain },
   { href: "/dashboard/statistics", labelAr: "الإحصائيات", labelEn: "Statistics", icon: BarChart3 },
   { href: "/dashboard/security", labelAr: "الأمان", labelEn: "Security", icon: Shield },
   { href: "/dashboard/devices", labelAr: "القنوات والمنتجات", labelEn: "Devices", icon: TabletSmartphone },

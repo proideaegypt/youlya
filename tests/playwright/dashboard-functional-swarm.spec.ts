@@ -9,6 +9,7 @@ test("dashboard navigation links work", async ({ page }) => {
     { name: "لوحة التحكم", url: /\/dashboard\/command-center/ },
     { name: "الرسائل", url: /\/dashboard\/inbox/ },
     { name: "المنتجات والمخزون", url: /\/dashboard\/products/ },
+    { name: "ذكاء المنتجات", url: /\/dashboard\/products-intelligence/ },
     { name: "الإحصائيات", url: /\/dashboard\/statistics/ },
     { name: "الأمان", url: /\/dashboard\/security/ },
     { name: "القنوات والمنتجات", url: /\/dashboard\/devices/ },
