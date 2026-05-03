@@ -1772,3 +1772,34 @@ Blockers:
 - Admin app health/build-info endpoints still report the older deployed version `2.5.7`; that is outside this VPS n8n hardening task.
 Next step:
 - Run one real WhatsApp message manually if needed for end-to-end confirmation.
+
+## 2026-05-03 — fix-n8n-send-text-blank-number-final
+
+Date: 2026-05-03
+Phase: Phase 1
+Task: fix-n8n-send-text-blank-number-final
+Version: v2.6.6
+Version Name: n8n-send-text-blank-number-final
+Files changed:
+- n8n/workflows/youlya-whatsapp-main.json
+- qa-artifacts/tasks/2026-05-03/fix-n8n-send-text-blank-number-final/Youlya WhatsApp Main.json
+- qa-artifacts/tasks/2026-05-03/fix-n8n-send-text-blank-number-final/RESULT.md
+- RELEASES/v2.6.6-n8n-send-text-blank-number-final.md
+- worktime.md
+Commands run:
+- `npm run n8n:export -- --id "joqfame4HXG775JO" --out "qa-artifacts/tasks/2026-05-03/fix-n8n-send-text-blank-number-final"`
+- n8n API `deactivate` / `PUT` / `activate` for workflow `joqfame4HXG775JO`
+- synthetic webhook POST to `https://ai.youlya365.com/webhook/youlya-whatsapp`
+- n8n executions API checks for execution `8294`
+- `npm run release:task -- --task "fix-n8n-send-text-blank-number-final" --type patch`
+Tests passed:
+- Public webhook returned HTTP 200.
+- Normalize Message resolved `remote_jid=201000000000@s.whatsapp.net` and `send_number=201000000000`.
+- Prepare Reply emitted `number: 201000000000`.
+- Send Text sent `number: 201000000000` instead of blank.
+Tests failed/skipped:
+- Evolution returned HTTP 400 for the synthetic dummy recipient because the number does not exist, which is expected.
+Blockers:
+- None for the blank-number fix.
+Next step:
+- Optional manual real WhatsApp message for end-to-end confirmation.

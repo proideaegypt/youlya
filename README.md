@@ -4,6 +4,13 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.6.6 |
+| Version Name | n8n-send-text-blank-number-final |
+| Task | fix-n8n-send-text-blank-number-final |
+| Release File | RELEASES/v2.6.6-n8n-send-text-blank-number-final.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.6.4 |
 | Version Name | register-youlya-n8n-production-webhook |
 | Task | register-youlya-n8n-production-webhook |

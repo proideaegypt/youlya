@@ -1,4 +1,5 @@
 {
+  "active": true,
   "name": "Youlya WhatsApp Main",
   "nodes": [
     {
@@ -52,7 +53,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = $json.data || {};\nconst message = data.message || {};\nconst key = data.key || {};\nreturn [{\n  json: {\n    conversation_id: key.remoteJid,\n    customer_id: key.remoteJid,\n    provider_message_id: key.id,\n    text: message.conversation ?? message.extendedTextMessage?.text ?? \"\",\n    message_type: \"text\",\n    channel: \"whatsapp_evolution\",\n    language: \"ar-EG\",\n    tone: \"neutral\",\n    store_id: \"youlya\",\n    remote_jid: key.remoteJid,\n    instance_name: $node[\"Webhook\"].json.instance || \"YoulyaMain\"\n  }\n}];"
+    "jsCode": "const payload = $json.body?.data || $json.data || {};\nconst message = payload.message || {};\nconst key = payload.key || {};\nconst remoteJid = String(key.remoteJid || \"\");\nconst sendNumber = remoteJid\n  .replace(/@s\\.whatsapp\\.net$/i, \"\")\n  .replace(/@c\\.us$/i, \"\")\n  .replace(/@g\\.us$/i, \"\")\n  .replace(/\\D/g, \"\");\nreturn [{\n  json: {\n    conversation_id: remoteJid,\n    customer_id: remoteJid,\n    provider_message_id: key.id,\n    text: message.conversation ?? message.extendedTextMessage?.text ?? \"\",\n    message_type: \"text\",\n    channel: \"whatsapp_evolution\",\n    language: \"ar-EG\",\n    tone: \"neutral\",\n    store_id: \"youlya\",\n    remote_jid: remoteJid,\n    send_number: sendNumber,\n    instance_name: $node[\"Webhook\"].json.body?.instance || $node[\"Webhook\"].json.instance || \"YoulyaMain\"\n  }\n}];"
       },
       "id": "Normalize Message",
       "name": "Normalize Message",
@@ -95,86 +96,6 @@
     },
     {
       "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": false
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{$json.action}}",
-                    "rightValue": "duplicate_ignored",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
-                "conditions": [
-                  {
-                    "leftValue": "={{$json.action}}",
-                    "rightValue": "handoff",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
-                "conditions": [
-                  {
-                    "leftValue": "={{$json.action}}",
-                    "rightValue": "error",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
-                "conditions": [
-                  {
-                    "leftValue": "={{$json.action}}",
-                    "rightValue": "ai_disabled",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            }
-          ]
-        },
-        "fallbackOutput": 4
-      },
-      "id": "Route by Action",
-      "name": "Route by Action",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3,
-      "position": [
-        1140,
-        120
-      ]
-    },
-    {
-      "parameters": {
         "method": "POST",
         "url": "={{$env.EVOLUTION_API_URL}}/message/sendText/{{$env.EVOLUTION_INSTANCE}}",
         "sendHeaders": true,
@@ -188,7 +109,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\"number\": \"{{$node[\"Normalize Message\"].json[\"conversation_id\"]}}\", \"text\": \"{{$json.reply}}\"}",
+    "jsonBody": "={\"number\": \"{{$json.number || $node['Normalize Message'].json.send_number || String($node['Normalize Message'].json.remote_jid || '').replace('@s.whatsapp.net','').replace('@c.us','').replace('@g.us','').replace(/\\\\D/g,'')}}\", \"text\": \"{{$json.reply}}\"}",
         "options": {
           "timeout": 10000
         }
@@ -198,7 +119,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        1360,
+        1580,
         260
       ]
     },
@@ -217,6 +138,40 @@
       "position": [
         1120,
         420
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const action = $json.action || \"error\";\n\nconst reply =\n  $json.reply ||\n  $json.message ||\n  \"حصل خطأ تقني بسيط، ممكن تبعتي الرسالة تاني؟\";\n\nconst shouldSend = action !== \"duplicate_ignored\" && Boolean(reply);\nconst normalized = $node[\"Normalize Message\"].json;\nconst fallbackNumber = String(normalized.send_number || normalized.remote_jid || normalized.conversation_id || \"\")\n  .replace(/@s\\.whatsapp\\.net$/i, \"\")\n  .replace(/@c\\.us$/i, \"\")\n  .replace(/@g\\.us$/i, \"\")\n  .replace(/\\D/g, \"\");\n\nreturn [\n  {\n    json: {\n      ...$json,\n      action,\n      reply,\n      shouldSend,\n      number: $json.number || normalized.send_number || fallbackNumber,\n    },\n  },\n];"
+      },
+      "id": "Prepare Reply",
+      "name": "Prepare Reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1140,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.shouldSend}}",
+              "value2": true
+            }
+          ],
+          "string": []
+        }
+      },
+      "id": "Should Send Reply",
+      "name": "Should Send Reply",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        120
       ]
     }
   ],
@@ -259,49 +214,40 @@
       "main": [
         [
           {
-            "node": "Route by Action",
+            "node": "Prepare Reply",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Route by Action": {
+    "Prepare Reply": {
       "main": [
-        [],
         [
           {
-            "node": "Send Text",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Send Text",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Send Text",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Send Text",
+            "node": "Should Send Reply",
             "type": "main",
             "index": 0
           }
         ]
       ]
+    },
+    "Should Send Reply": {
+      "main": [
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
     }
   },
-  "active": false,
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
   }
 }

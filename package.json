@@ -1,6 +1,6 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.6.5",
+  "version": "2.6.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -38,7 +38,7 @@
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "allow-n8n-workflow-env-access-for-youlya-workflow"
+    "youlyaVersionName": "n8n-send-text-blank-number-final"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
