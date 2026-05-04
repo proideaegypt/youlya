@@ -1,0 +1,30 @@
+{
+  "route": "/dashboard/products-intelligence",
+  "heading": "ذكاء المنتجات",
+  "hasH1": true,
+  "title": "YOULYA HOME WEAR Dashboard",
+  "bodyTextLength": 1072,
+  "sidebarVisible": true,
+  "contentVisible": true,
+  "shellPresent": true,
+  "footerBuildIdentityVisible": false,
+  "hasArabicText": true,
+  "direction": "rtl",
+  "hasHorizontalOverflow": false,
+  "hasErrorOverlay": false,
+  "hasWeakEmptyState": false,
+  "consoleErrors": [],
+  "realFailedRequests": [],
+  "ignoredNetworkNoise": [
+    {
+      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=sfe36",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    }
+  ],
+  "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_products-intelligence.png",
+  "uxIssues": [
+    "Missing build identity"
+  ]
+}

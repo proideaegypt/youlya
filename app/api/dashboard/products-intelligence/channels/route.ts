@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { normalizeChannel } from "@/lib/services/products-intelligence-service";
+import {
+  channelDisplayLabel,
+  getOrderChannel,
+  getOrderTotal,
+  getPrimaryOrderProductKey,
+  supportedInsightChannels,
+} from "@/lib/services/products-intelligence-service";
 
 function unauthorized() {
   return NextResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -23,6 +29,14 @@ export async function GET() {
       ordersByChannel: [],
       revenueByChannel: [],
       topProductsByChannel: [],
+      supportedChannels: supportedInsightChannels.map((channel) => ({
+        channel,
+        label: channelDisplayLabel(channel),
+        ordersCount: 0,
+        revenue: 0,
+        topProduct: null,
+        hasData: false,
+      })),
       message: "لا توجد بيانات قنوات متاحة",
     });
   }
@@ -49,22 +63,29 @@ export async function GET() {
     // Fetch orders with channel info
     const { data: orders } = await supabase
       .from("orders")
-      .select("source_channel, total_price, product_id")
+      .select("source_channel, channel, total_price, product_id, line_items_json")
       .eq("store_id", STORE_ID)
       .limit(5000);
 
     const channelCounts = new Map<string, number>();
     const channelRevenue = new Map<string, number>();
     const productChannelCounts = new Map<string, Map<string, number>>();
+    const topProductByChannel = new Map<string, { productId: string; count: number }>();
 
     for (const o of orders ?? []) {
-      const ch = normalizeChannel(o.source_channel);
+      const ch = getOrderChannel(o);
       channelCounts.set(ch, (channelCounts.get(ch) ?? 0) + 1);
-      channelRevenue.set(ch, (channelRevenue.get(ch) ?? 0) + (Number(o.total_price) || 0));
+      channelRevenue.set(ch, (channelRevenue.get(ch) ?? 0) + getOrderTotal(o));
 
-      const pid = o.product_id ?? "unknown";
+      const pid = getPrimaryOrderProductKey(o);
+      if (!pid) continue;
       if (!productChannelCounts.has(pid)) productChannelCounts.set(pid, new Map());
       productChannelCounts.get(pid)!.set(ch, (productChannelCounts.get(pid)!.get(ch) ?? 0) + 1);
+      const current = topProductByChannel.get(ch);
+      const nextCount = (productChannelCounts.get(pid)!.get(ch) ?? 0);
+      if (!current || nextCount > current.count) {
+        topProductByChannel.set(ch, { productId: pid, count: nextCount });
+      }
     }
 
     const ordersByChannel = Array.from(channelCounts.entries()).map(([channel, count]) => ({ channel, count }));
@@ -85,12 +106,27 @@ export async function GET() {
     }
     topProductsByChannel.sort((a, b) => b.count - a.count);
 
+    const supportedChannels = supportedInsightChannels.map((channel) => {
+      const ordersCount = channelCounts.get(channel) ?? 0;
+      const revenue = Math.round((channelRevenue.get(channel) ?? 0) * 100) / 100;
+      const topProduct = topProductByChannel.get(channel)?.productId ?? null;
+      return {
+        channel,
+        label: channelDisplayLabel(channel),
+        ordersCount,
+        revenue,
+        topProduct,
+        hasData: ordersCount > 0,
+      };
+    });
+
     return NextResponse.json({
       hasData: true,
       totalOrders: totalOrders ?? 0,
       ordersByChannel,
       revenueByChannel,
       topProductsByChannel: topProductsByChannel.slice(0, 20),
+      supportedChannels,
     });
   } catch (err) {
     console.error("products intelligence channels error", err);
@@ -100,6 +136,14 @@ export async function GET() {
       ordersByChannel: [],
       revenueByChannel: [],
       topProductsByChannel: [],
+      supportedChannels: supportedInsightChannels.map((channel) => ({
+        channel,
+        label: channelDisplayLabel(channel),
+        ordersCount: 0,
+        revenue: 0,
+        topProduct: null,
+        hasData: false,
+      })),
       message: "خطأ في تحميل بيانات القنوات",
     });
   }

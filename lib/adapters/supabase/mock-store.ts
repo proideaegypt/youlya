@@ -30,6 +30,14 @@ type StoreState = {
     resolved_by: string | null;
     notes: string | null;
   }>;
+  aiPausedConversations: Set<string>;
+  conversationHistory: Map<string, Record<string, unknown>>;
+  messageHistory: Array<Record<string, unknown>>;
+  conversationEvents: Array<Record<string, unknown>>;
+  knowledgeBase: Array<Record<string, unknown>>;
+  knowledgeVersions: Array<Record<string, unknown>>;
+  knowledgeSuggestions: Array<Record<string, unknown>>;
+  haidiSettingsByStore: Map<string, Record<string, unknown>>;
 };
 
 const globalStore = globalThis as typeof globalThis & { __youlyaMockState__?: StoreState };
@@ -49,6 +57,14 @@ function buildState(): StoreState {
     aiEnabledByStore: new Map(),
     processedMessages: new Map(),
     humanHandoffs: [],
+    aiPausedConversations: new Set(),
+    conversationHistory: new Map(),
+    messageHistory: [],
+    conversationEvents: [],
+    knowledgeBase: [],
+    knowledgeVersions: [],
+    knowledgeSuggestions: [],
+    haidiSettingsByStore: new Map(),
   };
 }
 

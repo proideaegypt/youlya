@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-04T03:00:15.413Z",
+  "timestamp": "2026-05-04T03:43:03.479Z",
   "apiUrl": "https://ai.youlya365.com",
   "totalWorkflows": 100,
   "workflows": [
@@ -266,8 +266,8 @@
       "id": "joqfame4HXG775JO",
       "name": "Youlya WhatsApp Main",
       "active": true,
-      "updatedAt": "2026-05-04T00:51:26.748Z",
-      "nodeCount": 10,
+      "updatedAt": "2026-05-04T03:34:59.620Z",
+      "nodeCount": 15,
       "tags": []
     },
     {

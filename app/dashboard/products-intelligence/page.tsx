@@ -41,6 +41,14 @@ type OverviewData = {
   lastSyncTime: string | null;
   hasOrderData: boolean;
   hasChannelData: boolean;
+  supportedChannels?: Array<{
+    channel: string;
+    label: string;
+    ordersCount: number;
+    revenue: number;
+    topProduct: string | null;
+    hasData: boolean;
+  }>;
 };
 
 type ProductCard = {
@@ -71,6 +79,14 @@ type ChannelData = {
   ordersByChannel: Array<{ channel: string; count: number }>;
   revenueByChannel: Array<{ channel: string; revenue: number }>;
   topProductsByChannel: Array<{ productId: string; channel: string; count: number }>;
+  supportedChannels?: Array<{
+    channel: string;
+    label: string;
+    ordersCount: number;
+    revenue: number;
+    topProduct: string | null;
+    hasData: boolean;
+  }>;
   message?: string;
 };
 
@@ -107,6 +123,7 @@ type ProductDetail = {
     channelSplit: Array<{ channel: string; count: number }>;
     lastOrderDate: string | null;
   } | null;
+  aiOrdersCount?: number;
   hasOrderData: boolean;
 };
 
@@ -232,6 +249,9 @@ function ProductDetailDrawer({ productId, onClose }: { productId: string; onClos
             <div className="flex justify-between"><span className="text-muted-foreground">المورد</span><span className="text-foreground">{p.vendor || "—"}</span></div>
             <div className="flex justify-between"><span className="text-muted-foreground">Shopify ID</span><span className="font-mono text-muted-foreground">{p.shopifyProductId}</span></div>
             <div className="flex justify-between"><span className="text-muted-foreground">آخر مزامنة</span><span className="text-foreground">{p.lastSyncedAt ? new Date(p.lastSyncedAt).toLocaleString("ar-EG") : "—"}</span></div>
+            {detail.aiOrdersCount !== undefined ? (
+              <div className="flex justify-between"><span className="text-muted-foreground">طلبات AI</span><span className="text-foreground">{detail.aiOrdersCount}</span></div>
+            ) : null}
           </div>
 
           <div>
@@ -324,6 +344,12 @@ export default function ProductsIntelligencePage() {
 
   const productTotalPages = Math.ceil(products.total / productPageSize);
   const lastSyncText = overview?.lastSyncTime ? new Date(overview.lastSyncTime).toLocaleString("ar-EG") : "لم يتم المزامنة بعد";
+  const supportedChannels = channels?.supportedChannels ?? [
+    { channel: "whatsapp", label: "واتساب", ordersCount: 0, revenue: 0, topProduct: null, hasData: false },
+    { channel: "instagram", label: "إنستغرام", ordersCount: 0, revenue: 0, topProduct: null, hasData: false },
+    { channel: "tiktok", label: "تيك توك", ordersCount: 0, revenue: 0, topProduct: null, hasData: false },
+    { channel: "facebook", label: "فيسبوك", ordersCount: 0, revenue: 0, topProduct: null, hasData: false },
+  ];
 
   return (
     <div className="space-y-6">
@@ -347,6 +373,24 @@ export default function ProductsIntelligencePage() {
               درجة الذكاء: {overview.productIntelligenceScore}%
             </span>
           )}
+          {overview?.mostOrderedByAiProduct ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-1 text-emerald-500 font-semibold">
+              <ShoppingCart className="h-3.5 w-3.5" />
+              الأعلى بالذكاء: {overview.mostOrderedByAiProduct}
+            </span>
+          ) : null}
+          {overview?.topOrderedChannel ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-muted-foreground font-semibold">
+              <Smartphone className="h-3.5 w-3.5" />
+              القناة الأعلى: {channelLabel(overview.topOrderedChannel)}
+            </span>
+          ) : null}
+          {overview?.aiAssistedRevenue ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2.5 py-1 text-amber-500 font-semibold">
+              <TrendingUp className="h-3.5 w-3.5" />
+              إيراد AI: {overview.aiAssistedRevenue.toLocaleString()} EGP
+            </span>
+          ) : null}
         </div>
       </div>
 
@@ -418,6 +462,11 @@ export default function ProductsIntelligencePage() {
                       <Badge key={b} code={b} />
                     ))}
                   </div>
+                  {p.topChannel ? (
+                    <div className="absolute right-2 top-2">
+                      <StatusBadge tone="neutral">{channelLabel(p.topChannel)}</StatusBadge>
+                    </div>
+                  ) : null}
                 </div>
                 <h3 className="mt-3 text-sm font-semibold text-foreground line-clamp-1">{p.title}</h3>
                 <p className="text-xs text-muted-foreground">{p.productType || p.vendor || "—"}</p>
@@ -438,6 +487,14 @@ export default function ProductsIntelligencePage() {
                     <p className="text-muted-foreground">OOS</p>
                     <p className={`font-semibold ${p.outOfStockVariants > 0 ? "text-red-400" : "text-foreground"}`}>{p.outOfStockVariants}</p>
                   </div>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2 text-[11px]">
+                  <span className="inline-flex rounded-full bg-muted px-2 py-1 text-muted-foreground">
+                    AI orders: {p.aiOrdersCount}
+                  </span>
+                  <span className="inline-flex rounded-full bg-muted px-2 py-1 text-muted-foreground">
+                    Total orders: {p.totalOrdersCount}
+                  </span>
                 </div>
                 {p.notes.length > 0 && (
                   <div className="mt-2 space-y-1">
@@ -473,21 +530,37 @@ export default function ProductsIntelligencePage() {
         <h2 className="text-lg font-semibold text-foreground mb-4">أداء القنوات</h2>
         {loadingChannels ? (
           <LoadingBlock />
-        ) : channels?.hasData ? (
+        ) : (
           <div className="space-y-5">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {channels.ordersByChannel.map((oc) => (
-                <div key={oc.channel} className="rounded-xl bg-muted p-4 text-center">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <ChannelIcon channel={oc.channel} className="h-5 w-5 text-brand" />
-                    <span className="text-sm font-medium text-foreground">{channelLabel(oc.channel)}</span>
+              {supportedChannels.map((item) => (
+                <div key={item.channel} className="rounded-xl bg-muted p-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <ChannelIcon channel={item.channel} className="h-5 w-5 text-brand" />
+                      <span className="text-sm font-medium text-foreground">{item.label}</span>
+                    </div>
+                    <StatusBadge tone={item.hasData ? "success" : "neutral"}>{item.hasData ? "Live" : "Empty"}</StatusBadge>
                   </div>
-                  <p className="text-2xl font-bold text-foreground">{oc.count}</p>
-                  <p className="text-xs text-muted-foreground">طلب</p>
+                  {item.hasData ? (
+                    <div className="mt-3 space-y-1">
+                      <p className="text-2xl font-bold text-foreground">{item.ordersCount}</p>
+                      <p className="text-xs text-muted-foreground">طلب · {item.revenue.toLocaleString()} EGP</p>
+                      {item.topProduct ? <p className="text-xs text-muted-foreground">أعلى منتج: {item.topProduct}</p> : null}
+                    </div>
+                  ) : (
+                    <div className="mt-3">
+                      <EmptyState
+                        compact
+                        title="لا توجد بيانات بعد"
+                        description={`القناة ${item.label} ستظهر هنا بعد تسجيل الطلبات الفعلية`}
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
-            {channels.revenueByChannel.length > 0 && (
+            {channels?.hasData && channels.revenueByChannel.length > 0 && (
               <div>
                 <h3 className="text-sm font-semibold text-foreground mb-3">الإيرادات بالقناة</h3>
                 <div className="space-y-2">
@@ -504,11 +577,6 @@ export default function ProductsIntelligencePage() {
               </div>
             )}
           </div>
-        ) : (
-          <EmptyState
-            title="لا توجد بيانات قنوات"
-            description={channels?.message ?? "ستظهر تحليلات القنوات بعد ربط القنوات وتسجيل الطلبات"}
-          />
         )}
       </section>
 

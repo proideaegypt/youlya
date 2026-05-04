@@ -119,6 +119,28 @@ describe("message turn integration", () => {
     expect(body.handoff).toBe(true);
   });
 
+  test("explicit human request -> immediate handoff", async () => {
+    const res = await turnRoute(
+      makeRequest({
+        store_id: "11111111-1111-1111-1111-111111111111",
+        conversation_id: "66666666-6666-6666-6666-666666666666",
+        customer_id: "33333333-3333-3333-3333-333333333333",
+        channel: "whatsapp_evolution",
+        message_type: "text",
+        text: "عايزة أكلم حد",
+        language: "ar-EG",
+        tone: "browsing",
+        remote_jid: "201000000000@s.whatsapp.net",
+        instance_name: "youlya",
+        provider_message_id: "msg-human-request",
+      }),
+    );
+    const body = (await res.json()) as Record<string, unknown>;
+    expect(body.intent).toBe("handoff");
+    expect(body.action).toBe("handoff");
+    expect(body.handoff).toBe(true);
+  });
+
   test("unclear x3 -> auto handoff triggered", async () => {
     const bodyTemplate = {
       store_id: "11111111-1111-1111-1111-111111111111",

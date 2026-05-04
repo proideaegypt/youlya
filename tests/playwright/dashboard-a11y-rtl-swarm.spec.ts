@@ -2,7 +2,7 @@ import path from "node:path";
 import { test, expect } from "@playwright/test";
 import { ensureDir, taskRoot } from "./helpers";
 
-const pages = ["/dashboard/command-center", "/dashboard/inbox", "/dashboard/products", "/dashboard/products-intelligence", "/dashboard/statistics", "/dashboard/security", "/dashboard/devices", "/dashboard/profile", "/dashboard/orders", "/dashboard/logs", "/dashboard/settings"];
+const pages = ["/dashboard/command-center", "/dashboard/pilot-control", "/dashboard/handoff", "/dashboard/inbox", "/dashboard/products", "/dashboard/products-intelligence", "/dashboard/statistics", "/dashboard/security", "/dashboard/devices", "/dashboard/profile", "/dashboard/orders", "/dashboard/logs", "/dashboard/settings"];
 
 const viewports = [
   { name: "desktop", size: { width: 1440, height: 900 } },
@@ -18,6 +18,11 @@ for (const viewport of viewports) {
       test(`a11y/rtl ${route}`, async ({ page }) => {
         await page.goto(route, { waitUntil: "domcontentloaded" });
         await page.waitForLoadState("networkidle");
+
+        const sidebarToggle = page.getByRole("button", { name: /Toggle sidebar|Collapse sidebar|Expand sidebar|Open menu/ }).first();
+        if (!(await page.locator("aside, nav").first().isVisible().catch(() => false)) && await sidebarToggle.isVisible().catch(() => false)) {
+          await sidebarToggle.click();
+        }
 
         const screenshotDir = path.join(taskRoot(), "a11y", "screenshots", viewport.name);
         await ensureDir(screenshotDir);

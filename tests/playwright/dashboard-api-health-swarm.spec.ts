@@ -6,6 +6,7 @@ const dashboardApis = [
   "/api/dashboard/orders",
   "/api/dashboard/logs",
   "/api/dashboard/settings",
+  "/api/dashboard/pilot-control",
   "/api/dashboard/products/overview",
   "/api/dashboard/products/catalog",
   "/api/dashboard/products/variants",

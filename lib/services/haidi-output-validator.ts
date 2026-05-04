@@ -16,28 +16,57 @@ const UNSAFE_ORDER_PHRASES_EN = [
   "your order is confirmed",
 ];
 
+const INTERNAL_ID_PATTERNS = [
+  /provider_message_id/i,
+  /conversation_id/i,
+  /customer_id/i,
+  /store_id/i,
+  /variant_id/i,
+  /shopify_order_id/i,
+  /shopify_variant_id/i,
+  /shopify_product_id/i,
+  /gid:\/\//i,
+  /remote_jid/i,
+  /#MOCK-/i,
+  /mock-/i,
+];
+
 function containsUnsafeOrderClaim(text: string, appAction: string): boolean {
-  if (appAction === "order_created") return false; // app already confirmed
+  if (appAction === "order_created") return false;
   const lower = text.toLowerCase();
-  for (const phrase of UNSAFE_ORDER_PHRASES_AR) {
-    if (lower.includes(phrase.toLowerCase())) return true;
-  }
-  for (const phrase of UNSAFE_ORDER_PHRASES_EN) {
-    if (lower.includes(phrase.toLowerCase())) return true;
-  }
-  return false;
+  return [...UNSAFE_ORDER_PHRASES_AR, ...UNSAFE_ORDER_PHRASES_EN].some((phrase) =>
+    lower.includes(phrase.toLowerCase())
+  );
 }
 
-function containsSuspiciousInvention(text: string): boolean {
-  return /\b(gid:\/\/|provider_message_id|conversation_id|customer_id|store_id|variant_id|shopify_order_id|shopify_variant_id|remote_jid|#mock-|mock-|test-instance)\b/i.test(text);
+function containsInternalIdExposure(text: string): boolean {
+  return INTERNAL_ID_PATTERNS.some((pattern) => pattern.test(text));
 }
 
 function containsPriceClaim(text: string): boolean {
-  return /\b\d+(?:[.,]\d+)?\s*(?:جنيه|ج\.م|EGP|ريال|SAR|USD)\b/i.test(text);
+  const lower = text.toLowerCase();
+  return /\d/.test(text) && (
+    lower.includes("جنيه") ||
+    lower.includes("ج.م") ||
+    lower.includes("egp") ||
+    lower.includes("ريال") ||
+    lower.includes("sar") ||
+    lower.includes("usd")
+  );
 }
 
 function containsStockClaim(text: string): boolean {
-  return /\b(?:متوفر|غير متوفر|in stock|out of stock|stock|خلص|نفد)\b/i.test(text);
+  const lower = text.toLowerCase();
+  return (
+    lower.includes("متوفر") ||
+    lower.includes("غير متوفر") ||
+    lower.includes("available") ||
+    lower.includes("in stock") ||
+    lower.includes("out of stock") ||
+    lower.includes("stock") ||
+    lower.includes("خلص") ||
+    lower.includes("نفد")
+  );
 }
 
 export type HaidiValidationResult =
@@ -48,7 +77,7 @@ export function validateHaidiOutput(
   raw: unknown,
   appAction: string,
   appReply: string,
-  appFacts: {
+  context: {
     products?: Array<{ price?: number; available?: boolean }>;
     blockedReason?: string | null;
   } = {}
@@ -58,14 +87,12 @@ export function validateHaidiOutput(
   }
 
   const obj = raw as Record<string, unknown>;
-
-  // final_reply must be a non-empty string
   const finalReply = obj.final_reply;
+
   if (typeof finalReply !== "string" || finalReply.trim().length === 0) {
     return { ok: false, fallbackReply: appReply, reason: "Haidi final_reply missing or empty" };
   }
 
-  // Block unsafe order claims
   if (containsUnsafeOrderClaim(finalReply, appAction)) {
     return {
       ok: false,
@@ -74,8 +101,7 @@ export function validateHaidiOutput(
     };
   }
 
-  // Block internal IDs and operational identifiers from reaching customers
-  if (containsSuspiciousInvention(finalReply)) {
+  if (containsInternalIdExposure(finalReply)) {
     return {
       ok: false,
       fallbackReply: appReply,
@@ -83,12 +109,12 @@ export function validateHaidiOutput(
     };
   }
 
-  // Price / stock claims must be grounded in app facts
-  const hasKnownProducts = Array.isArray(appFacts.products) && appFacts.products.length > 0;
-  const knownPrices = (appFacts.products ?? [])
+  const products = context.products ?? [];
+  const knownPrices = products
     .map((product) => product.price)
     .filter((price): price is number => typeof price === "number" && Number.isFinite(price))
     .map((price) => String(price));
+
   if (containsPriceClaim(finalReply) && !knownPrices.some((price) => finalReply.includes(price))) {
     return {
       ok: false,
@@ -97,19 +123,32 @@ export function validateHaidiOutput(
     };
   }
 
-  if (containsStockClaim(finalReply) && !hasKnownProducts && appFacts.blockedReason !== "out_of_stock") {
-    return {
-      ok: false,
-      fallbackReply: appReply,
-      reason: "Haidi output contains unsupported stock claims",
-    };
+  if (containsStockClaim(finalReply)) {
+    const hasAvailableFact = products.some((product) => product.available === true);
+    const hasUnavailableFact = products.some((product) => product.available === false);
+    const lower = finalReply.toLowerCase();
+    const mentionsAvailable = lower.includes("متوفر") || lower.includes("available") || lower.includes("in stock");
+    const mentionsUnavailable = lower.includes("غير متوفر") || lower.includes("out of stock") || lower.includes("نفد") || lower.includes("خلص");
+
+    if (mentionsAvailable && !hasAvailableFact) {
+      return {
+        ok: false,
+        fallbackReply: appReply,
+        reason: "Haidi output contains unsupported stock claims",
+      };
+    }
+    if (mentionsUnavailable && !hasUnavailableFact && context.blockedReason !== "out_of_stock") {
+      return {
+        ok: false,
+        fallbackReply: appReply,
+        reason: "Haidi output contains unsupported stock claims",
+      };
+    }
   }
 
-  // used_upsell should be boolean or default false
   const usedUpsell = typeof obj.used_upsell === "boolean" ? obj.used_upsell : false;
 
-  // intent_label should be one of allowed values or fallback
-  const allowedIntents = [
+  const allowedIntents: HaidiOutput["intent_label"][] = [
     "greeting",
     "product_search",
     "select_product",
@@ -120,34 +159,42 @@ export function validateHaidiOutput(
     "support",
     "fallback",
   ];
+
+  const allowedTones: HaidiOutput["tone"][] = [
+    "friendly",
+    "premium",
+    "concise",
+    "excited",
+    "empathetic",
+    "neutral",
+  ];
+
   const intentLabel =
-    typeof obj.intent_label === "string" && allowedIntents.includes(obj.intent_label)
-      ? obj.intent_label
+    typeof obj.intent_label === "string" && allowedIntents.includes(obj.intent_label as HaidiOutput["intent_label"])
+      ? (obj.intent_label as HaidiOutput["intent_label"])
       : "fallback";
 
-  // tone should be one of allowed values
-  const allowedTones = ["friendly", "premium", "concise", "excited", "empathetic", "neutral"];
   const tone =
-    typeof obj.tone === "string" && allowedTones.includes(obj.tone)
-      ? obj.tone
+    typeof obj.tone === "string" && allowedTones.includes(obj.tone as HaidiOutput["tone"])
+      ? (obj.tone as HaidiOutput["tone"])
       : "friendly";
 
-  const recommendedNextStep = typeof obj.recommended_next_step === "string"
-    ? obj.recommended_next_step
-    : "";
+  const recommendedNextStep =
+    typeof obj.recommended_next_step === "string" ? obj.recommended_next_step : "";
 
   const safetyNotes = Array.isArray(obj.safety_notes)
-    ? obj.safety_notes.filter((s): s is string => typeof s === "string")
+    ? obj.safety_notes.filter((value): value is string => typeof value === "string")
     : [];
 
-  const validated: HaidiOutput = {
-    final_reply: finalReply.trim(),
-    intent_label: intentLabel as HaidiOutput["intent_label"],
-    tone: tone as HaidiOutput["tone"],
-    used_upsell: usedUpsell,
-    recommended_next_step: recommendedNextStep,
-    safety_notes: safetyNotes,
+  return {
+    ok: true,
+    output: {
+      final_reply: finalReply.trim(),
+      intent_label: intentLabel,
+      tone,
+      used_upsell: usedUpsell,
+      recommended_next_step: recommendedNextStep,
+      safety_notes: safetyNotes,
+    },
   };
-
-  return { ok: true, output: validated };
 }

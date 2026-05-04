@@ -17,7 +17,7 @@ import { getCartItems } from "@/lib/services/cart-service";
 import { logFailedTurn } from "@/lib/services/dead-letter-service";
 import { evolutionClient } from "@/lib/adapters/evolution/evolution-client";
 
-import { buildOrderSummary, getCart, getCustomerInfo, getStage, looksLikeAddress, resetConversation, setCart, setCustomerInfo, setStage } from "@/lib/services/conversation-flow-service";
+import { buildOrderSummary, getCart, getCustomerInfo, getStage, isAIPaused, looksLikeAddress, resetConversation, setCart, setCustomerInfo, setStage } from "@/lib/services/conversation-flow-service";
 import { placeOrder } from "@/lib/services/shopify-mock-service";
 import type { CanonicalMessageEvent, InternalMessageTurnInput, MessageTurnResponse } from "@/lib/types/messages";
 import type { ScenarioRecord } from "@/lib/types/scenarios";
@@ -131,6 +131,25 @@ function summarizeHandoff(language: string): string {
 
 function summarizeClarify(language: string): string {
   return isArabic(language) ? "ممكن توضحي أكثر؟" : "Could you clarify a bit more?";
+}
+
+function looksLikeHumanHandoffRequest(text: string): boolean {
+  const normalized = text.trim().toLowerCase();
+  if (!normalized) return false;
+
+  const patterns = [
+    /كلم\s+حد/i,
+    /أكلم\s+حد/i,
+    /عايز(?:ة)?\s+حد/i,
+    /محتاج(?:ة|ه)?\s+حد/i,
+    /خدمة\s*العملاء/i,
+    /human/i,
+    /agent/i,
+    /representative/i,
+    /موظف/i,
+  ];
+
+  return patterns.some((pattern) => pattern.test(normalized));
 }
 
 const REPLY_TEMPLATES = {
@@ -386,6 +405,52 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       reply: replyFor(language, "العميلة تحت متابعة زميل بشري الآن.", "This conversation is already under human care."),
       handoff: true,
       action: "handoff",
+    };
+  }
+
+  const aiPaused = await isAIPaused(conversationId);
+  if (aiPaused && !input._preconditions) {
+    return {
+      intent: "handoff",
+      toolsCalled: [],
+      reply: replyFor(language, "العميلة تحت متابعة زميل بشري الآن. ممكن ترجع للـ AI لاحقاً.", "This conversation is under human care. You can return to AI later."),
+      handoff: true,
+      action: "handoff",
+    };
+  }
+
+  if (looksLikeHumanHandoffRequest(input.text)) {
+    const ticket = await createHandoffTicket({
+      store_id: storeKey,
+      conversation_id: conversationId,
+      customer_id: customerId,
+      reason: "CUSTOMER_REQUEST",
+      priority: "HIGH",
+      ai_summary: input.text,
+    });
+    logTool({
+      store_id: storeKey,
+      conversation_id: conversationId,
+      tool_name: "handoff",
+      input_summary: { reason: "CUSTOMER_REQUEST", text: input.text },
+      output_summary: { ticketId: ticket.id },
+      status: "ok",
+      latency_ms: 0,
+    });
+    const haidiContextRequest = buildHaidiContext({
+      language,
+      customerText: input.text,
+      action: "handoff",
+      intent: "HANDOFF_REQUEST",
+    });
+    return {
+      intent: "handoff",
+      toolsCalled: ["handoff"],
+      reply: REPLY_TEMPLATES.handoff,
+      handoff: true,
+      action: "handoff",
+      data: { ticket },
+      haidi_context: haidiContextRequest,
     };
   }
 

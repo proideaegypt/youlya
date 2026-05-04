@@ -19,6 +19,9 @@ import {
   Sparkles,
   Package,
   Brain,
+  Activity,
+  AlertTriangle,
+  BookOpenText,
 } from "lucide-react";
 import { YoulyaLogo } from "@/lib/ui/youlya-logo";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
@@ -39,6 +42,8 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { href: "/dashboard/command-center", labelAr: "لوحة التحكم", labelEn: "Command Center", icon: LayoutDashboard },
+  { href: "/dashboard/pilot", labelAr: "غرفة التحكم التجريبي", labelEn: "Pilot Control", icon: Activity },
+  { href: "/dashboard/handoff", labelAr: "التحويل البشري", labelEn: "Handoff Center", icon: AlertTriangle },
   { href: "/dashboard/inbox", labelAr: "الرسائل", labelEn: "Messages", icon: MessageCircle },
   { href: "/dashboard/products", labelAr: "المنتجات والمخزون", labelEn: "Products & Inventory", icon: Package },
   { href: "/dashboard/products-intelligence", labelAr: "ذكاء المنتجات", labelEn: "Products Intelligence", icon: Brain },
@@ -48,6 +53,7 @@ const navItems: NavItem[] = [
   { href: "/dashboard/profile", labelAr: "الملف الشخصي", labelEn: "Profile", icon: UserRound },
   { href: "/dashboard/orders", labelAr: "الطلبات", labelEn: "Orders", icon: ShoppingBag },
   { href: "/dashboard/logs", labelAr: "السجلات", labelEn: "Logs", icon: FileText },
+  { href: "/dashboard/haidi/settings", labelAr: "إعدادات Haidi", labelEn: "Haidi Settings", icon: Settings },
   { href: "/dashboard/settings", labelAr: "الإعدادات", labelEn: "Settings", icon: Settings },
 ];
 

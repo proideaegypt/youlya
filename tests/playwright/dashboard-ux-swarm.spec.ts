@@ -11,6 +11,7 @@ import {
 
 const routes = [
   "/dashboard/command-center",
+  "/dashboard/pilot-control",
   "/dashboard/inbox",
   "/dashboard/products",
   "/dashboard/products-intelligence",
@@ -29,6 +30,12 @@ for (const route of routes) {
 
     await page.goto(route, { waitUntil: "domcontentloaded" });
     await page.waitForLoadState("networkidle");
+
+    const sidebarToggle = page.getByRole("button", { name: /Toggle sidebar|Collapse sidebar|Expand sidebar|Open menu/ }).first();
+    if (!(await page.locator("aside").first().isVisible().catch(() => false)) && await sidebarToggle.isVisible().catch(() => false)) {
+      await sidebarToggle.click();
+      await page.waitForLoadState("networkidle");
+    }
 
     const screenshotDir = path.join(taskRoot(), "ux", "screenshots");
     await ensureDir(screenshotDir);

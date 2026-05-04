@@ -140,7 +140,7 @@ export function buildHaidiContext(options: {
   }
 
   const replyGoal = inferReplyGoal(action, intent, itemsCount);
-  const styleInstructions = buildStyleInstructions(action, intent, blockedReason);
+  const styleInstructions = buildStyleInstructions(action, intent, blockedReason ?? null);
 
   return {
     language,

@@ -78,6 +78,7 @@ const app = $json;
 const appReply = String(app.reply || app.message || "حصل خطأ تقني بسيط، ممكن تبعتي الرسالة تاني؟").trim();
 const appAction = String(app.action || "ai_reply");
 const appIntent = String(app.intent || "fallback");
+const haidiSessionKey = String(app.haidi_session_key || app.haidi_memory?.sessionKey || "");
 const haidiContext = app.haidi_context || {};
 const commerceFacts = haidiContext.commerceFacts || {};
 const products = Array.isArray(commerceFacts.products) ? commerceFacts.products : [];
@@ -234,6 +235,7 @@ const output = {
   tone: deriveTone(),
   used_upsell: Boolean(safetyNotes.includes("upsell_applied")),
   recommended_next_step: deriveNextStep(),
+  haidi_session_key: haidiSessionKey,
   safety_notes: unique([
     ...safetyNotes,
     appAction === "order_created" ? "app_confirmed_order" : "app_action:" + appAction,
@@ -254,6 +256,7 @@ const haidiContext = app.haidi_context || {};
 const facts = haidiContext.commerceFacts || {};
 const products = Array.isArray(facts.products) ? facts.products : [];
 const raw = $json;
+const haidiSessionKey = String((raw && raw.haidi_session_key) || (raw && raw.haidi_memory && raw.haidi_memory.sessionKey) || "");
 
 function fallback(reason) {
   return [{
@@ -323,8 +326,26 @@ if (internalIdPatterns.some((pattern) => pattern.test(finalReply))) {
   return fallback("internal_identifier_leak");
 }
 
-const hasPriceClaim = /\\b\\d+(?:[.,]\\d+)?\\s*(?:جنيه|ج\\.م|EGP|ريال|SAR|USD)\\b/i.test(finalReply);
-const hasStockClaim = /\\b(?:متوفر|غير متوفر|in stock|out of stock|stock|خلص|نفد)\\b/i.test(finalReply);
+const lowerFinalReply = finalReply.toLowerCase();
+const hasPriceClaim =
+  /\\d/.test(finalReply) &&
+  (
+    lowerFinalReply.includes("جنيه") ||
+    lowerFinalReply.includes("ج.م") ||
+    lowerFinalReply.includes("egp") ||
+    lowerFinalReply.includes("ريال") ||
+    lowerFinalReply.includes("sar") ||
+    lowerFinalReply.includes("usd")
+  );
+const hasStockClaim =
+  lowerFinalReply.includes("متوفر") ||
+  lowerFinalReply.includes("غير متوفر") ||
+  lowerFinalReply.includes("available") ||
+  lowerFinalReply.includes("in stock") ||
+  lowerFinalReply.includes("out of stock") ||
+  lowerFinalReply.includes("stock") ||
+  lowerFinalReply.includes("خلص") ||
+  lowerFinalReply.includes("نفد");
 const knownPrices = products
   .map((product) => product.price)
   .filter((price) => typeof price === "number" && Number.isFinite(price))
@@ -332,8 +353,17 @@ const knownPrices = products
 if (hasPriceClaim && !knownPrices.some((price) => finalReply.includes(price))) {
   return fallback("unsupported_price_claim");
 }
-if (hasStockClaim && products.length === 0 && facts.blockedReason !== "out_of_stock") {
-  return fallback("unsupported_stock_claim");
+if (hasStockClaim) {
+  const hasAvailableFact = products.some((product) => product.available === true);
+  const hasUnavailableFact = products.some((product) => product.available === false);
+  const mentionsAvailable = lowerFinalReply.includes("متوفر") || lowerFinalReply.includes("available") || lowerFinalReply.includes("in stock");
+  const mentionsUnavailable = lowerFinalReply.includes("غير متوفر") || lowerFinalReply.includes("out of stock") || lowerFinalReply.includes("نفد") || lowerFinalReply.includes("خلص");
+  if (mentionsAvailable && !hasAvailableFact) {
+    return fallback("unsupported_stock_claim");
+  }
+  if (mentionsUnavailable && !hasUnavailableFact && facts.blockedReason !== "out_of_stock") {
+    return fallback("unsupported_stock_claim");
+  }
 }
 
 const allowedIntents = [
@@ -377,11 +407,48 @@ return [{
       tone,
       used_upsell: usedUpsell,
       recommended_next_step: recommendedNextStep,
+      haidi_session_key: haidiSessionKey,
       safety_notes: safetyNotes,
     },
+    haidi_session_key: haidiSessionKey,
     number: $node["Normalize Message"].json.send_number,
   },
 }];
+`;
+}
+
+function buildPrepareEvolutionPayloadCode() {
+  return `
+if ($json.shouldSend === false || $json.action === "duplicate_ignored") {
+  return [];
+}
+
+const rawNumber =
+  $json.number ||
+  $node["Normalize Message"].json.remote_jid ||
+  $node["Normalize Message"].json.conversation_id;
+
+const number = String(rawNumber || "")
+  .replace("@s.whatsapp.net", "")
+  .replace("@c.us", "")
+  .replace(/\\D/g, "");
+
+const text =
+  $json.reply ||
+  $json.message ||
+  "حصل خطأ تقني بسيط، ممكن تبعتي الرسالة تاني؟";
+
+return [
+  {
+    json: {
+      ...$json,
+      evolutionPayload: {
+        number,
+        text,
+      },
+    },
+  },
+];
 `;
 }
 
@@ -411,18 +478,55 @@ function upsertNodes(workflow) {
     position: [1580, 120],
   };
 
+  const memoryNode = {
+    parameters: {
+      jsCode: `
+const normalized = $node["Normalize Message"].json || {};
+const conversationId = String(normalized.conversation_id || "");
+const remoteJid = String(normalized.remote_jid || "");
+const sessionKey = String(conversationId || remoteJid || "").trim();
+
+return [{
+  json: {
+    ...$json,
+    haidi_memory: {
+      sessionKey,
+      conversation_id: conversationId,
+      remote_jid: remoteJid,
+    },
+    haidi_session_key: sessionKey,
+  },
+}];
+`,
+    },
+    id: "Haidi Session Memory",
+    name: "Haidi Session Memory",
+    type: "n8n-nodes-base.code",
+    typeVersion: 2,
+    position: [1360, 120],
+  };
+
   const existingHaidi = nodeMap.get("Haidi AI Sales Agent");
   const existingValidator = nodeMap.get("Validate Haidi Output");
+  const existingEvolution = nodeMap.get("Prepare Evolution Payload");
+  const existingMemory = nodeMap.get("Haidi Session Memory");
   const insertBefore = "Prepare Reply";
   const insertIndex = Math.max(
     0,
     nodes.findIndex((node) => node.name === insertBefore)
   );
 
-  if (existingHaidi) {
-    nodes[existingHaidi.index] = haidiNode;
+  if (existingMemory) {
+    nodes[existingMemory.index] = memoryNode;
   } else {
-    nodes.splice(insertIndex, 0, haidiNode);
+    nodes.splice(insertIndex, 0, memoryNode);
+  }
+
+  const haidiCurrentIndex = nodes.findIndex((node) => node.name === "Haidi AI Sales Agent");
+  if (existingHaidi) {
+    nodes[haidiCurrentIndex] = haidiNode;
+  } else {
+    nodes.splice(nodes.findIndex((node) => node.name === "Haidi Session Memory") + 1, 0, haidiNode);
   }
 
   const validatorIndexAfterHaidi = Math.max(
@@ -436,6 +540,17 @@ function upsertNodes(workflow) {
     nodes.splice(validatorIndexAfterHaidi, 0, validatorNode);
   }
 
+  if (existingEvolution) {
+    const currentIndex = nodes.findIndex((node) => node.name === "Prepare Evolution Payload");
+    nodes[currentIndex] = {
+      ...existingEvolution.node,
+      parameters: {
+        ...existingEvolution.node.parameters,
+        jsCode: buildPrepareEvolutionPayloadCode(),
+      },
+    };
+  }
+
   workflow.nodes = nodes;
 
   const connections = deepClone(workflow.connections || {});
@@ -443,7 +558,7 @@ function upsertNodes(workflow) {
     main: [
       [
         {
-          node: "Haidi AI Sales Agent",
+          node: "Haidi Session Memory",
           type: "main",
           index: 0,
         },
@@ -472,6 +587,18 @@ function upsertNodes(workflow) {
     ],
   };
 
+  connections["Haidi Session Memory"] = {
+    main: [
+      [
+        {
+          node: "Haidi AI Sales Agent",
+          type: "main",
+          index: 0,
+        },
+      ],
+    ],
+  };
+
   connections["Validate Haidi Output"] = {
     main: [
       [
@@ -486,6 +613,27 @@ function upsertNodes(workflow) {
 
   workflow.connections = connections;
   return workflow;
+}
+
+function buildUpdatePayload(workflow) {
+  return {
+    name: workflow.name,
+    nodes: workflow.nodes,
+    connections: workflow.connections,
+    settings: workflow.settings,
+    staticData: workflow.staticData,
+  };
+}
+
+function toRepoWorkflow(workflow, name, active = false) {
+  return {
+    active,
+    name,
+    nodes: workflow.nodes,
+    connections: workflow.connections,
+    settings: workflow.settings,
+    staticData: workflow.staticData,
+  };
 }
 
 async function main() {
@@ -504,21 +652,22 @@ async function main() {
   const putRes = await fetchJson(`${baseUrl}/api/v1/workflows/${WORKFLOW_ID}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(patchedActive),
+    body: JSON.stringify(buildUpdatePayload(patchedActive)),
   });
   if (!putRes.ok) {
     console.error("ERROR: Failed to update active workflow:", putRes.status, await putRes.text());
     process.exit(1);
   }
 
-  const repoWorkflow = deepClone(patchedActive);
-  repoWorkflow.active = false;
-  repoWorkflow.name = "Youlya WhatsApp Main";
+  const repoWorkflow = toRepoWorkflow(patchedActive, "Youlya WhatsApp Main", false);
   fs.writeFileSync(CANONICAL_PATH, JSON.stringify(repoWorkflow, null, 2));
 
-  const draftWorkflow = deepClone(patchedActive);
-  draftWorkflow.active = false;
-  draftWorkflow.name = "Youlya WhatsApp Main — Haidi Draft";
+  const draftWorkflow = toRepoWorkflow(patchedActive, "Youlya WhatsApp Main — Haidi Draft", false);
+  if (Array.isArray(draftWorkflow.nodes) && draftWorkflow.nodes[0]) {
+    draftWorkflow.nodes[0].parameters = draftWorkflow.nodes[0].parameters || {};
+    draftWorkflow.nodes[0].parameters.path = "youlya-whatsapp-haidi-draft";
+    draftWorkflow.nodes[0].webhookId = "youlya-whatsapp-haidi-draft-webhook";
+  }
   fs.writeFileSync(DRAFT_PATH, JSON.stringify(draftWorkflow, null, 2));
 
   const confirmRes = await fetchJson(`${baseUrl}/api/v1/workflows/${WORKFLOW_ID}`);

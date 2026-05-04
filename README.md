@@ -4,6 +4,104 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.16.1 |
+| Version Name | human-handoff-center-and-team-leader-queue |
+| Task | human-handoff-center-and-team-leader-queue |
+| Release File | RELEASES/v2.16.1-human-handoff-center-and-team-leader-queue.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.16.0 |
+| Version Name | haidi-settings-and-pilot-control-room |
+| Task | haidi-settings-and-pilot-control-room |
+| Release File | RELEASES/v2.16.0-haidi-settings-and-pilot-control-room.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.15.2 |
+| Version Name | approved-rag-knowledge-base-v1 |
+| Task | approved-rag-knowledge-base-v1 |
+| Release File | RELEASES/v2.15.2-approved-rag-knowledge-base-v1.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.15.1 |
+| Version Name | integrate-pilot-sprint-playbook-safely |
+| Task | integrate-pilot-sprint-playbook-safely |
+| Release File | RELEASES/v2.15.1-integrate-pilot-sprint-playbook-safely.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.15.0 |
+| Version Name | message-history-and-conversation-timeline |
+| Task | message-history-and-conversation-timeline |
+| Release File | RELEASES/v2.15.0-message-history-and-conversation-timeline.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.14.0 |
+| Version Name | pilot-dashboard-control-room-and-products-intelligence |
+| Task | pilot-dashboard-control-room-and-products-intelligence |
+| Release File | RELEASES/v2.14.0-pilot-dashboard-control-room-and-products-intelligence.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.13.0 |
+| Version Name | human-handoff-center-and-team-leader-queue |
+| Task | human-handoff-center-and-team-leader-queue |
+| Release File | RELEASES/v2.13.0-human-handoff-center-and-team-leader-queue.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.12.0 |
+| Version Name | apply-haidi-openai-agent-to-whatsapp-main |
+| Task | apply-haidi-openai-agent-to-whatsapp-main |
+| Release File | RELEASES/v2.12.0-apply-haidi-openai-agent-to-whatsapp-main.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.11.0 |
+| Version Name | commerce-product-cache-and-selection-readiness |
+| Task | commerce-product-cache-and-selection-readiness |
+| Release File | RELEASES/v2.11.0-commerce-product-cache-and-selection-readiness.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.10.2 |
+| Version Name | pilot-dashboard-control-room-and-products-intelligence |
+| Task | pilot-dashboard-control-room-and-products-intelligence |
+| Release File | RELEASES/v2.10.2-pilot-dashboard-control-room-and-products-intelligence.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.10.1 |
+| Version Name | apply-haidi-agent-draft-to-active-workflow |
+| Task | apply-haidi-agent-draft-to-active-workflow |
+| Release File | RELEASES/v2.10.1-apply-haidi-agent-draft-to-active-workflow.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.10.0 |
+| Version Name | prepare-haidi-ai-agent-conversation-layer-draft |
+| Task | prepare-haidi-ai-agent-conversation-layer-draft |
+| Release File | RELEASES/v2.10.0-prepare-haidi-ai-agent-conversation-layer-draft.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.9.3 |
+| Version Name | apply-haidi-agent-draft-to-active-workflow |
+| Task | apply-haidi-agent-draft-to-active-workflow |
+| Release File | RELEASES/v2.9.3-apply-haidi-agent-draft-to-active-workflow.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.9.2 |
+| Version Name | stabilize-whatsapp-loop-foundation |
+| Task | stabilize-whatsapp-loop-foundation |
+| Release File | RELEASES/v2.9.2-stabilize-whatsapp-loop-foundation.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.9.1 |
 | Version Name | integrate-pilot-sprint-playbook-safely |
 | Task | integrate-pilot-sprint-playbook-safely |

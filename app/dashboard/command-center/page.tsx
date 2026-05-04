@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { cookies } from "next/headers";
 import {
-  LayoutDashboard,
   ShoppingBag,
   MessageCircle,
   AlertTriangle,
@@ -8,8 +8,6 @@ import {
   TrendingUp,
   Zap,
   Users,
-  Sunrise,
-  Moon,
   FileText,
   Settings,
 } from "lucide-react";
@@ -84,16 +82,36 @@ function KpiWidget({
   );
 }
 
-function QuickAction({ icon: Icon, title }: { icon: React.ComponentType<{ className?: string }>; title: string }) {
-  return (
-    <div className="flex items-center gap-3 rounded-2xl bg-card p-4 shadow-sm ring-1 ring-border cursor-pointer hover:shadow-md transition">
+function QuickAction({
+  icon: Icon,
+  title,
+  href,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  href?: string;
+}) {
+  const content = (
+    <>
       <Icon className="size-6 text-brand dark:text-white transition-colors" />
       <div>
         <div className="text-sm font-semibold text-foreground">{title}</div>
         <div className="text-xs text-muted-foreground">Quick Action</div>
       </div>
-    </div>
+    </>
   );
+
+  const className = "flex items-center gap-3 rounded-2xl bg-card p-4 shadow-sm ring-1 ring-border cursor-pointer hover:shadow-md transition";
+
+  if (href) {
+    return (
+      <Link href={href} className={className}>
+        {content}
+      </Link>
+    );
+  }
+
+  return <div className={className}>{content}</div>;
 }
 
 export default async function CommandCenterPage() {
@@ -183,7 +201,8 @@ export default async function CommandCenterPage() {
                 <h2 className="text-sm font-semibold text-foreground">إجراءات سريعة</h2>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <QuickAction icon={MessageCircle} title="Open Inbox" />
+                <QuickAction icon={Shield} title="غرفة الطيار" href="/dashboard/pilot-control" />
+                <QuickAction icon={MessageCircle} title="Open Inbox" href="/dashboard/inbox" />
                 <QuickAction icon={ShoppingBag} title="View Orders" />
                 <QuickAction icon={FileText} title="Check Logs" />
                 <QuickAction icon={Settings} title="Open Settings" />

@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { generateAiVisibilityReasons, normalizeChannel } from "@/lib/services/products-intelligence-service";
+import {
+  generateAiVisibilityReasons,
+  getOrderChannel,
+  isAiCreatedOrder,
+} from "@/lib/services/products-intelligence-service";
 
 function unauthorized() {
   return NextResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -67,6 +71,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 
     // Order summary if orders exist
     let orderSummary = null;
+    let aiOrdersCount = 0;
     const { count: orderCount } = await supabase
       .from("orders")
       .select("*", { count: "exact", head: true })
@@ -75,7 +80,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     if ((orderCount ?? 0) > 0) {
       const { data: productOrders } = await supabase
         .from("orders")
-        .select("total_price, source_channel, created_at")
+        .select("total_price, source_channel, channel, created_by, line_items_json, product_id, created_at")
         .eq("store_id", STORE_ID)
         .eq("product_id", id)
         .limit(100);
@@ -83,8 +88,9 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       const totalRevenue = (productOrders ?? []).reduce((sum, o) => sum + (Number(o.total_price) || 0), 0);
       const channelCounts = new Map<string, number>();
       for (const o of productOrders ?? []) {
-        const ch = normalizeChannel(o.source_channel);
+        const ch = getOrderChannel(o);
         channelCounts.set(ch, (channelCounts.get(ch) ?? 0) + 1);
+        if (isAiCreatedOrder(o)) aiOrdersCount += 1;
       }
       const channelSplit = Array.from(channelCounts.entries()).map(([channel, count]) => ({ channel, count }));
 
@@ -113,6 +119,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       },
       variants: enrichedVariants,
       orderSummary,
+      aiOrdersCount,
       hasOrderData: (orderCount ?? 0) > 0,
     });
   } catch (err) {

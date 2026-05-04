@@ -182,6 +182,7 @@ export async function resetConversation(conversationId: string): Promise<void> {
   try {
     if (!hasSupabaseEnv()) {
       getMockState().conversationFlow.delete(conversationId);
+      getMockState().aiPausedConversations.delete(conversationId);
       return;
     }
     const client = getSupabaseServerClient();
@@ -190,6 +191,44 @@ export async function resetConversation(conversationId: string): Promise<void> {
     if (error) console.error("resetConversation failed", error);
   } catch (error) {
     console.error("resetConversation failed", error);
+  }
+}
+
+export async function setAIPaused(conversationId: string, paused: boolean): Promise<void> {
+  try {
+    if (!hasSupabaseEnv()) {
+      if (paused) getMockState().aiPausedConversations.add(conversationId);
+      else getMockState().aiPausedConversations.delete(conversationId);
+      return;
+    }
+    const client = getSupabaseServerClient();
+    if (!client) return;
+    const { error } = await client.from("conversation_state").upsert(
+      { conversation_id: conversationId, ai_paused: paused, updated_at: new Date().toISOString() },
+      { onConflict: "conversation_id" },
+    );
+    if (error) console.error("setAIPaused failed", error);
+  } catch (error) {
+    console.error("setAIPaused failed", error);
+  }
+}
+
+export async function isAIPaused(conversationId: string): Promise<boolean> {
+  try {
+    if (!hasSupabaseEnv()) {
+      return getMockState().aiPausedConversations.has(conversationId);
+    }
+    const client = getSupabaseServerClient();
+    if (!client) return false;
+    const { data, error } = await client.from("conversation_state").select("ai_paused").eq("conversation_id", conversationId).maybeSingle();
+    if (error) {
+      console.error("isAIPaused failed", error);
+      return false;
+    }
+    return data?.ai_paused === true;
+  } catch (error) {
+    console.error("isAIPaused failed", error);
+    return false;
   }
 }
 

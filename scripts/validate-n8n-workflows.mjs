@@ -279,11 +279,21 @@ function validateHaidiDraftWorkflow(filePath) {
   }
 
   // Check for direct Shopify mutation nodes
-  const shopifyNodeTypes = ['shopify', 'shopifyApi', 'shopifyGraphql'];
-  for (const type of shopifyNodeTypes) {
-    if (text.includes(type)) {
-      result.hasShopifyDirectNodes = true;
-      result.errors.push(`Direct Shopify node found: ${type}`);
+  const directShopifyNodes = Array.isArray(json.nodes)
+    ? json.nodes.filter(node => {
+        const type = String(node?.type || "").toLowerCase();
+        return (
+          type === "n8n-nodes-base.shopify" ||
+          type.startsWith("n8n-nodes-base.shopify") ||
+          type === "shopify" ||
+          type.startsWith("shopify")
+        );
+      })
+    : [];
+  if (directShopifyNodes.length > 0) {
+    result.hasShopifyDirectNodes = true;
+    for (const node of directShopifyNodes) {
+      result.errors.push(`Direct Shopify node found: ${node.name || node.type || "unknown"}`);
     }
   }
 

@@ -9,6 +9,80 @@ export function normalizeChannel(source?: string | null): string {
   return "unknown";
 }
 
+export const supportedInsightChannels = ["whatsapp", "instagram", "tiktok", "facebook"] as const;
+
+export function channelDisplayLabel(channel: string): string {
+  const labels: Record<string, string> = {
+    whatsapp: "واتساب",
+    instagram: "إنستغرام",
+    tiktok: "تيك توك",
+    facebook: "فيسبوك",
+    manual: "يدوي",
+    unknown: "غير معروف",
+  };
+  return labels[channel] ?? channel;
+}
+
+type OrderLikeRow = {
+  created_by?: string | null;
+  channel?: string | null;
+  source_channel?: string | null;
+  total_price?: number | string | null;
+  line_items_json?: unknown;
+  product_id?: string | null;
+};
+
+function readLineItems(lineItemsJson: unknown): Array<Record<string, unknown>> {
+  if (!Array.isArray(lineItemsJson)) return [];
+  return lineItemsJson.filter((item): item is Record<string, unknown> => Boolean(item) && typeof item === "object");
+}
+
+export function isAiCreatedOrder(order: OrderLikeRow): boolean {
+  const createdBy = String(order.created_by ?? "").trim().toLowerCase();
+  return createdBy === "ai" || createdBy === "youlya ai" || createdBy === "youlyaai";
+}
+
+export function getOrderChannel(order: OrderLikeRow): string {
+  return normalizeChannel(order.channel ?? order.source_channel ?? null);
+}
+
+export function getOrderTotal(order: OrderLikeRow): number {
+  const total = typeof order.total_price === "number" ? order.total_price : Number(order.total_price ?? 0);
+  return Number.isFinite(total) ? total : 0;
+}
+
+export function getOrderProductKeys(order: OrderLikeRow): string[] {
+  const keys = new Set<string>();
+  if (order.product_id) keys.add(String(order.product_id));
+
+  for (const item of readLineItems(order.line_items_json)) {
+    const variantId = item.variant_id ?? item.shopify_variant_id ?? item.id;
+    const productId = item.product_id ?? item.shopify_product_id;
+    const title = item.title ?? item.name;
+    if (productId) keys.add(String(productId));
+    if (variantId) keys.add(String(variantId));
+    if (title) keys.add(String(title));
+  }
+
+  return [...keys];
+}
+
+export function getPrimaryOrderProductKey(order: OrderLikeRow): string | null {
+  return getOrderProductKeys(order)[0] ?? null;
+}
+
+export function getSafeMessagePreview(text?: string | null): string {
+  if (!text) return "—";
+  return text
+    .replace(/https?:\/\/\S+/gi, "[link]")
+    .replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, "[email]")
+    .replace(/(?:\+?\d[\d\s().-]{5,}\d)/g, "[phone]")
+    .replace(/\b\d{4,}\b/g, "[number]")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 120);
+}
+
 export type VariantCounts = {
   total: number;
   available: number;

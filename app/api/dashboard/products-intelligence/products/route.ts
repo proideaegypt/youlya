@@ -3,6 +3,9 @@ import { cookies } from "next/headers";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import {
   computeVariantAggregates,
+  getOrderChannel,
+  getPrimaryOrderProductKey,
+  isAiCreatedOrder,
   generateProductNotes,
   generateProductBadges,
 } from "@/lib/services/products-intelligence-service";
@@ -68,10 +71,58 @@ export async function GET(request: Request) {
       if ((v.inventory_quantity ?? 0) <= 0) entry.oos += 1;
     }
 
+    const { data: orderRows } = await supabase
+      .from("orders")
+      .select("created_by, channel, source_channel, total_price, line_items_json, product_id, created_at")
+      .eq("store_id", STORE_ID)
+      .order("created_at", { ascending: false })
+      .limit(1000);
+
+    const productTitleByKey = new Map<string, string>();
+    const { data: productRows } = await supabase
+      .from("products")
+      .select("id, shopify_product_id, shopify_title")
+      .eq("store_id", STORE_ID);
+    for (const row of productRows ?? []) {
+      if (row.id) productTitleByKey.set(String(row.id), String(row.shopify_title ?? row.shopify_product_id ?? row.id));
+      if (row.shopify_product_id) productTitleByKey.set(String(row.shopify_product_id), String(row.shopify_title ?? row.shopify_product_id));
+    }
+    const { data: variantRows } = await supabase
+      .from("product_variants")
+      .select("shopify_variant_id, shopify_product_id")
+      .eq("store_id", STORE_ID);
+    for (const row of variantRows ?? []) {
+      if (row.shopify_variant_id && row.shopify_product_id && productTitleByKey.has(String(row.shopify_product_id))) {
+        productTitleByKey.set(String(row.shopify_variant_id), productTitleByKey.get(String(row.shopify_product_id)) ?? String(row.shopify_product_id));
+      }
+    }
+
+    const productOrderCounts = new Map<string, number>();
+    const aiProductOrderCounts = new Map<string, number>();
+    const productChannelCounts = new Map<string, Map<string, number>>();
+
+    for (const order of orderRows ?? []) {
+      const channel = getOrderChannel(order);
+      const key = getPrimaryOrderProductKey(order);
+      if (!key) continue;
+      const label = productTitleByKey.get(key) ?? key;
+      productOrderCounts.set(label, (productOrderCounts.get(label) ?? 0) + 1);
+      if (!productChannelCounts.has(label)) productChannelCounts.set(label, new Map<string, number>());
+      const channelMap = productChannelCounts.get(label)!;
+      channelMap.set(channel, (channelMap.get(channel) ?? 0) + 1);
+      if (isAiCreatedOrder(order)) {
+        aiProductOrderCounts.set(label, (aiProductOrderCounts.get(label) ?? 0) + 1);
+      }
+    }
+
     const enriched = products.map((p) => {
       const counts = variantMap.get(p.shopify_product_id) ?? { total: 0, available: 0, aiVisible: 0, missingSku: 0, oos: 0 };
       const notes = generateProductNotes(counts);
       const badges = generateProductBadges(p.ai_visible ?? true, counts);
+      const aiOrdersCount = aiProductOrderCounts.get(p.shopify_title) ?? aiProductOrderCounts.get(p.shopify_product_id) ?? 0;
+      const totalOrdersCount = productOrderCounts.get(p.shopify_title) ?? productOrderCounts.get(p.shopify_product_id) ?? 0;
+      const channelMap = productChannelCounts.get(p.shopify_title) ?? productChannelCounts.get(p.shopify_product_id);
+      const topChannel = channelMap ? [...channelMap.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null : null;
 
       return {
         shopifyProductId: p.shopify_product_id,
@@ -87,9 +138,9 @@ export async function GET(request: Request) {
         aiVisibleVariants: counts.aiVisible,
         missingSkuVariants: counts.missingSku,
         outOfStockVariants: counts.oos,
-        aiOrdersCount: 0,
-        totalOrdersCount: 0,
-        topChannel: null as string | null,
+        aiOrdersCount,
+        totalOrdersCount,
+        topChannel,
         lastSyncedAt: p.last_synced_at,
         notes,
         badges,

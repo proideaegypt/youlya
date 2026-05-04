@@ -2,6 +2,8 @@ import { describe, expect, test } from "vitest";
 import { validateHaidiOutput } from "@/lib/services/haidi-output-validator";
 import { buildHaidiContext } from "@/lib/services/haidi-context-builder";
 
+const APP_REPLY = "App fallback reply";
+
 describe("haidi-output-validator", () => {
   const appReply = "App fallback reply";
 
@@ -139,6 +141,7 @@ describe("haidi-output-validator", () => {
 });
 
 describe("haidi-context-builder", () => {
+  const appReply = "App fallback reply";
   test("product search context has max 10 products", () => {
     const recommendations = Array.from({ length: 15 }, (_, i) => ({
       index: i + 1,
@@ -243,7 +246,7 @@ describe("haidi-context-builder", () => {
     const result = validateHaidiOutput(
       { final_reply: "رقم الطلب provider_message_id: abc123" },
       "ai_reply",
-      appReply,
+      APP_REPLY,
       { products: [{ price: 100, available: true }] }
     );
     expect(result.ok).toBe(false);
@@ -253,7 +256,7 @@ describe("haidi-context-builder", () => {
     const result = validateHaidiOutput(
       { final_reply: "السعر 250 جنيه" },
       "ai_reply",
-      appReply
+      APP_REPLY
     );
     expect(result.ok).toBe(false);
   });
@@ -262,7 +265,7 @@ describe("haidi-context-builder", () => {
     const result = validateHaidiOutput(
       { final_reply: "متوفر حاليا" },
       "ai_reply",
-      appReply
+      APP_REPLY
     );
     expect(result.ok).toBe(false);
   });

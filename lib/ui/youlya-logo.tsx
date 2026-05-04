@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useTheme } from "next-themes";
 
 type YoulyaLogoProps = {
   className?: string;
@@ -11,10 +10,7 @@ type YoulyaLogoProps = {
 };
 
 export function YoulyaLogo({ className = "", compact = false, preferImage = true }: YoulyaLogoProps) {
-  const { resolvedTheme } = useTheme();
   const [failed, setFailed] = useState(false);
-  const isDark = resolvedTheme !== "light";
-  const src = isDark ? "/brand/youlya-logo-dark.jpeg" : "/brand/youlya-logo-light.jpeg";
   const alt = "YOULYA HOME WEAR logo";
 
   if (failed || !preferImage) {
@@ -26,15 +22,25 @@ export function YoulyaLogo({ className = "", compact = false, preferImage = true
   }
 
   return (
-    <Image
-      src={src}
-      alt={alt}
-      width={compact ? 32 : 120}
-      height={compact ? 32 : 40}
-      className={`rounded-lg object-contain ${className}`}
-      onError={() => setFailed(true)}
-      priority
-      unoptimized
-    />
+    <div className={`relative ${compact ? "h-8 w-8" : "h-10 w-[120px]"} ${className}`} aria-label={alt}>
+      <Image
+        src="/brand/youlya-logo-light.jpeg"
+        alt={alt}
+        fill
+        className="rounded-lg object-contain dark:hidden"
+        onError={() => setFailed(true)}
+        priority
+        unoptimized
+      />
+      <Image
+        src="/brand/youlya-logo-dark.jpeg"
+        alt={alt}
+        fill
+        className="rounded-lg object-contain hidden dark:block"
+        onError={() => setFailed(true)}
+        priority
+        unoptimized
+      />
+    </div>
   );
 }

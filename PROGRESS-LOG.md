@@ -2060,3 +2060,226 @@ Next step:
 - Import draft workflow into n8n, configure OpenAI credentials, test synthetic webhook
 - Replace placeholder Code node with actual AI Agent node
 - Activate only after full safety validation
+
+## 2026-05-04 — stabilize-whatsapp-loop-foundation
+
+Date: 2026-05-04
+Phase:
+Task: stabilize-whatsapp-loop-foundation
+Version: v2.9.2
+Version Name: stabilize-whatsapp-loop-foundation
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — apply-haidi-agent-draft-to-active-workflow
+
+Date: 2026-05-04
+Phase:
+Task: apply-haidi-agent-draft-to-active-workflow
+Version: v2.9.3
+Version Name: apply-haidi-agent-draft-to-active-workflow
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — prepare-haidi-ai-agent-conversation-layer-draft
+
+Date: 2026-05-04
+Phase:
+Task: prepare-haidi-ai-agent-conversation-layer-draft
+Version: v2.10.0
+Version Name: prepare-haidi-ai-agent-conversation-layer-draft
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — apply-haidi-agent-draft-to-active-workflow
+
+Date: 2026-05-04
+Phase:
+Task: apply-haidi-agent-draft-to-active-workflow
+Version: v2.10.1
+Version Name: apply-haidi-agent-draft-to-active-workflow
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — pilot-dashboard-control-room-and-products-intelligence
+
+Date: 2026-05-04
+Phase:
+Task: pilot-dashboard-control-room-and-products-intelligence
+Version: v2.10.2
+Version Name: pilot-dashboard-control-room-and-products-intelligence
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — commerce-product-cache-and-selection-readiness
+
+Date: 2026-05-04
+Phase:
+Task: commerce-product-cache-and-selection-readiness
+Version: v2.11.0
+Version Name: commerce-product-cache-and-selection-readiness
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — apply-haidi-openai-agent-to-whatsapp-main
+
+Date: 2026-05-04
+Phase:
+Task: apply-haidi-openai-agent-to-whatsapp-main
+Version: v2.12.0
+Version Name: apply-haidi-openai-agent-to-whatsapp-main
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — human-handoff-center-and-team-leader-queue
+
+Date: 2026-05-04
+Phase:
+Task: human-handoff-center-and-team-leader-queue
+Version: v2.13.0
+Version Name: human-handoff-center-and-team-leader-queue
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — pilot-dashboard-control-room-and-products-intelligence
+
+Date: 2026-05-04
+Phase: Phase 2 dashboard MVP pilot readiness
+Task: pilot-dashboard-control-room-and-products-intelligence
+Version: v2.14.0
+Version Name: pilot-dashboard-control-room-and-products-intelligence
+Files changed:
+- app/api/dashboard/pilot-control/route.ts (new)
+- app/dashboard/pilot-control/page.tsx (new)
+- lib/ui/dashboard-sidebar.tsx (add pilot-control nav)
+- lib/ui/empty-state.tsx (add compact prop)
+- lib/adapters/supabase/mock-store.ts (add aiPausedConversations)
+- tests/playwright/dashboard-ux-swarm.spec.ts (add pilot-control route)
+- tests/playwright/dashboard-functional-swarm.spec.ts (add pilot-control and products-intelligence tests)
+Commands run:
+- npm run typecheck (PASS, pre-fix)
+- npm run lint (PASS, 0 errors, 23 warnings)
+- npm test (PASS, 122/122)
+- npm run validate:scenarios (PASS, 104)
+- npm run scan:secrets (PASS)
+- npm run release:task -- --task "pilot-dashboard-control-room-and-products-intelligence" --type minor
+- npm run verify:release (PASS, v2.14.0)
+Tests passed:
+- typecheck PASS
+- lint PASS (0 errors)
+- unit tests PASS (122/122)
+- scenario validation PASS (104)
+- secret scan PASS
+- verify:release PASS
+Tests failed/skipped:
+- Playwright dashboard swarm: 3/20 failed against production (pilot-control page not yet deployed, 404)
+- Build: timeout in sandbox environment (known resource limitation, webpack compiled successfully in dev)
+Blockers:
+- Production deployment required before Playwright E2E passes for new /dashboard/pilot-control route
+- Sandbox build timeout prevents full verify:deploy gate locally
+Next step:
+- Deploy v2.14.0 to production VPS
+- Re-run Playwright dashboard swarm after deploy
+- Run manual pilot 10-message sequence
+
+## 2026-05-04 — message-history-and-conversation-timeline
+
+Date: 2026-05-04
+Phase:
+Task: message-history-and-conversation-timeline
+Version: v2.15.0
+Version Name: message-history-and-conversation-timeline
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — integrate-pilot-sprint-playbook-safely
+
+Date: 2026-05-04
+Phase:
+Task: integrate-pilot-sprint-playbook-safely
+Version: v2.15.1
+Version Name: integrate-pilot-sprint-playbook-safely
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — approved-rag-knowledge-base-v1
+
+Date: 2026-05-04
+Phase:
+Task: approved-rag-knowledge-base-v1
+Version: v2.15.2
+Version Name: approved-rag-knowledge-base-v1
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — haidi-settings-and-pilot-control-room
+
+Date: 2026-05-04
+Phase:
+Task: haidi-settings-and-pilot-control-room
+Version: v2.16.0
+Version Name: haidi-settings-and-pilot-control-room
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — human-handoff-center-and-team-leader-queue
+
+Date: 2026-05-04
+Phase:
+Task: human-handoff-center-and-team-leader-queue
+Version: v2.16.1
+Version Name: human-handoff-center-and-team-leader-queue
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:

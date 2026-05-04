@@ -3,6 +3,7 @@ import { internalMessageTurnSchema, messageTurnSchema } from "@/lib/validation/s
 import { runMessageTurn } from "@/lib/services/message-turn-service";
 import { requireInternalAuth } from "@/lib/middleware/internal-auth";
 import { checkAndMarkProcessed, updateProcessedAction } from "@/lib/middleware/idempotency";
+import { logInboundMessage, logOutboundMessage, logSystemEvent } from "@/lib/services/message-history-service";
 import type { CartItem } from "@/lib/services/conversation-flow-service";
 
 export async function POST(req: Request) {
@@ -10,10 +11,12 @@ export async function POST(req: Request) {
   const internalParsed = internalMessageTurnSchema.safeParse(body);
   const parsed = internalParsed.success ? internalParsed : messageTurnSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
+  const internalData = internalParsed.success ? internalParsed.data : undefined;
+  const messageData = internalData ?? parsed.data;
 
   const preconditions =
-    "_preconditions" in parsed.data && parsed.data._preconditions && typeof parsed.data._preconditions === "object"
-      ? parsed.data._preconditions
+    "_preconditions" in messageData && messageData._preconditions && typeof messageData._preconditions === "object"
+      ? messageData._preconditions
       : undefined;
 
   // Handler 1: force_duplicate
@@ -43,7 +46,7 @@ export async function POST(req: Request) {
 
   if (preconditions?.stage) {
     const { setStage, setCart, setCustomerInfo } = await import("@/lib/services/conversation-flow-service");
-    const convId = "conversation_id" in parsed.data ? parsed.data.conversation_id : "";
+    const convId = internalData?.conversation_id ?? "";
     await setStage(convId, String(preconditions.stage));
     if (Array.isArray(preconditions.cart)) {
       await setCart(convId, preconditions.cart as CartItem[]);
@@ -58,12 +61,12 @@ export async function POST(req: Request) {
   }
 
   const auth = requireInternalAuth(req);
-  if ("error" in auth && !parsed.data.testMode) {
+  if ("error" in auth && !messageData.testMode) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  const providerMessageId = "provider_message_id" in parsed.data ? parsed.data.provider_message_id : undefined;
-  const conversationId = "conversation_id" in parsed.data ? parsed.data.conversation_id : undefined;
+  const providerMessageId = "provider_message_id" in messageData ? messageData.provider_message_id : undefined;
+  const conversationId = "conversation_id" in messageData ? messageData.conversation_id : undefined;
   if (providerMessageId && conversationId) {
     const idempotency = await checkAndMarkProcessed(providerMessageId, conversationId);
     if (idempotency.alreadyProcessed) {
@@ -75,9 +78,59 @@ export async function POST(req: Request) {
     }
   }
 
-  const result = await runMessageTurn(parsed.data);
+  // Log inbound message before processing
+  if (internalData && conversationId) {
+    logInboundMessage({
+      store_id: internalData.store_id,
+      conversation_id: conversationId,
+      customer_id: internalData.customer_id,
+      provider_message_id: providerMessageId,
+      channel: internalData.channel,
+      message_type: internalData.message_type as "text" | "voice" | "image",
+      text: internalData.text,
+      raw_payload: internalData as Record<string, unknown>,
+    }).catch(() => {});
+  }
+
+  const result = await runMessageTurn(messageData);
+
   if (providerMessageId) {
     await updateProcessedAction(providerMessageId, result.action);
   }
+
+  // Log outbound reply and system events (fire-and-forget)
+  if (internalData && conversationId) {
+    logOutboundMessage({
+      store_id: internalData.store_id,
+      conversation_id: conversationId,
+      customer_id: internalData.customer_id,
+      channel: internalData.channel,
+      message_type: "text",
+      text: result.reply ?? "",
+      final_reply: result.reply ?? undefined,
+      status: result.action === "error" ? "failed" : "delivered",
+    }).catch(() => {});
+
+    if (result.toolsCalled && result.toolsCalled.length > 0) {
+      logSystemEvent({
+        store_id: internalData.store_id,
+        conversation_id: conversationId,
+        event_type: "tool_call",
+        summary: `Tools: ${result.toolsCalled.join(", ")}`,
+        metadata: { tools: result.toolsCalled, action: result.action, intent: result.intent },
+      }).catch(() => {});
+    }
+
+    if (result.handoff) {
+      logSystemEvent({
+        store_id: internalData.store_id,
+        conversation_id: conversationId,
+        event_type: "handoff",
+        summary: "Handoff triggered",
+        metadata: { action: result.action, intent: result.intent },
+      }).catch(() => {});
+    }
+  }
+
   return NextResponse.json(result);
 }
