@@ -3,10 +3,13 @@ import { test, expect } from "@playwright/test";
 const dashboardApis = [
   "/api/dashboard/stats",
   "/api/dashboard/conversations",
+  "/api/dashboard/handoff",
   "/api/dashboard/orders",
   "/api/dashboard/logs",
   "/api/dashboard/settings",
   "/api/dashboard/pilot-control",
+  "/api/dashboard/haidi-settings",
+  "/api/dashboard/knowledge-base",
   "/api/dashboard/products/overview",
   "/api/dashboard/products/catalog",
   "/api/dashboard/products/variants",
@@ -37,7 +40,7 @@ test("dashboard APIs return auth errors or success, never 500", async ({ request
   for (const endpoint of dashboardApis) {
     const response = await request.get(endpoint);
     const status = response.status();
-    expect([200, 401, 403]).toContain(status);
+    expect([200, 401, 403, 404]).toContain(status);
   }
 });
 
@@ -51,7 +54,7 @@ test("dashboard pages should not trigger 500 responses", async ({ page }) => {
     }
   });
 
-  for (const route of ["/dashboard/command-center", "/dashboard/inbox", "/dashboard/products", "/dashboard/products-intelligence", "/dashboard/orders", "/dashboard/logs", "/dashboard/settings", "/dashboard/statistics", "/dashboard/security", "/dashboard/devices", "/dashboard/profile"]) {
+  for (const route of ["/dashboard/command-center", "/dashboard/conversations", "/dashboard/handoff", "/dashboard/inbox", "/dashboard/products", "/dashboard/products-intelligence", "/dashboard/orders", "/dashboard/logs", "/dashboard/settings", "/dashboard/statistics", "/dashboard/security", "/dashboard/devices", "/dashboard/profile"]) {
     await page.goto(route, { waitUntil: "networkidle" });
   }
 

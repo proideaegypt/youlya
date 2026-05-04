@@ -17,13 +17,19 @@
   "realFailedRequests": [],
   "ignoredNetworkNoise": [
     {
-      "url": "https://admin.youlya365.com/dashboard/products?_rsc=ujjow",
+      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=ujjow",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
       "url": "https://admin.youlya365.com/dashboard/handoff?_rsc=ujjow",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/pilot-control?_rsc=ujjow",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"

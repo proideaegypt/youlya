@@ -1349,3 +1349,35 @@ Release prep for task human-handoff-center-and-team-leader-queue (v2.16.1, human
 RESULT TBD 2026-05-04
 STATUS: PENDING
 Release file generated: RELEASES/v2.16.1-human-handoff-center-and-team-leader-queue.md
+
+PROMPT 141 04/05/26
+User requested: push to github.
+
+RESULT 141 04/05/26
+STATUS: PASS
+Pushed commit 819c528 to origin/main. 203 files changed, 10495 insertions(+), 713 deletions(-). Includes human handoff center, team leader queue, AI pause, conversation timeline, knowledge base, pilot control, Haidi settings, and accumulated Phase 1 hardening.
+
+PROMPT TBD 2026-05-04
+Release prep for task haidi-settings-and-pilot-control-room (v2.17.0, haidi-settings-and-pilot-control-room).
+
+RESULT TBD 2026-05-04
+STATUS: PENDING
+Release file generated: RELEASES/v2.17.0-haidi-settings-and-pilot-control-room.md
+
+PROMPT 142 04/05/26
+TASK: haidi-lab-and-approved-learning-pipeline
+GOAL: Build /dashboard/haidi/lab and /dashboard/haidi/learning with scenario CRUD, safe run + scoring, learning suggestion creation, approval queue actions, and publish placeholder without auto-learning.
+
+PROMPT TBD 2026-05-04
+Release prep for task conversation-history-and-human-handoff-dashboard (v2.17.1, conversation-history-and-human-handoff-dashboard).
+
+RESULT TBD 2026-05-04
+STATUS: PENDING
+Release file generated: RELEASES/v2.17.1-conversation-history-and-human-handoff-dashboard.md
+
+PROMPT TBD 2026-05-04
+Release prep for task haidi-lab-and-approved-learning-pipeline (v2.17.2, haidi-lab-and-approved-learning-pipeline).
+
+RESULT TBD 2026-05-04
+STATUS: PENDING
+Release file generated: RELEASES/v2.17.2-haidi-lab-and-approved-learning-pipeline.md

@@ -4,6 +4,27 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.17.2 |
+| Version Name | haidi-lab-and-approved-learning-pipeline |
+| Task | haidi-lab-and-approved-learning-pipeline |
+| Release File | RELEASES/v2.17.2-haidi-lab-and-approved-learning-pipeline.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.17.1 |
+| Version Name | conversation-history-and-human-handoff-dashboard |
+| Task | conversation-history-and-human-handoff-dashboard |
+| Release File | RELEASES/v2.17.1-conversation-history-and-human-handoff-dashboard.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.17.0 |
+| Version Name | haidi-settings-and-pilot-control-room |
+| Task | haidi-settings-and-pilot-control-room |
+| Release File | RELEASES/v2.17.0-haidi-settings-and-pilot-control-room.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.16.1 |
 | Version Name | human-handoff-center-and-team-leader-queue |
 | Task | human-handoff-center-and-team-leader-queue |

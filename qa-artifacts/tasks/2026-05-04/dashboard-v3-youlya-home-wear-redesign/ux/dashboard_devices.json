@@ -23,85 +23,19 @@
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=1ypm1",
+      "url": "https://admin.youlya365.com/dashboard/products-intelligence?_rsc=1ypm1",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/handoff?_rsc=1ypm1",
+      "url": "https://admin.youlya365.com/dashboard/profile?_rsc=1ypm1",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
       "url": "https://admin.youlya365.com/dashboard/products?_rsc=1ypm1",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/command-center?_rsc=1ypm1",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/profile?_rsc=1513o",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=1513o",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/security?_rsc=1513o",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/statistics?_rsc=1513o",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/products?_rsc=1513o",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/products-intelligence?_rsc=1513o",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=1513o",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/handoff?_rsc=1513o",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/pilot-control?_rsc=1513o",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/command-center?_rsc=1513o",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"

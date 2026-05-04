@@ -15,7 +15,7 @@
 - screenshot: /root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_orders.png
 - consoleErrorCount: 0
 - realFailedRequestCount: 0
-- ignoredNetworkNoiseCount: 4
+- ignoredNetworkNoiseCount: 2
 
 ## UX Issues
 
@@ -23,8 +23,6 @@
 
 ## Ignored Framework/Network Noise
 
-- [0] GET https://admin.youlya365.com/dashboard/security?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/devices?_rsc=11hkw (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/statistics?_rsc=11hkw (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/products?_rsc=11hkw (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/products-intelligence?_rsc=11hkw (net::ERR_ABORTED)
 

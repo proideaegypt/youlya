@@ -11,7 +11,8 @@ import {
 
 const routes = [
   "/dashboard/command-center",
-  "/dashboard/pilot-control",
+  "/dashboard/pilot",
+  "/dashboard/haidi/settings",
   "/dashboard/inbox",
   "/dashboard/products",
   "/dashboard/products-intelligence",

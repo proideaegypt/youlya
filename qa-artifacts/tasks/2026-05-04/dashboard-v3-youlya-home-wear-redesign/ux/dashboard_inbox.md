@@ -24,6 +24,6 @@
 ## Ignored Framework/Network Noise
 
 - [0] GET https://admin.youlya365.com/dashboard/profile?_rsc=1n4r8 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/statistics?_rsc=1n4r8 (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/devices?_rsc=1n4r8 (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/security?_rsc=1n4r8 (net::ERR_ABORTED)
 

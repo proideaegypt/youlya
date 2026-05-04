@@ -17,19 +17,19 @@
   "realFailedRequests": [],
   "ignoredNetworkNoise": [
     {
+      "url": "https://admin.youlya365.com/dashboard/statistics?_rsc=11aqc",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
       "url": "https://admin.youlya365.com/dashboard/devices?_rsc=11aqc",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/profile?_rsc=11aqc",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/statistics?_rsc=11aqc",
+      "url": "https://admin.youlya365.com/dashboard/products-intelligence?_rsc=11aqc",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"

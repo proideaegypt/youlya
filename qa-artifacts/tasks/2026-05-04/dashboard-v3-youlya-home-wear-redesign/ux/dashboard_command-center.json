@@ -17,7 +17,7 @@
   "realFailedRequests": [],
   "ignoredNetworkNoise": [
     {
-      "url": "https://admin.youlya365.com/dashboard/security?_rsc=1sjum",
+      "url": "https://admin.youlya365.com/dashboard/statistics?_rsc=1sjum",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
@@ -29,7 +29,7 @@
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/products-intelligence?_rsc=1sjum",
+      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=1sjum",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"

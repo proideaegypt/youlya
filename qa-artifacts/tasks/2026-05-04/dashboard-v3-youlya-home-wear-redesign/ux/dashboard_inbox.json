@@ -23,13 +23,13 @@
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/statistics?_rsc=1n4r8",
+      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=1n4r8",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=1n4r8",
+      "url": "https://admin.youlya365.com/dashboard/security?_rsc=1n4r8",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"

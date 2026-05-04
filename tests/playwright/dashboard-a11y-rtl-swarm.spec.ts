@@ -2,7 +2,7 @@ import path from "node:path";
 import { test, expect } from "@playwright/test";
 import { ensureDir, taskRoot } from "./helpers";
 
-const pages = ["/dashboard/command-center", "/dashboard/pilot-control", "/dashboard/handoff", "/dashboard/inbox", "/dashboard/products", "/dashboard/products-intelligence", "/dashboard/statistics", "/dashboard/security", "/dashboard/devices", "/dashboard/profile", "/dashboard/orders", "/dashboard/logs", "/dashboard/settings"];
+const pages = ["/dashboard/command-center", "/dashboard/pilot", "/dashboard/haidi/settings", "/dashboard/handoff", "/dashboard/conversations", "/dashboard/inbox", "/dashboard/products", "/dashboard/products-intelligence", "/dashboard/statistics", "/dashboard/security", "/dashboard/devices", "/dashboard/profile", "/dashboard/orders", "/dashboard/logs", "/dashboard/settings"];
 
 const viewports = [
   { name: "desktop", size: { width: 1440, height: 900 } },

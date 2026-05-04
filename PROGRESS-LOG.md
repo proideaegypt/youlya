@@ -2283,3 +2283,45 @@ Tests passed:
 Tests failed/skipped:
 Blockers:
 Next step:
+
+## 2026-05-04 — haidi-settings-and-pilot-control-room
+
+Date: 2026-05-04
+Phase:
+Task: haidi-settings-and-pilot-control-room
+Version: v2.17.0
+Version Name: haidi-settings-and-pilot-control-room
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — conversation-history-and-human-handoff-dashboard
+
+Date: 2026-05-04
+Phase:
+Task: conversation-history-and-human-handoff-dashboard
+Version: v2.17.1
+Version Name: conversation-history-and-human-handoff-dashboard
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — haidi-lab-and-approved-learning-pipeline
+
+Date: 2026-05-04
+Phase:
+Task: haidi-lab-and-approved-learning-pipeline
+Version: v2.17.2
+Version Name: haidi-lab-and-approved-learning-pipeline
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:

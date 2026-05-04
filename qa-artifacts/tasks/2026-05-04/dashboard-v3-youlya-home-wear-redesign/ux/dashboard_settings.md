@@ -23,6 +23,6 @@
 
 ## Ignored Framework/Network Noise
 
-- [0] GET https://admin.youlya365.com/dashboard/devices?_rsc=1c9xt (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/profile?_rsc=1c9xt (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/handoff?_rsc=1c9xt (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/inbox?_rsc=1c9xt (net::ERR_ABORTED)
 

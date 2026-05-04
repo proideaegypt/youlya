@@ -365,3 +365,22 @@ Running: docker-compose-build
 #11 4.127 
 #11 4.277 ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
 #11 4.397   Creating an optimized production build ...
+#11 42.95 ⚠ Compiled with warnings in 36.3s
+#11 42.95 
+#11 42.95 ./app/api/health/route.ts
+#11 42.95 Should not import the named export 'version' (imported as 'version') from default-exporting module (only default export is available soon)
+#11 42.95 
+#11 42.95 Import trace for requested module:
+#11 42.95 ./app/api/health/route.ts
+#11 42.95 
+#11 53.12 <w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (231kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+#11 86.01 ✓ Compiled successfully in 74s
+#11 86.04   Running TypeScript ...
+#11 124.1   Finished TypeScript in 38.0s ...
+#11 124.1   Collecting page data using 3 workers ...
+#11 133.5   Generating static pages using 3 workers (0/57) ...
+#11 134.1   Generating static pages using 3 workers (14/57) 
+#11 134.2   Generating static pages using 3 workers (28/57) 
+#11 134.5   Generating static pages using 3 workers (42/57) 
+#11 134.8 ✓ Generating static pages using 3 workers (57/57) in 1310ms
+

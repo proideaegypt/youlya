@@ -37,6 +37,8 @@ type StoreState = {
   knowledgeBase: Array<Record<string, unknown>>;
   knowledgeVersions: Array<Record<string, unknown>>;
   knowledgeSuggestions: Array<Record<string, unknown>>;
+  haidiLabScenarios: Array<Record<string, unknown>>;
+  haidiLabRuns: Array<Record<string, unknown>>;
   haidiSettingsByStore: Map<string, Record<string, unknown>>;
 };
 
@@ -64,6 +66,8 @@ function buildState(): StoreState {
     knowledgeBase: [],
     knowledgeVersions: [],
     knowledgeSuggestions: [],
+    haidiLabScenarios: [],
+    haidiLabRuns: [],
     haidiSettingsByStore: new Map(),
   };
 }

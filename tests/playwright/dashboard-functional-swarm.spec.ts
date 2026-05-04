@@ -11,7 +11,7 @@ test("dashboard navigation links work", async ({ page }) => {
 
   const links = [
     { name: "لوحة التحكم", url: /\/dashboard\/command-center/ },
-    { name: "غرفة التحكم التجريبي", url: /\/dashboard\/pilot-control/ },
+    { name: "غرفة التحكم التجريبي", url: /\/dashboard\/pilot/ },
     { name: "التحويل البشري", url: /\/dashboard\/handoff/ },
     { name: "الرسائل", url: /\/dashboard\/inbox/ },
     { name: "المنتجات والمخزون", url: /\/dashboard\/products/ },
@@ -57,7 +57,7 @@ test("orders and logs pages render non-blank states", async ({ page }) => {
 });
 
 test("pilot control shows health and safety counters", async ({ page }) => {
-  await page.goto("/dashboard/pilot-control");
+  await page.goto("/dashboard/pilot");
   const sidebarToggle = page.getByRole("button", { name: /Expand sidebar|Collapse sidebar/ }).first();
   if (await sidebarToggle.isVisible().catch(() => false)) {
     await sidebarToggle.click();
