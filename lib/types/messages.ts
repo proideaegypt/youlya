@@ -48,4 +48,5 @@ export type MessageTurnResponse = {
   handoff: boolean;
   action: "ai_reply" | "product_results" | "order_created" | "handoff" | "error" | "duplicate_ignored" | "ai_disabled";
   data?: unknown;
+  haidi_context?: import("@/lib/services/haidi-context-builder").HaidiContext;
 };

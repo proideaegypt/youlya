@@ -21,6 +21,7 @@ import { buildOrderSummary, getCart, getCustomerInfo, getStage, looksLikeAddress
 import { placeOrder } from "@/lib/services/shopify-mock-service";
 import type { CanonicalMessageEvent, InternalMessageTurnInput, MessageTurnResponse } from "@/lib/types/messages";
 import type { ScenarioRecord } from "@/lib/types/scenarios";
+import { buildHaidiContext } from "@/lib/services/haidi-context-builder";
 
 type MessageTurnInput = CanonicalMessageEvent | InternalMessageTurnInput;
 
@@ -319,6 +320,12 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
   // angry_tone precondition = context metadata only, not a handoff trigger
   // The AI should still reply normally (see CONV-082 expected: action=ai_reply)
   if (input._preconditions?.angry_tone === true) {
+    const haidiContextAngryTone = buildHaidiContext({
+      language,
+      customerText: input.text,
+      action: "ai_reply",
+      intent: "OTHER",
+    });
     return {
       intent: "OTHER",
       toolsCalled: [],
@@ -326,6 +333,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       handoff: false,
       action: "ai_reply",
       data: { intent: "OTHER" },
+      haidi_context: haidiContextAngryTone,
     };
   }
 
@@ -348,6 +356,12 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       status: "ok",
       latency_ms: 0,
     });
+    const haidiContextKillSwitch = buildHaidiContext({
+      language,
+      customerText: input.text,
+      action: "handoff",
+      intent: "KILL_SWITCH",
+    });
     return {
       intent: "handoff",
       toolsCalled: ["handoff"],
@@ -355,6 +369,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       handoff: true,
       action: "handoff",
       data: { ticket },
+      haidi_context: haidiContextKillSwitch,
     };
   }
 
@@ -395,6 +410,12 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       status: "ok",
       latency_ms: 0,
     });
+    const haidiContextAngry = buildHaidiContext({
+      language,
+      customerText: input.text,
+      action: "handoff",
+      intent: "ANGRY_TONE",
+    });
     return {
       intent: "handoff",
       toolsCalled: ["handoff"],
@@ -402,6 +423,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       handoff: true,
       action: "handoff",
       data: { ticket },
+      haidi_context: haidiContextAngry,
     };
   }
 
@@ -413,6 +435,12 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       customer_id: customerId,
       ai_summary: input.text,
     });
+    const haidiContextUnclear3x = buildHaidiContext({
+      language,
+      customerText: input.text,
+      action: "ai_reply",
+      intent: "UNCLEAR",
+    });
     return {
       intent: "UNCLEAR",
       toolsCalled: [],
@@ -420,6 +448,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       handoff: false,
       action: "ai_reply",
       data: { unclearCount },
+      haidi_context: haidiContextUnclear3x,
     };
   }
 
@@ -504,6 +533,13 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       status: "ok",
       latency_ms: Date.now() - start,
     });
+    const haidiContext = buildHaidiContext({
+      language,
+      customerText: input.text,
+      action: "product_results",
+      intent: "PRODUCT_SEARCH",
+      recommendations: result.recommendations,
+    });
     return {
       intent: "PRODUCT_SEARCH",
       toolsCalled: ["product_search"],
@@ -511,6 +547,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       handoff: false,
       action: "product_results",
       data: { recommendations: result.recommendations, mappingPersisted: true },
+      haidi_context: haidiContext,
     };
   }
 
@@ -550,17 +587,22 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       latency_ms: Date.now() - start,
     });
     if (result.status === "added_to_cart") {
-      await setCart(
-        conversationId,
-        result.items.map((item) => ({
-          slot_number: item.index,
-          title: item.shopifyProductTitle,
-          price: item.price,
-          size: item.size ?? "N/A",
-          variant_id: item.shopifyVariantId,
-        })),
-      );
+      const cartItems = result.items.map((item) => ({
+        slot_number: item.index,
+        title: item.shopifyProductTitle,
+        price: item.price,
+        size: item.size ?? "N/A",
+        variant_id: item.shopifyVariantId,
+      }));
+      await setCart(conversationId, cartItems);
       await setStage(conversationId, "collecting_address");
+      const haidiContext = buildHaidiContext({
+        language,
+        customerText: input.text,
+        action: "ai_reply",
+        intent: "SELECT_PRODUCT",
+        cartItems,
+      });
       return {
         intent: "SELECT_PRODUCT",
         toolsCalled: ["select_product"],
@@ -568,8 +610,16 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
         handoff: false,
         action: "ai_reply",
         data: resolvedProduct ? { ...result, resolved_product: resolvedProduct } : result,
+        haidi_context: haidiContext,
       };
     }
+    const haidiContextSelect = buildHaidiContext({
+      language,
+      customerText: input.text,
+      action: result.status === "oos" ? "error" : "ai_reply",
+      intent: "SELECT_PRODUCT",
+      blockedReason: result.status === "oos" ? "out_of_stock" : null,
+    });
     return {
       intent: "SELECT_PRODUCT",
       toolsCalled: ["select_product"],
@@ -577,6 +627,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       handoff: false,
       action: result.status === "oos" ? "error" : "ai_reply",
       data: resolvedProduct ? { ...result, resolved_product: resolvedProduct } : result,
+      haidi_context: haidiContextSelect,
     };
   }
 
@@ -678,12 +729,21 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     });
 
     if (result.success) {
+      const cartItems = getCartItems(cartId).map((item) => ({ title: item.shopifyProductTitle ?? "منتج", price: item.price, size: item.size ?? "N/A" }));
+      const haidiContextOrder = buildHaidiContext({
+        language,
+        customerText: input.text,
+        action: "order_created",
+        intent: "CONFIRM_ORDER",
+        cartItems,
+      });
       return {
         intent: "CONFIRM_ORDER",
         toolsCalled: ["confirm_order", "create_shopify_order"],
         reply: summarizeConfirmation(language),
         handoff: false,
         action: "order_created",
+        haidi_context: haidiContextOrder,
         data: { order_name: result.order_name, shopify_order_id: result.shopify_order_id, duplicate: result.duplicate ?? false },
       };
     }
@@ -778,6 +838,12 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     latency_ms: 0,
   });
 
+  const haidiContextFallback = buildHaidiContext({
+    language,
+    customerText: input.text,
+    action: "ai_reply",
+    intent: "OTHER",
+  });
   return {
     intent: "OTHER",
     toolsCalled: [],
@@ -785,5 +851,6 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     handoff: false,
     action: "ai_reply",
     data: { intent },
+    haidi_context: haidiContextFallback,
   };
 }

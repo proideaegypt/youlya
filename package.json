@@ -1,6 +1,6 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.8.3",
+  "version": "2.9.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -26,6 +26,8 @@
     "shopify:sync": "npx tsx scripts/sync-shopify-products.ts --mode full",
     "shopify:sync:inventory": "npx tsx scripts/sync-shopify-products.ts --mode inventory",
     "shopify:sync:dry-run": "npx tsx scripts/sync-shopify-products.ts --mode full --dry-run",
+    "smoke:daily": "bash scripts/smoke-test-daily.sh",
+    "pilot:scenarios": "bash scripts/run-pilot-scenarios.sh",
     "validate:scenarios": "node scripts/validate-scenarios.mjs",
     "scan:secrets": "node scripts/scan-secrets.mjs",
     "check:env:tracking": "git status --ignored --short .env .env.local .env.production .env.test \".env.production.backup*\" \".env.*\" | node scripts/check-env-files-not-tracked.mjs",
@@ -39,7 +41,7 @@
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "n8n-send-text-json-body"
+    "youlyaVersionName": "integrate-pilot-sprint-playbook-safely"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

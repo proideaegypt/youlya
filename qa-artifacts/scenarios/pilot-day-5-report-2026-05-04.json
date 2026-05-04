@@ -1,0 +1,232 @@
+{
+  "appUrl": "https://admin.youlya365.com",
+  "generatedAt": "2026-05-04T02:49:29.658Z",
+  "report": [
+    {
+      "id": "PILOT-001",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "PRODUCT_SEARCH",
+      "action": "product_results",
+      "handoff": false,
+      "toolsCalled": [
+        "product_search"
+      ],
+      "replyPreview": "أكيد، دي شوية اختيارات مناسبة: 1) Pajama Set 6620 • 2) Pajama Set Shorts 6622\n\nاختار المنتج اللي عايزه وابعتلي رقمه والم"
+    },
+    {
+      "id": "PILOT-002",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "PRODUCT_SEARCH",
+      "action": "product_results",
+      "handoff": false,
+      "toolsCalled": [
+        "product_search"
+      ],
+      "replyPreview": "أكيد، دي شوية اختيارات مناسبة: 1) Pajama Set 6620 • 2) Pajama Set Shorts 6622\n\nاختار المنتج اللي عايزه وابعتلي رقمه والم"
+    },
+    {
+      "id": "PILOT-003",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "SELECT_PRODUCT",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [
+        "select_product"
+      ],
+      "replyPreview": "غير متاح، ممكن تختاري منتج تاني؟"
+    },
+    {
+      "id": "PILOT-004",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "SELECT_PRODUCT",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [
+        "select_product"
+      ],
+      "replyPreview": "غير متاح، ممكن تختاري منتج تاني؟"
+    },
+    {
+      "id": "PILOT-005",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "OTHER",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [],
+      "replyPreview": "اختاري المقاس المناسب: S / M / L / XL."
+    },
+    {
+      "id": "PILOT-006",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "COLLECT_ADDRESS",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [
+        "conversation_flow"
+      ],
+      "replyPreview": "طلبك:\n- بيجامة شتوي أسود (XL) - 950 جنيه\nالإجمالي: 950 جنيه\nالاسم: عميل\nالعنوان: القاهرة، مدينة نصر، شارع عباس العقاد\nتأ"
+    },
+    {
+      "id": "PILOT-007",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "COLLECT_ADDRESS",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [
+        "conversation_flow"
+      ],
+      "replyPreview": "طلبك:\n- روب قطن وردي (L) - 790 جنيه\nالإجمالي: 790 جنيه\nالاسم: عميل\nالعنوان: اسكندرية، سموحة، شارع 10\nتأكدي؟"
+    },
+    {
+      "id": "PILOT-008",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "CONFIRM_ORDER",
+      "action": "order_created",
+      "handoff": false,
+      "toolsCalled": [
+        "confirm_order",
+        "place_order_mock"
+      ],
+      "replyPreview": "تم الأوردر! رقم طلبك: #MOCK-8317 🎉 هيوصلك خلال 3-5 أيام"
+    },
+    {
+      "id": "PILOT-009",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "OTHER",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [],
+      "replyPreview": "تم استلام رسالتك بالفعل"
+    },
+    {
+      "id": "PILOT-010",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "OTHER",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [],
+      "replyPreview": "مش فاهم قصدك، ممكن توضحلي أكتر؟"
+    },
+    {
+      "id": "PILOT-011",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "PRODUCT_SEARCH",
+      "action": "product_results",
+      "handoff": false,
+      "toolsCalled": [
+        "product_search"
+      ],
+      "replyPreview": "أكيد، دي شوية اختيارات مناسبة: 1) Pajama Set 6620 • 2) Pajama Set Shorts 6622\n\nاختار المنتج اللي عايزه وابعتلي رقمه والم"
+    },
+    {
+      "id": "PILOT-012",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "OTHER",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [],
+      "replyPreview": "مش فاهم قصدك، ممكن توضحلي أكتر؟"
+    },
+    {
+      "id": "PILOT-013",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "OTHER",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [],
+      "replyPreview": "اختاري المقاس المناسب: S / M / L / XL."
+    },
+    {
+      "id": "PILOT-014",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "OTHER",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [],
+      "replyPreview": "اختاري المقاس المناسب: S / M / L / XL."
+    },
+    {
+      "id": "PILOT-015",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "handoff",
+      "action": "handoff",
+      "handoff": true,
+      "toolsCalled": [
+        "handoff"
+      ],
+      "replyPreview": "هنتابع معك فوراً، هحولك لفريق الدعم."
+    },
+    {
+      "id": "PILOT-016",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "OTHER",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [],
+      "replyPreview": "تم استلام رسالتك بالفعل"
+    },
+    {
+      "id": "PILOT-017",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "OTHER",
+      "action": "ai_reply",
+      "handoff": false,
+      "toolsCalled": [],
+      "replyPreview": "اختاري المقاس المناسب: S / M / L / XL."
+    },
+    {
+      "id": "PILOT-018",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "PRODUCT_SEARCH",
+      "action": "product_results",
+      "handoff": false,
+      "toolsCalled": [
+        "product_search"
+      ],
+      "replyPreview": "أكيد، دي شوية اختيارات مناسبة: 1) Pajama Set 6620 • 2) Pajama Set Shorts 6622\n\nاختار المنتج اللي عايزه وابعتلي رقمه والم"
+    },
+    {
+      "id": "PILOT-019",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "PRODUCT_SEARCH",
+      "action": "product_results",
+      "handoff": false,
+      "toolsCalled": [
+        "product_search"
+      ],
+      "replyPreview": "أكيد، دي شوية اختيارات مناسبة: 1) Pajama Set 6620 • 2) Pajama Set Shorts 6622\n\nاختار المنتج اللي عايزه وابعتلي رقمه والم"
+    },
+    {
+      "id": "PILOT-020",
+      "status": "PASS",
+      "httpStatus": 200,
+      "intent": "CONFIRM_ORDER",
+      "action": "order_created",
+      "handoff": false,
+      "toolsCalled": [
+        "confirm_order",
+        "place_order_mock"
+      ],
+      "replyPreview": "تم الأوردر! رقم طلبك: #MOCK-3271 🎉 هيوصلك خلال 3-5 أيام"
+    }
+  ]
+}

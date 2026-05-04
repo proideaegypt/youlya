@@ -1,0 +1,334 @@
+{
+  "active": false,
+  "name": "Youlya WhatsApp Main — Haidi Draft",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "youlya-whatsapp-haidi-draft",
+        "httpMethod": "POST",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "Webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        200,
+        200
+      ],
+      "webhookId": "youlya-whatsapp-haidi-draft-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const root = $json.body ?? $json;\nconst data = root.data ?? root;\nconst key = data.key ?? {};\nconst message = data.message ?? {};\n\nconst fromMe =\n  key.fromMe === true ||\n  data.fromMe === true ||\n  root.fromMe === true;\n\nconst remoteJid =\n  key.remoteJid ||\n  data.remoteJid ||\n  data.remote_jid ||\n  root.remoteJid ||\n  root.remote_jid ||\n  data.from ||\n  root.from ||\n  \"\";\n\nconst text =\n  message.conversation ||\n  message.extendedTextMessage?.text ||\n  message.imageMessage?.caption ||\n  data.text ||\n  root.text ||\n  \"\";\n\nconst messageType =\n  data.messageType ||\n  data.type ||\n  root.messageType ||\n  root.type ||\n  \"\";\n\nconst ignoredReasons = [];\n\nif (fromMe) ignoredReasons.push(\"fromMe_outgoing_message\");\nif (!remoteJid) ignoredReasons.push(\"missing_remote_jid\");\nif (String(remoteJid).includes(\"status@broadcast\")) ignoredReasons.push(\"status_broadcast\");\nif (String(remoteJid).endsWith(\"@g.us\")) ignoredReasons.push(\"group_message_ignored\");\nif (!String(text).trim()) ignoredReasons.push(\"empty_text\");\n\nif (ignoredReasons.length > 0) {\n  return [];\n}\n\nreturn [\n  {\n    json: {\n      ...$json,\n      _guard: {\n        passed: true,\n        remoteJid,\n        messageType,\n        textPreview: String(text).slice(0, 40),\n      },\n    },\n  },\n];"
+      },
+      "id": "Guard Inbound Customer Message",
+      "name": "Guard Inbound Customer Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [],
+          "string": [
+            {
+              "value1": "={{$json.data.messageType || $json.data.type}}",
+              "operation": "equal",
+              "value2": "conversation"
+            },
+            {
+              "value1": "={{$json.data.messageType || $json.data.type}}",
+              "operation": "equal",
+              "value2": "extendedTextMessage"
+            },
+            {
+              "value1": "={{$json.data.messageType || $json.data.type}}",
+              "operation": "equal",
+              "value2": "audioMessage"
+            }
+          ]
+        }
+      },
+      "id": "Filter Message Type",
+      "name": "Filter Message Type",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        640,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const root = $json.body ?? $json;\nconst data = root.data ?? root;\nconst key = data.key ?? {};\nif (key.fromMe === true || data.fromMe === true || root.fromMe === true) {\n  return [];\n}\nconst message = data.message || {};\nconst remoteJid = String(key.remoteJid || \"\");\nconst sendNumber = remoteJid\n  .replace(/@s\\.whatsapp\\.net$/i, \"\")\n  .replace(/@c\\.us$/i, \"\")\n  .replace(/@g\\.us$/i, \"\")\n  .replace(/\\D/g, \"\");\nreturn [{\n  json: {\n    conversation_id: remoteJid,\n    customer_id: remoteJid,\n    provider_message_id: key.id,\n    text: message.conversation ?? message.extendedTextMessage?.text ?? \"\",\n    message_type: \"text\",\n    channel: \"whatsapp_evolution\",\n    language: \"ar-EG\",\n    tone: \"neutral\",\n    store_id: \"youlya\",\n    remote_jid: remoteJid,\n    send_number: sendNumber,\n    instance_name: $node[\"Webhook\"].json.body?.instance || $node[\"Webhook\"].json.instance || \"YoulyaMain\"\n  }\n}];"
+      },
+      "id": "Normalize Message",
+      "name": "Normalize Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.APP_INTERNAL_URL}}/api/internal/messages/turn",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-internal-secret",
+              "value": "={{$env.INTERNAL_API_SECRET}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{$json}}",
+        "options": {
+          "timeout": 45000
+        }
+      },
+      "id": "Call Turn Endpoint",
+      "name": "Call Turn Endpoint",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1120,
+        120
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// PLACEHOLDER: Replace with actual n8n AI Agent node (OpenAI Chat Model)\n// This node receives the app response and haidi_context, then calls the LLM\n// with the Haidi system prompt to generate a beautiful human reply.\n\n// Input: $json from Call Turn Endpoint\n// Expected output: { final_reply: string, intent_label: string, tone: string, used_upsell: boolean, ... }\n\n// For now, pass through the app reply unchanged (safe fallback)\nconst appReply = $json.reply || \"\";\nconst appAction = $json.action || \"ai_reply\";\nconst haidiContext = $json.haidi_context || {};\n\nreturn [{\n  json: {\n    final_reply: appReply,\n    intent_label: \"fallback\",\n    tone: \"friendly\",\n    used_upsell: false,\n    recommended_next_step: \"\",\n    safety_notes: [\"placeholder_mode: app_reply_passed_through\"],\n    _app_action: appAction,\n    _haidi_context_present: Boolean($json.haidi_context),\n  },\n}];"
+      },
+      "id": "Haidi AI Sales Agent",
+      "name": "Haidi AI Sales Agent",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const appReply = $node[\"Call Turn Endpoint\"].json.reply || \"\";\nconst appAction = $node[\"Call Turn Endpoint\"].json.action || \"ai_reply\";\nconst haidiRaw = $json.final_reply ? $json : null;\n\nif (!haidiRaw || typeof haidiRaw.final_reply !== \"string\" || !haidiRaw.final_reply.trim()) {\n  return [{\n    json: {\n      reply: appReply,\n      action: appAction,\n      haidi_valid: false,\n      haidi_fallback: true,\n      number: $node[\"Normalize Message\"].json.send_number,\n    },\n  }];\n}\n\nconst unsafePhrases = [\"تم تأكيد الأوردر\", \"الأوردر اتعمل\", \"الأوردر اتأكد\", \"تم إنشاء الأوردر\"];\nconst hasUnsafeOrderClaim = unsafePhrases.some((p) => haidiRaw.final_reply.includes(p));\nif (hasUnsafeOrderClaim && appAction !== \"order_created\") {\n  return [{\n    json: {\n      reply: appReply,\n      action: appAction,\n      haidi_valid: false,\n      haidi_fallback: true,\n      haidi_blocked_reason: \"unsafe_order_claim\",\n      number: $node[\"Normalize Message\"].json.send_number,\n    },\n  }];\n}\n\nreturn [{\n  json: {\n    reply: haidiRaw.final_reply,\n    action: appAction,\n    haidi_valid: true,\n    haidi_output: haidiRaw,\n    number: $node[\"Normalize Message\"].json.send_number,\n  },\n}];"
+      },
+      "id": "Validate Haidi Output",
+      "name": "Validate Haidi Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1580,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.EVOLUTION_API_URL}}/message/sendText/{{$env.EVOLUTION_INSTANCE}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{$env.EVOLUTION_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"number\": \"{{$json.number || $node['Normalize Message'].json.send_number || String($node['Normalize Message'].json.remote_jid || '').replace('@s.whatsapp.net','').replace('@c.us','').replace('@g.us','').replace(/\\D/g,'')}}\", \"text\": \"{{$json.reply}}\"}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "Send Text",
+      "name": "Send Text",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2020,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.APP_INTERNAL_URL}}/api/internal/dead-letter",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"raw_input\": $json, \"error_message\": $json.error?.message || 'turn endpoint failed', \"conversation_id\": $node[\"Normalize Message\"].json[\"conversation_id\"]}"
+      },
+      "id": "Dead Letter",
+      "name": "Dead Letter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1360,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const action = $json.action || \"error\";\n\nconst reply =\n  $json.reply ||\n  $json.message ||\n  \"حصل خطأ تقني بسيط، ممكن تبعتي الرسالة تاني؟\";\n\nconst normalized = $node[\"Normalize Message\"].json;\nconst fallbackNumber = String(normalized.send_number || normalized.remote_jid || normalized.conversation_id || \"\")\n  .replace(/@s\\.whatsapp\\.net$/i, \"\")\n  .replace(/@c\\.us$/i, \"\")\n  .replace(/@g\\.us$/i, \"\")\n  .replace(/\\D/g, \"\");\n\nconst number = $json.number || normalized.send_number || fallbackNumber;\nconst shouldSend = action !== \"duplicate_ignored\" && Boolean(reply) && Boolean(number);\n\nreturn [\n  {\n    json: {\n      ...$json,\n      action,\n      reply,\n      shouldSend,\n      number,\n    },\n  },\n];"
+      },
+      "id": "Prepare Reply",
+      "name": "Prepare Reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1800,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.shouldSend}}",
+              "value2": true
+            }
+          ],
+          "string": []
+        }
+      },
+      "id": "Should Send Reply",
+      "name": "Should Send Reply",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2020,
+        120
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Guard Inbound Customer Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guard Inbound Customer Message": {
+      "main": [
+        [
+          {
+            "node": "Filter Message Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Message Type": {
+      "main": [
+        [
+          {
+            "node": "Normalize Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Normalize Message": {
+      "main": [
+        [
+          {
+            "node": "Call Turn Endpoint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Turn Endpoint": {
+      "main": [
+        [
+          {
+            "node": "Haidi AI Sales Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "error": [
+        [
+          {
+            "node": "Dead Letter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Haidi AI Sales Agent": {
+      "main": [
+        [
+          {
+            "node": "Validate Haidi Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Haidi Output": {
+      "main": [
+        [
+          {
+            "node": "Prepare Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Reply": {
+      "main": [
+        [
+          {
+            "node": "Should Send Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Should Send Reply": {
+      "main": [
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  }
+}

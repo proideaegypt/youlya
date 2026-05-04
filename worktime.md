@@ -897,3 +897,21 @@ GOAL: Fix the Youlya WhatsApp Main n8n workflow so Send Text no longer breaks on
 
 RESULT 57 04/05/26
 Backed up the live workflow export to `qa-artifacts/tasks/2026-05-04/fix-n8n-send-text-json-body/backup-youlya-whatsapp-main.json`, then patched the active `Youlya WhatsApp Main` workflow so `Should Send Reply` now routes into `Prepare Evolution Payload` before `Send Text`. `Send Text` now uses a single `JSON.stringify(...)` expression for the body and keeps the Evolution URL and API key env-driven. Ran the exact synthetic webhook with `curl`; the request returned `200`, execution `9371` reached `Prepare Evolution Payload` and `Send Text`, and the only failure was the expected dummy Evolution `400 Bad Request` for the test number. The JSON parameter parsing error is no longer present.
+
+PROMPT 58 04/05/26
+TASK: integrate-pilot-sprint-playbook-safely
+GOAL: Review and integrate the uploaded Youlya Pilot Sprint playbook into the current Youlya repo as safe operational documentation and scripts. Use the useful parts, update outdated assumptions, remove unsafe hardcoded values, and align it with the current architecture and production state.
+
+PROMPT TBD 2026-05-04
+Release prep for task prepare-haidi-ai-agent-conversation-layer-draft (v2.9.0, prepare-haidi-ai-agent-conversation-layer-draft).
+
+RESULT TBD 2026-05-04
+STATUS: PENDING
+Release file generated: RELEASES/v2.9.0-prepare-haidi-ai-agent-conversation-layer-draft.md
+
+PROMPT TBD 2026-05-04
+Release prep for task integrate-pilot-sprint-playbook-safely (v2.9.1, integrate-pilot-sprint-playbook-safely).
+
+RESULT TBD 2026-05-04
+STATUS: PENDING
+Release file generated: RELEASES/v2.9.1-integrate-pilot-sprint-playbook-safely.md

@@ -9,6 +9,8 @@ const canonicalName = 'youlya-whatsapp-main.json';
 const canonicalPath = path.join(canonicalDir, canonicalName);
 const syncWorkflowName = 'youlya-daily-shopify-product-sync.json';
 const syncWorkflowPath = path.join(canonicalDir, syncWorkflowName);
+const haidiDraftName = 'youlya-whatsapp-main-haidi-draft.json';
+const haidiDraftPath = path.join(canonicalDir, haidiDraftName);
 
 const requiredEnvKeys = [
   'APP_INTERNAL_URL',
@@ -221,6 +223,78 @@ function validateSyncWorkflow(filePath) {
   return result;
 }
 
+function validateHaidiDraftWorkflow(filePath) {
+  const result = {
+    name: path.basename(filePath),
+    present: fs.existsSync(filePath),
+    validJson: false,
+    active: true,
+    hasTurnEndpoint: false,
+    hasHaidiNode: false,
+    hasValidatorNode: false,
+    hasShopifyDirectNodes: false,
+    hardcodedSecrets: [],
+    errors: [],
+    warnings: [],
+  };
+
+  if (!result.present) {
+    result.warnings.push('Haidi draft workflow not found');
+    return result;
+  }
+
+  let json;
+  try {
+    const raw = fs.readFileSync(filePath, 'utf8');
+    json = JSON.parse(raw);
+    result.validJson = true;
+  } catch (err) {
+    result.errors.push(`Invalid JSON: ${err.message}`);
+    return result;
+  }
+
+  result.active = json.active === true;
+  if (result.active) {
+    result.errors.push('Haidi draft workflow must be inactive (active=false)');
+  }
+
+  const text = JSON.stringify(json);
+
+  if (text.includes('/api/internal/messages/turn')) {
+    result.hasTurnEndpoint = true;
+  } else {
+    result.errors.push('Missing /api/internal/messages/turn endpoint call');
+  }
+
+  if (text.includes('Haidi AI Sales Agent')) {
+    result.hasHaidiNode = true;
+  } else {
+    result.warnings.push('Missing Haidi AI Sales Agent node');
+  }
+
+  if (text.includes('Validate Haidi Output')) {
+    result.hasValidatorNode = true;
+  } else {
+    result.warnings.push('Missing Validate Haidi Output node');
+  }
+
+  // Check for direct Shopify mutation nodes
+  const shopifyNodeTypes = ['shopify', 'shopifyApi', 'shopifyGraphql'];
+  for (const type of shopifyNodeTypes) {
+    if (text.includes(type)) {
+      result.hasShopifyDirectNodes = true;
+      result.errors.push(`Direct Shopify node found: ${type}`);
+    }
+  }
+
+  result.hardcodedSecrets = hasHardcodedSecrets(json);
+  if (result.hardcodedSecrets.length > 0) {
+    result.errors.push(`Hardcoded secrets detected (${result.hardcodedSecrets.length} occurrences)`);
+  }
+
+  return result;
+}
+
 function checkForRawExportsInRepo() {
   const violations = [];
   if (!fs.existsSync(workflowDir)) return violations;
@@ -241,15 +315,17 @@ function checkForRawExportsInRepo() {
 const rawExportFiles = checkForRawExportsInRepo();
 const canonicalResult = validateCanonicalWorkflow(canonicalPath);
 const syncResult = validateSyncWorkflow(syncWorkflowPath);
+const haidiDraftResult = validateHaidiDraftWorkflow(haidiDraftPath);
 
 const hasRawExports = rawExportFiles.length > 0;
 const hasCanonicalErrors = canonicalResult.errors.length > 0;
 const hasSyncErrors = syncResult.errors.length > 0;
+const hasHaidiDraftErrors = haidiDraftResult.errors.length > 0;
 
 let status = 'PASS';
 if (hasRawExports) {
   status = 'FAIL';
-} else if (hasCanonicalErrors || hasSyncErrors) {
+} else if (hasCanonicalErrors || hasSyncErrors || hasHaidiDraftErrors) {
   status = 'FAIL';
 } else if (!canonicalResult.present) {
   status = 'BLOCKED';
@@ -304,6 +380,25 @@ if (syncResult.warnings.length > 0) {
 }
 
 console.log('');
+console.log('HAIDI DRAFT WORKFLOW:');
+const haidiIcon = haidiDraftResult.errors.length === 0 ? '✅' : '❌';
+console.log(`  ${haidiIcon} ${haidiDraftResult.name}`);
+console.log(`     Present: ${haidiDraftResult.present}`);
+console.log(`     Valid JSON: ${haidiDraftResult.validJson}`);
+console.log(`     Active: ${haidiDraftResult.active}`);
+console.log(`     Has turn endpoint: ${haidiDraftResult.hasTurnEndpoint}`);
+console.log(`     Has Haidi node: ${haidiDraftResult.hasHaidiNode}`);
+console.log(`     Has validator node: ${haidiDraftResult.hasValidatorNode}`);
+console.log(`     Has Shopify direct nodes: ${haidiDraftResult.hasShopifyDirectNodes}`);
+console.log(`     Hardcoded secrets: ${haidiDraftResult.hardcodedSecrets.length > 0 ? 'YES (' + haidiDraftResult.hardcodedSecrets.length + ')' : 'none'}`);
+if (haidiDraftResult.errors.length > 0) {
+  for (const e of haidiDraftResult.errors) console.log(`     ERROR: ${e}`);
+}
+if (haidiDraftResult.warnings.length > 0) {
+  for (const w of haidiDraftResult.warnings) console.log(`     WARNING: ${w}`);
+}
+
+console.log('');
 console.log('RAW EXPORT QUARANTINE CHECK:');
 if (hasRawExports) {
   console.log(`  ❌ FAIL: Raw workflow exports found in repo (${rawExportFiles.length} files):`);
@@ -322,6 +417,8 @@ console.log(`  Canonical errors: ${canonicalResult.errors.length}`);
 console.log(`  Canonical warnings: ${canonicalResult.warnings.length}`);
 console.log(`  Sync workflow: ${syncResult.present ? 'present' : 'MISSING'}`);
 console.log(`  Sync errors: ${syncResult.errors.length}`);
+console.log(`  Haidi draft: ${haidiDraftResult.present ? 'present' : 'MISSING'}`);
+console.log(`  Haidi draft errors: ${haidiDraftResult.errors.length}`);
 console.log(`  Raw exports in repo: ${rawExportFiles.length}`);
 console.log('='.repeat(60));
 

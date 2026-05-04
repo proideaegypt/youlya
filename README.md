@@ -4,6 +4,20 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.9.1 |
+| Version Name | integrate-pilot-sprint-playbook-safely |
+| Task | integrate-pilot-sprint-playbook-safely |
+| Release File | RELEASES/v2.9.1-integrate-pilot-sprint-playbook-safely.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.9.0 |
+| Version Name | prepare-haidi-ai-agent-conversation-layer-draft |
+| Task | prepare-haidi-ai-agent-conversation-layer-draft |
+| Release File | RELEASES/v2.9.0-prepare-haidi-ai-agent-conversation-layer-draft.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.8.3 |
 | Version Name | n8n-send-text-json-body |
 | Task | fix-n8n-send-text-json-body |

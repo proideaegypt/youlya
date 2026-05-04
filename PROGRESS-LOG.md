@@ -1987,3 +1987,31 @@ Tests passed:
 Tests failed/skipped:
 Blockers:
 Next step:
+
+## 2026-05-04 — prepare-haidi-ai-agent-conversation-layer-draft
+
+Date: 2026-05-04
+Phase:
+Task: prepare-haidi-ai-agent-conversation-layer-draft
+Version: v2.9.0
+Version Name: prepare-haidi-ai-agent-conversation-layer-draft
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — integrate-pilot-sprint-playbook-safely
+
+Date: 2026-05-04
+Phase:
+Task: integrate-pilot-sprint-playbook-safely
+Version: v2.9.1
+Version Name: integrate-pilot-sprint-playbook-safely
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
