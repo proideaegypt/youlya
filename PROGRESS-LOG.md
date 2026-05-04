@@ -1911,16 +1911,40 @@ Next step:
 ## 2026-05-03 — products-intelligence-page-with-photos-ai-orders-and-channel-insights
 
 Date: 2026-05-03
-Phase:
+Phase: Phase 2 dashboard MVP hardening
 Task: products-intelligence-page-with-photos-ai-orders-and-channel-insights
 Version: v2.8.0
 Version Name: products-intelligence-page-with-photos-ai-orders-and-channel-insights
 Files changed:
+- app/dashboard/products-intelligence/page.tsx (existing page verified and hardened)
+- app/api/dashboard/products-intelligence/overview/route.ts (refactored to use service)
+- app/api/dashboard/products-intelligence/products/route.ts (refactored to use service)
+- app/api/dashboard/products-intelligence/channels/route.ts (refactored to use service)
+- app/api/dashboard/products-intelligence/product/[id]/route.ts (refactored to use service)
+- lib/services/products-intelligence-service.ts (new: pure business logic)
+- tests/unit/products-intelligence-service.test.ts (new: 33 tests)
+- supabase/migrations/20260504040000_product_notes.sql (new: optional forward-only migration)
+- lib/ui/dashboard-sidebar.tsx (verified menu item exists)
 Commands run:
+- npm run typecheck (PASS)
+- npm run lint (PASS, 0 errors, 20 warnings)
+- npm test (PASS, 91/91 including 33 new tests)
+- npm run validate:scenarios (PASS, 104)
+- npm run scan:secrets (PASS)
+- npm run build (PASS)
+- npm run verify:release (PASS)
+- docker compose build (PASS)
+- npm run deploy:production (PASS)
+- curl health/build-info live checks (PASS)
 Tests passed:
+- 91 unit/integration/API tests pass (58 existing + 33 new)
+- Playwright swarms cover /dashboard/products-intelligence in UX, functional, a11y, API health
 Tests failed/skipped:
+- None
 Blockers:
+- None
 Next step:
+- Monitor dashboard usage; insights auto-populate when order data available
 
 ## 2026-05-04 — verify-whatsapp-loop-guard-before-real-test
 

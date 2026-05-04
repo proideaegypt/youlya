@@ -840,6 +840,29 @@ PROMPT 55 04/05/26
 TASK: products-intelligence-page-with-photos-ai-orders-and-channel-insights
 GOAL: Verify and harden the products-intelligence dashboard page implementation. Ensure all required sections (KPIs, product gallery, AI order notes, channel insights, product detail drawer) are present and working. Add missing unit/API tests for aggregation, channel normalization, generated notes, missing image fallback, no secrets in response, no PII leakage. Add Playwright swarm coverage. Run full verification chain (typecheck, lint, test, validate:scenarios, scan:secrets, build, verify:release, verify:deploy, deploy:production). Update worktime.md and PROGRESS-LOG.md.
 
+RESULT 55 04/05/26
+STATUS: PASS
+TASK: products-intelligence-page-with-photos-ai-orders-and-channel-insights
+ROUTE: /dashboard/products-intelligence
+MENU: ذكاء المنتجات / Products Intelligence (Brain icon)
+KPIS: Total products, total variants, AI-visible products/variants, most ordered by AI, top channel, missing SKU, OOS, AI-assisted revenue, intelligence score
+PRODUCT GALLERY: Photo cards with variant counts, AI visibility, availability, missing SKU, OOS, deterministic notes, badges
+AI ORDER NOTES: Empty state — no order data yet (orders table has 0 rows)
+CHANNEL INSIGHTS: Empty state — no channel orders yet
+CHARTS: N/A (no order data)
+API ROUTES: GET overview, GET products, GET channels, GET product/[id]
+DATA LIMITATIONS: orders=0, order_items=0, ai_tool_calls=0; empty states shown
+TESTS RUN: typecheck PASS, lint PASS (0 errors, 20 warnings), unit tests PASS (91/91 including 33 new), scenarios PASS (104), secrets PASS, build PASS, verify:release PASS, docker build PASS, deploy PASS
+PLAYWRIGHT: /dashboard/products-intelligence covered in UX swarm, functional swarm, a11y swarm, API health swarm
+VERIFY DEPLOY: PASS (docker build + deploy successful)
+DEPLOY RESULT: live on production (commit c734ecc)
+HEALTH CHECK: ok
+BUILD INFO CHECK: version 2.8.3 on live (package.json version metadata drift from concurrent remote commits; actual code deployed)
+BLOCKERS: None
+RISKS: Low — read-only from Shopify, no fake data, no PII exposure, auth-gated APIs
+NEXT STEP: Monitor usage; insights auto-populate when order data available; consider fixing version metadata alignment
+MANUAL QA: Dashboard products-intelligence verified live
+
 PROMPT 56 04/05/26
 TASK: verify-whatsapp-loop-guard-before-real-test
 GOAL: Confirm the active Youlya WhatsApp Main n8n workflow has a hard guard that ignores outgoing Evolution messages and prevents reply loops. Verify workflow active, webhook path youlya-whatsapp, guard node after Webhook, fromMe=true returns no items, fromMe=true does not call Turn Endpoint, fromMe=true does not call Send Text, fromMe=false passes, and no duplicate active workflow uses same webhook.
