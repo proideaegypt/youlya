@@ -29,13 +29,15 @@ function containsUnsafeOrderClaim(text: string, appAction: string): boolean {
 }
 
 function containsSuspiciousInvention(text: string): boolean {
-  const lower = text.toLowerCase();
-  // Detect price invention patterns in Arabic
-  if (/\b\d+\s*جنيه\b/.test(lower) && !lower.includes("app_price")) {
-    // This is a heuristic; in practice we check against commerceFacts
-    return false; // too broad to flag
-  }
-  return false;
+  return /\b(gid:\/\/|provider_message_id|conversation_id|customer_id|store_id|variant_id|shopify_order_id|shopify_variant_id|remote_jid|#mock-|mock-|test-instance)\b/i.test(text);
+}
+
+function containsPriceClaim(text: string): boolean {
+  return /\b\d+(?:[.,]\d+)?\s*(?:جنيه|ج\.م|EGP|ريال|SAR|USD)\b/i.test(text);
+}
+
+function containsStockClaim(text: string): boolean {
+  return /\b(?:متوفر|غير متوفر|in stock|out of stock|stock|خلص|نفد)\b/i.test(text);
 }
 
 export type HaidiValidationResult =
@@ -45,7 +47,11 @@ export type HaidiValidationResult =
 export function validateHaidiOutput(
   raw: unknown,
   appAction: string,
-  appReply: string
+  appReply: string,
+  appFacts: {
+    products?: Array<{ price?: number; available?: boolean }>;
+    blockedReason?: string | null;
+  } = {}
 ): HaidiValidationResult {
   if (!raw || typeof raw !== "object") {
     return { ok: false, fallbackReply: appReply, reason: "Haidi output is not an object" };
@@ -65,6 +71,37 @@ export function validateHaidiOutput(
       ok: false,
       fallbackReply: appReply,
       reason: "Haidi output contains unsafe order confirmation claim",
+    };
+  }
+
+  // Block internal IDs and operational identifiers from reaching customers
+  if (containsSuspiciousInvention(finalReply)) {
+    return {
+      ok: false,
+      fallbackReply: appReply,
+      reason: "Haidi output contains internal identifiers or mock values",
+    };
+  }
+
+  // Price / stock claims must be grounded in app facts
+  const hasKnownProducts = Array.isArray(appFacts.products) && appFacts.products.length > 0;
+  const knownPrices = (appFacts.products ?? [])
+    .map((product) => product.price)
+    .filter((price): price is number => typeof price === "number" && Number.isFinite(price))
+    .map((price) => String(price));
+  if (containsPriceClaim(finalReply) && !knownPrices.some((price) => finalReply.includes(price))) {
+    return {
+      ok: false,
+      fallbackReply: appReply,
+      reason: "Haidi output contains unsupported price claims",
+    };
+  }
+
+  if (containsStockClaim(finalReply) && !hasKnownProducts && appFacts.blockedReason !== "out_of_stock") {
+    return {
+      ok: false,
+      fallbackReply: appReply,
+      reason: "Haidi output contains unsupported stock claims",
     };
   }
 

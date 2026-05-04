@@ -2015,3 +2015,48 @@ Tests passed:
 Tests failed/skipped:
 Blockers:
 Next step:
+
+## 2026-05-04 — prepare-haidi-ai-agent-conversation-layer-draft
+
+Date: 2026-05-04
+Phase: Phase 2+ AI agent layer preparation
+Task: prepare-haidi-ai-agent-conversation-layer-draft
+Version: v2.9.0
+Version Name: prepare-haidi-ai-agent-conversation-layer-draft
+Files changed:
+- docs/HAIDI_AI_SALES_AGENT_PROMPT.md (new)
+- docs/HAIDI_MEMORY_DESIGN.md (new)
+- lib/services/haidi-context-builder.ts (new)
+- lib/services/haidi-output-validator.ts (new)
+- lib/types/messages.ts (extended with haidi_context)
+- lib/services/message-turn-service.ts (populates haidi_context for all intents)
+- n8n/workflows/youlya-whatsapp-main-haidi-draft.json (new, active=false)
+- n8n/workflows/HAIDI_AGENT_WORKFLOW_PATCH_PLAN.md (new)
+- scripts/validate-n8n-workflows.mjs (updated for Haidi draft validation)
+- tests/unit/haidi-agent.test.ts (new, 17 tests)
+Commands run:
+- npm run typecheck (PASS)
+- npm run lint (PASS, 0 errors)
+- npm test (PASS, 108/108)
+- npm run validate:scenarios (PASS, 104)
+- npm run scan:secrets (PASS)
+- npm run build (PASS)
+- npm run validate:n8n (PASS)
+- npm run verify:release (PASS)
+- bash scripts/verify-before-deploy.sh (PASS)
+- npm run deploy:production (PASS)
+- curl health/build-info live checks (PASS)
+Tests passed:
+- 108 unit/integration/API tests pass (91 existing + 17 new)
+- Haidi validator tests: valid JSON, empty reply, unsafe order claims, fallback, defaults
+- Haidi context builder tests: max 10 products, product facts, replyGoal inference, cart summary
+- validate:n8n: canonical, sync, and Haidi draft all pass
+Tests failed/skipped:
+- None
+Blockers:
+- None
+Next step:
+- Final Haidi activation task after Codex completes Send Text fix
+- Import draft workflow into n8n, configure OpenAI credentials, test synthetic webhook
+- Replace placeholder Code node with actual AI Agent node
+- Activate only after full safety validation

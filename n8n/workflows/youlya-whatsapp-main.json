@@ -109,6 +109,19 @@
     },
     {
       "parameters": {
+        "jsCode": "const rawNumber =\n  $json.number ||\n  $node[\"Normalize Message\"].json.remote_jid ||\n  $node[\"Normalize Message\"].json.conversation_id;\n\nconst number = String(rawNumber || \"\")\n  .replace(\"@s.whatsapp.net\", \"\")\n  .replace(\"@c.us\", \"\")\n  .replace(/\\D/g, \"\");\n\nconst text =\n  $json.reply ||\n  $json.message ||\n  \"حصل خطأ تقني بسيط، ممكن تبعتي الرسالة تاني؟\";\n\nreturn [\n  {\n    json: {\n      ...$json,\n      evolutionPayload: {\n        number,\n        text,\n      },\n    },\n  },\n];"
+      },
+      "id": "Prepare Evolution Payload",
+      "name": "Prepare Evolution Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1800,
+        120
+      ]
+    },
+    {
+      "parameters": {
         "method": "POST",
         "url": "={{$env.EVOLUTION_API_URL}}/message/sendText/{{$env.EVOLUTION_INSTANCE}}",
         "sendHeaders": true,
@@ -122,7 +135,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\"number\": \"{{$json.number || $node['Normalize Message'].json.send_number || String($node['Normalize Message'].json.remote_jid || '').replace('@s.whatsapp.net','').replace('@c.us','').replace('@g.us','').replace(/\\D/g,'')}}\", \"text\": \"{{$json.reply}}\"}",
+        "jsonBody": "={{ JSON.stringify({ number: $json.evolutionPayload && $json.evolutionPayload.number ? $json.evolutionPayload.number : $json.number, text: $json.evolutionPayload && $json.evolutionPayload.text ? $json.evolutionPayload.text : $json.reply }) }}",
         "options": {
           "timeout": 10000
         }
@@ -132,8 +145,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        1580,
-        260
+        2020,
+        120
       ]
     },
     {
@@ -260,12 +273,24 @@
       "main": [
         [
           {
-            "node": "Send Text",
+            "node": "Prepare Evolution Payload",
             "type": "main",
             "index": 0
           }
         ],
         []
+      ]
+    }
+,
+    "Prepare Evolution Payload": {
+      "main": [
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },

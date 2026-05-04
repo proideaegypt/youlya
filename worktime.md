@@ -915,3 +915,32 @@ Release prep for task integrate-pilot-sprint-playbook-safely (v2.9.1, integrate-
 RESULT TBD 2026-05-04
 STATUS: PENDING
 Release file generated: RELEASES/v2.9.1-integrate-pilot-sprint-playbook-safely.md
+
+PROMPT 59 04/05/26
+TASK: prepare-haidi-ai-agent-conversation-layer-draft
+GOAL: Prepare Haidi AI Agent as the smart human sales assistant layer for Youlya. Create draft workflow/docs/app support only. Do not edit active workflow. Run full validation, tests, release, and deploy checks.
+
+PROMPT 60 04/05/26
+TASK: apply-haidi-agent-draft-to-active-workflow
+GOAL: Restore Haidi AI Agent into the active Youlya WhatsApp workflow as a smart human-like sales assistant layer, while keeping Youlya App as the commerce safety gate.
+
+RESULT 59 04/05/26
+STATUS: PASS
+TASK: prepare-haidi-ai-agent-conversation-layer-draft
+HAIDI PROMPT: docs/HAIDI_AI_SALES_AGENT_PROMPT.md — warm Egyptian Arabic sales assistant system prompt with commerce safety rules
+APP HAIDI CONTEXT: lib/services/haidi-context-builder.ts — builds commerce facts for Haidi from app data (products, cart, upsells, blockedReason)
+HAIDI VALIDATOR: lib/services/haidi-output-validator.ts — validates JSON output, blocks unsafe order claims unless app action=order_created, falls back to app reply
+DRAFT WORKFLOW: n8n/workflows/youlya-whatsapp-main-haidi-draft.json (active=false) + HAIDI_AGENT_WORKFLOW_PATCH_PLAN.md
+MEMORY DESIGN: docs/HAIDI_MEMORY_DESIGN.md — app owns commerce truth, Haidi owns conversational warmth, no product index mapping in memory, 10-20 message context window
+TOOLS POLICY: Haidi may NOT create orders, mutate Shopify, mutate Supabase, invent prices/stock/SKUs, or resolve product indexes from memory
+TESTS RUN: 108/108 pass (91 existing + 17 new Haidi tests)
+VERIFY DEPLOY: PASS (typecheck, lint, tests, scenarios, secrets, build, validate:n8n, verify:release, docker build all pass)
+DEPLOY RESULT: deployed to production (live version 2.9.1 due concurrent task, code deployed successfully)
+BLOCKERS: None
+RISKS: Low — draft workflow inactive, active workflow untouched, app changes backward compatible (haidi_context optional)
+NEXT STEP: Final Haidi activation task after Codex completes Send Text fix — import draft workflow, configure OpenAI credentials, test synthetic webhook, then activate
+MANUAL QA: Not yet — activation deferred to later task per parallel work rule
+
+PROMPT 60 04/05/26
+TASK: stabilize-whatsapp-loop-foundation
+GOAL: Make the Youlya WhatsApp loop work end-to-end for one safe text message: "هاي". Fix n8n Send Text JSON body, public webhook proxy, Evolution instance config, and validate synthetic + real inbound readiness.

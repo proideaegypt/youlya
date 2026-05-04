@@ -16,7 +16,8 @@ describe("haidi-output-validator", () => {
         safety_notes: [],
       },
       "ai_reply",
-      appReply
+      appReply,
+      { products: [{ price: 100, available: true }] }
     );
     expect(result.ok).toBe(true);
     if (result.ok) {
@@ -85,7 +86,8 @@ describe("haidi-output-validator", () => {
     const result = validateHaidiOutput(
       { final_reply: "Hi" },
       "ai_reply",
-      appReply
+      appReply,
+      { products: [{ price: 100, available: true }] }
     );
     expect(result.ok).toBe(true);
     if (result.ok) {
@@ -97,7 +99,8 @@ describe("haidi-output-validator", () => {
     const result = validateHaidiOutput(
       { final_reply: "Hi", intent_label: "unknown_intent" },
       "ai_reply",
-      appReply
+      appReply,
+      { products: [{ price: 100, available: true }] }
     );
     expect(result.ok).toBe(true);
     if (result.ok) {
@@ -109,7 +112,8 @@ describe("haidi-output-validator", () => {
     const result = validateHaidiOutput(
       { final_reply: "Hi", tone: "aggressive" },
       "ai_reply",
-      appReply
+      appReply,
+      { products: [{ price: 100, available: true }] }
     );
     expect(result.ok).toBe(true);
     if (result.ok) {
@@ -121,7 +125,8 @@ describe("haidi-output-validator", () => {
     const result = validateHaidiOutput(
       { final_reply: "Hi", safety_notes: ["note1"] },
       "ai_reply",
-      appReply
+      appReply,
+      { products: [{ price: 100, available: true }] }
     );
     expect(result.ok).toBe(true);
     if (result.ok) {
@@ -220,5 +225,45 @@ describe("haidi-context-builder", () => {
       blockedReason: "out_of_stock",
     });
     expect(ctx.commerceFacts.blockedReason).toBe("out_of_stock");
+  });
+
+  test("builds warm style instructions for handoff", () => {
+    const ctx = buildHaidiContext({
+      language: "ar-EG",
+      customerText: "عايزة أكلم حد",
+      action: "handoff",
+      intent: "UNCLEAR",
+      blockedReason: "customer_request",
+    });
+    expect(ctx.styleInstructions.mustInclude).toEqual(expect.arrayContaining(["هحولك", "فريق الدعم"]));
+    expect(ctx.styleInstructions.mustNotSay).toEqual(expect.arrayContaining(["customer_request"]));
+  });
+
+  test("blocks internal identifiers in validator", () => {
+    const result = validateHaidiOutput(
+      { final_reply: "رقم الطلب provider_message_id: abc123" },
+      "ai_reply",
+      appReply,
+      { products: [{ price: 100, available: true }] }
+    );
+    expect(result.ok).toBe(false);
+  });
+
+  test("blocks price claims when app facts are absent", () => {
+    const result = validateHaidiOutput(
+      { final_reply: "السعر 250 جنيه" },
+      "ai_reply",
+      appReply
+    );
+    expect(result.ok).toBe(false);
+  });
+
+  test("blocks stock claims when app facts are absent", () => {
+    const result = validateHaidiOutput(
+      { final_reply: "متوفر حاليا" },
+      "ai_reply",
+      appReply
+    );
+    expect(result.ok).toBe(false);
   });
 });

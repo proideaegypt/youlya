@@ -1,0 +1,684 @@
+{
+  "updatedAt": "2026-05-04T00:51:26.748Z",
+  "createdAt": "2026-05-02T15:17:18.252Z",
+  "id": "joqfame4HXG775JO",
+  "name": "Youlya WhatsApp Main",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "youlya-whatsapp",
+        "httpMethod": "POST",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "Webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        200,
+        200
+      ],
+      "webhookId": "youlya-whatsapp-main-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const root = $json.body ?? $json;\nconst data = root.data ?? root;\nconst key = data.key ?? {};\nconst message = data.message ?? {};\n\nconst fromMe =\n  key.fromMe === true ||\n  data.fromMe === true ||\n  root.fromMe === true;\n\nconst remoteJid =\n  key.remoteJid ||\n  data.remoteJid ||\n  data.remote_jid ||\n  root.remoteJid ||\n  root.remote_jid ||\n  data.from ||\n  root.from ||\n  \"\";\n\nconst text =\n  message.conversation ||\n  message.extendedTextMessage?.text ||\n  message.imageMessage?.caption ||\n  data.text ||\n  root.text ||\n  \"\";\n\nconst messageType =\n  data.messageType ||\n  data.type ||\n  root.messageType ||\n  root.type ||\n  \"\";\n\nconst ignoredReasons = [];\n\nif (fromMe) ignoredReasons.push(\"fromMe_outgoing_message\");\nif (!remoteJid) ignoredReasons.push(\"missing_remote_jid\");\nif (String(remoteJid).includes(\"status@broadcast\")) ignoredReasons.push(\"status_broadcast\");\nif (String(remoteJid).endsWith(\"@g.us\")) ignoredReasons.push(\"group_message_ignored\");\nif (!String(text).trim()) ignoredReasons.push(\"empty_text\");\n\nif (ignoredReasons.length > 0) {\n  return [];\n}\n\nreturn [\n  {\n    json: {\n      ...$json,\n      _guard: {\n        passed: true,\n        remoteJid,\n        messageType,\n        textPreview: String(text).slice(0, 40),\n      },\n    },\n  },\n];"
+      },
+      "id": "Guard Inbound Customer Message",
+      "name": "Guard Inbound Customer Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [],
+          "string": [
+            {
+              "value1": "={{$json.data.messageType || $json.data.type}}",
+              "operation": "equal",
+              "value2": "conversation"
+            },
+            {
+              "value1": "={{$json.data.messageType || $json.data.type}}",
+              "operation": "equal",
+              "value2": "extendedTextMessage"
+            },
+            {
+              "value1": "={{$json.data.messageType || $json.data.type}}",
+              "operation": "equal",
+              "value2": "audioMessage"
+            }
+          ]
+        }
+      },
+      "id": "Filter Message Type",
+      "name": "Filter Message Type",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        640,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const root = $json.body ?? $json;\nconst data = root.data ?? root;\nconst key = data.key ?? {};\nif (key.fromMe === true || data.fromMe === true || root.fromMe === true) {\n  return [];\n}\nconst message = data.message || {};\nconst remoteJid = String(key.remoteJid || \"\");\nconst sendNumber = remoteJid\n  .replace(/@s\\.whatsapp\\.net$/i, \"\")\n  .replace(/@c\\.us$/i, \"\")\n  .replace(/@g\\.us$/i, \"\")\n  .replace(/\\D/g, \"\");\nreturn [{\n  json: {\n    conversation_id: remoteJid,\n    customer_id: remoteJid,\n    provider_message_id: key.id,\n    text: message.conversation ?? message.extendedTextMessage?.text ?? \"\",\n    message_type: \"text\",\n    channel: \"whatsapp_evolution\",\n    language: \"ar-EG\",\n    tone: \"neutral\",\n    store_id: \"youlya\",\n    remote_jid: remoteJid,\n    send_number: sendNumber,\n    instance_name: $node[\"Webhook\"].json.body?.instance || $node[\"Webhook\"].json.instance || \"YoulyaMain\"\n  }\n}];"
+      },
+      "id": "Normalize Message",
+      "name": "Normalize Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.APP_INTERNAL_URL}}/api/internal/messages/turn",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-internal-secret",
+              "value": "={{$env.INTERNAL_API_SECRET}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{$json}}",
+        "options": {
+          "timeout": 45000
+        }
+      },
+      "id": "Call Turn Endpoint",
+      "name": "Call Turn Endpoint",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1120,
+        120
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawNumber =\n  $json.number ||\n  $node[\"Normalize Message\"].json.remote_jid ||\n  $node[\"Normalize Message\"].json.conversation_id;\n\nconst number = String(rawNumber || \"\")\n  .replace(\"@s.whatsapp.net\", \"\")\n  .replace(\"@c.us\", \"\")\n  .replace(/\\D/g, \"\");\n\nconst text =\n  $json.reply ||\n  $json.message ||\n  \"حصل خطأ تقني بسيط، ممكن تبعتي الرسالة تاني؟\";\n\nreturn [\n  {\n    json: {\n      ...$json,\n      evolutionPayload: {\n        number,\n        text,\n      },\n    },\n  },\n];"
+      },
+      "id": "Prepare Evolution Payload",
+      "name": "Prepare Evolution Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1800,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.EVOLUTION_API_URL}}/message/sendText/{{$env.EVOLUTION_INSTANCE}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{$env.EVOLUTION_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ number: $json.evolutionPayload && $json.evolutionPayload.number ? $json.evolutionPayload.number : $json.number, text: $json.evolutionPayload && $json.evolutionPayload.text ? $json.evolutionPayload.text : $json.reply }) }}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "Send Text",
+      "name": "Send Text",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2020,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.APP_INTERNAL_URL}}/api/internal/dead-letter",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"raw_input\": $json, \"error_message\": $json.error?.message || 'turn endpoint failed', \"conversation_id\": $node[\"Normalize Message\"].json[\"conversation_id\"]}"
+      },
+      "id": "Dead Letter",
+      "name": "Dead Letter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1360,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const action = $json.action || \"error\";\n\nconst reply =\n  $json.reply ||\n  $json.message ||\n  \"حصل خطأ تقني بسيط، ممكن تبعتي الرسالة تاني؟\";\n\nconst normalized = $node[\"Normalize Message\"].json;\nconst fallbackNumber = String(normalized.send_number || normalized.remote_jid || normalized.conversation_id || \"\")\n  .replace(/@s\\.whatsapp\\.net$/i, \"\")\n  .replace(/@c\\.us$/i, \"\")\n  .replace(/@g\\.us$/i, \"\")\n  .replace(/\\D/g, \"\");\n\nconst number = $json.number || normalized.send_number || fallbackNumber;\nconst shouldSend = action !== \"duplicate_ignored\" && Boolean(reply) && Boolean(number);\n\nreturn [\n  {\n    json: {\n      ...$json,\n      action,\n      reply,\n      shouldSend,\n      number,\n    },\n  },\n];"
+      },
+      "id": "Prepare Reply",
+      "name": "Prepare Reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.shouldSend}}",
+              "value2": true
+            }
+          ],
+          "string": []
+        }
+      },
+      "id": "Should Send Reply",
+      "name": "Should Send Reply",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1580,
+        120
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Guard Inbound Customer Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guard Inbound Customer Message": {
+      "main": [
+        [
+          {
+            "node": "Filter Message Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Message Type": {
+      "main": [
+        [
+          {
+            "node": "Normalize Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Normalize Message": {
+      "main": [
+        [
+          {
+            "node": "Call Turn Endpoint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Turn Endpoint": {
+      "main": [
+        [
+          {
+            "node": "Prepare Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Reply": {
+      "main": [
+        [
+          {
+            "node": "Should Send Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Should Send Reply": {
+      "main": [
+        [
+          {
+            "node": "Prepare Evolution Payload",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Prepare Evolution Payload": {
+      "main": [
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": null,
+  "versionId": "2c7e17cb-d73e-46da-a8fd-b6d1fc0fbb95",
+  "activeVersionId": "2c7e17cb-d73e-46da-a8fd-b6d1fc0fbb95",
+  "versionCounter": 70,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-05-02T15:17:18.252Z",
+      "createdAt": "2026-05-02T15:17:18.252Z",
+      "role": "workflow:owner",
+      "workflowId": "joqfame4HXG775JO",
+      "projectId": "mOtgNeJlBhvmEWsM",
+      "project": {
+        "updatedAt": "2026-04-29T13:15:06.032Z",
+        "createdAt": "2025-12-02T09:11:28.665Z",
+        "id": "mOtgNeJlBhvmEWsM",
+        "name": "ahmed proideaegypt@gmail.com <proideaegypt@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+        "projectRelations": [
+          {
+            "updatedAt": "2025-12-02T09:11:28.665Z",
+            "createdAt": "2025-12-02T09:11:28.665Z",
+            "userId": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+            "projectId": "mOtgNeJlBhvmEWsM",
+            "user": {
+              "updatedAt": "2026-05-04T00:34:10.781Z",
+              "createdAt": "2025-12-02T09:11:28.117Z",
+              "id": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07",
+              "email": "proideaegypt@gmail.com",
+              "firstName": "ahmed",
+              "lastName": "proideaegypt@gmail.com",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-12-02T10:40:00.411Z",
+                "personalization_survey_n8n_version": "1.122.4",
+                "companySize": "<20",
+                "companyType": "ecommerce",
+                "role": "business-owner",
+                "reportedSource": "google"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "TAfiadIWix0pNAti",
+                "userActivatedAt": 1765298870918,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1768746437011
+                }
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2026-05-03",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2026-05-04T00:51:26.763Z",
+    "createdAt": "2026-05-04T00:51:26.763Z",
+    "versionId": "2c7e17cb-d73e-46da-a8fd-b6d1fc0fbb95",
+    "workflowId": "joqfame4HXG775JO",
+    "nodes": [
+      {
+        "parameters": {
+          "path": "youlya-whatsapp",
+          "httpMethod": "POST",
+          "responseMode": "onReceived",
+          "options": {}
+        },
+        "id": "Webhook",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          200,
+          200
+        ],
+        "webhookId": "youlya-whatsapp-main-webhook"
+      },
+      {
+        "parameters": {
+          "jsCode": "const root = $json.body ?? $json;\nconst data = root.data ?? root;\nconst key = data.key ?? {};\nconst message = data.message ?? {};\n\nconst fromMe =\n  key.fromMe === true ||\n  data.fromMe === true ||\n  root.fromMe === true;\n\nconst remoteJid =\n  key.remoteJid ||\n  data.remoteJid ||\n  data.remote_jid ||\n  root.remoteJid ||\n  root.remote_jid ||\n  data.from ||\n  root.from ||\n  \"\";\n\nconst text =\n  message.conversation ||\n  message.extendedTextMessage?.text ||\n  message.imageMessage?.caption ||\n  data.text ||\n  root.text ||\n  \"\";\n\nconst messageType =\n  data.messageType ||\n  data.type ||\n  root.messageType ||\n  root.type ||\n  \"\";\n\nconst ignoredReasons = [];\n\nif (fromMe) ignoredReasons.push(\"fromMe_outgoing_message\");\nif (!remoteJid) ignoredReasons.push(\"missing_remote_jid\");\nif (String(remoteJid).includes(\"status@broadcast\")) ignoredReasons.push(\"status_broadcast\");\nif (String(remoteJid).endsWith(\"@g.us\")) ignoredReasons.push(\"group_message_ignored\");\nif (!String(text).trim()) ignoredReasons.push(\"empty_text\");\n\nif (ignoredReasons.length > 0) {\n  return [];\n}\n\nreturn [\n  {\n    json: {\n      ...$json,\n      _guard: {\n        passed: true,\n        remoteJid,\n        messageType,\n        textPreview: String(text).slice(0, 40),\n      },\n    },\n  },\n];"
+        },
+        "id": "Guard Inbound Customer Message",
+        "name": "Guard Inbound Customer Message",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          420,
+          200
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "boolean": [],
+            "string": [
+              {
+                "value1": "={{$json.data.messageType || $json.data.type}}",
+                "operation": "equal",
+                "value2": "conversation"
+              },
+              {
+                "value1": "={{$json.data.messageType || $json.data.type}}",
+                "operation": "equal",
+                "value2": "extendedTextMessage"
+              },
+              {
+                "value1": "={{$json.data.messageType || $json.data.type}}",
+                "operation": "equal",
+                "value2": "audioMessage"
+              }
+            ]
+          }
+        },
+        "id": "Filter Message Type",
+        "name": "Filter Message Type",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          640,
+          200
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const root = $json.body ?? $json;\nconst data = root.data ?? root;\nconst key = data.key ?? {};\nif (key.fromMe === true || data.fromMe === true || root.fromMe === true) {\n  return [];\n}\nconst message = data.message || {};\nconst remoteJid = String(key.remoteJid || \"\");\nconst sendNumber = remoteJid\n  .replace(/@s\\.whatsapp\\.net$/i, \"\")\n  .replace(/@c\\.us$/i, \"\")\n  .replace(/@g\\.us$/i, \"\")\n  .replace(/\\D/g, \"\");\nreturn [{\n  json: {\n    conversation_id: remoteJid,\n    customer_id: remoteJid,\n    provider_message_id: key.id,\n    text: message.conversation ?? message.extendedTextMessage?.text ?? \"\",\n    message_type: \"text\",\n    channel: \"whatsapp_evolution\",\n    language: \"ar-EG\",\n    tone: \"neutral\",\n    store_id: \"youlya\",\n    remote_jid: remoteJid,\n    send_number: sendNumber,\n    instance_name: $node[\"Webhook\"].json.body?.instance || $node[\"Webhook\"].json.instance || \"YoulyaMain\"\n  }\n}];"
+        },
+        "id": "Normalize Message",
+        "name": "Normalize Message",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          880,
+          120
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{$env.APP_INTERNAL_URL}}/api/internal/messages/turn",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "x-internal-secret",
+                "value": "={{$env.INTERNAL_API_SECRET}}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{$json}}",
+          "options": {
+            "timeout": 45000
+          }
+        },
+        "id": "Call Turn Endpoint",
+        "name": "Call Turn Endpoint",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          1120,
+          120
+        ],
+        "continueOnFail": true
+      },
+      {
+        "parameters": {
+          "jsCode": "const rawNumber =\n  $json.number ||\n  $node[\"Normalize Message\"].json.remote_jid ||\n  $node[\"Normalize Message\"].json.conversation_id;\n\nconst number = String(rawNumber || \"\")\n  .replace(\"@s.whatsapp.net\", \"\")\n  .replace(\"@c.us\", \"\")\n  .replace(/\\D/g, \"\");\n\nconst text =\n  $json.reply ||\n  $json.message ||\n  \"حصل خطأ تقني بسيط، ممكن تبعتي الرسالة تاني؟\";\n\nreturn [\n  {\n    json: {\n      ...$json,\n      evolutionPayload: {\n        number,\n        text,\n      },\n    },\n  },\n];"
+        },
+        "id": "Prepare Evolution Payload",
+        "name": "Prepare Evolution Payload",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1800,
+          120
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{$env.EVOLUTION_API_URL}}/message/sendText/{{$env.EVOLUTION_INSTANCE}}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "={{$env.EVOLUTION_API_KEY}}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ number: $json.evolutionPayload && $json.evolutionPayload.number ? $json.evolutionPayload.number : $json.number, text: $json.evolutionPayload && $json.evolutionPayload.text ? $json.evolutionPayload.text : $json.reply }) }}",
+          "options": {
+            "timeout": 10000
+          }
+        },
+        "id": "Send Text",
+        "name": "Send Text",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          2020,
+          120
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{$env.APP_INTERNAL_URL}}/api/internal/dead-letter",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\"raw_input\": $json, \"error_message\": $json.error?.message || 'turn endpoint failed', \"conversation_id\": $node[\"Normalize Message\"].json[\"conversation_id\"]}"
+        },
+        "id": "Dead Letter",
+        "name": "Dead Letter",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          1360,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const action = $json.action || \"error\";\n\nconst reply =\n  $json.reply ||\n  $json.message ||\n  \"حصل خطأ تقني بسيط، ممكن تبعتي الرسالة تاني؟\";\n\nconst normalized = $node[\"Normalize Message\"].json;\nconst fallbackNumber = String(normalized.send_number || normalized.remote_jid || normalized.conversation_id || \"\")\n  .replace(/@s\\.whatsapp\\.net$/i, \"\")\n  .replace(/@c\\.us$/i, \"\")\n  .replace(/@g\\.us$/i, \"\")\n  .replace(/\\D/g, \"\");\n\nconst number = $json.number || normalized.send_number || fallbackNumber;\nconst shouldSend = action !== \"duplicate_ignored\" && Boolean(reply) && Boolean(number);\n\nreturn [\n  {\n    json: {\n      ...$json,\n      action,\n      reply,\n      shouldSend,\n      number,\n    },\n  },\n];"
+        },
+        "id": "Prepare Reply",
+        "name": "Prepare Reply",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1360,
+          120
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "boolean": [
+              {
+                "value1": "={{$json.shouldSend}}",
+                "value2": true
+              }
+            ],
+            "string": []
+          }
+        },
+        "id": "Should Send Reply",
+        "name": "Should Send Reply",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1580,
+          120
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Guard Inbound Customer Message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guard Inbound Customer Message": {
+        "main": [
+          [
+            {
+              "node": "Filter Message Type",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter Message Type": {
+        "main": [
+          [
+            {
+              "node": "Normalize Message",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          []
+        ]
+      },
+      "Normalize Message": {
+        "main": [
+          [
+            {
+              "node": "Call Turn Endpoint",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Turn Endpoint": {
+        "main": [
+          [
+            {
+              "node": "Prepare Reply",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Reply": {
+        "main": [
+          [
+            {
+              "node": "Should Send Reply",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Should Send Reply": {
+        "main": [
+          [
+            {
+              "node": "Prepare Evolution Payload",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          []
+        ]
+      },
+      "Prepare Evolution Payload": {
+        "main": [
+          [
+            {
+              "node": "Send Text",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "ahmed proideaegypt@gmail.com",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-05-04T00:51:26.948Z",
+        "id": 277,
+        "workflowId": "joqfame4HXG775JO",
+        "versionId": "2c7e17cb-d73e-46da-a8fd-b6d1fc0fbb95",
+        "event": "activated",
+        "userId": "b3269cfb-a6e4-413f-ae29-17fbff9e2c07"
+      }
+    ]
+  }
+}

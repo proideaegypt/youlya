@@ -140,6 +140,7 @@ export function buildHaidiContext(options: {
   }
 
   const replyGoal = inferReplyGoal(action, intent, itemsCount);
+  const styleInstructions = buildStyleInstructions(action, intent, blockedReason);
 
   return {
     language,
@@ -151,11 +152,41 @@ export function buildHaidiContext(options: {
       allowedUpsells: [], // populated later when upsell service exists
       blockedReason: blockedReason ?? null,
     },
-    styleInstructions: {
-      tone: "warm_egyptian_sales",
-      mustInclude: [],
-      mustNotSay: [],
-    },
+    styleInstructions,
+  };
+}
+
+function buildStyleInstructions(
+  action: string,
+  intent: string,
+  blockedReason: string | null
+): HaidiStyleInstructions {
+  const mustInclude: string[] = [];
+  const mustNotSay: string[] = [
+    "رقم ١ =",
+    "variant_id",
+    "provider_message_id",
+    "customer_id",
+    "store_id",
+  ];
+
+  if (action === "handoff") {
+    mustInclude.push("هحولك", "فريق الدعم");
+  }
+  if (action === "order_created") {
+    mustInclude.push("تم", "الأوردر");
+  }
+  if (action === "product_results" || intent === "PRODUCT_SEARCH") {
+    mustInclude.push("اختاري", "رقم");
+  }
+  if (blockedReason) {
+    mustNotSay.push(blockedReason);
+  }
+
+  return {
+    tone: "warm_egyptian_sales",
+    mustInclude: [...new Set(mustInclude)],
+    mustNotSay: [...new Set(mustNotSay)],
   };
 }
 
