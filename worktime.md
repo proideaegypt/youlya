@@ -1368,12 +1368,71 @@ PROMPT 142 04/05/26
 TASK: haidi-lab-and-approved-learning-pipeline
 GOAL: Build /dashboard/haidi/lab and /dashboard/haidi/learning with scenario CRUD, safe run + scoring, learning suggestion creation, approval queue actions, and publish placeholder without auto-learning.
 
+RESULT 142 04/05/26
+STATUS: PASS
+PHASE: 3 foundation
+TASK: haidi-lab-and-approved-learning-pipeline
+FILES CHANGED: supabase/migrations/20260504173000_haidi_lab_scenarios.sql, lib/adapters/supabase/mock-store.ts, lib/services/haidi-lab-service.ts, app/api/dashboard/haidi/lab/route.ts, app/api/dashboard/haidi/lab/[id]/route.ts, app/api/dashboard/haidi/lab/run/route.ts, app/api/dashboard/haidi/learning/route.ts, app/dashboard/haidi/lab/page.tsx, app/dashboard/haidi/learning/page.tsx, lib/ui/dashboard-sidebar.tsx, tests/unit/haidi-lab-service.test.ts, RELEASES/v2.17.2-haidi-lab-and-approved-learning-pipeline.md, worktime.md
+TESTS RUN: npm run typecheck; npm test -- tests/unit/haidi-lab-service.test.ts tests/unit/knowledge-base-service.test.ts; npm run release:task -- --task "haidi-lab-and-approved-learning-pipeline" --type patch; npm run verify:release
+RESULTS: Added Haidi Lab scenario CRUD + run/scoring, learning suggestion creation from runs, approval queue UI/API, and explicit publish placeholder. Auto-learning remains disabled.
+BLOCKERS: None
+RISKS: Repo has unrelated existing dirty changes; task completed without reverting unrelated files.
+NEXT STEP: Add Playwright coverage for /dashboard/haidi/lab and /dashboard/haidi/learning flows once authenticated dashboard swarm baseline is stable.
+MANUAL QA: Create a scenario in /dashboard/haidi/lab, run it, create learning suggestion, approve/reject/publish it from /dashboard/haidi/learning, and verify retrieval remains approved-only.
+
 PROMPT TBD 2026-05-04
 Release prep for task conversation-history-and-human-handoff-dashboard (v2.17.1, conversation-history-and-human-handoff-dashboard).
 
 RESULT TBD 2026-05-04
 STATUS: PENDING
 Release file generated: RELEASES/v2.17.1-conversation-history-and-human-handoff-dashboard.md
+
+PROMPT 143 04/05/26
+TASK: conversation-history-and-human-handoff-dashboard
+GOAL: Persist all inbound/outbound messages and create a staff-visible conversation timeline plus human handoff queue.
+
+RESULT 143 04/05/26
+STATUS: PASS
+PHASE: Phase 1 — Conversation History & Handoff Dashboard
+TASK: conversation-history-and-human-handoff-dashboard
+FILES CHANGED:
+- app/dashboard/conversations/page.tsx (new: conversation list + timeline view with filters)
+- app/dashboard/handoff/page.tsx (existing, hardened with timeline preview)
+- lib/ui/dashboard-sidebar.tsx (added /dashboard/conversations nav)
+- tests/playwright/dashboard-a11y-rtl-swarm.spec.ts (added /dashboard/conversations and /dashboard/handoff)
+- tests/playwright/dashboard-functional-swarm.spec.ts (added conversations nav link)
+- tests/playwright/dashboard-api-health-swarm.spec.ts (added /api/dashboard/handoff and /api/dashboard/knowledge-base)
+SCHEMA:
+- conversations, messages, conversation_events (existing from v2.15.0)
+- handoff_tickets with notes, ai_summary, assigned_user_id (existing from v2.13.0)
+- conversation_state.ai_paused (existing from v2.16.1)
+LOGGING:
+- message-history-service.ts: inbound/outbound logging with secret stripping and PII masking
+- maskCustomerIdentifier: shows first 3 + **** + last 3 digits only
+CONVERSATIONS UI:
+- /dashboard/conversations: list with status filter (all/handoff/AI), customer ID masked, last message timestamp
+- Timeline view: inbound/outbound/system events with direction badges and timestamps
+- Handoff count badge with quick link to handoff center
+HANDOFF UI:
+- /dashboard/handoff: queue cards with priority/status filters
+- Ticket detail: AI summary, internal notes, assign/return-to-AI/resolve actions
+- Conversation preview: fetches timeline from /api/dashboard/conversations/{id}/timeline
+TESTS:
+- npm run typecheck — PASS
+- npm test — PASS (154 tests, 22 files)
+- npm run validate:scenarios — PASS (104 total)
+- npm run scan:secrets — PASS
+- npm run build — PASS
+- npm run verify:release — PASS (v2.17.1)
+NEXT STEP:
+- Deploy to production with owner approval
+- Apply migrations if not yet applied to production DB
+- Re-run Playwright dashboard swarm after deploy
+MANUAL QA:
+- Open /dashboard/conversations, verify list and timeline load
+- Open /dashboard/handoff, verify queue and ticket actions work
+- Send test message, confirm it appears in timeline
+TEST Ya AHMED
 
 PROMPT TBD 2026-05-04
 Release prep for task haidi-lab-and-approved-learning-pipeline (v2.17.2, haidi-lab-and-approved-learning-pipeline).
