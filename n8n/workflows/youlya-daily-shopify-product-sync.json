@@ -137,14 +137,14 @@
     },
     "Check Success": {
       "main": [
+        [],
         [
           {
             "node": "Dead Letter",
             "type": "main",
             "index": 0
           }
-        ],
-        []
+        ]
       ]
     }
   },

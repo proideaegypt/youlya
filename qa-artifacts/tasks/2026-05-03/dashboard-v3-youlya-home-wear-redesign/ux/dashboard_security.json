@@ -1,0 +1,23 @@
+{
+  "route": "/dashboard/security",
+  "heading": "الأمان",
+  "hasH1": true,
+  "title": "YOULYA HOME WEAR Dashboard",
+  "bodyTextLength": 658,
+  "sidebarVisible": true,
+  "contentVisible": true,
+  "shellPresent": true,
+  "footerBuildIdentityVisible": false,
+  "hasArabicText": true,
+  "direction": "rtl",
+  "hasHorizontalOverflow": false,
+  "hasErrorOverlay": false,
+  "hasWeakEmptyState": false,
+  "consoleErrors": [],
+  "realFailedRequests": [],
+  "ignoredNetworkNoise": [],
+  "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-03/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_security.png",
+  "uxIssues": [
+    "Missing build identity"
+  ]
+}

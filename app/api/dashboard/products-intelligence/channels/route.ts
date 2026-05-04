@@ -1,23 +1,13 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { normalizeChannel } from "@/lib/services/products-intelligence-service";
 
 function unauthorized() {
   return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 }
 
 const STORE_ID = "ef77af08-688d-4354-8096-d89f6046f0c2";
-
-function normalizeChannel(source?: string | null): string {
-  if (!source) return "unknown";
-  const s = source.toLowerCase();
-  if (s.includes("whatsapp") || s.includes("evolution")) return "whatsapp";
-  if (s.includes("instagram")) return "instagram";
-  if (s.includes("tiktok")) return "tiktok";
-  if (s.includes("facebook") || s.includes("messenger")) return "facebook";
-  if (s.includes("manual")) return "manual";
-  return "unknown";
-}
 
 export async function GET() {
   const cookieStore = await cookies();

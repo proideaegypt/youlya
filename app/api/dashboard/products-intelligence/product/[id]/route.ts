@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { generateAiVisibilityReasons, normalizeChannel } from "@/lib/services/products-intelligence-service";
 
 function unauthorized() {
   return NextResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -43,31 +44,26 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       .eq("shopify_product_id", id)
       .order("price", { ascending: true });
 
-    // AI visibility reasons per variant
-    const enrichedVariants = (variants ?? []).map((v) => {
-      const reasons: string[] = [];
-      if (!v.available_for_ai) {
-        if (v.inventory_quantity <= 0) reasons.push("OOS");
-        if (v.code_missing) reasons.push("missing SKU");
-        if (!v.price || v.price <= 0) reasons.push("missing price");
-        if (!v.shopify_variant_id) reasons.push("missing variant ID");
-        if (reasons.length === 0) reasons.push("inactive");
-      }
-      return {
-        shopifyVariantId: v.shopify_variant_id,
-        shopifyVariantGid: v.shopify_variant_gid,
-        title: v.variant_title,
-        size: v.size,
-        color: v.color,
-        sku: v.sku,
+    const enrichedVariants = (variants ?? []).map((v) => ({
+      shopifyVariantId: v.shopify_variant_id,
+      shopifyVariantGid: v.shopify_variant_gid,
+      title: v.variant_title,
+      size: v.size,
+      color: v.color,
+      sku: v.sku,
+      price: v.price,
+      inventoryQuantity: v.inventory_quantity,
+      availableForAi: v.available_for_ai,
+      codeMissing: v.code_missing,
+      aiVisibilityReasons: generateAiVisibilityReasons({
+        inventory_quantity: v.inventory_quantity,
+        code_missing: v.code_missing,
         price: v.price,
-        inventoryQuantity: v.inventory_quantity,
-        availableForAi: v.available_for_ai,
-        codeMissing: v.code_missing,
-        aiVisibilityReasons: reasons,
-        lastSyncedAt: v.last_synced_at,
-      };
-    });
+        shopify_variant_id: v.shopify_variant_id,
+        available_for_ai: v.available_for_ai,
+      }),
+      lastSyncedAt: v.last_synced_at,
+    }));
 
     // Order summary if orders exist
     let orderSummary = null;
@@ -87,7 +83,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       const totalRevenue = (productOrders ?? []).reduce((sum, o) => sum + (Number(o.total_price) || 0), 0);
       const channelCounts = new Map<string, number>();
       for (const o of productOrders ?? []) {
-        const ch = (o.source_channel ?? "unknown").toLowerCase();
+        const ch = normalizeChannel(o.source_channel);
         channelCounts.set(ch, (channelCounts.get(ch) ?? 0) + 1);
       }
       const channelSplit = Array.from(channelCounts.entries()).map(([channel, count]) => ({ channel, count }));

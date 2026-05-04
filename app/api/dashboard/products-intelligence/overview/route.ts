@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { calculateIntelligenceScore } from "@/lib/services/products-intelligence-service";
 
 function unauthorized() {
   return NextResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -93,19 +94,12 @@ export async function GET() {
 
     const hasOrderData = (orderCount ?? 0) > 0;
 
-    // Intelligence score: weighted average of AI visibility, SKU completeness, stock availability
-    const tv = totalVariants ?? 0;
-    const aiVis = aiVisibleVariants ?? 0;
-    const missSku = missingSkuVariants ?? 0;
-    const oos = outOfStockVariants ?? 0;
-
-    let productIntelligenceScore = 0;
-    if (tv > 0) {
-      const aiScore = (aiVis / tv) * 40;
-      const skuScore = ((tv - missSku) / tv) * 30;
-      const stockScore = ((tv - oos) / tv) * 30;
-      productIntelligenceScore = Math.round(aiScore + skuScore + stockScore);
-    }
+    const productIntelligenceScore = calculateIntelligenceScore(
+      totalVariants ?? 0,
+      aiVisibleVariants ?? 0,
+      missingSkuVariants ?? 0,
+      outOfStockVariants ?? 0
+    );
 
     return NextResponse.json({
       totalProducts: totalProducts ?? 0,

@@ -2,16 +2,16 @@
 
 - Date: 2026-05-03
 - Branch: main
-- Commit: f40e947
+- Commit: be3670a
 
 Running: check-env-tracking
 
-> youlya-phase0-app@2.6.10 check:env:tracking
+> youlya-phase0-app@2.7.1 check:env:tracking
 > git status --ignored --short .env .env.local .env.production .env.test ".env.production.backup*" ".env.*" | node scripts/check-env-files-not-tracked.mjs
 
 .env.local: ignored
 .env.playwright: ignored
-.env.playwright.example: untracked
+.env.playwright.example: ignored
 .env.production: ignored
 .env.test: ignored
 
@@ -19,7 +19,7 @@ ENV tracking check passed.
 PASS: check-env-tracking
 Running: check-env-production
 
-> youlya-phase0-app@2.6.10 check:env:production
+> youlya-phase0-app@2.7.1 check:env:production
 > node scripts/check-production-env.mjs
 
 Checked .env.production keys only (values not printed).
@@ -29,13 +29,13 @@ Production env key check passed.
 PASS: check-env-production
 Running: typecheck
 
-> youlya-phase0-app@2.6.10 typecheck
+> youlya-phase0-app@2.7.1 typecheck
 > tsc --noEmit
 
 PASS: typecheck
 Running: lint
 
-> youlya-phase0-app@2.6.10 lint
+> youlya-phase0-app@2.7.1 lint
 > eslint .
 
 
@@ -53,6 +53,9 @@ Running: lint
 
 /root/youlya/app/dashboard/logs/page.tsx
   57:18  warning  '_setFilter' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/root/youlya/app/dashboard/products/page.tsx
+  306:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
 
 /root/youlya/lib/adapters/shopify/live-shopify-adapter.ts
   5:26  warning  '_items' is defined but never used    @typescript-eslint/no-unused-vars
@@ -77,216 +80,516 @@ Running: lint
   3:40  warning  '_url' is defined but never used  @typescript-eslint/no-unused-vars
   3:54  warning  '_key' is defined but never used  @typescript-eslint/no-unused-vars
 
-✖ 16 problems (0 errors, 16 warnings)
+✖ 17 problems (0 errors, 17 warnings)
   0 errors and 2 warnings potentially fixable with the `--fix` option.
 
 PASS: lint
 Running: unit-tests
 
-> youlya-phase0-app@2.6.10 test
+> youlya-phase0-app@2.7.1 test
 > vitest run
 
 
  RUN  v3.2.4 /root/youlya
 
- ✓ tests/unit/supabase-browser-client.test.ts (2 tests) 84ms
- ✓ tests/unit/root-page.test.ts (1 test) 51ms
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > angry tone -> HIGH priority ticket created
+handoff_tickets insert error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'ai_summary' column of 'handoff_tickets' in the schema cache"[39m
+}
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > angry tone -> HIGH priority ticket created
+human_handoffs insert error {
+  code: [32m'22P02'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'invalid input syntax for type uuid: "conv-1"'[39m
+}
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > unclear 3x -> handoff auto-triggered
+readConversationState error {
+  code: [32m'42703'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'column conversations.state_json does not exist'[39m
+}
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > unclear 3x -> handoff auto-triggered
+writeConversationState error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'agent_handling' column of 'conversations' in the schema cache"[39m
+}
+
+stderr | tests/unit/select-product.test.ts > select product > select by index + size
+saveRecommendations failed invalid input syntax for type uuid: "c1"
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > unclear 3x -> handoff auto-triggered
+readConversationState error {
+  code: [32m'42703'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'column conversations.state_json does not exist'[39m
+}
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > unclear 3x -> handoff auto-triggered
+writeConversationState error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'agent_handling' column of 'conversations' in the schema cache"[39m
+}
+
+stderr | tests/unit/select-product.test.ts > select product > select by index + size
+getRecommendations failed invalid input syntax for type uuid: "c1"
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > unclear 3x -> handoff auto-triggered
+readConversationState error {
+  code: [32m'42703'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'column conversations.state_json does not exist'[39m
+}
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > unclear 3x -> handoff auto-triggered
+writeConversationState error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'agent_handling' column of 'conversations' in the schema cache"[39m
+}
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > tool logger strips phone/address from input_summary
+logToolCall insert error {
+  code: [32m'22P02'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'invalid input syntax for type uuid: "conv-3"'[39m
+}
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > duplicate handoff same conversation -> upsert not duplicate
+handoff_tickets insert error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'ai_summary' column of 'handoff_tickets' in the schema cache"[39m
+}
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > duplicate handoff same conversation -> upsert not duplicate
+human_handoffs insert error {
+  code: [32m'22P02'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'invalid input syntax for type uuid: "conv-4"'[39m
+}
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > duplicate handoff same conversation -> upsert not duplicate
+handoff_tickets insert error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'ai_summary' column of 'handoff_tickets' in the schema cache"[39m
+}
+
+stderr | tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > duplicate handoff same conversation -> upsert not duplicate
+human_handoffs insert error {
+  code: [32m'22P02'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'invalid input syntax for type uuid: "conv-4"'[39m
+}
+
+ ❯ tests/unit/handoff-service.test.ts (6 tests | 2 failed) 2098ms
+   ✓ handoff + kill switch + ai tool logs > angry tone -> HIGH priority ticket created  792ms
+   × handoff + kill switch + ai tool logs > unclear 3x -> handoff auto-triggered 879ms
+     → expected +0 to be 1 // Object.is equality
+   ✓ handoff + kill switch + ai tool logs > kill switch on -> true 1ms
+   ✓ handoff + kill switch + ai tool logs > kill switch off -> false 0ms
+   × handoff + kill switch + ai tool logs > tool logger strips phone/address from input_summary 77ms
+     → expected undefined to be 'pajama' // Object.is equality
+   ✓ handoff + kill switch + ai tool logs > duplicate handoff same conversation -> upsert not duplicate 263ms
+stderr | tests/unit/select-product.test.ts > select product > fails safely when mapping expired
+saveRecommendations failed invalid input syntax for type uuid: "c2"
+
+stderr | tests/unit/select-product.test.ts > select product > fails safely when mapping expired
+clearRecommendations failed invalid input syntax for type uuid: "c2"
+
+stderr | tests/unit/select-product.test.ts > select product > fails safely when mapping expired
+getRecommendations failed invalid input syntax for type uuid: "c2"
+
+stderr | tests/unit/select-product.test.ts > select product > blocks out-of-stock selection
+saveRecommendations failed invalid input syntax for type uuid: "c3"
+
+stderr | tests/unit/select-product.test.ts > select product > blocks out-of-stock selection
+getRecommendations failed invalid input syntax for type uuid: "c3"
+
+stderr | tests/unit/select-product.test.ts > select product > supports multi-item selection with one size
+saveRecommendations failed invalid input syntax for type uuid: "c4"
+
+stderr | tests/unit/select-product.test.ts > select product > supports multi-item selection with one size
+getRecommendations failed invalid input syntax for type uuid: "c4"
+
+ ❯ tests/unit/select-product.test.ts (4 tests | 4 failed) 3345ms
+   × select product > select by index + size 1641ms
+     → expected 'M 60-70kg' to be 'XL' // Object.is equality
+   × select product > fails safely when mapping expired 870ms
+     → expected 'added_to_cart' to be 'mapping_expired' // Object.is equality
+   × select product > blocks out-of-stock selection 392ms
+     → expected 'added_to_cart' to be 'oos' // Object.is equality
+   × select product > supports multi-item selection with one size 383ms
+     → expected 'not_found' to be 'added_to_cart' // Object.is equality
+ ❯ tests/integration/message-turn.test.ts (4 tests | 4 failed) 1453ms
+   × message turn integration > text message -> intent -> product search -> reply 299ms
+     → expected undefined to be 'PRODUCT_SEARCH' // Object.is equality
+   × message turn integration > confirm -> idempotency check -> order created 279ms
+     → expected undefined to be 'CONFIRM_ORDER' // Object.is equality
+   × message turn integration > kill switch ON -> immediate handoff 287ms
+     → expected 'duplicate_ignored' to be 'handoff' // Object.is equality
+   × message turn integration > unclear x3 -> auto handoff triggered 541ms
+     → expected 'duplicate_ignored' to be 'handoff' // Object.is equality
+ ❯ tests/unit/failed-events.test.ts (2 tests | 1 failed) 331ms
+   ✓ failed-events route > without auth returns 401 26ms
+   × failed-events route > with auth returns 201 300ms
+     → expected 500 to be 201 // Object.is equality
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > happy path: order created + audit log written
+checkOrderIdempotencyKey error {
+  code: [32m'42703'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'column order_idempotency_keys.shopify_order_id does not exist'[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > happy path: order created + audit log written
+markOrderIdempotencyCreated error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'idempotency_key' column of 'order_idempotency_keys' in the schema cache"[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > happy path: order created + audit log written
+orders insert error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'channel' column of 'orders' in the schema cache"[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > duplicate call returns existing, no second Shopify call
+checkOrderIdempotencyKey error {
+  code: [32m'42703'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'column order_idempotency_keys.shopify_order_id does not exist'[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > duplicate call returns existing, no second Shopify call
+markOrderIdempotencyCreated error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'idempotency_key' column of 'order_idempotency_keys' in the schema cache"[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > duplicate call returns existing, no second Shopify call
+orders insert error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'channel' column of 'orders' in the schema cache"[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > duplicate call returns existing, no second Shopify call
+checkOrderIdempotencyKey error {
+  code: [32m'42703'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'column order_idempotency_keys.shopify_order_id does not exist'[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > OOS recheck blocks order
+checkOrderIdempotencyKey error {
+  code: [32m'42703'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'column order_idempotency_keys.shopify_order_id does not exist'[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > Shopify 429 triggers retry
+checkOrderIdempotencyKey error {
+  code: [32m'42703'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'column order_idempotency_keys.shopify_order_id does not exist'[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > Shopify 429 triggers retry
+markOrderIdempotencyCreated error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'idempotency_key' column of 'order_idempotency_keys' in the schema cache"[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > Shopify 429 triggers retry
+orders insert error {
+  code: [32m'PGRST204'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m"Could not find the 'channel' column of 'orders' in the schema cache"[39m
+}
+
+stderr | tests/unit/shopify-order-service.test.ts > shopify order service > Shopify 500 error returns failure with no fake order
+checkOrderIdempotencyKey error {
+  code: [32m'42703'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'column order_idempotency_keys.shopify_order_id does not exist'[39m
+}
+
+ ✓ tests/unit/shopify-order-service.test.ts (6 tests) 1837ms
+   ✓ shopify order service > happy path: order created + audit log written  1010ms
+   ✓ shopify order service > duplicate call returns existing, no second Shopify call  392ms
+stderr | tests/integration/message-turn-evolution.test.ts > message turn evolution integration > duplicate provider_message_id returns cached result
+logToolCall insert error {
+  code: [32m'22P02'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'invalid input syntax for type uuid: "c-evo-1"'[39m
+}
+
+stderr | tests/integration/message-turn-evolution.test.ts > message turn evolution integration > duplicate provider_message_id returns cached result
+logToolCall insert error {
+  code: [32m'22P02'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'invalid input syntax for type uuid: "c-evo-dup"'[39m
+}
+
+ ✓ tests/integration/message-turn-evolution.test.ts (2 tests) 629ms
+   ✓ message turn evolution integration > duplicate provider_message_id returns cached result  365ms
+stderr | logToolCall (/root/youlya/lib/services/ai-tool-logger.ts:48:24)
+logToolCall insert error {
+  code: [32m'22P02'[39m,
+  details: [1mnull[22m,
+  hint: [1mnull[22m,
+  message: [32m'invalid input syntax for type uuid: "c-evo-dup"'[39m
+}
+
 stdout | tests/unit/evolution-client.test.ts > evolution client > mock mode does not call HTTP
 [MOCK-EVOLUTION] Would send: {"instanceName":"YoulyaMain","remoteJid":"2010@s.whatsapp.net","text":"hi"}
 
- ✓ tests/unit/evolution-client.test.ts (3 tests) 1036ms
-   ✓ evolution client > sendText 429 retries then resolves  1008ms
-stdout | tests/integration/message-turn.test.ts > message turn integration > text message -> intent -> product search -> reply
-[MOCK-EVOLUTION] Would send: {"instanceName":"youlya","remoteJid":"201000000000@s.whatsapp.net","text":"أكيد، دي شوية اختيارات مناسبة: 1) بيجامة شتوي أسود • 2) روب قطن وردي • 3) بوركيني أسود\n\nاختار المنتج اللي عايزه وابعتلي رقمه والمقاس."}
+ ✓ tests/unit/evolution-client.test.ts (3 tests) 1068ms
+   ✓ evolution client > sendText 429 retries then resolves  1006ms
+ ✓ tests/unit/auth-middleware.test.ts (7 tests) 286ms
+ ✓ tests/unit/root-page.test.ts (1 test) 72ms
+ ✓ tests/unit/supabase-browser-client.test.ts (2 tests) 85ms
+ ✓ tests/unit/product-mapping-repository.test.ts (4 tests) 11ms
+ ✓ tests/unit/intent-detector.test.ts (6 tests) 25ms
+ ✓ tests/api/message-turn.test.ts (1 test) 54ms
+ ✓ tests/unit/confirmation.test.ts (2 tests) 33ms
+ ✓ tests/unit/cart-validation.test.ts (6 tests) 24ms
+ ✓ tests/unit/shipping.test.ts (2 tests) 37ms
 
- ✓ tests/api/message-turn.test.ts (1 test) 22ms
-stdout | tests/integration/message-turn.test.ts > message turn integration > confirm -> idempotency check -> order created
-[MOCK-EVOLUTION] Would send: {"instanceName":"youlya","remoteJid":"201000000000@s.whatsapp.net","text":"تمام، الأوردر اتأكد بنجاح."}
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
 
-stdout | tests/integration/message-turn.test.ts > message turn integration > kill switch ON -> immediate handoff
-[MOCK-EVOLUTION] Would send: {"instanceName":"youlya","remoteJid":"201000000000@s.whatsapp.net","text":"هحولك لفريق الدعم دلوقتي."}
+ FAIL  tests/integration/message-turn.test.ts > message turn integration > text message -> intent -> product search -> reply
+AssertionError: expected undefined to be 'PRODUCT_SEARCH' // Object.is equality
 
-stdout | tests/integration/message-turn.test.ts > message turn integration > unclear x3 -> auto handoff triggered
-[MOCK-EVOLUTION] Would send: {"instanceName":"youlya","remoteJid":"201000000000@s.whatsapp.net","text":"هحولك لفريق الدعم دلوقتي."}
+[32m- Expected:[39m 
+"PRODUCT_SEARCH"
 
-stdout | tests/integration/message-turn.test.ts > message turn integration > unclear x3 -> auto handoff triggered
-[MOCK-EVOLUTION] Would send: {"instanceName":"youlya","remoteJid":"201000000000@s.whatsapp.net","text":"هحولك لفريق الدعم دلوقتي."}
+[31m+ Received:[39m 
+undefined
 
-stdout | tests/integration/message-turn.test.ts > message turn integration > unclear x3 -> auto handoff triggered
-[MOCK-EVOLUTION] Would send: {"instanceName":"youlya","remoteJid":"201000000000@s.whatsapp.net","text":"هحولك لفريق الدعم دلوقتي."}
+ ❯ tests/integration/message-turn.test.ts:59:25
+     57|     );
+     58|     const body = (await res.json()) as Record<string, unknown>;
+     59|     expect(body.intent).toBe("PRODUCT_SEARCH");
+       |                         ^
+     60|     expect(body.action).toBe("product_results");
+     61|     expect(Array.isArray(body.toolsCalled)).toBe(true);
 
- ✓ tests/integration/message-turn.test.ts (4 tests) 52ms
- ✓ tests/unit/shipping.test.ts (2 tests) 42ms
- ✓ tests/unit/select-product.test.ts (4 tests) 9ms
- ✓ tests/unit/cart-validation.test.ts (6 tests) 16ms
- ✓ tests/unit/shopify-order-service.test.ts (6 tests) 39ms
- ✓ tests/unit/product-mapping-repository.test.ts (4 tests) 42ms
- ✓ tests/unit/auth-middleware.test.ts (7 tests) 81ms
- ✓ tests/integration/message-turn-evolution.test.ts (2 tests) 49ms
- ✓ tests/unit/handoff-service.test.ts (6 tests) 13ms
- ✓ tests/unit/confirmation.test.ts (2 tests) 9ms
- ✓ tests/unit/failed-events.test.ts (2 tests) 18ms
- ✓ tests/unit/intent-detector.test.ts (6 tests) 9ms
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
 
- Test Files  16 passed (16)
-      Tests  58 passed (58)
-   Start at  21:22:10
-   Duration  6.67s (transform 1.77s, setup 0ms, collect 6.04s, tests 1.57s, environment 10ms, prepare 4.59s)
+ FAIL  tests/integration/message-turn.test.ts > message turn integration > confirm -> idempotency check -> order created
+AssertionError: expected undefined to be 'CONFIRM_ORDER' // Object.is equality
 
-PASS: unit-tests
-Running: validate-scenarios
+[32m- Expected:[39m 
+"CONFIRM_ORDER"
 
-> youlya-phase0-app@2.6.10 validate:scenarios
-> node scripts/validate-scenarios.mjs
+[31m+ Received:[39m 
+undefined
 
-Scenario validation passed.
-{
-  "total": 104,
-  "counts": {
-    "CONV": 94,
-    "DASH": 10
-  }
-}
-PASS: validate-scenarios
-Running: scan-secrets
+ ❯ tests/integration/message-turn.test.ts:93:25
+     91|     );
+     92|     const body = (await res.json()) as Record<string, unknown>;
+     93|     expect(body.intent).toBe("CONFIRM_ORDER");
+       |                         ^
+     94|     expect(body.action).toBe("order_created");
+     95|     expect(body.handoff).toBe(false);
 
-> youlya-phase0-app@2.6.10 scan:secrets
-> node scripts/scan-secrets.mjs
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
 
-Secret scan passed: no obvious live secrets found.
-PASS: scan-secrets
-Running: verify-release
+ FAIL  tests/integration/message-turn.test.ts > message turn integration > kill switch ON -> immediate handoff
+AssertionError: expected 'duplicate_ignored' to be 'handoff' // Object.is equality
 
-> youlya-phase0-app@2.6.10 verify:release
-> node scripts/verify-release.mjs
+Expected: [32m"handoff"[39m
+Received: [31m"duplicate_ignored"[39m
 
-PASS
-- version: v2.6.10
-- versionName: run-approved-shopify-cache-sync-and-validate-product-search
-- releaseFile: RELEASES/v2.6.10-run-approved-shopify-cache-sync-and-validate-product-search.md
-PASS: verify-release
-Running: build
+ ❯ tests/integration/message-turn.test.ts:118:25
+    116|     );
+    117|     const body = (await res.json()) as Record<string, unknown>;
+    118|     expect(body.action).toBe("handoff");
+       |                         ^
+    119|     expect(body.handoff).toBe(true);
+    120|   });
 
-> youlya-phase0-app@2.6.10 build
-> npm run build:info && next build --webpack
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  tests/integration/message-turn.test.ts > message turn integration > unclear x3 -> auto handoff triggered
+AssertionError: expected 'duplicate_ignored' to be 'handoff' // Object.is equality
+
+Expected: [32m"handoff"[39m
+Received: [31m"duplicate_ignored"[39m
+
+ ❯ tests/integration/message-turn.test.ts:143:29
+    141|     }
+    142| 
+    143|     expect(lastBody.action).toBe("handoff");
+       |                             ^
+    144|     expect(lastBody.handoff).toBe(true);
+    145|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  tests/unit/failed-events.test.ts > failed-events route > with auth returns 201
+AssertionError: expected 500 to be 201 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 201[39m
+[31m+ 500[39m
+
+ ❯ tests/unit/failed-events.test.ts:38:24
+     36|       ),
+     37|     );
+     38|     expect(res.status).toBe(201);
+       |                        ^
+     39|   });
+     40| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > unclear 3x -> handoff auto-triggered
+AssertionError: expected +0 to be 1 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1[39m
+[31m+ 0[39m
+
+ ❯ tests/unit/handoff-service.test.ts:37:44
+     35|     await incrementUnclearCount("conv-2", { store_id: "youlya", custom…
+     36|     await incrementUnclearCount("conv-2", { store_id: "youlya", custom…
+     37|     expect(getMockState().handoffs.length).toBe(1);
+       |                                            ^
+     38|     expect(getMockState().handoffs[0]?.reason).toBe("UNCLEAR_3X");
+     39|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  tests/unit/handoff-service.test.ts > handoff + kill switch + ai tool logs > tool logger strips phone/address from input_summary
+AssertionError: expected undefined to be 'pajama' // Object.is equality
+
+[32m- Expected:[39m 
+"pajama"
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/unit/handoff-service.test.ts:70:42
+     68|     expect(logged?.input_summary?.phone).toBeUndefined();
+     69|     expect(logged?.input_summary?.address).toBeUndefined();
+     70|     expect(logged?.input_summary?.query).toBe("pajama");
+       |                                          ^
+     71|   });
+     72| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ FAIL  tests/unit/select-product.test.ts > select product > select by index + size
+AssertionError: expected 'M 60-70kg' to be 'XL' // Object.is equality
+
+Expected: [32m"XL"[39m
+Received: [31m"M 60-70kg"[39m
+
+ ❯ tests/unit/select-product.test.ts:25:35
+     23|     });
+     24|     expect(result.status).toBe("added_to_cart");
+     25|     expect(result.items[0]?.size).toBe("XL");
+       |                                   ^
+     26|   });
+     27| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+
+ FAIL  tests/unit/select-product.test.ts > select product > fails safely when mapping expired
+AssertionError: expected 'added_to_cart' to be 'mapping_expired' // Object.is equality
+
+Expected: [32m"mapping_expired"[39m
+Received: [31m"added_to_cart"[39m
+
+ ❯ tests/unit/select-product.test.ts:46:27
+     44|       testMode: true,
+     45|     });
+     46|     expect(result.status).toBe("mapping_expired");
+       |                           ^
+     47|   });
+     48| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯
+
+ FAIL  tests/unit/select-product.test.ts > select product > blocks out-of-stock selection
+AssertionError: expected 'added_to_cart' to be 'oos' // Object.is equality
+
+Expected: [32m"oos"[39m
+Received: [31m"added_to_cart"[39m
+
+ ❯ tests/unit/select-product.test.ts:66:27
+     64|       testMode: true,
+     65|     });
+     66|     expect(result.status).toBe("oos");
+       |                           ^
+     67|   });
+     68| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯
+
+ FAIL  tests/unit/select-product.test.ts > select product > supports multi-item selection with one size
+AssertionError: expected 'not_found' to be 'added_to_cart' // Object.is equality
+
+Expected: [32m"added_to_cart"[39m
+Received: [31m"not_found"[39m
+
+ ❯ tests/unit/select-product.test.ts:86:27
+     84|       testMode: true,
+     85|     });
+     86|     expect(result.status).toBe("added_to_cart");
+       |                           ^
+     87|     expect(result.items.length).toBe(2);
+     88|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/11]⎯
 
 
-> youlya-phase0-app@2.6.10 build:info
-> node scripts/write-build-info.mjs
-
-build info written: /root/youlya/public/build-info.json
-▲ Next.js 16.2.4 (webpack)
-- Environments: .env.local, .env.production, .env
-
-⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-  Creating an optimized production build ...
-⚠ Compiled with warnings in 12.4s
-
-./app/api/health/route.ts
-Should not import the named export 'version' (imported as 'version') from default-exporting module (only default export is available soon)
-
-Import trace for requested module:
-./app/api/health/route.ts
-
-✓ Compiled successfully in 20.0s
-  Running TypeScript ...
-  Finished TypeScript in 21.2s ...
-  Collecting page data using 3 workers ...
-  Generating static pages using 3 workers (0/35) ...
-  Generating static pages using 3 workers (8/35) 
-  Generating static pages using 3 workers (17/35) 
-  Generating static pages using 3 workers (26/35) 
-✓ Generating static pages using 3 workers (35/35) in 1466ms
-  Finalizing page optimization ...
-  Collecting build traces ...
-
-Route (app)
-┌ ○ /
-├ ○ /_not-found
-├ ƒ /api/admin/handoffs
-├ ƒ /api/admin/settings
-├ ƒ /api/ai/tools/calculate-shipping
-├ ƒ /api/ai/tools/confirm-order
-├ ƒ /api/ai/tools/create-shopify-order
-├ ƒ /api/ai/tools/handoff
-├ ƒ /api/ai/tools/product-search
-├ ƒ /api/ai/tools/select-product
-├ ƒ /api/build-info
-├ ƒ /api/dashboard/conversations
-├ ƒ /api/dashboard/conversations/[id]
-├ ƒ /api/dashboard/conversations/[id]/actions
-├ ƒ /api/dashboard/logs
-├ ƒ /api/dashboard/orders
-├ ƒ /api/dashboard/settings
-├ ƒ /api/dashboard/stats
-├ ƒ /api/health
-├ ƒ /api/internal/failed-events
-├ ƒ /api/internal/messages/turn
-├ ƒ /api/internal/shopify/sync-products
-├ ƒ /api/webhooks/evolution
-├ ƒ /dashboard
-├ ƒ /dashboard/command-center
-├ ƒ /dashboard/devices
-├ ƒ /dashboard/inbox
-├ ƒ /dashboard/logs
-├ ƒ /dashboard/messages
-├ ƒ /dashboard/orders
-├ ƒ /dashboard/orders/[id]/safety
-├ ƒ /dashboard/profile
-├ ƒ /dashboard/security
-├ ƒ /dashboard/settings
-├ ƒ /dashboard/statistics
-└ ○ /login
-
-
-ƒ Proxy (Middleware)
-
-○  (Static)   prerendered as static content
-ƒ  (Dynamic)  server-rendered on demand
-
-PASS: build
-Running: docker-compose-config
-PASS: docker-compose-config
-Running: docker-compose-build
- Image youlya-youlya-app Building 
-#1 [internal] load local bake definitions
-#1 reading from stdin 490B done
-#1 DONE 0.0s
-
-#2 [internal] load build definition from Dockerfile
-#2 transferring dockerfile:
-#2 transferring dockerfile: 556B 0.0s done
-#2 DONE 0.2s
-
-#3 [internal] load metadata for docker.io/library/node:20-alpine
-#3 DONE 1.1s
-
-#4 [internal] load .dockerignore
-#4 transferring context: 45B 0.0s done
-#4 DONE 0.1s
-
-#5 [deps 1/4] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
-#5 DONE 0.0s
-
-#6 [internal] load build context
-#6 transferring context: 192.91MB 4.8s
-#6 transferring context: 237.61MB 9.9s
-#6 transferring context: 238.01MB 15.0s
-#6 transferring context: 238.39MB 20.0s
-#6 transferring context: 239.30MB 25.1s
-#6 transferring context: 240.62MB 30.1s
-#6 transferring context: 241.47MB 35.2s
-#6 transferring context: 241.71MB 40.3s
-#6 transferring context: 242.13MB 45.4s
-#6 transferring context: 242.99MB 50.5s
-#6 transferring context: 243.94MB 58.7s done
-#6 DONE 63.1s
-
-#7 [deps 2/4] WORKDIR /app
-#7 CACHED
-
-#8 [deps 3/4] COPY package*.json ./
-#8 DONE 16.1s
-
-#9 [deps 4/4] RUN npm ci --omit=dev
+ Test Files  4 failed | 12 passed (16)
+      Tests  11 failed | 47 passed (58)
+   Start at  23:30:59
+   Duration  19.58s (transform 5.32s, setup 0ms, collect 18.55s, tests 11.39s, environment 54ms, prepare 9.94s)
 

@@ -4,6 +4,27 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.8.3 |
+| Version Name | n8n-send-text-json-body |
+| Task | fix-n8n-send-text-json-body |
+| Release File | RELEASES/v2.8.3-n8n-send-text-json-body.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.8.2 |
+| Version Name | products-intelligence-page-with-photos-ai-orders-and-channel-insights |
+| Task | products-intelligence-page-with-photos-ai-orders-and-channel-insights |
+| Release File | RELEASES/v2.8.2-products-intelligence-page-with-photos-ai-orders-and-channel-insights.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.8.1 |
+| Version Name | verify-whatsapp-loop-guard-before-real-test |
+| Task | verify-whatsapp-loop-guard-before-real-test |
+| Release File | RELEASES/v2.8.1-verify-whatsapp-loop-guard-before-real-test.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.8.0 |
 | Version Name | products-intelligence-page-with-photos-ai-orders-and-channel-insights |
 | Task | products-intelligence-page-with-photos-ai-orders-and-channel-insights |

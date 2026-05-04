@@ -749,9 +749,128 @@ PROMPT 53 03/05/26
 TASK: run-approved-shopify-cache-sync-and-validate-product-search
 GOAL: Run one approved Shopify product cache sync into Supabase, then validate that product search and selection mapping work from the Supabase cache using exact Shopify product IDs and variant IDs. Owner approved running npm run shopify:sync. This task may upsert Supabase cache only and must not mutate Shopify.
 
+RESULT 53 03/05/26
+STATUS: PASS
+Ran one approved Shopify full sync: 252 products, 1082 variants, 461 missing SKUs, 541 unavailable, 6071ms. DB counts stable, last_synced_at updated. Product search cache test passed with exact Shopify product/variant IDs. Selection mapping test passed for Arabic numeral + Latin/Arabic M inputs, returning exact variant IDs. Fixed mock fallback bug in product-mapping-service and Docker health check via HOSTNAME=0.0.0.0. Released v2.6.10, deployed production, live health/build-info confirm v2.6.10 with container healthy. n8n daily workflow exists and inactive, ready for activation.
+
 PROMPT TBD 2026-05-03
 Release prep for task run-approved-shopify-cache-sync-and-validate-product-search (v2.6.10, run-approved-shopify-cache-sync-and-validate-product-search).
 
 RESULT TBD 2026-05-03
 STATUS: PENDING
 Release file generated: RELEASES/v2.6.10-run-approved-shopify-cache-sync-and-validate-product-search.md
+
+PROMPT TBD 2026-05-03
+Release prep for task products-sync-observability-dashboard (v2.7.0, products-sync-observability-dashboard).
+
+RESULT TBD 2026-05-03
+STATUS: PENDING
+Release file generated: RELEASES/v2.7.0-products-sync-observability-dashboard.md
+
+PROMPT 54 03/05/26
+TASK: activate-n8n-daily-shopify-product-sync
+GOAL: Activate the n8n daily Shopify product sync workflow after the first approved full sync passed. The workflow must refresh Supabase products/product_variants cache only. It must not mutate Shopify and must not create orders.
+
+RESULT 54 03/05/26
+STATUS: PASS
+Activated n8n daily sync workflow (ID: H7l8PiCss9ZeqGug) from inactive to active. Discovered and fixed backwards IF node connections (Dead Letter was on success branch instead of failure). Canonical workflow JSON updated. Internal sync endpoint tested directly and confirmed working (252 products, 1082 variants, 6165ms). DB counts stable. All verification passes (typecheck, lint, tests, scenarios, secrets). n8n daily workflow scheduled for 04:00 daily.
+
+PROMPT TBD 2026-05-03
+Release prep for task activate-n8n-daily-shopify-product-sync (v2.7.1, activate-n8n-daily-shopify-product-sync).
+
+RESULT TBD 2026-05-03
+STATUS: PENDING
+Release file generated: RELEASES/v2.7.1-activate-n8n-daily-shopify-product-sync.md
+
+PROMPT 53 03/05/26
+TASK: products-sync-observability-dashboard
+GOAL: Build a Products & Inventory dashboard module focused on Shopify-synced product cache observability, AI visibility, product search safety, and sync health. This is not a Shopify catalog editor. Shopify remains the source of truth; the dashboard monitors and controls AI selling readiness from the Supabase cache.
+
+RESULT 53 03/05/26
+STATUS: PASS
+TASK: products-sync-observability-dashboard
+PAGES: /dashboard/products (new)
+TABS: Overview, Catalog Cache, Variants, Sync Health, Search QA, Mapping Inspector
+KPIS: Total products, total variants, AI-visible variants, available variants, OOS variants, missing SKU variants, last sync time, cache health score, AI sellable inventory score
+CHARTS: Variant availability distribution, AI visibility funnel
+API ROUTES: GET /api/dashboard/products/overview, GET /api/dashboard/products/catalog, GET /api/dashboard/products/variants, GET /api/dashboard/products/sync-health, GET /api/dashboard/products/mapping-inspector, POST /api/dashboard/products/search-qa
+SECURITY: Dashboard auth required (sb- cookie check), no secrets exposed, customer IDs masked in mapping inspector, no Shopify mutations
+PLAYWRIGHT: /dashboard/products added to UX, a11y/rtl, functional, and API health swarms. All products-specific tests pass.
+TESTS RUN: typecheck PASS, lint PASS (0 errors), unit tests PASS (58/58), validate:scenarios PASS (104), scan:secrets PASS, build PASS, verify:release PASS, docker build PASS, deploy PASS, Playwright products UX PASS, Playwright products a11y PASS (desktop/tablet/mobile), Playwright API health PASS
+BLOCKERS: None
+RISKS: Low — all product sync operations remain read-only from Shopify
+NEXT STEP: Monitor dashboard usage, consider activating n8n daily sync workflow after validation
+MANUAL QA: Dashboard products page verified live on production
+
+PROMPT TBD 2026-05-03
+Release prep for task products-intelligence-page-with-photos-ai-orders-and-channel-insights (v2.8.0, products-intelligence-page-with-photos-ai-orders-and-channel-insights).
+
+RESULT TBD 2026-05-03
+STATUS: PENDING
+Release file generated: RELEASES/v2.8.0-products-intelligence-page-with-photos-ai-orders-and-channel-insights.md
+
+PROMPT 54 03/05/26
+TASK: products-intelligence-page-with-photos-ai-orders-and-channel-insights
+GOAL: Add a dashboard menu page that shows Shopify-synced products with photos, AI order performance notes, and most ordered channel insights across WhatsApp, Instagram, TikTok, and Facebook. Read-only for Shopify. Focused on AI Commerce performance and product intelligence.
+
+RESULT 54 03/05/26
+STATUS: PASS
+TASK: products-intelligence-page-with-photos-ai-orders-and-channel-insights
+ROUTE: /dashboard/products-intelligence
+MENU: ذكاء المنتجات / Products Intelligence (Brain icon)
+KPIS: Total products, total variants, AI-visible products/variants, most ordered by AI, top channel, missing SKU, OOS, AI-assisted revenue, intelligence score
+PRODUCT GALLERY: Photo cards with variant counts, AI visibility, availability, missing SKU, OOS, deterministic notes, badges
+AI ORDER NOTES: Empty state — no order data yet (orders table has 0 rows)
+CHANNEL INSIGHTS: Empty state — no channel orders yet
+CHARTS: N/A (no order data)
+API ROUTES: GET overview, GET products, GET channels, GET product/[id]
+DATA LIMITATIONS: orders=0, order_items=0, ai_tool_calls=0; empty states shown
+TESTS RUN: typecheck PASS, lint PASS (0 errors), unit tests PASS (58/58), scenarios PASS (104), secrets PASS, build PASS, verify:release PASS, deploy PASS
+PLAYWRIGHT: UX PASS, a11y desktop/tablet/mobile PASS, functional PASS, API health PASS
+VERIFY DEPLOY: PASS
+DEPLOY RESULT: v2.8.0 live on production
+HEALTH CHECK: ok
+BUILD INFO CHECK: v2.8.0
+BLOCKERS: None
+RISKS: Low — read-only from Shopify, no fake data
+NEXT STEP: Monitor usage; insights auto-populate when order data available
+MANUAL QA: Dashboard products-intelligence verified live
+
+PROMPT 55 04/05/26
+TASK: products-intelligence-page-with-photos-ai-orders-and-channel-insights
+GOAL: Verify and harden the products-intelligence dashboard page implementation. Ensure all required sections (KPIs, product gallery, AI order notes, channel insights, product detail drawer) are present and working. Add missing unit/API tests for aggregation, channel normalization, generated notes, missing image fallback, no secrets in response, no PII leakage. Add Playwright swarm coverage. Run full verification chain (typecheck, lint, test, validate:scenarios, scan:secrets, build, verify:release, verify:deploy, deploy:production). Update worktime.md and PROGRESS-LOG.md.
+
+PROMPT 56 04/05/26
+TASK: verify-whatsapp-loop-guard-before-real-test
+GOAL: Confirm the active Youlya WhatsApp Main n8n workflow has a hard guard that ignores outgoing Evolution messages and prevents reply loops. Verify workflow active, webhook path youlya-whatsapp, guard node after Webhook, fromMe=true returns no items, fromMe=true does not call Turn Endpoint, fromMe=true does not call Send Text, fromMe=false passes, and no duplicate active workflow uses same webhook.
+
+RESULT 56 04/05/26
+Verified the live `Youlya WhatsApp Main` workflow in n8n is active and uses the `youlya-whatsapp` webhook path. Confirmed the guard node `Guard Inbound Customer Message` sits immediately after `Webhook`. Synthetic webhook execution `9286` (`fromMe=true`) stopped at the guard with `itemsOutput=0`, so it did not reach `Filter Message Type`, `Normalize Message`, `Call Turn Endpoint`, or `Send Text`. Synthetic webhook execution `9287` (`fromMe=false`) passed the guard, reached `Call Turn Endpoint`, then `Prepare Reply` and `Should Send Reply`, and attempted `Send Text` once before the external Evolution API returned a dummy-number 400. Checked active workflow inventory and inspected the other active WhatsApp-flavored workflow; no second active workflow using the same `youlya-whatsapp` path was found. `npm run release:task -- --task "verify-whatsapp-loop-guard-before-real-test" --type patch` generated `RELEASES/v2.8.1-verify-whatsapp-loop-guard-before-real-test.md`, and `npm run verify:release` passed.
+
+PROMPT TBD 2026-05-04
+Release prep for task verify-whatsapp-loop-guard-before-real-test (v2.8.1, verify-whatsapp-loop-guard-before-real-test).
+
+RESULT TBD 2026-05-04
+STATUS: PENDING
+Release file generated: RELEASES/v2.8.1-verify-whatsapp-loop-guard-before-real-test.md
+
+PROMPT TBD 2026-05-04
+Release prep for task products-intelligence-page-with-photos-ai-orders-and-channel-insights (v2.8.2, products-intelligence-page-with-photos-ai-orders-and-channel-insights).
+
+RESULT TBD 2026-05-04
+STATUS: PENDING
+Release file generated: RELEASES/v2.8.2-products-intelligence-page-with-photos-ai-orders-and-channel-insights.md
+
+PROMPT TBD 2026-05-04
+Release prep for task fix-n8n-send-text-json-body (v2.8.3, n8n-send-text-json-body).
+
+RESULT TBD 2026-05-04
+STATUS: PENDING
+Release file generated: RELEASES/v2.8.3-n8n-send-text-json-body.md
+
+PROMPT 57 04/05/26
+TASK: fix-n8n-send-text-json-body
+GOAL: Fix the Youlya WhatsApp Main n8n workflow so Send Text no longer breaks on invalid raw JSON body construction. Backup the live workflow first, insert a Prepare Evolution Payload node before Send Text, switch Send Text to a safe JSON.stringify body expression, and verify with a synthetic webhook only.
+
+RESULT 57 04/05/26
+Backed up the live workflow export to `qa-artifacts/tasks/2026-05-04/fix-n8n-send-text-json-body/backup-youlya-whatsapp-main.json`, then patched the active `Youlya WhatsApp Main` workflow so `Should Send Reply` now routes into `Prepare Evolution Payload` before `Send Text`. `Send Text` now uses a single `JSON.stringify(...)` expression for the body and keeps the Evolution URL and API key env-driven. Ran the exact synthetic webhook with `curl`; the request returned `200`, execution `9371` reached `Prepare Evolution Payload` and `Send Text`, and the only failure was the expected dummy Evolution `400 Bad Request` for the test number. The JSON parameter parsing error is no longer present.

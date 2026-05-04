@@ -1,0 +1,30 @@
+{
+  "route": "/dashboard/products",
+  "heading": "المنتجات والمخزون",
+  "hasH1": true,
+  "title": "YOULYA HOME WEAR Dashboard",
+  "bodyTextLength": 855,
+  "sidebarVisible": true,
+  "contentVisible": true,
+  "shellPresent": true,
+  "footerBuildIdentityVisible": false,
+  "hasArabicText": true,
+  "direction": "rtl",
+  "hasHorizontalOverflow": false,
+  "hasErrorOverlay": false,
+  "hasWeakEmptyState": false,
+  "consoleErrors": [],
+  "realFailedRequests": [],
+  "ignoredNetworkNoise": [
+    {
+      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=1ipce",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    }
+  ],
+  "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-03/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/ux/screenshots/dashboard_products.png",
+  "uxIssues": [
+    "Missing build identity"
+  ]
+}

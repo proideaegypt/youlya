@@ -1,6 +1,6 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.7.1",
+  "version": "2.8.3",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -39,7 +39,7 @@
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "activate-n8n-daily-shopify-product-sync"
+    "youlyaVersionName": "n8n-send-text-json-body"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

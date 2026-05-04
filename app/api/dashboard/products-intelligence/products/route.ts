@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import {
+  computeVariantAggregates,
+  generateProductNotes,
+  generateProductBadges,
+} from "@/lib/services/products-intelligence-service";
 
 function unauthorized() {
   return NextResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -49,7 +54,7 @@ export async function GET(request: Request) {
       .eq("store_id", STORE_ID)
       .in("shopify_product_id", productIds);
 
-    const variantMap = new Map<string, { total: number; available: number; aiVisible: number; missingSku: number; oos: number }>();
+    const variantMap = new Map<string, ReturnType<typeof computeVariantAggregates>>();
     for (const v of variants ?? []) {
       const pid = v.shopify_product_id;
       if (!variantMap.has(pid)) {
@@ -57,29 +62,16 @@ export async function GET(request: Request) {
       }
       const entry = variantMap.get(pid)!;
       entry.total += 1;
-      if (v.inventory_quantity > 0) entry.available += 1;
+      if ((v.inventory_quantity ?? 0) > 0) entry.available += 1;
       if (v.available_for_ai) entry.aiVisible += 1;
       if (v.code_missing) entry.missingSku += 1;
-      if (v.inventory_quantity <= 0) entry.oos += 1;
+      if ((v.inventory_quantity ?? 0) <= 0) entry.oos += 1;
     }
 
-    // Determine notes based on metrics
     const enriched = products.map((p) => {
-      const counts = variantMap.get(p.shopify_product_id) || { total: 0, available: 0, aiVisible: 0, missingSku: 0, oos: 0 };
-      const notes: string[] = [];
-      if (counts.aiVisible === 0) notes.push("غير مرئي للذكاء الاصطناعي");
-      else if (counts.aiVisible > 0 && counts.aiVisible < counts.total) notes.push("بعض المتغيرات غير مرئية للذكاء الاصطناعي");
-      if (counts.missingSku > 0) notes.push("SKU مفقود في " + counts.missingSku + " متغير");
-      if (counts.oos > 0 && counts.oos === counts.total) notes.push("كل المتغيرات نفذت من المخزون");
-      else if (counts.oos > 0) notes.push("متغيرات نفذت من المخزون: " + counts.oos);
-      if (counts.aiVisible > 0 && counts.oos === 0 && counts.missingSku === 0) notes.push("جاهز للبيع بالذكاء الاصطناعي");
-
-      const badges: string[] = [];
-      if (counts.aiVisible > 0 && counts.oos === 0 && counts.missingSku === 0) badges.push("ai_ready");
-      if (counts.missingSku > 0) badges.push("missing_sku");
-      if (counts.oos > 0) badges.push("oos");
-      if (counts.available > 0 && counts.available <= 3) badges.push("low_stock");
-      if (!p.ai_visible) badges.push("hidden_from_ai");
+      const counts = variantMap.get(p.shopify_product_id) ?? { total: 0, available: 0, aiVisible: 0, missingSku: 0, oos: 0 };
+      const notes = generateProductNotes(counts);
+      const badges = generateProductBadges(p.ai_visible ?? true, counts);
 
       return {
         shopifyProductId: p.shopify_product_id,

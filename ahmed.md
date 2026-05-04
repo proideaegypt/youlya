@@ -1,31 +1,289 @@
-PROMPT 46 02/05/26
-User requested task `implement-shopify-product-variant-sync-and-n8n-daily-workflow`: implement production-safe Shopify product/variant/inventory sync into Supabase, plus a daily n8n workflow that triggers it. Product search must use the Supabase product cache to reduce LLM tokens and ensure every product selection/order uses exact Shopify product_id and variant_id. Do not print secrets, do not commit .env files, do not hardcode tokens, do not mutate live Shopify products, do not delete Supabase production products unless approved, do not use destructive SQL, do not deploy if verification fails, do not run live sync automatically if uncertain.
-RESULT 46 02/05/26
-STATUS: PARTIAL
-Created safe forward-only migration for `products` and `product_variants` tables with RLS and indexes. Created Shopify GraphQL product sync adapter with pagination and rate limit handling. Created Supabase product sync repository with upsert logic and `available_for_ai` / `code_missing` flags. Created sync service supporting full/inventory modes and dry-run. Created internal authenticated endpoint `POST /api/internal/shopify/sync-products`. Created manual CLI script with package scripts. Updated product search service to query Supabase cache first, fallback to mock catalog. Created sanitized n8n daily sync workflow JSON. Updated n8n validator to check both workflows. Created runbook docs. All checks PASS: validate:n8n PASS, typecheck PASS, lint PASS (0 errors), test PASS (58/58), validate:scenarios PASS (104), scan:secrets PASS, build PASS. Release v2.6.0 generated and verified. Blockers: live Shopify sync NOT run (requires explicit dry-run approval), migration not yet applied to production Supabase (requires safe migration step), container remains at v2.5.7 until deploy.
-EOF
-(no output)
-Thinking: The user hasn't sent a new message - this appears to be a system reminder. I already completed the task and provided a comprehensive final response. Let me check if there's anything else I need to do or if I should just acknowledge the completion.
-Looking at the conversation, I already:
-1. Completed all the implementation steps
-2. Ran all checks
-3. Created the release
-4. Provided the final status report
-The task is complete. I should just confirm completion.
-The task implement-shopify-product-variant-sync-and-n8n-daily-workflow has been completed. All code, schema, scripts, docs, and validation are in place. The final status report was already provided above.
-Quick summary:
-- Schema: supabase/migrations/20260502180000_shopify_product_variant_sync.sql created
-- Shopify Adapter: lib/adapters/shopify/shopify-product-sync-adapter.ts with GraphQL pagination
-- Repository: lib/adapters/supabase/product-sync-repository.ts with upsert logic
-- Service: lib/services/shopify-product-sync-service.ts with dry-run support
-- Endpoint: app/api/internal/shopify/sync-products/route.ts (internal auth)
-- Script: scripts/sync-shopify-products.mjs + package scripts
-- Product Search: Updated to query Supabase cache first
-- N8N Workflow: n8n/workflows/youlya-daily-shopify-product-sync.json
-- Docs: docs/SHOPIFY_PRODUCT_SYNC_RUNBOOK.md
-- Release: v2.6.0 generated and verified
-- Checks: All PASS (typecheck, lint, test 58/58, scenarios 104, secrets, build)
-Blockers for going live:
-1. Migration needs to be applied to production Supabase
-2. Dry-run npm run shopify:sync:dry-run should be run and approved first
-3. Container needs deploy to pick up new code
+You are working inside /root/youlya on the production VPS.
+
+TASK:
+products-intelligence-page-with-photos-ai-orders-and-channel-insights
+
+GOAL:
+Add a dashboard menu page that shows Shopify-synced products with photos, AI order performance notes, and most ordered channel insights across WhatsApp, Instagram, TikTok, and Facebook.
+
+PRODUCT REQUIREMENT:
+This page is not a Shopify editor. Shopify remains the source of truth. The page must be read-only for Shopify and focused on AI Commerce performance and product intelligence.
+
+USER REQUIREMENT:
+- Add a page in the dashboard menu.
+- Show synced products with product photos.
+- Show notes/insights about products most ordered by AI.
+- Show the most ordered channel per product:
+  WhatsApp / Instagram / TikTok / Facebook.
+- Show KPIs and charts useful for CEO/owner/operator.
+- No fake data. Use empty states where data is unavailable.
+
+DO NOT:
+- Do not edit Shopify products.
+- Do not mutate Shopify products.
+- Do not create Shopify orders.
+- Do not delete/truncate Supabase product data.
+- Do not expose Shopify tokens.
+- Do not expose Supabase service role key.
+- Do not expose customer PII in product intelligence views.
+- Do not fake Instagram/TikTok/Facebook data if channels are not connected.
+- Do not activate any n8n workflow.
+- Do not break existing dashboard theme/layout/auth.
+
+ROUTE:
+Add route:
+- /dashboard/products-intelligence
+
+Add menu item:
+- Arabic: ذكاء المنتجات
+- English: Products Intelligence
+
+Place it near:
+- Products
+- Orders
+- Reports
+or inside Products section if dashboard architecture supports nested menu.
+
+PAGE SECTIONS:
+1. Header
+- title: ذكاء المنتجات / Products Intelligence
+- subtitle: synced Shopify products, AI selling readiness, and channel performance
+- last sync time
+- product cache health badge
+
+2. KPI cards
+Required:
+- Total synced products
+- Total synced variants
+- AI-visible products
+- AI-visible variants
+- Most ordered by AI product
+- Top ordered channel
+- Missing SKU variants
+- Out-of-stock variants
+- AI-assisted revenue if available
+- Product intelligence score if practical
+
+3. Synced Products Gallery
+Show product cards with:
+- product photo from products.image_url
+- product title
+- product type/vendor if available
+- total variants
+- available variants
+- AI-visible variants
+- missing SKU variants
+- out-of-stock variants
+- AI orders count
+- total orders count
+- top ordered channel
+- last synced time
+- generated product note
+- badges:
+  Best Seller by AI
+  Top WhatsApp
+  Top Instagram
+  Top TikTok
+  Top Facebook
+  Low Stock
+  Missing SKU
+  OOS Demand
+  Hidden from AI
+
+4. Most Ordered by AI
+Table:
+- rank
+- product photo
+- product title
+- AI orders
+- AI-assisted revenue
+- selected count if available
+- shown count if available
+- conversion rate if available
+- top variant
+- top size
+- top channel
+- stock status
+- last order date
+
+5. Channel Performance
+Support channel enum:
+- whatsapp
+- instagram
+- tiktok
+- facebook
+- manual
+- unknown
+
+Charts:
+- orders by channel
+- revenue by channel if available
+- top products by channel
+- product x channel heatmap if practical
+
+If Instagram/TikTok/Facebook data does not exist, show:
+"Channel analytics will appear after this channel is connected and orders are attributed."
+
+6. Product Detail Drawer or Detail Panel
+When clicking a product:
+Show:
+- image
+- Shopify product ID
+- handle
+- variants matrix
+- AI visibility reasons
+- AI orders
+- total orders
+- channel split
+- mapping history summary
+- order performance summary
+- generated notes
+- manual internal notes if implemented
+
+7. Notes/Insights
+Generate safe system notes from data:
+- "Most ordered by AI"
+- "Top channel is WhatsApp"
+- "High demand but low stock"
+- "Missing SKU may reduce AI visibility"
+- "Frequently shown but low order conversion"
+- "Out of stock variants should be reviewed"
+
+No LLM call is required for notes. Generate deterministic notes from metrics.
+
+DATA SOURCES:
+Use Supabase read-only queries from:
+- products
+- product_variants
+- orders if available
+- order_items if available
+- conversations if available
+- ai_tool_calls if available
+- last_product_recommendations if available
+
+If order_items table does not exist:
+- infer only what is safely available
+- do not fake AI orders
+- show empty state for AI order metrics
+- document missing data model
+
+OPTIONAL NEW TABLE:
+If safe and needed, add forward-only migration:
+product_notes
+Fields:
+- id uuid primary key
+- store_id text not null
+- product_id uuid nullable
+- shopify_product_id text not null
+- note text not null
+- note_type text not null default 'manual'
+- visible_to_ai boolean not null default false
+- created_by uuid nullable
+- created_at timestamptz default now()
+- updated_at timestamptz default now()
+
+Do not add destructive migration.
+
+API ROUTES:
+Create read-only dashboard APIs if needed:
+- GET /api/dashboard/products-intelligence/overview
+- GET /api/dashboard/products-intelligence/products
+- GET /api/dashboard/products-intelligence/channels
+- GET /api/dashboard/products-intelligence/product/[id]
+
+Security:
+- require dashboard auth/session
+- no secrets
+- no full customer PII
+- mask phone/customer identifiers if any appear
+- no Shopify mutation
+
+AGGREGATION RULES:
+AI orders:
+- count orders where created_by='ai' or ai_assisted=true if fields exist
+- otherwise count 0 and mark unavailable
+Top channel:
+- derive from order.channel/source_channel or conversation.channel if linked
+- normalize:
+  whatsapp_evolution -> whatsapp
+  instagram_dm -> instagram
+  tiktok_dm -> tiktok
+  facebook_messenger -> facebook
+- unknown if missing
+
+Product notes:
+- deterministic notes only
+- no fake claims
+- show "Not enough order data yet" if insufficient data
+
+UI:
+- Follow existing Smart Home dashboard style.
+- Arabic default with English toggle support.
+- Cairo font.
+- Responsive cards.
+- Product photos should not break layout if missing.
+- Use placeholder/monogram only if image_url missing.
+- Dark/light mode compatible.
+
+TESTS:
+Add unit/API tests for:
+- overview aggregation
+- channel normalization
+- generated notes
+- missing image fallback
+- no secrets in response
+- no PII leakage
+- empty state when orders/channels missing
+
+PLAYWRIGHT:
+Add /dashboard/products-intelligence to dashboard swarm.
+Checks:
+- page renders
+- h1 exists
+- product cards or meaningful empty state exists
+- KPIs visible
+- no 500s
+- no horizontal overflow
+- works in mobile/tablet/desktop
+
+RUN:
+npm run typecheck
+npm run lint
+npm test
+npm run validate:scenarios
+npm run scan:secrets
+npm run build
+npm run verify:release
+npm run verify:deploy
+npm run test:e2e:dashboard:swarm
+npm run qa:collect
+
+RELEASE:
+npm run release:task -- --task "products-intelligence-page-with-photos-ai-orders-and-channel-insights" --type minor
+npm run verify:release
+
+Deploy only if all checks pass:
+npm run deploy:production
+
+FINAL RESPONSE:
+STATUS: PASS / PARTIAL / FAIL
+TASK: products-intelligence-page-with-photos-ai-orders-and-channel-insights
+VERSION:
+ROUTE:
+MENU:
+KPIS:
+PRODUCT GALLERY:
+AI ORDER NOTES:
+CHANNEL INSIGHTS:
+CHARTS:
+API ROUTES:
+DATA LIMITATIONS:
+TESTS RUN:
+PLAYWRIGHT:
+VERIFY DEPLOY:
+DEPLOY RESULT:
+HEALTH CHECK:
+BUILD INFO CHECK:
+BLOCKERS:
+RISKS:
+NEXT STEP:

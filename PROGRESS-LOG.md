@@ -1879,3 +1879,87 @@ Tests passed:
 Tests failed/skipped:
 Blockers:
 Next step:
+
+## 2026-05-03 — products-sync-observability-dashboard
+
+Date: 2026-05-03
+Phase:
+Task: products-sync-observability-dashboard
+Version: v2.7.0
+Version Name: products-sync-observability-dashboard
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-03 — activate-n8n-daily-shopify-product-sync
+
+Date: 2026-05-03
+Phase:
+Task: activate-n8n-daily-shopify-product-sync
+Version: v2.7.1
+Version Name: activate-n8n-daily-shopify-product-sync
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-03 — products-intelligence-page-with-photos-ai-orders-and-channel-insights
+
+Date: 2026-05-03
+Phase:
+Task: products-intelligence-page-with-photos-ai-orders-and-channel-insights
+Version: v2.8.0
+Version Name: products-intelligence-page-with-photos-ai-orders-and-channel-insights
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — verify-whatsapp-loop-guard-before-real-test
+
+Date: 2026-05-04
+Phase:
+Task: verify-whatsapp-loop-guard-before-real-test
+Version: v2.8.1
+Version Name: verify-whatsapp-loop-guard-before-real-test
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — products-intelligence-page-with-photos-ai-orders-and-channel-insights
+
+Date: 2026-05-04
+Phase:
+Task: products-intelligence-page-with-photos-ai-orders-and-channel-insights
+Version: v2.8.2
+Version Name: products-intelligence-page-with-photos-ai-orders-and-channel-insights
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — fix-n8n-send-text-json-body
+
+Date: 2026-05-04
+Phase:
+Task: fix-n8n-send-text-json-body
+Version: v2.8.3
+Version Name: n8n-send-text-json-body
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
