@@ -22,7 +22,7 @@ Webhook → Guard → Filter → Normalize → Call Turn Endpoint → Haidi AI S
 - **Type**: `n8n-nodes-base.openAi` (Chat Model) or `n8n-nodes-base.agent` (AI Agent)
 - **Position**: After Call Turn Endpoint, before Prepare Reply
 - **Input**: `$json` from Call Turn Endpoint (contains reply, action, intent, haidi_context)
-- **System Prompt**: Loaded from `docs/HAIDI_AI_SALES_AGENT_PROMPT.md`
+- **System Prompt**: Loaded from `haidi_context.prompt.currentPrompt` sent by the app; repo fallback is `docs/HAIDI_AI_SALES_AGENT_PROMPT.md`
 - **User Prompt**: JSON.stringify of app response + haidi_context
 - **Model**: gpt-4o-mini or gpt-4o (configurable via env `HAIDI_MODEL`)
 - **Temperature**: 0.7

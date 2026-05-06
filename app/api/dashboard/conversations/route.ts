@@ -9,6 +9,11 @@ export async function GET(req: Request) {
 
   const url = new URL(req.url);
   const filter = url.searchParams.get("filter") ?? "all";
+  const channel = url.searchParams.get("channel") ?? "";
+  const assignee = url.searchParams.get("assignee") ?? "";
+  const search = url.searchParams.get("search") ?? "";
+  const from = url.searchParams.get("from") ?? "";
+  const to = url.searchParams.get("to") ?? "";
   const limit = Math.min(Number(url.searchParams.get("limit") ?? "50"), 100);
   const offset = Number(url.searchParams.get("offset") ?? "0");
 
@@ -17,6 +22,11 @@ export async function GET(req: Request) {
 
   const conversations = await listConversations(storeId, {
     status: filter === "all" ? undefined : filter,
+    channel: channel || undefined,
+    assignee: assignee || undefined,
+    search: search || undefined,
+    from: from || undefined,
+    to: to || undefined,
     limit,
     offset,
   });

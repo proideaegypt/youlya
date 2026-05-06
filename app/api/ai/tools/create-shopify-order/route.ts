@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   }
   await getStoreConfig(ctx.storeId);
 
-  const result = await createCODOrder(parsed.data);
+  const result = await createCODOrder({ ...parsed.data, testMode: parsed.data.testMode ?? false });
   writeAuditLog({
     action: "api.create_shopify_order",
     entityType: "orders",

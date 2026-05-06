@@ -29,12 +29,14 @@ describe("handoff center", () => {
       store_id: "youlya",
       conversation_id: "conv-angry",
       customer_id: "cust-1",
-      reason: "ANGRY_TONE",
+      reason: "MANAGER_REQUEST",
       priority: "HIGH",
       ai_summary: "customer is angry",
+      handoff_type: "manager_request",
+      problem_summary: "customer asked for manager",
     });
     expect(ticket.priority).toBe("HIGH");
-    expect(ticket.reason).toBe("ANGRY_TONE");
+    expect(ticket.reason).toBe("MANAGER_REQUEST");
     expect(ticket.status).toBe("open");
     expect(ticket.assigned_to).toBeNull();
   });
@@ -44,11 +46,13 @@ describe("handoff center", () => {
       store_id: "youlya",
       conversation_id: "conv-human",
       customer_id: "cust-2",
-      reason: "CUSTOMER_REQUEST",
-      priority: "HIGH",
-      ai_summary: "عايزة أكلم حد",
+      reason: "CUSTOMER_SERVICE_REQUEST",
+      priority: "NORMAL",
+      ai_summary: "عايزة خدمة العملاء",
+      handoff_type: "customer_service",
+      problem_summary: "customer asked for customer service",
     });
-    expect(ticket.reason).toBe("CUSTOMER_REQUEST");
+    expect(ticket.reason).toBe("CUSTOMER_SERVICE_REQUEST");
     expect(ticket.status).toBe("open");
   });
 
@@ -57,9 +61,10 @@ describe("handoff center", () => {
       store_id: "youlya",
       conversation_id: "conv-pause",
       customer_id: "cust-3",
-      reason: "CUSTOMER_REQUEST",
-      priority: "HIGH",
+      reason: "CUSTOMER_SERVICE_REQUEST",
+      priority: "NORMAL",
       ai_summary: "handoff requested",
+      handoff_type: "customer_service",
     });
     const paused = await isAIPausedForConversation("conv-pause");
     expect(paused).toBe(true);
@@ -68,19 +73,21 @@ describe("handoff center", () => {
   });
 
   test("return-to-AI resumes and resolves handoff", async () => {
-    const ticket = await createHandoffTicket({
+    await createHandoffTicket({
       store_id: "youlya",
       conversation_id: "conv-return",
       customer_id: "cust-4",
-      reason: "CUSTOMER_REQUEST",
+      reason: "MANAGER_REQUEST",
       priority: "HIGH",
       ai_summary: "return test",
+      handoff_type: "manager_request",
     });
     expect(await isAIPaused("conv-return")).toBe(true);
 
     const result = await returnToAI("conv-return", "staff-ahmed");
     expect(result).toBe(true);
     expect(await isAIPaused("conv-return")).toBe(false);
+    expect(getMockState().handoffs[0]?.status).toBe("returned_to_ai");
 
     const open = await getOpenHandoffs("youlya");
     expect(open.some((t) => t.conversation_id === "conv-return")).toBe(false);
@@ -143,7 +150,7 @@ describe("handoff center", () => {
       store_id: "youlya",
       conversation_id: "conv-a",
       customer_id: "cust-a",
-      reason: "CUSTOMER_REQUEST",
+      reason: "CUSTOMER_SERVICE_REQUEST",
       priority: "HIGH",
       ai_summary: "a",
     });
@@ -151,7 +158,7 @@ describe("handoff center", () => {
       store_id: "other-store",
       conversation_id: "conv-b",
       customer_id: "cust-b",
-      reason: "CUSTOMER_REQUEST",
+      reason: "CUSTOMER_SERVICE_REQUEST",
       priority: "HIGH",
       ai_summary: "b",
     });
@@ -165,7 +172,7 @@ describe("handoff center", () => {
       store_id: "youlya",
       conversation_id: "conv-pii",
       customer_id: "cust-pii",
-      reason: "CUSTOMER_REQUEST",
+      reason: "CUSTOMER_SERVICE_REQUEST",
       priority: "HIGH",
       ai_summary: "test",
     });

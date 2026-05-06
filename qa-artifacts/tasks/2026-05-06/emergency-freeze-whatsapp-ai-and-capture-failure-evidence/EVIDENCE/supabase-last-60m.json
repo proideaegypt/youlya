@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "captured_at": "2026-05-06T01:06:02.292Z",
+    "since": "2026-05-06T00:06:02.291Z"
+  },
+  "store": {
+    "id": "ef77af08-688d-4354-8096-d89f6046f0c2",
+    "slug": "youlya",
+    "ai_enabled": false,
+    "kill_switch_enabled": false,
+    "updated_at": "2026-05-06T01:04:28.754+00:00"
+  },
+  "haidi_settings": {
+    "store_id": "youlya",
+    "global_ai_paused": true,
+    "orders_paused": false,
+    "updated_at": "2026-05-06T01:04:44.109+00:00",
+    "updated_by": "codex_emergency_freeze"
+  },
+  "messages": {
+    "table": "messages",
+    "since": "2026-05-06T00:06:02.291Z",
+    "error": "column messages.metadata does not exist",
+    "count": 0,
+    "rows": []
+  },
+  "conversations": {
+    "table": "conversations",
+    "since": "2026-05-06T00:06:02.291Z",
+    "error": null,
+    "count": 1,
+    "rows": [
+      {
+        "id": "**********50@s.whatsapp.net",
+        "store_id": "youlya",
+        "customer_id": "**********50@s.whatsapp.net",
+        "channel": "whatsapp_evolution",
+        "last_message_at": "2026-05-06T00:29:11.618+00:00",
+        "created_at": "2026-05-06T00:29:11.536+00:00",
+        "updated_at": "2026-05-06T00:29:11.618+00:00"
+      }
+    ]
+  },
+  "handoff_tickets": {
+    "table": "handoff_tickets",
+    "since": "2026-05-06T00:06:02.291Z",
+    "error": "column handoff_tickets.handoff_type does not exist",
+    "count": 0,
+    "rows": []
+  },
+  "ai_tool_calls": {
+    "table": "ai_tool_calls",
+    "since": "2026-05-06T00:06:02.291Z",
+    "error": "column ai_tool_calls.input_json does not exist",
+    "count": 0,
+    "rows": []
+  },
+  "failed_events": {
+    "table": "failed_events",
+    "since": "2026-05-06T00:06:02.291Z",
+    "error": "column failed_events.conversation_id does not exist",
+    "count": 0,
+    "rows": []
+  },
+  "processed_messages": {
+    "table": "processed_messages",
+    "since": "2026-05-06T00:06:02.291Z",
+    "error": "column processed_messages.id does not exist",
+    "count": 0,
+    "rows": []
+  },
+  "dead_letter_log": {
+    "table": "dead_letter_log",
+    "since": "2026-05-06T00:06:02.291Z",
+    "error": "column dead_letter_log.store_id does not exist",
+    "count": 0,
+    "rows": []
+  },
+  "duplicate_provider_message_id": []
+}

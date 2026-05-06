@@ -24,25 +24,39 @@ type Stats = {
   killSwitchStatus: "ON" | "OFF";
 };
 
-async function loadStats(): Promise<Stats> {
-  const cookieHeader = (await cookies()).getAll().map((c) => `${c.name}=${c.value}`).join("; ");
-  const res = await fetch(`${process.env.APP_URL ?? "http://127.0.0.1:3000"}/api/dashboard/stats`, {
-    headers: { cookie: cookieHeader },
-    cache: "no-store",
-  });
-  if (!res.ok) {
+type StatsResult = {
+  stats: Stats;
+  fromFallback: boolean;
+};
+
+async function loadStats(): Promise<StatsResult> {
+  try {
+    const cookieHeader = (await cookies()).getAll().map((c) => `${c.name}=${c.value}`).join("; ");
+    const baseUrl = process.env.APP_INTERNAL_URL ?? "http://127.0.0.1:3000";
+    const res = await fetch(`${baseUrl}/api/dashboard/stats`, {
+      headers: { cookie: cookieHeader },
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      throw new Error(`stats API returned ${res.status}`);
+    }
+    return { stats: (await res.json()) as Stats, fromFallback: false };
+  } catch (err) {
+    console.error("loadStats error:", err);
     return {
-      activeConversations: 0,
-      aiActiveConversations: 0,
-      needsHuman: 0,
-      pendingConfirmations: 0,
-      ordersCreatedToday: 0,
-      failedOrderAttempts: 0,
-      duplicateWebhooksBlocked: 0,
-      killSwitchStatus: "OFF",
+      stats: {
+        activeConversations: 0,
+        aiActiveConversations: 0,
+        needsHuman: 0,
+        pendingConfirmations: 0,
+        ordersCreatedToday: 0,
+        failedOrderAttempts: 0,
+        duplicateWebhooksBlocked: 0,
+        killSwitchStatus: "OFF",
+      },
+      fromFallback: true,
     };
   }
-  return res.json();
 }
 
 function KpiWidget({
@@ -96,7 +110,7 @@ function QuickAction({
       <Icon className="size-6 text-brand dark:text-white transition-colors" />
       <div>
         <div className="text-sm font-semibold text-foreground">{title}</div>
-        <div className="text-xs text-muted-foreground">Quick Action</div>
+        <div className="text-xs text-muted-foreground">إجراء سريع</div>
       </div>
     </>
   );
@@ -115,7 +129,7 @@ function QuickAction({
 }
 
 export default async function CommandCenterPage() {
-  const stats = await loadStats();
+  const { stats, fromFallback } = await loadStats();
   const conversion = stats.activeConversations > 0 ? Math.round((stats.ordersCreatedToday / stats.activeConversations) * 100) : 0;
   const revenue = stats.ordersCreatedToday * 640;
 
@@ -137,6 +151,14 @@ export default async function CommandCenterPage() {
 
   return (
     <div className="space-y-5">
+      {fromFallback ? (
+        <div className="flex items-center gap-3 rounded-2xl bg-amber-500/10 p-4 text-amber-600">
+          <AlertTriangle className="h-5 w-5" />
+          <p className="text-sm font-medium">
+            تعذر تحميل الإحصائيات الحية. يتم عرض أرقام مؤقتة.
+          </p>
+        </div>
+      ) : null}
       {/* Welcome Card */}
       <section className="relative overflow-hidden rounded-3xl bg-sidebar-gradient p-6 text-white">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -202,10 +224,10 @@ export default async function CommandCenterPage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <QuickAction icon={Shield} title="غرفة الطيار" href="/dashboard/pilot-control" />
-                <QuickAction icon={MessageCircle} title="Open Inbox" href="/dashboard/inbox" />
-                <QuickAction icon={ShoppingBag} title="View Orders" />
-                <QuickAction icon={FileText} title="Check Logs" />
-                <QuickAction icon={Settings} title="Open Settings" />
+                <QuickAction icon={MessageCircle} title="فتح الرسائل" href="/dashboard/inbox" />
+                <QuickAction icon={ShoppingBag} title="عرض الطلبات" />
+                <QuickAction icon={FileText} title="مراجعة السجلات" />
+                <QuickAction icon={Settings} title="فتح الإعدادات" />
               </div>
             </div>
             <div className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
@@ -228,7 +250,7 @@ export default async function CommandCenterPage() {
         <div className="space-y-5">
           {/* AI Control / Kill Switch */}
           <section className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
-            <h2 className="text-sm font-semibold text-foreground mb-3">AI Control</h2>
+            <h2 className="text-sm font-semibold text-foreground mb-3">التحكم في الذكاء الاصطناعي</h2>
             <div className="space-y-3">
               <div className="flex items-center justify-between rounded-xl bg-background p-3 ring-1 ring-border">
                 <div className="flex items-center gap-2">
@@ -240,7 +262,7 @@ export default async function CommandCenterPage() {
               <div className="flex items-center justify-between rounded-xl bg-background p-3 ring-1 ring-border">
                 <div className="flex items-center gap-2">
                   <Zap className="size-5 text-amber-500" />
-                  <span className="text-sm font-medium">Kill Switch</span>
+                  <span className="text-sm font-medium">إيقاف الطيار</span>
                 </div>
                 <span className={`text-xs font-semibold ${stats.killSwitchStatus === "OFF" ? "text-emerald-500" : "text-red-400"}`}>
                   {stats.killSwitchStatus}
@@ -276,7 +298,7 @@ export default async function CommandCenterPage() {
       {stats.failedOrderAttempts === 0 && stats.pendingConfirmations === 0 ? (
         <div className="flex items-center gap-3 rounded-2xl bg-emerald-500/10 p-4 text-emerald-500">
           <Shield className="h-5 w-5" />
-          <p className="text-sm font-medium">All systems operational. No alerts.</p>
+          <p className="text-sm font-medium">كل الأنظمة تعمل ولا توجد تنبيهات.</p>
         </div>
       ) : null}
     </div>

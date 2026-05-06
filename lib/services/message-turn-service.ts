@@ -3,11 +3,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { getMockState } from "@/lib/adapters/supabase/mock-store";
 import { createHandoffTicket } from "@/lib/services/handoff-service";
+import { evaluateHandoffPolicy } from "@/lib/services/handoff-policy-service";
 import { incrementUnclearCount, resetUnclearCount } from "@/lib/services/conversation-state-service";
 import { createCODOrder } from "@/lib/services/shopify-order-service";
 import { detectIntent } from "@/lib/services/intent-detector";
 import { isKillSwitchEnabled } from "@/lib/services/kill-switch-service";
 import { isAiEnabled } from "@/lib/services/ai-settings-service";
+import { getHaidiSettings } from "@/lib/services/haidi-settings-service";
 import { logToolCall } from "@/lib/services/ai-tool-logger";
 import { parseConfirmationMessage } from "@/lib/services/confirmation-parser";
 import { searchProducts } from "@/lib/services/product-search-service";
@@ -125,31 +127,21 @@ function summarizeConfirmation(language: string): string {
   return isArabic(language) ? "تمام، الأوردر اتأكد بنجاح." : "Confirmed, the order is now placed.";
 }
 
-function summarizeHandoff(language: string): string {
-  return isArabic(language) ? "تمام، هحوّلك لزميل بشري دلوقتي." : "I'm handing this over to a human agent now.";
-}
-
 function summarizeClarify(language: string): string {
   return isArabic(language) ? "ممكن توضحي أكثر؟" : "Could you clarify a bit more?";
 }
 
-function looksLikeHumanHandoffRequest(text: string): boolean {
-  const normalized = text.trim().toLowerCase();
-  if (!normalized) return false;
+function supportReplyWhenHandoffDisabled(language: string): string {
+  return isArabic(language)
+    ? "تمام يا فندم، ممكن أساعدك في تفاصيل المنتج أو المقاس هنا."
+    : "Sure, I can help with product details or sizing here.";
+}
 
-  const patterns = [
-    /كلم\s+حد/i,
-    /أكلم\s+حد/i,
-    /عايز(?:ة)?\s+حد/i,
-    /محتاج(?:ة|ه)?\s+حد/i,
-    /خدمة\s*العملاء/i,
-    /human/i,
-    /agent/i,
-    /representative/i,
-    /موظف/i,
-  ];
-
-  return patterns.some((pattern) => pattern.test(normalized));
+function pausedConversationReply(language: string, outboundEnabled: boolean): string {
+  if (!outboundEnabled) return "";
+  return isArabic(language)
+    ? "طلبك مع فريق Youlya، وهيتم التواصل معاكي في أقرب وقت."
+    : "Your request is with the Youlya team, and we will get back to you soon.";
 }
 
 const REPLY_TEMPLATES = {
@@ -237,7 +229,7 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
   try {
     const result = await runMessageTurnUnsafe(input);
 
-    if (isInternalInput(input) && input.channel === "whatsapp_evolution" && result.reply) {
+    if (isInternalInput(input) && input.channel === "whatsapp_evolution" && result.reply && !input.testMode) {
       try {
         await evolutionClient.sendText(input.instance_name, input.remote_jid, result.reply, input.store_id);
         const sendMedia = Array.isArray((result.data as { sendMedia?: unknown[] } | undefined)?.sendMedia)
@@ -254,10 +246,30 @@ export async function runMessageTurn(input: MessageTurnInput): Promise<MessageTu
       }
     }
 
+    console.log(
+      JSON.stringify({
+        level: "metric",
+        event: "message_turn_completed",
+        store_id: isInternalInput(input) ? input.store_id : undefined,
+        action: result.action,
+        intent: result.intent,
+        handoff: result.handoff,
+        toolsCalled: result.toolsCalled,
+      }),
+    );
+
     return result;
   } catch (error) {
     const err = error instanceof Error ? error : new Error("Unhandled runMessageTurn error");
     await logFailedTurn(input, err);
+    console.log(
+      JSON.stringify({
+        level: "metric",
+        event: "message_turn_error",
+        store_id: isInternalInput(input) ? input.store_id : undefined,
+        error: err.message,
+      }),
+    );
     return {
       intent: "error",
       toolsCalled: [],
@@ -302,14 +314,15 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
   }
 
   // FLOW ORDER:
-  // 1. kill switch check
-  // 2. human handoff status check (with test isolation cleanup)
-  // 3. angry tone check (tone field only, not _preconditions)
-  // 4. unclear_3x precondition shortcut
-  // 5. intent detection
-  // 6. route to service
+  // 1. kill switch / AI pause gates
+  // 2. explicit handoff policy
+  // 3. intent detection
+  // 4. route to service
   const storeKey = input.store_id;
-  const conversationId = input.conversation_id;
+  const conversationId = input.conversation_id?.trim();
+  if (!conversationId) {
+    throw new Error("missing_conversation_id");
+  }
   const customerId = input.customer_id;
   const language = input.language;
   const tone = input.tone;
@@ -336,62 +349,18 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     throw new Error("Forced internal error from preconditions");
   }
 
-  // angry_tone precondition = context metadata only, not a handoff trigger
-  // The AI should still reply normally (see CONV-082 expected: action=ai_reply)
-  if (input._preconditions?.angry_tone === true) {
-    const haidiContextAngryTone = buildHaidiContext({
-      language,
-      customerText: input.text,
-      action: "ai_reply",
-      intent: "OTHER",
-    });
-    return {
-      intent: "OTHER",
-      toolsCalled: [],
-      reply: resolveFallbackReply(input.text, language),
-      handoff: false,
-      action: "ai_reply",
-      data: { intent: "OTHER" },
-      haidi_context: haidiContextAngryTone,
-    };
-  }
-
   const killSwitchOn = input._preconditions?.kill_switch_on === true || (await isKillSwitchEnabled(storeKey));
   if (killSwitchOn) {
-    const ticket = await createHandoffTicket({
-      store_id: storeKey,
-      conversation_id: conversationId,
-      customer_id: customerId,
-      reason: "KILL_SWITCH",
-      priority: "HIGH",
-      ai_summary: "Kill switch enabled",
-    });
-    logTool({
-      store_id: storeKey,
-      conversation_id: conversationId,
-      tool_name: "handoff",
-      input_summary: { reason: "KILL_SWITCH" },
-      output_summary: { ticketId: ticket.id },
-      status: "ok",
-      latency_ms: 0,
-    });
-    const haidiContextKillSwitch = buildHaidiContext({
-      language,
-      customerText: input.text,
-      action: "handoff",
-      intent: "KILL_SWITCH",
-    });
     return {
-      intent: "handoff",
-      toolsCalled: ["handoff"],
-      reply: "هحولك لفريق الدعم دلوقتي.",
-      handoff: true,
-      action: "handoff",
-      data: { ticket },
-      haidi_context: haidiContextKillSwitch,
+      intent: "ai_disabled",
+      toolsCalled: [],
+      reply: isArabic(language) ? "الخدمة متوقفة مؤقتاً، بنرجع قريب." : "Service is temporarily paused, we will be back soon.",
+      handoff: false,
+      action: "ai_disabled",
     };
   }
 
+  const handoffSettings = await getHaidiSettings(storeKey);
   const handoffStatus = getMockState().conversationStatus.get(conversationId);
   // Clear stale state when _preconditions are present (test isolation)
   if (input._preconditions) {
@@ -402,7 +371,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     return {
       intent: "handoff",
       toolsCalled: [],
-      reply: replyFor(language, "العميلة تحت متابعة زميل بشري الآن.", "This conversation is already under human care."),
+      reply: pausedConversationReply(language, handoffSettings.sendHandoffAcknowledgement),
       handoff: true,
       action: "handoff",
     };
@@ -413,107 +382,68 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     return {
       intent: "handoff",
       toolsCalled: [],
-      reply: replyFor(language, "العميلة تحت متابعة زميل بشري الآن. ممكن ترجع للـ AI لاحقاً.", "This conversation is under human care. You can return to AI later."),
+      reply: pausedConversationReply(language, handoffSettings.sendHandoffAcknowledgement),
       handoff: true,
       action: "handoff",
     };
   }
 
-  if (looksLikeHumanHandoffRequest(input.text)) {
+  const handoffPolicy = evaluateHandoffPolicy(input.text);
+
+  if (handoffPolicy.shouldHandoff && handoffSettings.humanHandoffEnabled) {
+    const isManagerRequest = handoffPolicy.handoffType === "manager_request";
+    const isCustomerServiceRequest = handoffPolicy.handoffType === "customer_service";
+    if ((isCustomerServiceRequest && !handoffSettings.handoffCustomerServiceEnabled) || (isManagerRequest && !handoffSettings.handoffManagerRequestEnabled)) {
+      return {
+        intent: "OTHER",
+        toolsCalled: [],
+        reply: supportReplyWhenHandoffDisabled(language),
+        handoff: false,
+        action: "ai_reply",
+        data: { handoff_policy: handoffPolicy, handoff_enabled: false },
+      };
+    }
+
     const ticket = await createHandoffTicket({
       store_id: storeKey,
       conversation_id: conversationId,
       customer_id: customerId,
-      reason: "CUSTOMER_REQUEST",
-      priority: "HIGH",
+      reason: isManagerRequest ? "MANAGER_REQUEST" : "CUSTOMER_SERVICE_REQUEST",
+      priority: handoffPolicy.priority === "high" ? "HIGH" : "NORMAL",
       ai_summary: input.text,
+      handoff_type: handoffPolicy.handoffType,
+      problem_summary: handoffPolicy.problemSummary,
+      pause_ai_after_handoff: handoffSettings.pauseAiAfterHandoff,
+      notify_human_team: handoffSettings.notifyHumanTeam,
+      default_assignee: handoffSettings.defaultHandoffAssignee,
     });
     logTool({
       store_id: storeKey,
       conversation_id: conversationId,
       tool_name: "handoff",
-      input_summary: { reason: "CUSTOMER_REQUEST", text: input.text },
+      input_summary: { reason: handoffPolicy.reason, handoffType: handoffPolicy.handoffType, text: input.text },
       output_summary: { ticketId: ticket.id },
       status: "ok",
       latency_ms: 0,
     });
-    const haidiContextRequest = buildHaidiContext({
+    const haidiContextRequest = await buildHaidiContext({
       language,
       customerText: input.text,
       action: "handoff",
-      intent: "HANDOFF_REQUEST",
+      intent: handoffPolicy.handoffType === "manager_request" ? "MANAGER_REQUEST" : "CUSTOMER_SERVICE_REQUEST",
     });
+    const initialReply = isManagerRequest
+      ? handoffSettings.managerRequestReplyTemplateAr
+      : handoffSettings.customerServiceReplyTemplateAr;
+    const finalAck = handoffSettings.sendHandoffAcknowledgement ? `\n${handoffSettings.handoffFinalAckTemplateAr}` : "";
     return {
       intent: "handoff",
       toolsCalled: ["handoff"],
-      reply: REPLY_TEMPLATES.handoff,
+      reply: `${initialReply}${finalAck}`,
       handoff: true,
       action: "handoff",
-      data: { ticket },
+      data: { ticket, handoffPolicy, ai_paused: handoffSettings.pauseAiAfterHandoff },
       haidi_context: haidiContextRequest,
-    };
-  }
-
-  // angry tone: only triggered by actual tone field, NOT by _preconditions.angry_tone
-  // _preconditions.angry_tone is context metadata only (test describes the situation,
-  // but the expected action is still ai_reply per scenario CONV-082)
-  if (tone === "angry") {
-    const ticket = await createHandoffTicket({
-      store_id: storeKey,
-      conversation_id: conversationId,
-      customer_id: customerId,
-      reason: "ANGRY_TONE",
-      priority: "HIGH",
-      ai_summary: input.text,
-    });
-    logTool({
-      store_id: storeKey,
-      conversation_id: conversationId,
-      tool_name: "handoff",
-      input_summary: { reason: "ANGRY_TONE" },
-      output_summary: { ticketId: ticket.id },
-      status: "ok",
-      latency_ms: 0,
-    });
-    const haidiContextAngry = buildHaidiContext({
-      language,
-      customerText: input.text,
-      action: "handoff",
-      intent: "ANGRY_TONE",
-    });
-    return {
-      intent: "handoff",
-      toolsCalled: ["handoff"],
-      reply: REPLY_TEMPLATES.handoff,
-      handoff: true,
-      action: "handoff",
-      data: { ticket },
-      haidi_context: haidiContextAngry,
-    };
-  }
-
-  // unclear_3x precondition shortcut: the test describes a situation where the customer
-  // has sent unclear messages before; respond with clarify prompt, no handoff yet.
-  if (input._preconditions?.unclear_3x === true) {
-    const unclearCount = await incrementUnclearCount(conversationId, {
-      store_id: storeKey,
-      customer_id: customerId,
-      ai_summary: input.text,
-    });
-    const haidiContextUnclear3x = buildHaidiContext({
-      language,
-      customerText: input.text,
-      action: "ai_reply",
-      intent: "UNCLEAR",
-    });
-    return {
-      intent: "UNCLEAR",
-      toolsCalled: [],
-      reply: summarizeClarify(language),
-      handoff: false,
-      action: "ai_reply",
-      data: { unclearCount },
-      haidi_context: haidiContextUnclear3x,
     };
   }
 
@@ -533,7 +463,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     return {
       intent: "COLLECT_ADDRESS",
       toolsCalled: ["conversation_flow"],
-      reply: await buildOrderSummary(conversationId),
+      reply: await buildOrderSummary(conversationId, storeKey),
       handoff: false,
       action: "ai_reply",
     };
@@ -545,25 +475,14 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       customer_id: customerId,
       ai_summary: input.text,
     });
-    if (unclearCount >= 3) {
-      logTool({
-        store_id: storeKey,
-        conversation_id: conversationId,
-        tool_name: "handoff",
-        input_summary: { reason: "UNCLEAR_3X" },
-        output_summary: { unclearCount },
-        status: "ok",
-        latency_ms: 0,
-      });
-      return {
-        intent: "UNCLEAR",
-        toolsCalled: ["handoff"],
-        reply: summarizeHandoff(language),
-        handoff: true,
-        action: "handoff",
-        data: { unclearCount },
-      };
-    }
+    return {
+      intent: "UNCLEAR",
+      toolsCalled: [],
+      reply: summarizeClarify(language),
+      handoff: false,
+      action: "ai_reply",
+      data: { unclearCount },
+    };
   }
 
   if (intent === "PRODUCT_SEARCH") {
@@ -598,20 +517,25 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       status: "ok",
       latency_ms: Date.now() - start,
     });
-    const haidiContext = buildHaidiContext({
+    const haidiContext = await buildHaidiContext({
       language,
       customerText: input.text,
       action: "product_results",
       intent: "PRODUCT_SEARCH",
       recommendations: result.recommendations,
     });
+    const sendMedia = result.recommendations.slice(0, 5).map((rec) => ({
+      url: rec.imageUrl,
+      caption: `${rec.index}) ${rec.shopifyProductTitle} — ${rec.variantOptions[0]?.price ?? 0} EGP`,
+    })).filter((m) => m.url);
+
     return {
       intent: "PRODUCT_SEARCH",
       toolsCalled: ["product_search"],
       reply: `${summarizeRecommendations(result.recommendations, language)}\n\nاختار المنتج اللي عايزه وابعتلي رقمه والمقاس.`,
       handoff: false,
       action: "product_results",
-      data: { recommendations: result.recommendations, mappingPersisted: true },
+      data: { recommendations: result.recommendations, mappingPersisted: true, send_mode: "media_cards", sendMedia },
       haidi_context: haidiContext,
     };
   }
@@ -661,7 +585,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       }));
       await setCart(conversationId, cartItems);
       await setStage(conversationId, "collecting_address");
-      const haidiContext = buildHaidiContext({
+      const haidiContext = await buildHaidiContext({
         language,
         customerText: input.text,
         action: "ai_reply",
@@ -678,7 +602,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
         haidi_context: haidiContext,
       };
     }
-    const haidiContextSelect = buildHaidiContext({
+    const haidiContextSelect = await buildHaidiContext({
       language,
       customerText: input.text,
       action: result.status === "oos" ? "error" : "ai_reply",
@@ -769,6 +693,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       total: input.total ?? Number.NaN,
       explicit_confirmation_text: input.text,
       idempotency_key: buildIdempotencyKey(input),
+      testMode: input.testMode ?? false,
     };
 
     const start = Date.now();
@@ -795,7 +720,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
 
     if (result.success) {
       const cartItems = getCartItems(cartId).map((item) => ({ title: item.shopifyProductTitle ?? "منتج", price: item.price, size: item.size ?? "N/A" }));
-      const haidiContextOrder = buildHaidiContext({
+      const haidiContextOrder = await buildHaidiContext({
         language,
         customerText: input.text,
         action: "order_created",
@@ -813,15 +738,17 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       };
     }
 
+    const approvalBlocked = result.reason === "owner_approval_required";
     return {
       intent: "CONFIRM_ORDER",
       toolsCalled: ["confirm_order", "create_shopify_order"],
-      reply:
-        result.reason === "out_of_stock"
+      reply: approvalBlocked
+        ? result.reply ?? replyFor(language, "الأوردر جاهز للمراجعة، وفريق Youlya هيأكد معاكِ قبل التنفيذ.", "The order is ready for review and the Youlya team will confirm it before execution.")
+        : result.reason === "out_of_stock"
           ? replyFor(language, "المخزون خلص قبل تأكيد الأوردر.", "The item went out of stock before confirmation.")
           : replyFor(language, "محتاجين بيانات إضافية قبل إنشاء الأوردر.", "We need a bit more information before creating the order."),
       handoff: false,
-      action: "error",
+      action: approvalBlocked ? "owner_approval_required" : "error",
       data: result,
     };
   }
@@ -863,26 +790,6 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
       customer_id: customerId,
       ai_summary: input.text,
     });
-    if (unclearCount >= 3) {
-      logTool({
-        store_id: storeKey,
-        conversation_id: conversationId,
-        tool_name: "handoff",
-        input_summary: { reason: "UNCLEAR_3X" },
-        output_summary: { unclearCount },
-        status: "ok",
-        latency_ms: 0,
-      });
-      return {
-        intent: "UNCLEAR",
-        toolsCalled: ["handoff"],
-        reply: summarizeHandoff(language),
-        handoff: true,
-        action: "handoff",
-        data: { unclearCount },
-      };
-    }
-
     return {
       intent: "UNCLEAR",
       toolsCalled: [],
@@ -903,7 +810,7 @@ async function runMessageTurnUnsafe(input: MessageTurnInput): Promise<MessageTur
     latency_ms: 0,
   });
 
-  const haidiContextFallback = buildHaidiContext({
+  const haidiContextFallback = await buildHaidiContext({
     language,
     customerText: input.text,
     action: "ai_reply",

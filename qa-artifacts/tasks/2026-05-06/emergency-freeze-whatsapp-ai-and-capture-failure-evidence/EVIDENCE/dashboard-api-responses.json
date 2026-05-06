@@ -1,0 +1,14 @@
+{
+  "captured_at": "2026-05-06T01:06:38.557Z",
+  "base": "https://admin.nex-lnk.online",
+  "responses": {
+    "/api/dashboard/pilot-control": {
+      "status": 401,
+      "body": "{\"error\":\"unauthorized\"}"
+    },
+    "/api/dashboard/handoff": {
+      "status": 401,
+      "body": "{\"error\":\"unauthorized\"}"
+    }
+  }
+}

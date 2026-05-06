@@ -10,10 +10,10 @@ export function AiToggleCard({ initialEnabled }: { initialEnabled: boolean }) {
     const next = !enabled;
     setEnabled(next);
     setLoading(true);
-    const res = await fetch("/api/admin/settings", {
+    const res = await fetch("/api/dashboard/pilot/actions", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ ai_enabled: next, store_id: "youlya", updated_by: "dashboard" }),
+      body: JSON.stringify({ action: next ? "resume_haidi" : "pause_haidi", updatedBy: "dashboard_toggle" }),
     });
     if (!res.ok) setEnabled(!next);
     setLoading(false);

@@ -3,7 +3,7 @@
   "heading": "أهلاً بك في YOULYA HOME WEAR",
   "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 1289,
+  "bodyTextLength": 1343,
   "sidebarVisible": true,
   "contentVisible": true,
   "shellPresent": true,
@@ -23,13 +23,91 @@
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/profile?_rsc=1sjum",
+      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=1sjum",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=1sjum",
+      "url": "https://admin.youlya365.com/dashboard/products-intelligence?_rsc=1sjum",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/products?_rsc=1sjum",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=1sjum",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/handoff?_rsc=1sjum",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/statistics?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/security?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/pilot-control?_rsc=1sjum",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/products-intelligence?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/conversations?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/command-center?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/handoff?_rsc=h7hf8",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.youlya365.com/dashboard/pilot-control?_rsc=h7hf8",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"

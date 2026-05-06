@@ -1,33 +1,48 @@
 {
   "route": "/dashboard/pilot-control",
-  "heading": "404",
+  "heading": "غرفة الطيار للواتساب",
   "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 33,
-  "sidebarVisible": false,
-  "contentVisible": false,
-  "shellPresent": false,
+  "bodyTextLength": 1875,
+  "sidebarVisible": true,
+  "contentVisible": true,
+  "shellPresent": true,
   "footerBuildIdentityVisible": false,
-  "hasArabicText": false,
+  "hasArabicText": true,
   "direction": "rtl",
   "hasHorizontalOverflow": false,
   "hasErrorOverlay": false,
   "hasWeakEmptyState": false,
-  "consoleErrors": [
-    "Failed to load resource: the server responded with a status of 404 ()"
-  ],
-  "realFailedRequests": [
+  "consoleErrors": [],
+  "realFailedRequests": [],
+  "ignoredNetworkNoise": [
     {
-      "url": "https://admin.youlya365.com/dashboard/pilot-control",
+      "url": "http://127.0.0.1:3007/dashboard/inbox?_rsc=1ex9s",
       "method": "GET",
-      "status": 404,
-      "statusText": ""
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:3007/dashboard/handoff?_rsc=1ex9s",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:3007/dashboard/products?_rsc=1ex9s",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:3007/dashboard/conversations?_rsc=1ex9s",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
     }
   ],
-  "ignoredNetworkNoise": [],
   "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/ux/screenshots/dashboard_pilot-control.png",
   "uxIssues": [
-    "Missing build identity",
-    "Missing Arabic labels"
+    "Missing build identity"
   ]
 }

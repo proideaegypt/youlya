@@ -1,16 +1,25 @@
-import { cookies } from "next/headers";
-import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getMockState } from "@/lib/adapters/supabase/mock-store";
 import {
   listConversations,
   getConversationTimeline,
   maskCustomerIdentifier,
 } from "@/lib/services/message-history-service";
-import { MessageCircle, User, AlertTriangle, Bot, HandHelping } from "lucide-react";
+import { MessageCircle, User, AlertTriangle, Bot, HandHelping, Pause } from "lucide-react";
+import { RecordDateFilter } from "@/components/dashboard/record-date-filter";
+import { RecordExportMenu } from "@/components/dashboard/record-export-menu";
+import { ReturnToAiButton } from "@/components/dashboard/return-to-ai-button";
+import { parseDateRangeFromSearchParams } from "@/lib/dashboard/date-range";
 
-async function loadConversations() {
+async function loadConversations(searchParams?: Record<string, string | undefined>) {
   const storeId = "youlya";
-  return listConversations(storeId, { limit: 50 });
+  return listConversations(storeId, {
+    limit: 50,
+    status: searchParams?.filter && searchParams.filter !== "all" ? searchParams.filter : undefined,
+    channel: searchParams?.channel || undefined,
+    assignee: searchParams?.assignee || undefined,
+    search: searchParams?.search || undefined,
+    from: searchParams?.from || undefined,
+    to: searchParams?.to || undefined,
+  });
 }
 
 async function loadTimeline(conversationId: string) {
@@ -46,10 +55,15 @@ function directionBadge(direction?: string) {
   return <span className="text-[10px] font-semibold text-amber-500">SYS</span>;
 }
 
-export default async function InboxPage({ searchParams }: { searchParams: Promise<{ conversation?: string }> }) {
+export default async function InboxPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ conversation?: string; filter?: string; from?: string; to?: string; preset?: string; channel?: string; assignee?: string; search?: string }>;
+}) {
   const params = await searchParams;
   const selectedId = params.conversation ?? "";
-  const conversations = await loadConversations();
+  const range = parseDateRangeFromSearchParams(params);
+  const conversations = await loadConversations({ ...params, from: range.from, to: range.to });
   const selected = selectedId
     ? conversations.find((c) => String(c.id) === selectedId)
     : conversations[0] ?? null;
@@ -60,13 +74,35 @@ export default async function InboxPage({ searchParams }: { searchParams: Promis
     <section className="rounded-2xl bg-card p-6 md:p-8 shadow-sm ring-1 ring-border">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-balance text-2xl font-semibold text-foreground">صندوق الرسائل</h1>
+          <h1 className="text-balance text-2xl font-semibold text-foreground">طلبات التحويل للبشر</h1>
           <p className="mt-2 text-muted-foreground">Conversation timeline / AI events / handoff history</p>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-amber-500/15 px-3 py-1.5 text-xs font-semibold text-amber-500">
-          <AlertTriangle className="h-4 w-4" />
-          {conversations.filter((c) => String(c.status) === "handoff").length} pending handoffs
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 rounded-full bg-amber-500/15 px-3 py-1.5 text-xs font-semibold text-amber-500">
+            <AlertTriangle className="h-4 w-4" />
+            {conversations.filter((c) => String(c.status) === "handoff").length} pending handoffs
+          </div>
+          <RecordExportMenu
+            title="Inbox report"
+            page="inbox"
+            columns={[
+              { key: "id", label: "Conversation" },
+              { key: "customer_id_masked", label: "Customer" },
+              { key: "status", label: "Status" },
+              { key: "channel", label: "Channel" },
+              { key: "last_message_at", label: "Last Message" },
+            ]}
+            rows={conversations}
+            summaryLines={[
+              { label: "Total", value: conversations.length },
+              { label: "Pending handoffs", value: conversations.filter((c) => String(c.status) === "handoff").length },
+            ]}
+          />
         </div>
+      </div>
+
+      <div className="mb-4">
+        <RecordDateFilter />
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[380px_1fr]">
@@ -75,7 +111,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Promis
           <h2 className="text-sm font-semibold text-foreground">المحادثات</h2>
           {conversations.length === 0 ? (
             <div className="flex min-h-[140px] items-center justify-center rounded-xl border border-dashed border-border bg-background p-6 text-center">
-              <p className="text-sm text-muted-foreground">لا توجد محادثات</p>
+              <p className="text-sm text-muted-foreground">لا يوجد تحويلات مفتوحة</p>
             </div>
           ) : (
             <ul className="space-y-2">
@@ -129,10 +165,21 @@ export default async function InboxPage({ searchParams }: { searchParams: Promis
                     {maskCustomerIdentifier(String(selected.customer_id ?? selected.id))}
                   </p>
                 </div>
-                <div className="flex items-center gap-2 mt-1">
+                <div className="flex items-center gap-2 mt-1 flex-wrap">
                   {statusBadge(String(selected.status ?? "ai_active"))}
+                  {selected.ai_paused ? (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-red-500/10 px-2 py-0.5 text-[10px] font-semibold text-red-400">
+                      <Pause className="h-3 w-3" />
+                      الذكاء الاصطناعي متوقف لهذه المحادثة
+                    </span>
+                  ) : null}
                   <span className="text-xs text-muted-foreground">ID: {String(selected.id).slice(0, 24)}…</span>
                 </div>
+                {selected.ai_paused ? (
+                  <div className="mt-3">
+                    <ReturnToAiButton conversationId={String(selected.id)} />
+                  </div>
+                ) : null}
               </div>
 
               {timeline.length === 0 ? (

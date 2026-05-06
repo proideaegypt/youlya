@@ -2,7 +2,7 @@ import path from "node:path";
 import { test, expect } from "@playwright/test";
 import { ensureDir, taskRoot } from "./helpers";
 
-const pages = ["/dashboard/command-center", "/dashboard/pilot", "/dashboard/haidi/settings", "/dashboard/handoff", "/dashboard/conversations", "/dashboard/inbox", "/dashboard/products", "/dashboard/products-intelligence", "/dashboard/statistics", "/dashboard/security", "/dashboard/devices", "/dashboard/profile", "/dashboard/orders", "/dashboard/logs", "/dashboard/settings"];
+const pages = ["/dashboard/command-center", "/dashboard/pilot-control", "/dashboard/handoff", "/dashboard/inbox", "/dashboard/products", "/dashboard/products-intelligence", "/dashboard/statistics", "/dashboard/security", "/dashboard/devices", "/dashboard/profile", "/dashboard/orders", "/dashboard/logs", "/dashboard/settings"];
 
 const viewports = [
   { name: "desktop", size: { width: 1440, height: 900 } },
@@ -19,9 +19,18 @@ for (const viewport of viewports) {
         await page.goto(route, { waitUntil: "domcontentloaded" });
         await page.waitForLoadState("networkidle");
 
-        const sidebarToggle = page.getByRole("button", { name: /Toggle sidebar|Collapse sidebar|Expand sidebar|Open menu/ }).first();
-        if (!(await page.locator("aside, nav").first().isVisible().catch(() => false)) && await sidebarToggle.isVisible().catch(() => false)) {
-          await sidebarToggle.click();
+        const primaryNavigation = page.locator('aside[aria-label="Primary navigation"]');
+        const openMenuButton = page.getByRole("button", { name: "Open menu" }).first();
+        const sidebarToggle = page.getByRole("button", { name: /Collapse sidebar|Expand sidebar/ }).first();
+
+        if (!(await primaryNavigation.isVisible().catch(() => false))) {
+          if (await openMenuButton.isVisible().catch(() => false)) {
+            await openMenuButton.click();
+            await expect(primaryNavigation).toBeVisible();
+          } else if (await sidebarToggle.isVisible().catch(() => false)) {
+            await sidebarToggle.click();
+            await expect(primaryNavigation).toBeVisible();
+          }
         }
 
         const screenshotDir = path.join(taskRoot(), "a11y", "screenshots", viewport.name);
@@ -32,8 +41,10 @@ for (const viewport of viewports) {
         });
 
         const dir = await page.evaluate(() => document.documentElement.getAttribute("dir") || document.body.getAttribute("dir") || "");
-        const navVisible = await page.locator("aside, nav").first().isVisible().catch(() => false);
-        const navToggleVisible = await page.getByRole("button", { name: /Toggle sidebar|Collapse sidebar|Expand sidebar|Open menu/ }).first().isVisible().catch(() => false);
+        const navVisible = await primaryNavigation.isVisible().catch(() => false);
+        const navToggleVisible =
+          (await openMenuButton.isVisible().catch(() => false)) ||
+          (await sidebarToggle.isVisible().catch(() => false));
 
         expect(navVisible || navToggleVisible, "Navigation should be visible or reachable").toBe(true);
         expect(["", "rtl", "ltr"]).toContain(dir);

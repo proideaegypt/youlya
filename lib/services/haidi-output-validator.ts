@@ -146,6 +146,23 @@ export function validateHaidiOutput(
     }
   }
 
+  // Block app action overrides
+  const intentLabelRaw = typeof obj.intent_label === "string" ? obj.intent_label : "";
+  if (appAction === "handoff" && intentLabelRaw !== "handoff") {
+    return {
+      ok: false,
+      fallbackReply: appReply,
+      reason: "Haidi cannot override app handoff action",
+    };
+  }
+  if (appAction === "order_created" && intentLabelRaw !== "confirm_order" && intentLabelRaw !== "") {
+    return {
+      ok: false,
+      fallbackReply: appReply,
+      reason: "Haidi cannot override app order_created action",
+    };
+  }
+
   const usedUpsell = typeof obj.used_upsell === "boolean" ? obj.used_upsell : false;
 
   const allowedIntents: HaidiOutput["intent_label"][] = [

@@ -4,7 +4,7 @@
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
 - heading: القنوات والمنتجات
-- bodyTextLength: 587
+- bodyTextLength: 641
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -25,6 +25,6 @@
 
 - [0] GET https://admin.youlya365.com/dashboard/security?_rsc=1ypm1 (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/products-intelligence?_rsc=1ypm1 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/profile?_rsc=1ypm1 (net::ERR_ABORTED)
 - [0] GET https://admin.youlya365.com/dashboard/products?_rsc=1ypm1 (net::ERR_ABORTED)
+- [0] GET https://admin.youlya365.com/dashboard/statistics?_rsc=1ypm1 (net::ERR_ABORTED)
 

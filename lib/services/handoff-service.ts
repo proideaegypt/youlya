@@ -2,19 +2,22 @@ import { getMockState } from "@/lib/adapters/supabase/mock-store";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { writeAuditLog } from "@/lib/services/audit-log-service";
 import { setAIPaused } from "@/lib/services/conversation-flow-service";
+import { createHandoffNotification } from "@/lib/services/handoff-notification-service";
+import type { HandoffType } from "@/lib/services/handoff-policy-service";
 
 export type HandoffReason =
-  | "UNCLEAR_3X"
   | "ANGRY_TONE"
   | "COMPLAINT_POST_DELIVERY"
   | "PAYMENT_ISSUE"
   | "SHIPPING_ISSUE"
   | "API_FAILURE"
   | "KILL_SWITCH"
-  | "CUSTOMER_REQUEST";
+  | "CUSTOMER_REQUEST"
+  | "CUSTOMER_SERVICE_REQUEST"
+  | "MANAGER_REQUEST";
 
 export type HandoffPriority = "HIGH" | "NORMAL";
-export type HandoffStatus = "open" | "assigned" | "resolved";
+export type HandoffStatus = "open" | "assigned" | "resolved" | "returned_to_ai";
 
 export type HandoffInput = {
   store_id: string;
@@ -23,6 +26,11 @@ export type HandoffInput = {
   reason: HandoffReason;
   priority: HandoffPriority;
   ai_summary: string;
+  handoff_type?: HandoffType | null;
+  problem_summary?: string;
+  pause_ai_after_handoff?: boolean;
+  notify_human_team?: boolean;
+  default_assignee?: string | null;
 };
 
 export type HandoffTicket = {
@@ -35,9 +43,14 @@ export type HandoffTicket = {
   status: HandoffStatus;
   assigned_to?: string | null;
   ai_summary: string;
+  handoff_type?: HandoffType | null;
+  problem_summary?: string | null;
+  ai_paused?: boolean;
   notes?: string | null;
   created_at: string;
   resolved_at?: string | null;
+  returned_to_ai_at?: string | null;
+  returned_to_ai_by?: string | null;
 };
 
 export async function pauseAIForConversation(conversationId: string): Promise<void> {
@@ -47,11 +60,13 @@ export async function pauseAIForConversation(conversationId: string): Promise<vo
 export async function createHandoffTicket(input: HandoffInput): Promise<HandoffTicket> {
   const state = getMockState();
   const now = new Date().toISOString();
+  const shouldPauseAI = input.pause_ai_after_handoff !== false;
   const existing = state.handoffs.find(
     (ticket) =>
       (ticket as HandoffTicket).store_id === input.store_id &&
       (ticket as HandoffTicket).conversation_id === input.conversation_id &&
-      (ticket as HandoffTicket).status !== "resolved",
+      (ticket as HandoffTicket).status !== "resolved" &&
+      (ticket as HandoffTicket).status !== "returned_to_ai",
   ) as HandoffTicket | undefined;
 
   if (existing) {
@@ -60,26 +75,34 @@ export async function createHandoffTicket(input: HandoffInput): Promise<HandoffT
       reason: input.reason,
       priority: input.priority,
       ai_summary: input.ai_summary,
+      handoff_type: input.handoff_type ?? existing.handoff_type ?? null,
+      problem_summary: input.problem_summary ?? existing.problem_summary ?? input.ai_summary,
+      ai_paused: shouldPauseAI,
       status: existing.status === "resolved" ? "open" : existing.status,
     };
     const idx = state.handoffs.findIndex((ticket) => (ticket as HandoffTicket).id === updated.id);
     state.handoffs[idx] = updated as Record<string, unknown>;
     state.conversationStatus.set(input.conversation_id, "human_handoff");
-    state.aiPausedConversations.add(input.conversation_id);
-    await setAIPaused(input.conversation_id, true);
+    if (shouldPauseAI) {
+      state.aiPausedConversations.add(input.conversation_id);
+      await setAIPaused(input.conversation_id, true);
+    }
     writeAuditLog({
       action: "handoff.upsert",
       entityType: "handoff_ticket",
       entityId: updated.id,
       metadata: { reason: input.reason, priority: input.priority },
     });
+    if (input.notify_human_team !== false) {
+      await createHandoffNotification(updated);
+    }
     await persistHumanHandoff({
       store_id: input.store_id,
       customer_id: input.customer_id,
       conversation_id: input.conversation_id,
       reason: input.reason,
       requested_at: now,
-      notes: input.ai_summary,
+      notes: input.problem_summary ?? input.ai_summary,
     });
     return updated;
   }
@@ -94,28 +117,38 @@ export async function createHandoffTicket(input: HandoffInput): Promise<HandoffT
     status: "open",
     assigned_to: null,
     ai_summary: input.ai_summary,
+    handoff_type: input.handoff_type ?? null,
+    problem_summary: input.problem_summary ?? input.ai_summary,
+    ai_paused: shouldPauseAI,
     notes: null,
     created_at: now,
     resolved_at: null,
+    returned_to_ai_at: null,
+    returned_to_ai_by: null,
   };
 
   state.handoffs.push(ticket as Record<string, unknown>);
   state.conversationStatus.set(input.conversation_id, "human_handoff");
-  state.aiPausedConversations.add(input.conversation_id);
-  await setAIPaused(input.conversation_id, true);
+  if (shouldPauseAI) {
+    state.aiPausedConversations.add(input.conversation_id);
+    await setAIPaused(input.conversation_id, true);
+  }
   writeAuditLog({
     action: "handoff.create",
     entityType: "handoff_ticket",
     entityId: ticket.id,
     metadata: { reason: input.reason, priority: input.priority },
   });
+  if (input.notify_human_team !== false) {
+    await createHandoffNotification(ticket);
+  }
   await persistHumanHandoff({
     store_id: input.store_id,
     customer_id: input.customer_id,
     conversation_id: input.conversation_id,
     reason: input.reason,
     requested_at: now,
-    notes: input.ai_summary,
+    notes: input.problem_summary ?? input.ai_summary,
   });
   return ticket;
 }
@@ -159,9 +192,19 @@ export async function returnToAI(conversationId: string, actor: string): Promise
     (t) => (t as HandoffTicket).conversation_id === conversationId && (t as HandoffTicket).status !== "resolved",
   );
   if (idx !== -1) {
-    const ticket = { ...(state.handoffs[idx] as HandoffTicket), status: "resolved" as HandoffStatus, resolved_at: new Date().toISOString() };
+    const ticket = {
+      ...(state.handoffs[idx] as HandoffTicket),
+      status: "returned_to_ai" as HandoffStatus,
+      returned_to_ai_at: new Date().toISOString(),
+      returned_to_ai_by: actor,
+    };
     state.handoffs[idx] = ticket as Record<string, unknown>;
-    await updateHandoffInDb(ticket.id, { status: "resolved", resolved_at: ticket.resolved_at, resolved_by: actor });
+    await updateHandoffInDb(ticket.id, {
+      status: "resolved",
+      returned_to_ai_at: ticket.returned_to_ai_at,
+      returned_to_ai_by: actor,
+      resolved_by: actor,
+    });
   }
 
   writeAuditLog({ action: "handoff.return_to_ai", entityType: "conversation", entityId: conversationId, metadata: { actor } });
@@ -199,7 +242,7 @@ export async function getOpenHandoffs(storeId?: string): Promise<HandoffTicket[]
   const state = getMockState();
   const mockTickets = state.handoffs
     .map((t) => t as HandoffTicket)
-    .filter((t) => t.status !== "resolved" && (!storeId || t.store_id === storeId));
+    .filter((t) => t.status !== "resolved" && t.status !== "returned_to_ai" && (!storeId || t.store_id === storeId));
 
   const supabase = getSupabaseServerClient();
   if (!supabase) return mockTickets;
@@ -207,7 +250,7 @@ export async function getOpenHandoffs(storeId?: string): Promise<HandoffTicket[]
   try {
     const { data, error } = await supabase
       .from("handoff_tickets")
-      .select("id,store_id,conversation_id,customer_id,reason,priority,status,assigned_user_id,ai_summary,notes,created_at,closed_at")
+      .select("id,store_id,conversation_id,customer_id,reason,priority,status,assigned_to,ai_summary,problem_summary,handoff_type,ai_paused,notes,created_at,closed_at,returned_to_ai_at,returned_to_ai_by")
       .neq("status", "resolved")
       .order("created_at", { ascending: false });
 
@@ -220,11 +263,16 @@ export async function getOpenHandoffs(storeId?: string): Promise<HandoffTicket[]
       reason: String(row.reason) as HandoffReason,
       priority: String(row.priority) as HandoffPriority,
       status: String(row.status) as HandoffStatus,
-      assigned_to: row.assigned_user_id ? String(row.assigned_user_id) : null,
+      assigned_to: row.assigned_to ? String(row.assigned_to) : null,
       ai_summary: String(row.ai_summary ?? ""),
+      handoff_type: row.handoff_type ? (String(row.handoff_type) as HandoffType) : null,
+      problem_summary: row.problem_summary ? String(row.problem_summary) : null,
+      ai_paused: row.ai_paused === true,
       notes: row.notes ? String(row.notes) : null,
       created_at: String(row.created_at),
       resolved_at: row.closed_at ? String(row.closed_at) : null,
+      returned_to_ai_at: row.returned_to_ai_at ? String(row.returned_to_ai_at) : null,
+      returned_to_ai_by: row.returned_to_ai_by ? String(row.returned_to_ai_by) : null,
     }));
   } catch {
     return mockTickets;
@@ -262,6 +310,7 @@ async function persistHumanHandoff(input: {
       priority: "NORMAL",
       status: "open",
       ai_summary: input.notes,
+      problem_summary: input.notes,
       created_at: input.requested_at,
       updated_at: input.requested_at,
     });

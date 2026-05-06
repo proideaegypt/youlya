@@ -3,8 +3,8 @@
 - route: /dashboard/inbox
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
-- heading: صندوق الرسائل
-- bodyTextLength: 962
+- heading: طلبات التحويل للبشر
+- bodyTextLength: 625
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -23,8 +23,8 @@
 
 ## Ignored Framework/Network Noise
 
-- [0] GET https://admin.youlya365.com/dashboard/orders?_rsc=1n4r8 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/profile?_rsc=1n4r8 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/devices?_rsc=1n4r8 (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/statistics?_rsc=1n4r8 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/statistics?_rsc=1n4r8 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/products-intelligence?_rsc=1n4r8 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/devices?_rsc=1n4r8 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/security?_rsc=1n4r8 (net::ERR_ABORTED)
 

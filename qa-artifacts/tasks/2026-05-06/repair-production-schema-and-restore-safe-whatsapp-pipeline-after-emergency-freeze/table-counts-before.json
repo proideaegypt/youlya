@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-05-06T01:33:01.878Z",
+  "haidi_settings": 1,
+  "handoff_tickets": 1,
+  "handoff_notifications": null,
+  "conversations": 2,
+  "messages": 26,
+  "conversation_events": 13,
+  "processed_messages": 20,
+  "dead_letter_log": 0,
+  "ai_tool_calls": 2,
+  "products": 252,
+  "product_variants": 1082,
+  "last_product_recommendations": 0,
+  "stores": 1
+}

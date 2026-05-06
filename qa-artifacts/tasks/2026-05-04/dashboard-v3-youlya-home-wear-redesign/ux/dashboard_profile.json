@@ -3,7 +3,7 @@
   "heading": "الملف الشخصي",
   "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 570,
+  "bodyTextLength": 624,
   "sidebarVisible": true,
   "contentVisible": true,
   "shellPresent": true,
@@ -15,26 +15,7 @@
   "hasWeakEmptyState": false,
   "consoleErrors": [],
   "realFailedRequests": [],
-  "ignoredNetworkNoise": [
-    {
-      "url": "https://admin.youlya365.com/dashboard/statistics?_rsc=1f5xx",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/products-intelligence?_rsc=1f5xx",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/handoff?_rsc=1f5xx",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    }
-  ],
+  "ignoredNetworkNoise": [],
   "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_profile.png",
   "uxIssues": [
     "Missing build identity"

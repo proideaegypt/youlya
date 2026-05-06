@@ -18,6 +18,16 @@ export type HaidiSettings = {
   handoffOnHumanRequest: boolean;
   handoffAfterUnclearCount: number;
   handoffOnAngryTone: boolean;
+  humanHandoffEnabled: boolean;
+  handoffCustomerServiceEnabled: boolean;
+  handoffManagerRequestEnabled: boolean;
+  pauseAiAfterHandoff: boolean;
+  sendHandoffAcknowledgement: boolean;
+  notifyHumanTeam: boolean;
+  defaultHandoffAssignee: string | null;
+  customerServiceReplyTemplateAr: string;
+  managerRequestReplyTemplateAr: string;
+  handoffFinalAckTemplateAr: string;
   globalAiPaused: boolean;
   ordersPaused: boolean;
   promptVersion: string;
@@ -42,6 +52,16 @@ const DEFAULTS: HaidiSettings = {
   handoffOnHumanRequest: true,
   handoffAfterUnclearCount: 3,
   handoffOnAngryTone: true,
+  humanHandoffEnabled: true,
+  handoffCustomerServiceEnabled: true,
+  handoffManagerRequestEnabled: true,
+  pauseAiAfterHandoff: true,
+  sendHandoffAcknowledgement: true,
+  notifyHumanTeam: true,
+  defaultHandoffAssignee: null,
+  customerServiceReplyTemplateAr: "تمام يا فندم، هسجل طلبك وهيتواصل معاكي حد من الفريق حالًا.",
+  managerRequestReplyTemplateAr: "تمام يا فندم، هسجل طلبك كطلب تواصل مع الإدارة وهيتواصل معاكي حد من الفريق حالًا.",
+  handoffFinalAckTemplateAr: "تم تسجيل الطلب، وسيتواصل معاكي حد من الفريق.",
   globalAiPaused: false,
   ordersPaused: false,
   promptVersion: "v1",
@@ -70,6 +90,24 @@ function rowToSettings(row: Record<string, unknown>): HaidiSettings {
     handoffOnHumanRequest: Boolean(row.handoff_on_human_request ?? true),
     handoffAfterUnclearCount: Number(row.handoff_after_unclear_count ?? 3),
     handoffOnAngryTone: Boolean(row.handoff_on_angry_tone ?? true),
+    humanHandoffEnabled: Boolean(row.human_handoff_enabled ?? true),
+    handoffCustomerServiceEnabled: Boolean(row.handoff_customer_service_enabled ?? true),
+    handoffManagerRequestEnabled: Boolean(row.handoff_manager_request_enabled ?? true),
+    pauseAiAfterHandoff: Boolean(row.pause_ai_after_handoff ?? true),
+    sendHandoffAcknowledgement: Boolean(row.send_handoff_acknowledgement ?? true),
+    notifyHumanTeam: Boolean(row.notify_human_team ?? true),
+    defaultHandoffAssignee: row.default_handoff_assignee ? String(row.default_handoff_assignee) : null,
+    customerServiceReplyTemplateAr: String(
+      row.customer_service_reply_template_ar ??
+        "تمام يا فندم، هسجل طلبك وهيتواصل معاكي حد من الفريق حالًا.",
+    ),
+    managerRequestReplyTemplateAr: String(
+      row.manager_request_reply_template_ar ??
+        "تمام يا فندم، هسجل طلبك كطلب تواصل مع الإدارة وهيتواصل معاكي حد من الفريق حالًا.",
+    ),
+    handoffFinalAckTemplateAr: String(
+      row.handoff_final_ack_template_ar ?? "تم تسجيل الطلب، وسيتواصل معاكي حد من الفريق.",
+    ),
     globalAiPaused: Boolean(row.global_ai_paused ?? false),
     ordersPaused: Boolean(row.orders_paused ?? false),
     promptVersion: String(row.prompt_version ?? "v1"),
@@ -95,6 +133,16 @@ function settingsToRow(settings: Partial<HaidiSettings>): Record<string, unknown
   if (settings.handoffOnHumanRequest !== undefined) row.handoff_on_human_request = settings.handoffOnHumanRequest;
   if (settings.handoffAfterUnclearCount !== undefined) row.handoff_after_unclear_count = settings.handoffAfterUnclearCount;
   if (settings.handoffOnAngryTone !== undefined) row.handoff_on_angry_tone = settings.handoffOnAngryTone;
+  if (settings.humanHandoffEnabled !== undefined) row.human_handoff_enabled = settings.humanHandoffEnabled;
+  if (settings.handoffCustomerServiceEnabled !== undefined) row.handoff_customer_service_enabled = settings.handoffCustomerServiceEnabled;
+  if (settings.handoffManagerRequestEnabled !== undefined) row.handoff_manager_request_enabled = settings.handoffManagerRequestEnabled;
+  if (settings.pauseAiAfterHandoff !== undefined) row.pause_ai_after_handoff = settings.pauseAiAfterHandoff;
+  if (settings.sendHandoffAcknowledgement !== undefined) row.send_handoff_acknowledgement = settings.sendHandoffAcknowledgement;
+  if (settings.notifyHumanTeam !== undefined) row.notify_human_team = settings.notifyHumanTeam;
+  if (settings.defaultHandoffAssignee !== undefined) row.default_handoff_assignee = settings.defaultHandoffAssignee;
+  if (settings.customerServiceReplyTemplateAr !== undefined) row.customer_service_reply_template_ar = settings.customerServiceReplyTemplateAr;
+  if (settings.managerRequestReplyTemplateAr !== undefined) row.manager_request_reply_template_ar = settings.managerRequestReplyTemplateAr;
+  if (settings.handoffFinalAckTemplateAr !== undefined) row.handoff_final_ack_template_ar = settings.handoffFinalAckTemplateAr;
   if (settings.globalAiPaused !== undefined) row.global_ai_paused = settings.globalAiPaused;
   if (settings.ordersPaused !== undefined) row.orders_paused = settings.ordersPaused;
   if (settings.promptVersion !== undefined) row.prompt_version = settings.promptVersion;

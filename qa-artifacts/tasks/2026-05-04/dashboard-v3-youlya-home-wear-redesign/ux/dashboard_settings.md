@@ -4,7 +4,7 @@
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
 - heading: الإعدادات
-- bodyTextLength: 984
+- bodyTextLength: 1038
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -15,14 +15,9 @@
 - screenshot: /root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_settings.png
 - consoleErrorCount: 0
 - realFailedRequestCount: 0
-- ignoredNetworkNoiseCount: 2
+- ignoredNetworkNoiseCount: 0
 
 ## UX Issues
 
 - Missing build identity
-
-## Ignored Framework/Network Noise
-
-- [0] GET https://admin.youlya365.com/dashboard/handoff?_rsc=1c9xt (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/inbox?_rsc=1c9xt (net::ERR_ABORTED)
 

@@ -141,8 +141,7 @@ describe("haidi-output-validator", () => {
 });
 
 describe("haidi-context-builder", () => {
-  const appReply = "App fallback reply";
-  test("product search context has max 10 products", () => {
+  test("product search context has max 10 products", async () => {
     const recommendations = Array.from({ length: 15 }, (_, i) => ({
       index: i + 1,
       shopifyProductTitle: `Product ${i + 1}`,
@@ -150,7 +149,7 @@ describe("haidi-context-builder", () => {
         { size: "M", color: "Black", price: 100, currency: "EGP", inventoryQuantity: 5, available: true },
       ],
     }));
-    const ctx = buildHaidiContext({
+    const ctx = await buildHaidiContext({
       language: "ar-EG",
       customerText: "عايزة بيجامات",
       action: "product_results",
@@ -160,8 +159,8 @@ describe("haidi-context-builder", () => {
     expect(ctx.commerceFacts.products.length).toBeLessThanOrEqual(10);
   });
 
-  test("product search context includes product facts", () => {
-    const ctx = buildHaidiContext({
+  test("product search context includes product facts", async () => {
+    const ctx = await buildHaidiContext({
       language: "ar-EG",
       customerText: "عايزة بيجامات",
       action: "product_results",
@@ -186,8 +185,8 @@ describe("haidi-context-builder", () => {
     expect(ctx.commerceFacts.products[0].available).toBe(true);
   });
 
-  test("handoff context has correct replyGoal", () => {
-    const ctx = buildHaidiContext({
+  test("handoff context has correct replyGoal", async () => {
+    const ctx = await buildHaidiContext({
       language: "ar-EG",
       customerText: "مش فاهم",
       action: "handoff",
@@ -196,8 +195,8 @@ describe("haidi-context-builder", () => {
     expect(ctx.replyGoal).toBe("handoff");
   });
 
-  test("order created context has correct replyGoal", () => {
-    const ctx = buildHaidiContext({
+  test("order created context has correct replyGoal", async () => {
+    const ctx = await buildHaidiContext({
       language: "ar-EG",
       customerText: "أكدي",
       action: "order_created",
@@ -209,8 +208,8 @@ describe("haidi-context-builder", () => {
     expect(ctx.commerceFacts.cart.subtotal).toBe(950);
   });
 
-  test("empty recommendations yields empty products", () => {
-    const ctx = buildHaidiContext({
+  test("empty recommendations yields empty products", async () => {
+    const ctx = await buildHaidiContext({
       language: "ar-EG",
       customerText: "hello",
       action: "ai_reply",
@@ -219,8 +218,8 @@ describe("haidi-context-builder", () => {
     expect(ctx.commerceFacts.products).toEqual([]);
   });
 
-  test("blocked reason included when provided", () => {
-    const ctx = buildHaidiContext({
+  test("blocked reason included when provided", async () => {
+    const ctx = await buildHaidiContext({
       language: "ar-EG",
       customerText: "رقم ١",
       action: "error",
@@ -230,8 +229,8 @@ describe("haidi-context-builder", () => {
     expect(ctx.commerceFacts.blockedReason).toBe("out_of_stock");
   });
 
-  test("builds warm style instructions for handoff", () => {
-    const ctx = buildHaidiContext({
+  test("builds warm style instructions for handoff", async () => {
+    const ctx = await buildHaidiContext({
       language: "ar-EG",
       customerText: "عايزة أكلم حد",
       action: "handoff",

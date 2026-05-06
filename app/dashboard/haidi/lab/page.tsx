@@ -12,6 +12,12 @@ type Scenario = {
   must_not_include?: string[];
 };
 
+async function fetchScenarios(): Promise<Scenario[]> {
+  const res = await fetch("/api/dashboard/haidi/lab?store_id=youlya");
+  const data = await res.json();
+  return data.scenarios ?? [];
+}
+
 export default function HaidiLabPage() {
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [title, setTitle] = useState("");
@@ -22,14 +28,8 @@ export default function HaidiLabPage() {
   const [mustNotInclude, setMustNotInclude] = useState("");
   const [lastRun, setLastRun] = useState<Record<string, unknown> | null>(null);
 
-  const load = async () => {
-    const res = await fetch("/api/dashboard/haidi/lab?store_id=youlya");
-    const data = await res.json();
-    setScenarios(data.scenarios ?? []);
-  };
-
   useEffect(() => {
-    void load();
+    void fetchScenarios().then(setScenarios);
   }, []);
 
   const createScenario = async () => {
@@ -52,7 +52,7 @@ export default function HaidiLabPage() {
     setExpectedTone("");
     setMustInclude("");
     setMustNotInclude("");
-    await load();
+    void fetchScenarios().then(setScenarios);
   };
 
   const runScenario = async (id: string) => {

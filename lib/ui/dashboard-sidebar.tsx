@@ -22,6 +22,9 @@ import {
   Activity,
   AlertTriangle,
   BookOpenText,
+  Truck,
+  Bot,
+  Users,
 } from "lucide-react";
 import { YoulyaLogo } from "@/lib/ui/youlya-logo";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
@@ -42,22 +45,26 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { href: "/dashboard/command-center", labelAr: "لوحة التحكم", labelEn: "Command Center", icon: LayoutDashboard },
-  { href: "/dashboard/pilot", labelAr: "غرفة التحكم التجريبي", labelEn: "Pilot Control", icon: Activity },
-  { href: "/dashboard/handoff", labelAr: "التحويل البشري", labelEn: "Handoff Center", icon: AlertTriangle },
-  { href: "/dashboard/conversations", labelAr: "المحادثات", labelEn: "Conversations", icon: MessageCircle },
-  { href: "/dashboard/inbox", labelAr: "الرسائل", labelEn: "Messages", icon: MessageCircle },
+  { href: "/dashboard/inbox", labelAr: "الرسائل", labelEn: "Inbox", icon: MessageCircle },
+  { href: "/dashboard/orders", labelAr: "الطلبات", labelEn: "Orders", icon: ShoppingBag },
   { href: "/dashboard/products", labelAr: "المنتجات والمخزون", labelEn: "Products & Inventory", icon: Package },
   { href: "/dashboard/products-intelligence", labelAr: "ذكاء المنتجات", labelEn: "Products Intelligence", icon: Brain },
+  { href: "/dashboard/handoff", labelAr: "التحويل البشري", labelEn: "Handoff Center", icon: AlertTriangle },
+  { href: "/dashboard/conversations", labelAr: "المحادثات", labelEn: "Conversations", icon: MessageCircle },
   { href: "/dashboard/statistics", labelAr: "الإحصائيات", labelEn: "Statistics", icon: BarChart3 },
-  { href: "/dashboard/security", labelAr: "الأمان", labelEn: "Security", icon: Shield },
-  { href: "/dashboard/devices", labelAr: "القنوات والمنتجات", labelEn: "Devices", icon: TabletSmartphone },
-  { href: "/dashboard/profile", labelAr: "الملف الشخصي", labelEn: "Profile", icon: UserRound },
-  { href: "/dashboard/orders", labelAr: "الطلبات", labelEn: "Orders", icon: ShoppingBag },
+  { href: "/dashboard/settings/channels", labelAr: "القنوات", labelEn: "Channels", icon: TabletSmartphone },
+  { href: "/dashboard/settings/ai-agent", labelAr: "AI Agent", labelEn: "AI Agent", icon: Bot },
+  { href: "/dashboard/settings/shipping", labelAr: "الشحن", labelEn: "Shipping", icon: Truck },
+  { href: "/dashboard/settings/users", labelAr: "المستخدمين والأدوار", labelEn: "Users & Roles", icon: Users },
   { href: "/dashboard/logs", labelAr: "السجلات", labelEn: "Logs", icon: FileText },
+  { href: "/dashboard/profile", labelAr: "الملف الشخصي", labelEn: "Profile", icon: UserRound },
+  { href: "/dashboard/settings", labelAr: "الإعدادات", labelEn: "Settings", icon: Settings },
+  { href: "/dashboard/pilot-control", labelAr: "غرفة التحكم التجريبي", labelEn: "Pilot Control", icon: Activity },
   { href: "/dashboard/haidi/lab", labelAr: "مختبر Haidi", labelEn: "Haidi Lab", icon: BookOpenText },
   { href: "/dashboard/haidi/learning", labelAr: "تعلم Haidi", labelEn: "Haidi Learning", icon: Brain },
   { href: "/dashboard/haidi/settings", labelAr: "إعدادات Haidi", labelEn: "Haidi Settings", icon: Settings },
-  { href: "/dashboard/settings", labelAr: "الإعدادات", labelEn: "Settings", icon: Settings },
+  { href: "/dashboard/security", labelAr: "الأمان", labelEn: "Security", icon: Shield },
+  { href: "/dashboard/devices", labelAr: "الأجهزة", labelEn: "Devices", icon: TabletSmartphone },
 ];
 
 export function Sidebar({
@@ -116,7 +123,7 @@ export function Sidebar({
         <button
           aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
           onClick={() => setOpen((v) => !v)}
-          className="shrink-0 rounded-lg bg-white/20 p-1.5 hover:bg-white/30 transition"
+          className="hidden shrink-0 rounded-lg bg-white/20 p-1.5 hover:bg-white/30 transition lg:inline-flex"
         >
           {open ? <ChevronFirst className="h-5 w-5" /> : <ChevronLast className="h-5 w-5" />}
         </button>
@@ -139,7 +146,7 @@ export function Sidebar({
                   }`}
                 >
                   <Icon className={`h-5 w-5 shrink-0 ${active ? "text-brand" : "text-white"}`} />
-                  <span className={`${open ? "block" : "hidden"} text-sm truncate`}>{label}</span>
+                  <span className={`${open ? "block" : "sr-only"} text-sm truncate`}>{label}</span>
                 </Link>
               </li>
             );

@@ -3,7 +3,7 @@
   "heading": "الإعدادات",
   "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 947,
+  "bodyTextLength": 1053,
   "sidebarVisible": true,
   "contentVisible": true,
   "shellPresent": true,
@@ -17,13 +17,7 @@
   "realFailedRequests": [],
   "ignoredNetworkNoise": [
     {
-      "url": "https://admin.youlya365.com/dashboard/orders?_rsc=1c9xt",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/statistics?_rsc=1c9xt",
+      "url": "http://127.0.0.1:3007/dashboard/statistics?_rsc=1c9xt",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"

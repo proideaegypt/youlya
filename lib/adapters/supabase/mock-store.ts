@@ -16,6 +16,19 @@ type StoreState = {
   toolLogs: Array<Record<string, unknown>>;
   auditLogs: Array<Record<string, unknown>>;
   handoffs: Array<Record<string, unknown>>;
+  handoffNotifications: Array<{
+    id: string;
+    store_id: string;
+    type: "handoff_created";
+    title: string;
+    summary: string;
+    handoff_type: string;
+    priority: "normal" | "high";
+    conversation_id: string;
+    handoff_ticket_id: string;
+    status: "unread" | "pending" | "read";
+    created_at: string;
+  }>;
   conversationStatus: Map<string, string>;
   unclearCounts: Map<string, number>;
   killSwitchByStore: Map<string, boolean>;
@@ -40,6 +53,7 @@ type StoreState = {
   haidiLabScenarios: Array<Record<string, unknown>>;
   haidiLabRuns: Array<Record<string, unknown>>;
   haidiSettingsByStore: Map<string, Record<string, unknown>>;
+  haidiPromptByStore: Map<string, Record<string, unknown>>;
 };
 
 const globalStore = globalThis as typeof globalThis & { __youlyaMockState__?: StoreState };
@@ -53,6 +67,7 @@ function buildState(): StoreState {
     toolLogs: [],
     auditLogs: [],
     handoffs: [],
+    handoffNotifications: [],
     conversationStatus: new Map(),
     unclearCounts: new Map(),
     killSwitchByStore: new Map(),
@@ -69,6 +84,7 @@ function buildState(): StoreState {
     haidiLabScenarios: [],
     haidiLabRuns: [],
     haidiSettingsByStore: new Map(),
+    haidiPromptByStore: new Map(),
   };
 }
 

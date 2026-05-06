@@ -3,7 +3,7 @@
   "heading": "غرفة الطيار للواتساب",
   "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 1155,
+  "bodyTextLength": 1872,
   "sidebarVisible": true,
   "contentVisible": true,
   "shellPresent": true,
@@ -15,20 +15,7 @@
   "hasWeakEmptyState": false,
   "consoleErrors": [],
   "realFailedRequests": [],
-  "ignoredNetworkNoise": [
-    {
-      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=1ex9s",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/security?_rsc=1ex9s",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    }
-  ],
+  "ignoredNetworkNoise": [],
   "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_pilot-control.png",
   "uxIssues": [
     "Missing build identity"

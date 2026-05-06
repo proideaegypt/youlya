@@ -4,7 +4,7 @@
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
 - heading: الأمان
-- bodyTextLength: 671
+- bodyTextLength: 777
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -23,8 +23,8 @@
 
 ## Ignored Framework/Network Noise
 
-- [0] GET https://admin.youlya365.com/dashboard/devices?_rsc=11aqc (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/orders?_rsc=11aqc (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=11aqc (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/profile?_rsc=11aqc (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/statistics?_rsc=11aqc (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/products?_rsc=11aqc (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/devices?_rsc=11aqc (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/products-intelligence?_rsc=11aqc (net::ERR_ABORTED)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_URL="${APP_URL:-https://admin.youlya365.com}"
+APP_URL="${APP_URL:-https://admin.nex-lnk.online}"
 N8N_WEBHOOK_URL="${N8N_WEBHOOK_URL:-https://ai.youlya365.com/webhook/youlya-whatsapp}"
 
 tmp_dir="$(mktemp -d)"

@@ -1,6 +1,5 @@
 import { getMockState } from "@/lib/adapters/supabase/mock-store";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { createHandoffTicket } from "@/lib/services/handoff-service";
 
 type ConversationStateJson = {
   unclearCount?: number;
@@ -139,16 +138,6 @@ export async function incrementUnclearCount(
   }
 
   await writeConversationState(conversation_id, { unclearCount: next }, context);
-  if (next >= 3 && context) {
-    await createHandoffTicket({
-      store_id: context.store_id,
-      conversation_id,
-      customer_id: context.customer_id,
-      reason: "UNCLEAR_3X",
-      priority: "NORMAL",
-      ai_summary: context.ai_summary ?? "Auto handoff after 3 unclear turns",
-    });
-  }
   return next;
 }
 

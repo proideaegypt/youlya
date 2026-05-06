@@ -12,6 +12,7 @@ import { writeAuditLog } from "@/lib/services/audit-log-service";
 import { getMockState } from "@/lib/adapters/supabase/mock-store";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { createOrder, ShopifyAPIError, type ShopifyOrder } from "@/lib/adapters/shopify/shopify-client";
+import { isOwnerApprovedLiveOrder } from "@/lib/config/env";
 
 export type CreateOrderInput = {
   store_id: string;
@@ -26,11 +27,19 @@ export type CreateOrderInput = {
   total: number;
   explicit_confirmation_text: string;
   idempotency_key?: string;
+  testMode?: boolean;
 };
 
 export type CreateOrderResult =
   | { success: true; order_name: string; shopify_order_id: string; duplicate?: boolean }
-  | { success: false; missing_fields?: string[]; reason: "validation_failed" | "out_of_stock" | "shopify_error"; message?: string };
+  | {
+      success: false;
+      missing_fields?: string[];
+      reason: "validation_failed" | "out_of_stock" | "shopify_error" | "owner_approval_required";
+      message?: string;
+      action?: "owner_approval_required";
+      reply?: string;
+    };
 
 const mockOrders = new Map<string, { id: string; name: string }>();
 
@@ -77,10 +86,63 @@ async function createOrderWithRetry(
   throw new Error("shopify_rate_limit_exhausted");
 }
 
+const OWNER_APPROVAL_REPLY = "الأوردر جاهز للمراجعة، وفريق Youlya هيأكد معاكِ قبل التنفيذ.";
+
+// Simple in-memory order rate cap per store (resets every hour)
+const orderCapStore = new Map<string, { count: number; resetAt: number }>();
+const ORDER_CAP_HOURLY = 30;
+
+function checkOrderCap(storeId: string): { allowed: true } | { allowed: false; retryAfterMinutes: number } {
+  const now = Date.now();
+  const entry = orderCapStore.get(storeId);
+  if (!entry || entry.resetAt < now) {
+    orderCapStore.set(storeId, { count: 1, resetAt: now + 60 * 60 * 1000 });
+    return { allowed: true };
+  }
+  if (entry.count >= ORDER_CAP_HOURLY) {
+    return { allowed: false, retryAfterMinutes: Math.ceil((entry.resetAt - now) / 60_000) };
+  }
+  entry.count += 1;
+  return { allowed: true };
+}
+
+function buildOwnerApprovalBlocker(input: CreateOrderInput, key: string): CreateOrderResult {
+  writeAuditLog({
+    action: "order.owner_approval_required",
+    entityType: "orders",
+    entityId: key,
+    metadata: {
+      store_id: input.store_id,
+      conversation_id: input.conversation_id,
+      idempotency_key: key,
+      testMode: input.testMode === true,
+    },
+  });
+  return {
+    success: false,
+    reason: "owner_approval_required",
+    action: "owner_approval_required",
+    reply: OWNER_APPROVAL_REPLY,
+    message: "owner approval required",
+  };
+}
+
 export async function createCODOrder(
   input: CreateOrderInput,
   deps: { createOrderFn?: typeof createOrder } = {},
 ): Promise<CreateOrderResult> {
+  const cap = checkOrderCap(input.store_id);
+  if (!cap.allowed) {
+    console.warn("order_cap_exceeded", { store_id: input.store_id, retryAfterMinutes: cap.retryAfterMinutes });
+    return {
+      success: false,
+      reason: "owner_approval_required",
+      action: "owner_approval_required",
+      reply: OWNER_APPROVAL_REPLY,
+      message: `hourly order cap reached (${ORDER_CAP_HOURLY}). retry in ${cap.retryAfterMinutes} minutes.`,
+    };
+  }
+
   const validation = validateCartForOrder({
     variant_id: input.variant_id,
     quantity: input.quantity,
@@ -114,13 +176,21 @@ export async function createCODOrder(
   }
 
   const env = getServerEnv();
-  const orderFn = deps.createOrderFn ?? createOrder;
+  const isTestMode = input.testMode === true;
+  const shouldMockOrder = isTestMode || env.MOCK_MODE === "true";
+
+  if (!shouldMockOrder && !isOwnerApprovedLiveOrder()) {
+    return buildOwnerApprovalBlocker(input, key);
+  }
 
   try {
     let shopifyOrder: ShopifyOrder;
-    if (!deps.createOrderFn && (env.MOCK_MODE === "true" || !env.SHOPIFY_STORE_URL || !env.SHOPIFY_ADMIN_API_KEY)) {
+    if (shouldMockOrder) {
       shopifyOrder = { id: `MOCK-${key.slice(0, 10)}`, name: `MOCK-${input.conversation_id}` };
+    } else if (!deps.createOrderFn && (!env.SHOPIFY_STORE_URL || !env.SHOPIFY_ADMIN_API_KEY)) {
+      return { success: false, reason: "shopify_error", message: "shopify_not_configured" };
     } else {
+      const orderFn = deps.createOrderFn ?? createOrder;
       shopifyOrder = await createOrderWithRetry(orderFn, [
         { storeUrl: env.SHOPIFY_STORE_URL ?? "http://localhost", adminApiKey: env.SHOPIFY_ADMIN_API_KEY ?? "mock" },
         {

@@ -1,3 +1,5 @@
+import { getHaidiPromptSummary } from "@/lib/services/haidi-prompt-service";
+
 export type HaidiProductFact = {
   index: number;
   title: string;
@@ -30,6 +32,22 @@ export type HaidiStyleInstructions = {
   mustNotSay: string[];
 };
 
+export type HaidiPromptContext = {
+  currentPrompt: string;
+  currentVersion: string;
+  source: "repo" | "db";
+  updatedAt: string;
+  safetyRulesSummary: string[];
+  repoDefaultVersion: string;
+  canPublish: boolean;
+  draftPrompt: string | null;
+  draftVersion: string | null;
+  publishedPrompt: string | null;
+  publishedVersion: string | null;
+  lastTestScore: number | null;
+  lastTestRunId: string | null;
+};
+
 export type HaidiContext = {
   language: string;
   customerText: string;
@@ -43,6 +61,8 @@ export type HaidiContext = {
     | "order_confirmation";
   commerceFacts: HaidiCommerceFacts;
   styleInstructions: HaidiStyleInstructions;
+  prompt: HaidiPromptContext;
+  systemPrompt: string;
 };
 
 export type HaidiOutput = {
@@ -101,7 +121,7 @@ function toHaidiProductFact(
   };
 }
 
-export function buildHaidiContext(options: {
+export async function buildHaidiContext(options: {
   language: string;
   customerText: string;
   action: string;
@@ -121,8 +141,9 @@ export function buildHaidiContext(options: {
   }>;
   cartItems?: Array<{ title: string; price: number; size: string }>;
   blockedReason?: string | null;
-}): HaidiContext {
+}): Promise<HaidiContext> {
   const { language, customerText, action, intent, recommendations, cartItems, blockedReason } = options;
+  const prompt = await getHaidiPromptSummary("youlya");
 
   const products = (recommendations ?? [])
     .slice(0, 10)
@@ -153,6 +174,22 @@ export function buildHaidiContext(options: {
       blockedReason: blockedReason ?? null,
     },
     styleInstructions,
+    prompt: {
+      currentPrompt: prompt.currentPrompt,
+      currentVersion: prompt.promptVersion,
+      source: prompt.source,
+      updatedAt: prompt.updatedAt,
+      safetyRulesSummary: prompt.safetyRulesSummary,
+      repoDefaultVersion: prompt.repoDefaultVersion,
+      canPublish: prompt.canPublish,
+      draftPrompt: prompt.draftPrompt ?? null,
+      draftVersion: prompt.draftVersion ?? null,
+      publishedPrompt: prompt.publishedPrompt ?? null,
+      publishedVersion: prompt.publishedVersion ?? null,
+      lastTestScore: prompt.lastTestScore ?? null,
+      lastTestRunId: prompt.lastTestRunId ?? null,
+    },
+    systemPrompt: prompt.currentPrompt,
   };
 }
 

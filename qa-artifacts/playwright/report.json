@@ -1,0 +1,3532 @@
+{
+  "config": {
+    "configFile": "/root/youlya/playwright.config.ts",
+    "rootDir": "/root/youlya/tests/playwright",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "auth-setup",
+        "name": "auth-setup",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/auth\\.setup\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "dashboard-ux-swarm",
+        "name": "dashboard-ux-swarm",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/dashboard-ux-swarm\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "dashboard-functional-swarm",
+        "name": "dashboard-functional-swarm",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/dashboard-functional-swarm\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "dashboard-a11y-rtl-swarm",
+        "name": "dashboard-a11y-rtl-swarm",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/dashboard-a11y-rtl-swarm\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "dashboard-api-health-swarm",
+        "name": "dashboard-api-health-swarm",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/dashboard-api-health-swarm\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/root/youlya/qa-artifacts/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "dashboard-preferences-persistence",
+        "name": "dashboard-preferences-persistence",
+        "testDir": "/root/youlya/tests/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "/dashboard-preferences-persistence\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "qa-artifacts/playwright/report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "dashboard-api-health-swarm.spec.ts",
+      "file": "dashboard-api-health-swarm.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "health endpoint status ok",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-api-health-swarm",
+              "projectName": "dashboard-api-health-swarm",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 355,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:41:37.306Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eee53a811de157a8a0b3-9d8bf0e4a5f15098cdec",
+          "file": "dashboard-api-health-swarm.spec.ts",
+          "line": 23,
+          "column": 5
+        },
+        {
+          "title": "build-info endpoint has version metadata",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-api-health-swarm",
+              "projectName": "dashboard-api-health-swarm",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 201,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:41:37.823Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eee53a811de157a8a0b3-6d54124f6276697be13a",
+          "file": "dashboard-api-health-swarm.spec.ts",
+          "line": 31,
+          "column": 5
+        },
+        {
+          "title": "dashboard APIs return auth errors or success, never 500",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-api-health-swarm",
+              "projectName": "dashboard-api-health-swarm",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8995,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:41:38.172Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eee53a811de157a8a0b3-e11da4cffb8dc80ab8a3",
+          "file": "dashboard-api-health-swarm.spec.ts",
+          "line": 39,
+          "column": 5
+        },
+        {
+          "title": "dashboard pages should not trigger 500 responses",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-api-health-swarm",
+              "projectName": "dashboard-api-health-swarm",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 79141,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:41:47.390Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eee53a811de157a8a0b3-fadfd490d1b40f0085f1",
+          "file": "dashboard-api-health-swarm.spec.ts",
+          "line": 47,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "dashboard-a11y-rtl-swarm.spec.ts",
+      "file": "dashboard-a11y-rtl-swarm.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "desktop",
+          "file": "dashboard-a11y-rtl-swarm.spec.ts",
+          "line": 14,
+          "column": 8,
+          "specs": [
+            {
+              "title": "a11y/rtl /dashboard/command-center",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 11611,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:41:37.525Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-a43ae60caf69eaef5c6c",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/pilot-control",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 23629,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:41:49.860Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-d-85676-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-d-85676-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-d-85676-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-d-85676-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-1b60840b8cc804368623",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/handoff",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 29793,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:42:19.028Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-9d67fb47040b53ef79ac",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/inbox",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 18353,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:42:53.744Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-44cb2e3a194bce904e85",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/products",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 16165,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:43:16.388Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-0f5aa42c7bf2a71dfa48",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/products-intelligence",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 25126,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:43:33.336Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-dce0f1c010a2176ac6c7",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/statistics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 9169,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:43:58.670Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-d712b3b9ce1e62e8804f",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/security",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 7757,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:44:08.029Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-4ffbd3c13d89cb37355a",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/devices",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 9819,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:44:15.994Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-bef646d98dc6975bc09f",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/profile",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 7030,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:44:26.064Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-2439b5214a8013c44776",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/orders",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 10067,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:44:36.458Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-3aaa0bb2ade1fdcf029c",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/logs",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 12343,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:44:51.709Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-desktop-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-768fae8ec3cf9ba686f9",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 8032,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:45:08.068Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-af6bb8c737676784f2b8",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            }
+          ]
+        },
+        {
+          "title": "tablet",
+          "file": "dashboard-a11y-rtl-swarm.spec.ts",
+          "line": 14,
+          "column": 8,
+          "specs": [
+            {
+              "title": "a11y/rtl /dashboard/command-center",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 11947,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:45:16.758Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-ee8c4d97c7d542db4065",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/pilot-control",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 17858,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:45:28.995Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-t-9092b-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-t-9092b-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-t-9092b-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-t-9092b-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-ab7383461f259e5a97b6",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/handoff",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 16713,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:45:51.275Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-c829cbda3a4beca57195",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/inbox",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 8387,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:46:16.774Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-818cd54dcc7959fdc9ae",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/products",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 24747,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:46:29.607Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-a2327597540c8820c5cd",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/products-intelligence",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 19542,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:46:55.157Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-4a04d439a4bd262ec1e4",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/statistics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 16286,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:47:14.799Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-725e0ea81601a2ccf6aa",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/security",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 6151,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:47:31.240Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-3bcec1652c8b58a1a160",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/devices",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 12141,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:47:37.467Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-e3913db23804a4500a1d",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/profile",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 9406,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:47:49.802Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-bc035595da19161f6ac9",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/orders",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 14557,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:48:04.579Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-307631f1cbe63b26ef99",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/logs",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 11287,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:48:24.060Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-tablet-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-3928c1c94f13e3dc12a9",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 9696,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:48:41.012Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-18328da78536343ee623",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            }
+          ]
+        },
+        {
+          "title": "mobile",
+          "file": "dashboard-a11y-rtl-swarm.spec.ts",
+          "line": 14,
+          "column": 8,
+          "specs": [
+            {
+              "title": "a11y/rtl /dashboard/command-center",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4278,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:48:51.604Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-d26abf187a70f9191c34",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/pilot-control",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 5980,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:48:55.957Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-m-6679b-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-m-6679b-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-m-6679b-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-m-6679b-rtl-dashboard-pilot-control-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-82fcaaa1af3c0c7aa913",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/handoff",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5733,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:49:04.787Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-handoff-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-95979a1093a67c64faec",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/inbox",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5465,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:49:13.027Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-inbox-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-647b89535fffbdae373d",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/products",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4316,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:49:21.123Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-60a932cbe96085374784",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/products-intelligence",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6190,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:49:25.805Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-c20eec3074ea3f7fa017",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/statistics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4326,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:49:32.101Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-47d2345c479f134488ac",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/security",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3425,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:49:36.511Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-7953c2cfe18a742d7c41",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/devices",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7000,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:49:40.021Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-793e6dd5f42340850738",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/profile",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 7399,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:49:47.072Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-profile-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-87595d5bfab47cfdd8d2",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/orders",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 23,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 7784,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:49:56.793Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-orders-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-d3f4e59d7388dd7023b3",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/logs",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 24,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 4518,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
+                        "location": {
+                          "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                          "column": 33,
+                          "line": 63
+                        },
+                        "snippet": "  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                            "column": 33,
+                            "line": 63
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  61 |             }).length;\n  62 |           });\n> 63 |         expect(unlabeledInputs).toBe(0);\n     |                                 ^\n  64 |\n  65 |         const unnamedButtons = await page\n  66 |           .locator(\"button\")\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:50:07.176Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/root/youlya/qa-artifacts/playwright/dashboard-a11y-rtl-swarm-mobile-a11y-rtl-dashboard-logs-dashboard-a11y-rtl-swarm/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts",
+                        "column": 33,
+                        "line": 63
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-c8837ac5f9f0902eb6b4",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            },
+            {
+              "title": "a11y/rtl /dashboard/settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-a11y-rtl-swarm",
+                  "projectName": "dashboard-a11y-rtl-swarm",
+                  "results": [
+                    {
+                      "workerIndex": 25,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3674,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-06T04:50:14.436Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b823e07e31ffc52eb05c-26b9ca1643a8277bd1e4",
+              "file": "dashboard-a11y-rtl-swarm.spec.ts",
+              "line": 18,
+              "column": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "dashboard-functional-swarm.spec.ts",
+      "file": "dashboard-functional-swarm.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "dashboard navigation links work",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 72707,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts",
+                        "column": 55,
+                        "line": 29
+                      },
+                      "message": "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'القنوات والمنتجات' })\u001b[22m\n\n\n  27 |\n  28 |   for (const link of links) {\n> 29 |     await page.getByRole(\"link\", { name: link.name }).click();\n     |                                                       ^\n  30 |     await expect(page).toHaveURL(link.url);\n  31 |   }\n  32 | });\n    at /root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts:29:55"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:43:14.658Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-functional-swarm-dashboard-navigation-links-work-dashboard-functional-swarm/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-functional-swarm-dashboard-navigation-links-work-dashboard-functional-swarm/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-functional-swarm-dashboard-navigation-links-work-dashboard-functional-swarm/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-functional-swarm-dashboard-navigation-links-work-dashboard-functional-swarm/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-975cdc5a99315f9d86ca",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "command center shows AI/Kill switch context",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8402,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:44:35.661Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-74b666896daddd4bbe03",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 34,
+          "column": 5
+        },
+        {
+          "title": "inbox page shows list or meaningful empty state",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5450,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:44:44.925Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-fd67806365ed9864b991",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 42,
+          "column": 5
+        },
+        {
+          "title": "orders and logs pages render non-blank states",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 20631,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'الطلبات' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'الطلبات' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'الطلبات' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'الطلبات' })\u001b[22m\n\n    at /root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts:52:64",
+                    "location": {
+                      "file": "/root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts",
+                      "column": 64,
+                      "line": 52
+                    },
+                    "snippet": "  50 | test(\"orders and logs pages render non-blank states\", async ({ page }) => {\n  51 |   await page.goto(\"/dashboard/orders\");\n> 52 |   await expect(page.getByRole(\"heading\", { name: \"الطلبات\" })).toBeVisible();\n     |                                                                ^\n  53 |\n  54 |   await page.goto(\"/dashboard/logs\");\n  55 |   await expect(page.getByRole(\"heading\", { name: \"السجلات\" })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts",
+                        "column": 64,
+                        "line": 52
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'الطلبات' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'الطلبات' })\u001b[22m\n\n\n  50 | test(\"orders and logs pages render non-blank states\", async ({ page }) => {\n  51 |   await page.goto(\"/dashboard/orders\");\n> 52 |   await expect(page.getByRole(\"heading\", { name: \"الطلبات\" })).toBeVisible();\n     |                                                                ^\n  53 |\n  54 |   await page.goto(\"/dashboard/logs\");\n  55 |   await expect(page.getByRole(\"heading\", { name: \"السجلات\" })).toBeVisible();\n    at /root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts:52:64"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:44:50.517Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-functional-swarm-5b976-ges-render-non-blank-states-dashboard-functional-swarm/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-functional-swarm-5b976-ges-render-non-blank-states-dashboard-functional-swarm/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-functional-swarm-5b976-ges-render-non-blank-states-dashboard-functional-swarm/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-functional-swarm-5b976-ges-render-non-blank-states-dashboard-functional-swarm/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts",
+                    "column": 64,
+                    "line": 52
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-51deb4c6db8298c032ff",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 50,
+          "column": 5
+        },
+        {
+          "title": "pilot control shows health and safety counters",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12733,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:45:17.969Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-0fc1173fa1e3131cdcbc",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 59,
+          "column": 5
+        },
+        {
+          "title": "products intelligence shows overview and gallery",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14199,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:45:31.275Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-dc1a00442de77628b776",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 74,
+          "column": 5
+        },
+        {
+          "title": "settings page controls inspected safely",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "safety",
+                  "description": "Dangerous mutations disabled (TEST_SAFE_DASHBOARD_MUTATIONS!=true)"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4095,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:45:45.793Z",
+                  "annotations": [
+                    {
+                      "type": "safety",
+                      "description": "Dangerous mutations disabled (TEST_SAFE_DASHBOARD_MUTATIONS!=true)"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-53ed7b964a46b73b698a",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 90,
+          "column": 5
+        },
+        {
+          "title": "shipping settings page renders",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5979,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:45:50.060Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-857354e5b0def706078b",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 106,
+          "column": 5
+        },
+        {
+          "title": "ai agent settings page renders with masked secrets",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10934,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:45:56.262Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-24e94e2eebdb42052efb",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 112,
+          "column": 5
+        },
+        {
+          "title": "channels settings page renders",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4299,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:46:07.351Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-1308c76f8231764c8ef5",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 120,
+          "column": 5
+        },
+        {
+          "title": "users and roles page renders",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4636,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:46:11.818Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-9ad5c5c75127b8bc11f6",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 125,
+          "column": 5
+        },
+        {
+          "title": "profile page renders and persists preferences",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-functional-swarm",
+              "projectName": "dashboard-functional-swarm",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4505,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:46:16.598Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "274fc2b261a16a6e18b0-c6994598689f8daf3d99",
+          "file": "dashboard-functional-swarm.spec.ts",
+          "line": 130,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "dashboard-ux-swarm.spec.ts",
+      "file": "dashboard-ux-swarm.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "ux audit /dashboard/command-center",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8121,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:46:26.317Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-0aa0a8321f681b72e7de",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/pilot-control",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20073,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:46:34.739Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-4224e5d61eaa07cb7913",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/inbox",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18421,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:46:55.020Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-fefc760bdc10d19ee311",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/products",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 16011,
+                  "error": {
+                    "message": "Error: Uncaught console errors\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: Uncaught console errors\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-ux-swarm.spec.ts:114:63",
+                    "location": {
+                      "file": "/root/youlya/tests/playwright/dashboard-ux-swarm.spec.ts",
+                      "column": 63,
+                      "line": 114
+                    },
+                    "snippet": "  112 |     expect(shellPresent, \"Dashboard shell/sidebar should be visible\").toBe(true);\n  113 |     expect(hasHorizontalOverflow, \"Horizontal overflow >20px\").toBe(false);\n> 114 |     expect(trackers.consoleErrors, \"Uncaught console errors\").toEqual([]);\n      |                                                               ^\n  115 |     expect(trackers.realFailedRequests, \"Unexpected failed network requests\").toEqual([]);\n  116 |   });\n  117 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/root/youlya/tests/playwright/dashboard-ux-swarm.spec.ts",
+                        "column": 63,
+                        "line": 114
+                      },
+                      "message": "Error: Uncaught console errors\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  112 |     expect(shellPresent, \"Dashboard shell/sidebar should be visible\").toBe(true);\n  113 |     expect(hasHorizontalOverflow, \"Horizontal overflow >20px\").toBe(false);\n> 114 |     expect(trackers.consoleErrors, \"Uncaught console errors\").toEqual([]);\n      |                                                               ^\n  115 |     expect(trackers.realFailedRequests, \"Unexpected failed network requests\").toEqual([]);\n  116 |   });\n  117 | }\n    at /root/youlya/tests/playwright/dashboard-ux-swarm.spec.ts:114:63"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:47:13.609Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-ux-swarm-ux-audit-dashboard-products-dashboard-ux-swarm/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-ux-swarm-ux-audit-dashboard-products-dashboard-ux-swarm/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-ux-swarm-ux-audit-dashboard-products-dashboard-ux-swarm/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-ux-swarm-ux-audit-dashboard-products-dashboard-ux-swarm/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/root/youlya/tests/playwright/dashboard-ux-swarm.spec.ts",
+                    "column": 63,
+                    "line": 114
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-e580187698e09bff6eed",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/products-intelligence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13416,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:47:36.617Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-777ab0b5ab190a6db2df",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/orders",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10891,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:47:50.951Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-157ec5418d76a21da1de",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/logs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7368,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:48:02.014Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-7a071eeaf7974ef5560b",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/settings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10270,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:48:09.440Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-1334385751793d25122b",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/statistics",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7996,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:48:19.822Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-030b080beabdff5f0b85",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/security",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7634,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:48:27.902Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-990472416336572480ef",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/devices",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5296,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:48:35.614Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-eb716c5c685070b6bd59",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        },
+        {
+          "title": "ux audit /dashboard/profile",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dashboard-ux-swarm",
+              "projectName": "dashboard-ux-swarm",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9783,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:48:41.020Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0b2e968d828253534a2-23162e9303e486532349",
+          "file": "dashboard-ux-swarm.spec.ts",
+          "line": 28,
+          "column": 7
+        }
+      ]
+    },
+    {
+      "title": "auth.setup.ts",
+      "file": "auth.setup.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "authenticate admin dashboard user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "auth-setup",
+              "projectName": "auth-setup",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8905,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-06T04:41:24.586Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "17e3fe6f4d9d8bd79c6b-a8c5bc4de993690ab51d",
+          "file": "auth.setup.ts",
+          "line": 7,
+          "column": 6
+        }
+      ]
+    },
+    {
+      "title": "dashboard-preferences-persistence.spec.ts",
+      "file": "dashboard-preferences-persistence.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "dashboard UI preferences persistence",
+          "file": "dashboard-preferences-persistence.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "theme, color, language, and sidebar persist across reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-preferences-persistence",
+                  "projectName": "dashboard-preferences-persistence",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6b07206661c4ffa171a7-d162383e6f2a81a30cd8",
+              "file": "dashboard-preferences-persistence.spec.ts",
+              "line": 6,
+              "column": 7
+            },
+            {
+              "title": "preferences do not reset after logout and login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dashboard-preferences-persistence",
+                  "projectName": "dashboard-preferences-persistence",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6b07206661c4ffa171a7-b7b9acda5d793a412738",
+              "file": "dashboard-preferences-persistence.spec.ts",
+              "line": 78,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-06T04:41:22.591Z",
+    "duration": 536027.728,
+    "expected": 47,
+    "skipped": 2,
+    "unexpected": 21,
+    "flaky": 0
+  }
+}

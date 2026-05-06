@@ -1,0 +1,26 @@
+{
+  "error": null,
+  "count": 2,
+  "rows": [
+    {
+      "id": "201111839150@s.whatsapp.net",
+      "store_id": "youlya",
+      "customer_id": "201111839150@s.whatsapp.net",
+      "channel": "whatsapp_evolution",
+      "status": "ai_active",
+      "last_message_at": "2026-05-06T00:29:11.618+00:00",
+      "created_at": "2026-05-06T00:29:11.536+00:00",
+      "updated_at": "2026-05-06T00:29:11.618+00:00"
+    },
+    {
+      "id": "youlya",
+      "store_id": "youlya",
+      "customer_id": "youlya",
+      "channel": "whatsapp_evolution",
+      "status": "ai_active",
+      "last_message_at": null,
+      "created_at": "2026-05-05T16:52:22.411598+00:00",
+      "updated_at": "2026-05-05T16:52:22.363+00:00"
+    }
+  ]
+}

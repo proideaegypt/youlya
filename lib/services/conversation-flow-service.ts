@@ -165,13 +165,36 @@ export async function getCustomerInfo(conversationId: string): Promise<CustomerI
   }
 }
 
-export async function buildOrderSummary(conversationId: string): Promise<string> {
+export async function buildOrderSummary(conversationId: string, storeId = "youlya"): Promise<string> {
   try {
     const cart = await getCart(conversationId);
     const customer = await getCustomerInfo(conversationId);
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
     const items = cart.map((item) => `- ${item.title} (${item.size}) - ${item.price} جنيه`).join("\n");
-    return `طلبك:\n${items}\nالإجمالي: ${total} جنيه\nالاسم: ${customer?.name ?? "عميل"}\nالعنوان: ${customer?.address ?? ""}\nتأكدي؟`;
+
+    let shippingLine = "";
+    try {
+      const { getStoreShippingSettings, getShippingZones, calculateShippingFromSettings } = await import("@/lib/services/shipping-settings-service");
+      const settings = await getStoreShippingSettings(storeId);
+      const zones = await getShippingZones(storeId);
+      if (settings) {
+        const shippingResult = calculateShippingFromSettings(settings, zones, subtotal, customer?.address ?? "");
+        if (shippingResult.freeShippingApplied) {
+          shippingLine = `الشحن: مجاني ✓ (الطلب فوق ${settings.free_shipping_threshold_egp} جنيه)\n`;
+        } else if (shippingResult.unknownArea) {
+          shippingLine = `الشحن: محتاجين نتأكد من المنطقة\n`;
+        } else if (shippingResult.shippingFee !== null) {
+          shippingLine = `الشحن: ${shippingResult.shippingFee} جنيه\n`;
+        }
+        if (shippingResult.total !== null) {
+          return `طلبك:\n${items}\n${shippingLine}الإجمالي: ${shippingResult.total} جنيه\nالاسم: ${customer?.name ?? "عميل"}\nالعنوان: ${customer?.address ?? ""}\nتأكدي؟`;
+        }
+      }
+    } catch (shippingError) {
+      console.error("buildOrderSummary shipping calc failed", shippingError);
+    }
+
+    return `طلبك:\n${items}\n${shippingLine}الإجمالي: ${subtotal} جنيه\nالاسم: ${customer?.name ?? "عميل"}\nالعنوان: ${customer?.address ?? ""}\nتأكدي؟`;
   } catch (error) {
     console.error("buildOrderSummary failed", error);
     return "طلبك:\nالإجمالي: 0 جنيه\nالاسم: عميل\nالعنوان: \nتأكدي؟";

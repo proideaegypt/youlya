@@ -140,6 +140,7 @@ export async function logInboundMessage(input: InboundMessageInput): Promise<voi
     mock.messageHistory.push({
       ...input,
       direction: "inbound" as MessageDirection,
+      body: safeText,
       text: safeText,
       status: "delivered" as MessageStatus,
       created_at: new Date().toISOString(),
@@ -157,6 +158,7 @@ export async function logInboundMessage(input: InboundMessageInput): Promise<voi
       channel: input.channel,
       direction: "inbound",
       message_type: input.message_type,
+      body: safeText,
       text: safeText,
       transcript: input.transcript,
       image_caption: input.image_caption,
@@ -185,14 +187,17 @@ export async function logOutboundMessage(input: OutboundMessageInput): Promise<v
   const supabase = getSupabaseServerClient();
   const safeText = stripSecrets(input.text);
   const safeDraft = input.ai_agent_draft ? stripSecrets(input.ai_agent_draft) : undefined;
+  const safeFinalReply = input.final_reply ? stripSecrets(input.final_reply) : safeText;
 
   if (!supabase) {
     const mock = getMockState();
     mock.messageHistory.push({
       ...input,
       direction: "outbound" as MessageDirection,
+      body: safeFinalReply,
       text: safeText,
       ai_agent_draft: safeDraft,
+      final_reply: safeFinalReply,
       status: input.status ?? "delivered",
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -208,9 +213,10 @@ export async function logOutboundMessage(input: OutboundMessageInput): Promise<v
       channel: input.channel,
       direction: "outbound",
       message_type: input.message_type,
+      body: safeFinalReply,
       text: safeText,
       ai_agent_draft: safeDraft,
-      final_reply: input.final_reply,
+      final_reply: safeFinalReply,
       status: input.status ?? "delivered",
       n8n_execution_id: input.n8n_execution_id,
       evolution_message_id: input.evolution_message_id,
@@ -298,7 +304,7 @@ export async function getConversationTimeline(
     const [msgRes, evtRes] = await Promise.all([
       supabase
         .from("messages")
-        .select("id,direction,text,ai_agent_draft,final_reply,status,error_code,metadata,created_at")
+        .select("id,direction,body,text,ai_agent_draft,final_reply,status,error_code,metadata,created_at")
         .eq("conversation_id", conversationId)
         .eq("store_id", storeId)
         .order("created_at", { ascending: false })
@@ -316,7 +322,7 @@ export async function getConversationTimeline(
       id: m.id,
       type: "message" as const,
       direction: String(m.direction) as MessageDirection,
-      text: String(m.text ?? m.ai_agent_draft ?? m.final_reply ?? ""),
+      text: String(m.body ?? m.text ?? m.final_reply ?? m.ai_agent_draft ?? ""),
       metadata: safeJson(m.metadata),
       created_at: m.created_at,
     }));
@@ -341,7 +347,16 @@ export async function getConversationTimeline(
 
 export async function listConversations(
   storeId: string,
-  options?: { status?: string; limit?: number; offset?: number },
+  options?: {
+    status?: string;
+    channel?: string;
+    assignee?: string;
+    search?: string;
+    from?: string;
+    to?: string;
+    limit?: number;
+    offset?: number;
+  },
 ): Promise<Array<Record<string, unknown>>> {
   const limit = options?.limit ?? 50;
   const offset = options?.offset ?? 0;
@@ -349,10 +364,26 @@ export async function listConversations(
 
   if (!supabase) {
     const mock = getMockState();
-    return Array.from(mock.conversationHistory.entries()).map(([id, data]) => ({
-      id,
-      ...data,
-    }));
+    const rows = Array.from(mock.conversationHistory.entries()).map(([id, data]) => ({ id, ...(data as Record<string, unknown>) }));
+    return rows.filter((row: Record<string, unknown>) => {
+        if (options?.status && String(row.status ?? "") !== options.status) return false;
+        if (options?.channel && String(row.channel ?? "") !== options.channel) return false;
+        if (options?.assignee && String(row.assigned_to ?? "") !== options.assignee) return false;
+        if (options?.search) {
+          const haystack = [
+            String(row.id ?? ""),
+            String(row.customer_id ?? ""),
+            String(row.channel ?? ""),
+            String(row.status ?? ""),
+          ]
+            .join(" ")
+            .toLowerCase();
+          if (!haystack.includes(options.search.toLowerCase())) return false;
+        }
+        if (options?.from && new Date(String(row.last_message_at ?? row.created_at)).getTime() < new Date(options.from).getTime()) return false;
+        if (options?.to && new Date(String(row.last_message_at ?? row.created_at)).getTime() >= new Date(options.to).getTime()) return false;
+        return true;
+      });
   }
 
   try {
@@ -365,6 +396,24 @@ export async function listConversations(
 
     if (options?.status) {
       query = query.eq("status", options.status);
+    }
+    if (options?.channel) {
+      query = query.eq("channel", options.channel);
+    }
+    if (options?.assignee) {
+      query = query.eq("assigned_to", options.assignee);
+    }
+    if (options?.from) {
+      query = query.gte("last_message_at", options.from);
+    }
+    if (options?.to) {
+      query = query.lt("last_message_at", options.to);
+    }
+    if (options?.search) {
+      const term = options.search.trim();
+      if (term) {
+        query = query.or(`id.ilike.%${term}%,customer_id.ilike.%${term}%,channel.ilike.%${term}%`);
+      }
     }
 
     const { data, error } = await query;

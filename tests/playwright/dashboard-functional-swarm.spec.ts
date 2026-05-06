@@ -11,7 +11,7 @@ test("dashboard navigation links work", async ({ page }) => {
 
   const links = [
     { name: "لوحة التحكم", url: /\/dashboard\/command-center/ },
-    { name: "غرفة التحكم التجريبي", url: /\/dashboard\/pilot/ },
+    { name: "غرفة التحكم التجريبي", url: /\/dashboard\/pilot-control/ },
     { name: "التحويل البشري", url: /\/dashboard\/handoff/ },
     { name: "الرسائل", url: /\/dashboard\/inbox/ },
     { name: "المنتجات والمخزون", url: /\/dashboard\/products/ },
@@ -57,7 +57,7 @@ test("orders and logs pages render non-blank states", async ({ page }) => {
 });
 
 test("pilot control shows health and safety counters", async ({ page }) => {
-  await page.goto("/dashboard/pilot");
+  await page.goto("/dashboard/pilot-control");
   const sidebarToggle = page.getByRole("button", { name: /Expand sidebar|Collapse sidebar/ }).first();
   if (await sidebarToggle.isVisible().catch(() => false)) {
     await sidebarToggle.click();
@@ -101,4 +101,33 @@ test("settings page controls inspected safely", async ({ page }) => {
   if (count > 0) {
     await expect(toggleButtons.first()).toBeVisible();
   }
+});
+
+test("shipping settings page renders", async ({ page }) => {
+  await page.goto("/dashboard/settings/shipping");
+  await expect(page.getByRole("heading", { name: /إعدادات الشحن|Shipping/ })).toBeVisible();
+  await expect(page.getByText(/حد الشحن المجاني|free shipping/i)).toBeVisible();
+});
+
+test("ai agent settings page renders with masked secrets", async ({ page }) => {
+  await page.goto("/dashboard/settings/ai-agent");
+  await expect(page.getByRole("heading", { name: /AI Agent/ })).toBeVisible();
+  // Ensure no raw secret is visible
+  const bodyText = await page.locator("body").textContent();
+  expect(bodyText).not.toMatch(/sk-[a-zA-Z0-9]{20,}/);
+});
+
+test("channels settings page renders", async ({ page }) => {
+  await page.goto("/dashboard/settings/channels");
+  await expect(page.getByRole("heading", { name: /إعدادات القنوات|Channels/ })).toBeVisible();
+});
+
+test("users and roles page renders", async ({ page }) => {
+  await page.goto("/dashboard/settings/users");
+  await expect(page.getByRole("heading", { name: /المستخدمين والأدوار|Users/ })).toBeVisible();
+});
+
+test("profile page renders and persists preferences", async ({ page }) => {
+  await page.goto("/dashboard/profile");
+  await expect(page.getByRole("heading", { name: /الملف الشخصي|Profile/ })).toBeVisible();
 });

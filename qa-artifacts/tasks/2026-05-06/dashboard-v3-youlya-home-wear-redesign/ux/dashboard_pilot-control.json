@@ -1,0 +1,42 @@
+{
+  "route": "/dashboard/pilot-control",
+  "heading": "غرفة الطيار للواتساب",
+  "hasH1": true,
+  "title": "YOULYA HOME WEAR Dashboard",
+  "bodyTextLength": 5530,
+  "sidebarVisible": true,
+  "contentVisible": true,
+  "shellPresent": true,
+  "footerBuildIdentityVisible": false,
+  "hasArabicText": true,
+  "direction": "rtl",
+  "hasHorizontalOverflow": false,
+  "hasErrorOverlay": false,
+  "hasWeakEmptyState": false,
+  "consoleErrors": [],
+  "realFailedRequests": [],
+  "ignoredNetworkNoise": [
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/settings/ai-agent?_rsc=1ex9s",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/settings/channels?_rsc=1ex9s",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/conversations?_rsc=1ex9s",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    }
+  ],
+  "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-06/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_pilot-control.png",
+  "uxIssues": [
+    "Missing build identity"
+  ]
+}

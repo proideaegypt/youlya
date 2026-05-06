@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
   AlertTriangle,
@@ -18,11 +18,14 @@ import {
   Play,
   Smartphone,
   Bot,
-  ShoppingCart,
   ArrowRight,
 } from "lucide-react";
 import { EmptyState } from "@/lib/ui/empty-state";
 import { StatusBadge } from "@/lib/ui/status-badge";
+import { RecordDateFilter } from "@/components/dashboard/record-date-filter";
+import { RecordExportMenu } from "@/components/dashboard/record-export-menu";
+import { useSearchParams } from "next/navigation";
+import { parseDateRangeFromSearchParams } from "@/lib/dashboard/date-range";
 
 type PilotControlData = {
   health: {
@@ -187,6 +190,8 @@ export default function PilotPage() {
   const [data, setData] = useState<PilotControlData | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const range = useMemo(() => parseDateRangeFromSearchParams(searchParams), [searchParams]);
 
   useEffect(() => {
     fetch("/api/dashboard/pilot-control")
@@ -194,6 +199,8 @@ export default function PilotPage() {
       .then((json) => setData(json))
       .finally(() => setLoading(false));
   }, []);
+
+  const [toast, setToast] = useState<{ message: string; tone: "success" | "error" } | null>(null);
 
   const doAction = async (action: string) => {
     setActionLoading(action);
@@ -203,17 +210,35 @@ export default function PilotPage() {
       body: JSON.stringify({ action, updatedBy: "dashboard_pilot" }),
     });
     if (res.ok) {
-      // Refresh pilot data
       const refreshed = await fetch("/api/dashboard/pilot-control").then((r) => r.json());
       setData(refreshed);
+      setToast({ message: "تم التنفيذ بنجاح", tone: "success" });
+    } else {
+      setToast({ message: "فشل التنفيذ", tone: "error" });
     }
     setActionLoading(null);
+    setTimeout(() => setToast(null), 3000);
   };
 
   const blockers = data?.safetyBlockers ?? [];
+  const inboundMessages = (data?.inboundMessages ?? []).filter((message) => {
+    const timestamp = new Date(message.createdAt).getTime();
+    return timestamp >= new Date(range.from).getTime() && timestamp < new Date(`${range.to}T23:59:59.999`).getTime();
+  });
+  const outboundMessages = (data?.outboundMessages ?? []).filter((message) => {
+    const timestamp = new Date(message.createdAt).getTime();
+    return timestamp >= new Date(range.from).getTime() && timestamp < new Date(`${range.to}T23:59:59.999`).getTime();
+  });
 
   return (
     <div className="space-y-6">
+      {toast && (
+        <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 rounded-xl px-4 py-2 text-sm font-medium shadow-lg ${
+          toast.tone === "success" ? "bg-emerald-600 text-white" : "bg-red-500 text-white"
+        }`}>
+          {toast.message}
+        </div>
+      )}
       <section className="relative overflow-hidden rounded-3xl bg-sidebar-gradient p-6 text-white shadow-sm">
         <div className="relative z-10 flex flex-col gap-4">
           <div className="inline-flex w-fit items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">
@@ -236,6 +261,8 @@ export default function PilotPage() {
         </div>
         <div className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
       </section>
+
+      <RecordDateFilter />
 
       {loading ? (
         <div className="flex items-center justify-center rounded-2xl bg-card p-8 shadow-sm ring-1 ring-border">
@@ -280,6 +307,25 @@ export default function PilotPage() {
             />
           </section>
 
+          <div className="flex justify-end">
+            <RecordExportMenu
+              title="Pilot control report"
+              page="pilot-control"
+              columns={[
+                { key: "conversationId", label: "Conversation" },
+                { key: "channel", label: "Channel" },
+                { key: "body", label: "Body" },
+                { key: "createdAt", label: "Created At" },
+              ]}
+              rows={[...inboundMessages, ...outboundMessages]}
+              summaryLines={[
+                { label: "Inbound", value: inboundMessages.length },
+                { label: "Outbound", value: outboundMessages.length },
+                { label: "Handoffs", value: data.handoffCount },
+              ]}
+            />
+          </div>
+
           {/* Build Info + Sync */}
           <section className="grid gap-4 lg:grid-cols-3">
             <div className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
@@ -310,7 +356,7 @@ export default function PilotPage() {
             <div className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
               <div className="mb-3 flex items-center gap-2">
                 <Workflow className="h-5 w-5 text-brand" />
-                <h2 className="text-sm font-semibold text-foreground">Workflow & Integrations</h2>
+                <h2 className="text-sm font-semibold text-foreground">Workflow & safety</h2>
               </div>
               <div className="space-y-3 text-sm">
                 <div className="flex items-center justify-between rounded-xl bg-muted p-3">
@@ -387,7 +433,7 @@ export default function PilotPage() {
             </div>
             <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               <a
-                href="https://admin.youlya365.com/api/health"
+                href="/api/health"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-2 rounded-xl border border-border px-3 py-2.5 text-sm font-semibold text-muted-foreground hover:bg-muted transition"
@@ -433,7 +479,7 @@ export default function PilotPage() {
             <div className="rounded-xl bg-muted p-4 text-sm text-muted-foreground space-y-2">
               <p>Send a safe synthetic message to verify the loop without real WhatsApp:</p>
               <pre className="overflow-x-auto rounded-lg bg-background p-3 text-xs text-foreground">
-{`curl -X POST https://admin.youlya365.com/webhook/youlya-whatsapp \\
+{`curl -X POST ${process.env.NEXT_PUBLIC_APP_URL ?? "https://admin.nex-lnk.online"}/webhook/youlya-whatsapp \\
   -H "Content-Type: application/json" \\
   -d '{"data":{"key":{"remoteJid":"201000000000@s.whatsapp.net","fromMe":false},"message":{"conversation":"هاي"},"messageTimestamp":$(date +%s)}}'`}
               </pre>

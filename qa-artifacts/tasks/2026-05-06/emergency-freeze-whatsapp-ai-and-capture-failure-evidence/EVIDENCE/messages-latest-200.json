@@ -1,0 +1,288 @@
+{
+  "count": 26,
+  "blankCount": 26,
+  "latest": [
+    {
+      "id": "aeb60336-a0f4-4329-af89-c2afff24e0eb",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-06T00:29:11.586+00:00"
+    },
+    {
+      "id": "d151588b-84fd-442f-868e-e67e7dee2e97",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-06T00:29:11.323+00:00"
+    },
+    {
+      "id": "1275fc2e-6ab8-4249-a690-eb5f6724cdaf",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-06T00:28:58.821+00:00"
+    },
+    {
+      "id": "2e36d748-469d-4057-816e-de8928e7780d",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-06T00:28:58.58+00:00"
+    },
+    {
+      "id": "5b02cc3e-d66a-44fa-84f4-7fddc9c316d6",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-06T00:28:44.978+00:00"
+    },
+    {
+      "id": "e3e8686c-7b73-4e9b-97b4-a9557ba7a847",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-06T00:28:44.571+00:00"
+    },
+    {
+      "id": "ed31a384-6f25-42d4-9b2e-12c14eb82873",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T16:26:24.607+00:00"
+    },
+    {
+      "id": "1f171e43-3aaf-4a70-8817-21ff3bb75230",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T16:26:24.308+00:00"
+    },
+    {
+      "id": "0562a451-3a95-4da2-8a9b-13436981cad6",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T15:03:27.983+00:00"
+    },
+    {
+      "id": "08269d9c-1db5-4a18-8e60-a9045832c691",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T15:03:27.498+00:00"
+    },
+    {
+      "id": "f176f5d1-d5f9-4949-966b-422a90125f95",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T14:03:06.206+00:00"
+    },
+    {
+      "id": "ac14db75-8cc2-4855-9859-2a3f69da5109",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T14:03:06.059+00:00"
+    },
+    {
+      "id": "14c94916-6fec-4e91-a0bd-9b30160cf883",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T14:03:05.782+00:00"
+    },
+    {
+      "id": "b3df325b-73ea-4d32-a976-24a898f482d0",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T14:02:49.11+00:00"
+    },
+    {
+      "id": "3eab5416-5cfc-4c71-90df-fa3697958223",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T14:02:49.003+00:00"
+    },
+    {
+      "id": "c1f09104-a6cc-411b-87c3-bd44ade43725",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T14:02:48.674+00:00"
+    },
+    {
+      "id": "ffa77938-d75f-4a92-b357-5f995c35494b",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T13:54:18.671+00:00"
+    },
+    {
+      "id": "0771d41b-6540-4f98-b6d6-773a643cd8e3",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T13:54:18.184+00:00"
+    },
+    {
+      "id": "582779ed-eb28-4e1a-aa60-8e120527e138",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T13:53:59.811+00:00"
+    },
+    {
+      "id": "87f739c1-8780-481e-bc45-dcb604a73223",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T13:53:58.976+00:00"
+    }
+  ],
+  "blankSample": [
+    {
+      "id": "aeb60336-a0f4-4329-af89-c2afff24e0eb",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-06T00:29:11.586+00:00"
+    },
+    {
+      "id": "d151588b-84fd-442f-868e-e67e7dee2e97",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-06T00:29:11.323+00:00"
+    },
+    {
+      "id": "1275fc2e-6ab8-4249-a690-eb5f6724cdaf",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-06T00:28:58.821+00:00"
+    },
+    {
+      "id": "2e36d748-469d-4057-816e-de8928e7780d",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-06T00:28:58.58+00:00"
+    },
+    {
+      "id": "5b02cc3e-d66a-44fa-84f4-7fddc9c316d6",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-06T00:28:44.978+00:00"
+    },
+    {
+      "id": "e3e8686c-7b73-4e9b-97b4-a9557ba7a847",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-06T00:28:44.571+00:00"
+    },
+    {
+      "id": "ed31a384-6f25-42d4-9b2e-12c14eb82873",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T16:26:24.607+00:00"
+    },
+    {
+      "id": "1f171e43-3aaf-4a70-8817-21ff3bb75230",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T16:26:24.308+00:00"
+    },
+    {
+      "id": "0562a451-3a95-4da2-8a9b-13436981cad6",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T15:03:27.983+00:00"
+    },
+    {
+      "id": "08269d9c-1db5-4a18-8e60-a9045832c691",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T15:03:27.498+00:00"
+    },
+    {
+      "id": "f176f5d1-d5f9-4949-966b-422a90125f95",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T14:03:06.206+00:00"
+    },
+    {
+      "id": "ac14db75-8cc2-4855-9859-2a3f69da5109",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T14:03:06.059+00:00"
+    },
+    {
+      "id": "14c94916-6fec-4e91-a0bd-9b30160cf883",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T14:03:05.782+00:00"
+    },
+    {
+      "id": "b3df325b-73ea-4d32-a976-24a898f482d0",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T14:02:49.11+00:00"
+    },
+    {
+      "id": "3eab5416-5cfc-4c71-90df-fa3697958223",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T14:02:49.003+00:00"
+    },
+    {
+      "id": "c1f09104-a6cc-411b-87c3-bd44ade43725",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T14:02:48.674+00:00"
+    },
+    {
+      "id": "ffa77938-d75f-4a92-b357-5f995c35494b",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T13:54:18.671+00:00"
+    },
+    {
+      "id": "0771d41b-6540-4f98-b6d6-773a643cd8e3",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T13:54:18.184+00:00"
+    },
+    {
+      "id": "582779ed-eb28-4e1a-aa60-8e120527e138",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "outbound",
+      "body": null,
+      "created_at": "2026-05-05T13:53:59.811+00:00"
+    },
+    {
+      "id": "87f739c1-8780-481e-bc45-dcb604a73223",
+      "conversation_id": "201111839150@s.whatsapp.net",
+      "direction": "inbound",
+      "body": null,
+      "created_at": "2026-05-05T13:53:58.976+00:00"
+    }
+  ]
+}

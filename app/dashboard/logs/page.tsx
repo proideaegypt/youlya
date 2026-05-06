@@ -1,7 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FileText, Search, AlertTriangle, Info, AlertCircle } from "lucide-react";
+import { RecordDateFilter } from "@/components/dashboard/record-date-filter";
+import { RecordExportMenu } from "@/components/dashboard/record-export-menu";
+import { useSearchParams } from "next/navigation";
+import { parseDateRangeFromSearchParams } from "@/lib/dashboard/date-range";
 
 const sampleLogs = [
   { id: "1", timestamp: "2026-05-01 18:00", type: "AI_TOOL", level: "info", message: "Product search executed", details: "Query: 'summer dress'" },
@@ -54,12 +58,17 @@ const typeLabel = (type: string) => {
 };
 
 export default function DashboardLogsPage() {
-  const [filter, _setFilter] = useState<"all" | "info" | "warning" | "error">("all");
+  const [filter] = useState<"all" | "info" | "warning" | "error">("all");
   const [search, setSearch] = useState("");
+  const searchParams = useSearchParams();
+  const range = useMemo(() => parseDateRangeFromSearchParams(searchParams), [searchParams]);
 
   const filteredLogs = sampleLogs.filter((log) => {
     if (filter !== "all" && log.level !== filter) return false;
     if (search && !log.message.toLowerCase().includes(search.toLowerCase())) return false;
+    const timestamp = new Date(log.timestamp).getTime();
+    if (timestamp < new Date(range.from).getTime()) return false;
+    if (timestamp >= new Date(`${range.to}T23:59:59.999`).getTime()) return false;
     return true;
   });
 
@@ -71,6 +80,23 @@ export default function DashboardLogsPage() {
           <p className="mt-2 text-muted-foreground">Logs</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <RecordExportMenu
+            title="Logs report"
+            page="logs"
+            columns={[
+              { key: "timestamp", label: "Timestamp" },
+              { key: "type", label: "Type" },
+              { key: "level", label: "Level" },
+              { key: "message", label: "Message" },
+              { key: "details", label: "Details" },
+            ]}
+            rows={filteredLogs}
+            summaryLines={[
+              { label: "Total", value: filteredLogs.length },
+              { label: "Errors", value: filteredLogs.filter((log) => log.level === "error").length },
+              { label: "Warnings", value: filteredLogs.filter((log) => log.level === "warning").length },
+            ]}
+          />
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -83,6 +109,10 @@ export default function DashboardLogsPage() {
             />
           </div>
         </div>
+      </div>
+
+      <div className="mb-4">
+        <RecordDateFilter />
       </div>
 
       {/* Summary */}

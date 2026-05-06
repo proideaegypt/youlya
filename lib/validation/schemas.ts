@@ -13,7 +13,7 @@ export const messageTurnSchema = z.object({
 
 export const internalMessageTurnSchema = z.object({
   store_id: z.string().min(1),
-  conversation_id: z.string().min(1),
+  conversation_id: z.string().min(1).optional(),
   customer_id: z.string().min(1),
   channel: z.literal("whatsapp_evolution"),
   message_type: z.enum(["text", "voice", "image"]),
@@ -54,9 +54,11 @@ export const selectProductSchema = z.object({
 });
 
 export const shippingSchema = z.object({
-  storeSlug: z.string().min(1),
-  cartId: z.string().min(1),
+  storeSlug: z.string().min(1).optional(),
+  storeId: z.string().min(1).optional(),
+  cartId: z.string().min(1).optional(),
   city: z.string().min(1),
+  subtotal: z.number().optional(),
   testMode: z.boolean().default(false),
 });
 
@@ -82,6 +84,7 @@ export const createOrderSchema = z.object({
   total: z.number(),
   explicit_confirmation_text: z.string().min(1),
   idempotency_key: z.string().optional(),
+  testMode: z.boolean().default(false),
 });
 
 export const handoffSchema = z.object({

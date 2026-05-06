@@ -1,10 +1,9 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import fs from "node:fs";
-import path from "node:path";
 import { createServerClient } from "@supabase/ssr";
 import { isAiEnabled } from "@/lib/services/ai-settings-service";
 import { DashboardShell } from "@/lib/ui/dashboard-shell";
+import { TestModeBanner } from "@/components/dashboard/test-mode-banner";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
@@ -30,5 +29,10 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   const aiEnabled = await isAiEnabled("youlya");
 
-  return <DashboardShell aiEnabled={aiEnabled}>{children}</DashboardShell>;
+  return (
+    <>
+      <TestModeBanner />
+      <DashboardShell aiEnabled={aiEnabled}>{children}</DashboardShell>
+    </>
+  );
 }

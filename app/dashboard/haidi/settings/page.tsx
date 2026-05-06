@@ -6,16 +6,14 @@ import {
   Save,
   RefreshCw,
   Languages,
-  Smile,
-  MessageSquare,
   TrendingUp,
   Package,
-  Search,
   Hand,
-  AlertTriangle,
   Shield,
   FileText,
   CheckCircle2,
+  Undo2,
+  FlaskConical,
 } from "lucide-react";
 import { StatusBadge } from "@/lib/ui/status-badge";
 
@@ -35,9 +33,37 @@ type HaidiSettings = {
   handoffOnHumanRequest: boolean;
   handoffAfterUnclearCount: number;
   handoffOnAngryTone: boolean;
+  humanHandoffEnabled: boolean;
+  handoffCustomerServiceEnabled: boolean;
+  handoffManagerRequestEnabled: boolean;
+  pauseAiAfterHandoff: boolean;
+  sendHandoffAcknowledgement: boolean;
+  notifyHumanTeam: boolean;
+  defaultHandoffAssignee: string;
+  customerServiceReplyTemplateAr: string;
+  managerRequestReplyTemplateAr: string;
+  handoffFinalAckTemplateAr: string;
   globalAiPaused: boolean;
   ordersPaused: boolean;
   promptVersion: string;
+};
+
+type HaidiPrompt = {
+  currentPrompt: string;
+  currentVersion: string;
+  source: "repo" | "db";
+  updatedAt: string;
+  safetyRulesSummary: string[];
+  draftPrompt: string | null;
+  draftVersion: string | null;
+  publishedPrompt: string | null;
+  publishedVersion: string | null;
+  previousPublishedPrompt?: string | null;
+  previousPublishedVersion?: string | null;
+  repoDefaultVersion: string;
+  canPublish: boolean;
+  lastTestScore: number | null;
+  lastTestRunId: string | null;
 };
 
 const DEFAULTS: HaidiSettings = {
@@ -56,6 +82,16 @@ const DEFAULTS: HaidiSettings = {
   handoffOnHumanRequest: true,
   handoffAfterUnclearCount: 3,
   handoffOnAngryTone: true,
+  humanHandoffEnabled: true,
+  handoffCustomerServiceEnabled: true,
+  handoffManagerRequestEnabled: true,
+  pauseAiAfterHandoff: true,
+  sendHandoffAcknowledgement: true,
+  notifyHumanTeam: true,
+  defaultHandoffAssignee: "",
+  customerServiceReplyTemplateAr: "تمام يا فندم، هسجل طلبك وهيتواصل معاكي حد من الفريق حالًا.",
+  managerRequestReplyTemplateAr: "تمام يا فندم، هسجل طلبك كطلب تواصل مع الإدارة وهيتواصل معاكي حد من الفريق حالًا.",
+  handoffFinalAckTemplateAr: "تم تسجيل الطلب، وسيتواصل معاكي حد من الفريق.",
   globalAiPaused: false,
   ordersPaused: false,
   promptVersion: "v1",
@@ -163,19 +199,58 @@ function NumberField({
   );
 }
 
+function TextAreaField({
+  label,
+  value,
+  rows = 3,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  rows?: number;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div className="grid gap-2">
+      <label className="text-sm font-medium text-foreground">{label}</label>
+      <textarea
+        rows={rows}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-brand"
+      />
+    </div>
+  );
+}
+
 export default function HaidiSettingsPage() {
   const [settings, setSettings] = useState<HaidiSettings>(DEFAULTS);
+  const [prompt, setPrompt] = useState<HaidiPrompt | null>(null);
+  const [promptDraft, setPromptDraft] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [promptSaving, setPromptSaving] = useState(false);
+  const [testingPrompt, setTestingPrompt] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [promptSaved, setPromptSaved] = useState(false);
+  const [promptError, setPromptError] = useState<string | null>(null);
+  const [promptMessage, setPromptMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [lastTestScore, setLastTestScore] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch("/api/dashboard/haidi-settings")
-      .then((r) => r.json())
-      .then((json) => {
-        if (json.settings) {
-          setSettings((s) => ({ ...s, ...json.settings }));
+    Promise.all([
+      fetch("/api/dashboard/haidi/settings").then((r) => r.json()),
+      fetch("/api/dashboard/haidi/prompt").then((r) => r.json()),
+    ])
+      .then(([settingsJson, promptJson]) => {
+        if (settingsJson.settings) {
+          setSettings((s) => ({ ...s, ...settingsJson.settings }));
+        }
+        if (promptJson.prompt) {
+          setPrompt(promptJson.prompt);
+          setPromptDraft(String(promptJson.prompt.draftPrompt ?? promptJson.prompt.currentPrompt ?? ""));
+          setLastTestScore(typeof promptJson.prompt.lastTestScore === "number" ? promptJson.prompt.lastTestScore : null);
         }
       })
       .catch(() => setError("فشل تحميل الإعدادات"))
@@ -186,7 +261,7 @@ export default function HaidiSettingsPage() {
     setSaving(true);
     setSaved(false);
     setError(null);
-    const res = await fetch("/api/dashboard/haidi-settings", {
+    const res = await fetch("/api/dashboard/haidi/settings", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ ...settings, updatedBy: "dashboard_haidi_settings" }),
@@ -203,6 +278,144 @@ export default function HaidiSettingsPage() {
   const patch = (partial: Partial<HaidiSettings>) => {
     setSettings((s) => ({ ...s, ...partial }));
     setSaved(false);
+  };
+
+  const refreshPrompt = async () => {
+    const res = await fetch("/api/dashboard/haidi/prompt");
+    const json = await res.json();
+    if (json.prompt) {
+      setPrompt(json.prompt);
+      setPromptDraft(String(json.prompt.draftPrompt ?? json.prompt.currentPrompt ?? ""));
+      setLastTestScore(typeof json.prompt.lastTestScore === "number" ? json.prompt.lastTestScore : null);
+    }
+  };
+
+  const saveDraft = async () => {
+    setPromptSaving(true);
+    setPromptError(null);
+    setPromptMessage(null);
+    const res = await fetch("/api/dashboard/haidi/prompt", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        action: "save_draft",
+        storeId: "youlya",
+        promptText: promptDraft,
+        promptVersion: prompt?.draftVersion ?? undefined,
+        updatedBy: "dashboard_haidi_settings",
+      }),
+    });
+    const json = await res.json();
+    if (res.ok && json.prompt) {
+      setPrompt(json.prompt);
+      setPromptDraft(String(json.prompt.draftPrompt ?? json.prompt.currentPrompt ?? ""));
+      setPromptSaved(true);
+      setPromptMessage("تم حفظ المسودة");
+      setTimeout(() => setPromptSaved(false), 3000);
+    } else {
+      setPromptError(String(json.error ?? "فشل حفظ المسودة"));
+    }
+    setPromptSaving(false);
+  };
+
+  const publishPrompt = async () => {
+    setPromptSaving(true);
+    setPromptError(null);
+    setPromptMessage(null);
+    const res = await fetch("/api/dashboard/haidi/prompt", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        action: "publish",
+        storeId: "youlya",
+        updatedBy: "dashboard_haidi_settings",
+        requirePassingLabRun: true,
+      }),
+    });
+    const json = await res.json();
+    if (res.ok && json.prompt) {
+      setPrompt(json.prompt);
+      setPromptDraft(String(json.prompt.draftPrompt ?? json.prompt.currentPrompt ?? ""));
+      setPromptMessage("تم نشر prompt جديد");
+      setLastTestScore(typeof json.prompt.lastTestScore === "number" ? json.prompt.lastTestScore : lastTestScore);
+      await refreshSettingsOnly();
+    } else {
+      setPromptError(String(json.error ?? "فشل نشر prompt"));
+    }
+    setPromptSaving(false);
+  };
+
+  const rollbackPrompt = async () => {
+    setPromptSaving(true);
+    setPromptError(null);
+    setPromptMessage(null);
+    const res = await fetch("/api/dashboard/haidi/prompt", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        action: "rollback",
+        storeId: "youlya",
+        updatedBy: "dashboard_haidi_settings",
+      }),
+    });
+    const json = await res.json();
+    if (res.ok && json.prompt) {
+      setPrompt(json.prompt);
+      setPromptDraft(String(json.prompt.draftPrompt ?? json.prompt.currentPrompt ?? ""));
+      setPromptMessage("تم الرجوع للإصدار السابق");
+      await refreshSettingsOnly();
+    } else {
+      setPromptError(String(json.error ?? "فشل الرجوع للإصدار السابق"));
+    }
+    setPromptSaving(false);
+  };
+
+  const testPrompt = async () => {
+    setTestingPrompt(true);
+    setPromptError(null);
+    setPromptMessage(null);
+    const scenariosRes = await fetch("/api/dashboard/haidi/lab?store_id=youlya");
+    const scenariosJson = await scenariosRes.json();
+    const scenarioId = scenariosJson.scenarios?.[0]?.id;
+    if (!scenarioId) {
+      setPromptError("لا توجد سيناريوهات اختبار متاحة في Haidi Lab");
+      setTestingPrompt(false);
+      return;
+    }
+    const runRes = await fetch("/api/dashboard/haidi/lab/run", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ store_id: "youlya", scenario_id: scenarioId }),
+    });
+    const runJson = await runRes.json();
+    if (runRes.ok && runJson.run) {
+      const score = typeof runJson.run.score === "number" ? runJson.run.score : null;
+      setLastTestScore(score);
+      await fetch("/api/dashboard/haidi/prompt", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          action: "test",
+          storeId: "youlya",
+          runId: String(runJson.run.id),
+          score: score ?? 0,
+          updatedBy: "dashboard_haidi_settings",
+        }),
+      });
+      setPromptMessage(`تم اختبار prompt على السيناريو ${scenarioId}`);
+      await refreshPrompt();
+    } else {
+      setPromptError(String(runJson.error ?? "فشل اختبار prompt"));
+    }
+    setTestingPrompt(false);
+  };
+
+  const refreshSettingsOnly = async () => {
+    const res = await fetch("/api/dashboard/haidi/settings");
+    const json = await res.json();
+    if (json.settings) {
+      setSettings((s) => ({ ...s, ...json.settings }));
+    }
   };
 
   if (loading) {
@@ -235,7 +448,10 @@ export default function HaidiSettingsPage() {
             <StatusBadge tone={settings.ordersPaused ? "warning" : "success"}>
               {settings.ordersPaused ? "الطلبات متوقفة" : "الطلبات مفعلة"}
             </StatusBadge>
-            <StatusBadge tone="neutral">Prompt {settings.promptVersion}</StatusBadge>
+            <StatusBadge tone="neutral">Prompt {prompt?.currentVersion ?? settings.promptVersion}</StatusBadge>
+            <StatusBadge tone={prompt?.source === "db" ? "success" : "neutral"}>
+              Source {prompt?.source ?? "repo"}
+            </StatusBadge>
           </div>
         </div>
         <div className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
@@ -329,11 +545,6 @@ export default function HaidiSettingsPage() {
         </Section>
 
         <Section title="Handoff & Safety" icon={Hand}>
-          <ToggleField
-            label="Handoff On Human Request"
-            checked={settings.handoffOnHumanRequest}
-            onChange={(v) => patch({ handoffOnHumanRequest: v })}
-          />
           <NumberField
             label="Handoff After Unclear Count"
             value={settings.handoffAfterUnclearCount}
@@ -346,6 +557,129 @@ export default function HaidiSettingsPage() {
             checked={settings.handoffOnAngryTone}
             onChange={(v) => patch({ handoffOnAngryTone: v })}
           />
+          <ToggleField
+            label="Human Handoff Enabled"
+            checked={settings.humanHandoffEnabled}
+            onChange={(v) => patch({ humanHandoffEnabled: v })}
+          />
+          <ToggleField
+            label="Customer Service Request Enabled"
+            checked={settings.handoffCustomerServiceEnabled}
+            onChange={(v) => patch({ handoffCustomerServiceEnabled: v })}
+          />
+          <ToggleField
+            label="Manager Request Enabled"
+            checked={settings.handoffManagerRequestEnabled}
+            onChange={(v) => patch({ handoffManagerRequestEnabled: v })}
+          />
+          <ToggleField
+            label="Pause AI After Handoff"
+            checked={settings.pauseAiAfterHandoff}
+            onChange={(v) => patch({ pauseAiAfterHandoff: v })}
+          />
+          <ToggleField
+            label="Send Acknowledgement"
+            checked={settings.sendHandoffAcknowledgement}
+            onChange={(v) => patch({ sendHandoffAcknowledgement: v })}
+          />
+          <ToggleField
+            label="Notify Human Team"
+            checked={settings.notifyHumanTeam}
+            onChange={(v) => patch({ notifyHumanTeam: v })}
+          />
+          <div className="flex items-center justify-between gap-3">
+            <label className="text-sm font-medium text-foreground">Default Assignee</label>
+            <input
+              type="text"
+              value={settings.defaultHandoffAssignee}
+              onChange={(e) => patch({ defaultHandoffAssignee: e.target.value })}
+              className="w-48 rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-brand"
+            />
+          </div>
+          <TextAreaField
+            label="Customer Service Arabic Template"
+            value={settings.customerServiceReplyTemplateAr}
+            onChange={(v) => patch({ customerServiceReplyTemplateAr: v })}
+          />
+          <TextAreaField
+            label="Manager Request Arabic Template"
+            value={settings.managerRequestReplyTemplateAr}
+            onChange={(v) => patch({ managerRequestReplyTemplateAr: v })}
+          />
+          <TextAreaField
+            label="Final Acknowledgement Arabic Template"
+            value={settings.handoffFinalAckTemplateAr}
+            onChange={(v) => patch({ handoffFinalAckTemplateAr: v })}
+          />
+        </Section>
+
+        <Section title="Prompt Editor" icon={FlaskConical}>
+          <div className="grid gap-3 text-sm text-muted-foreground">
+            <div className="grid gap-2 rounded-2xl bg-muted/40 p-4 ring-1 ring-border">
+              <div className="flex flex-wrap items-center gap-2">
+                <StatusBadge tone={prompt?.source === "db" ? "success" : "neutral"}>{prompt?.source ?? "repo"}</StatusBadge>
+                <StatusBadge tone="neutral">Version {prompt?.currentVersion ?? "loading"}</StatusBadge>
+                <StatusBadge tone={typeof lastTestScore === "number" && lastTestScore >= 90 ? "success" : "warning"}>
+                  Test {typeof lastTestScore === "number" ? `${lastTestScore}/100` : "not run"}
+                </StatusBadge>
+              </div>
+              <p className="text-xs leading-5">
+                Repo default: {prompt?.repoDefaultVersion ?? "docs/HAIDI_AI_SALES_AGENT_PROMPT.md@v1.0"}
+                {" "}
+                {prompt?.canPublish ? "Publish gate open." : "Publish gate waits for a passing lab run."}
+              </p>
+              <p className="text-xs leading-5">
+                {prompt?.safetyRulesSummary?.length ? prompt.safetyRulesSummary.join(" ") : "No safety summary loaded."}
+              </p>
+            </div>
+            <textarea
+              value={promptDraft}
+              onChange={(e) => {
+                setPromptDraft(e.target.value);
+                setPromptSaved(false);
+                setPromptError(null);
+              }}
+              rows={16}
+              className="min-h-[360px] rounded-2xl border border-border bg-background px-4 py-3 text-sm leading-6 text-foreground outline-none focus:ring-2 focus:ring-brand"
+              placeholder="Haidi prompt draft"
+            />
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={saveDraft}
+                disabled={promptSaving}
+                className="inline-flex items-center gap-2 rounded-xl bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 transition disabled:opacity-50"
+              >
+                {promptSaving ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                Save draft
+              </button>
+              <button
+                onClick={testPrompt}
+                disabled={testingPrompt}
+                className="inline-flex items-center gap-2 rounded-xl border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground hover:bg-muted transition disabled:opacity-50"
+              >
+                {testingPrompt ? <RefreshCw className="h-4 w-4 animate-spin" /> : <FlaskConical className="h-4 w-4" />}
+                Test prompt
+              </button>
+              <button
+                onClick={publishPrompt}
+                disabled={promptSaving || !prompt?.canPublish}
+                className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 transition disabled:opacity-50"
+              >
+                Publish prompt
+              </button>
+              <button
+                onClick={rollbackPrompt}
+                disabled={promptSaving || !prompt?.publishedPrompt || !prompt?.previousPublishedPrompt}
+                className="inline-flex items-center gap-2 rounded-xl border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground hover:bg-muted transition disabled:opacity-50"
+              >
+                <Undo2 className="h-4 w-4" />
+                Rollback
+              </button>
+            </div>
+            {promptMessage && <p className="text-sm text-emerald-600">{promptMessage}</p>}
+            {promptError && <p className="text-sm text-red-500">{promptError}</p>}
+            {promptSaved && <p className="text-sm text-emerald-600">Draft saved.</p>}
+          </div>
         </Section>
 
         <Section title="Global Controls" icon={Shield}>

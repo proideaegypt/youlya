@@ -4,7 +4,7 @@
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
 - heading: غرفة الطيار للواتساب
-- bodyTextLength: 1155
+- bodyTextLength: 1872
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -15,14 +15,9 @@
 - screenshot: /root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_pilot-control.png
 - consoleErrorCount: 0
 - realFailedRequestCount: 0
-- ignoredNetworkNoiseCount: 2
+- ignoredNetworkNoiseCount: 0
 
 ## UX Issues
 
 - Missing build identity
-
-## Ignored Framework/Network Noise
-
-- [0] GET https://admin.youlya365.com/dashboard/devices?_rsc=1ex9s (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/security?_rsc=1ex9s (net::ERR_ABORTED)
 

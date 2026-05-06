@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { getMockState } from "@/lib/adapters/supabase/mock-store";
 import { logToolCall } from "@/lib/services/ai-tool-logger";
-import { incrementUnclearCount } from "@/lib/services/conversation-state-service";
 import { createHandoffTicket } from "@/lib/services/handoff-service";
 import { isKillSwitchEnabled, setKillSwitchForStore } from "@/lib/services/kill-switch-service";
 
@@ -10,32 +9,27 @@ function resetState() {
   state.handoffs.length = 0;
   state.auditLogs.length = 0;
   state.toolLogs.length = 0;
-  state.unclearCounts.clear();
   state.conversationStatus.clear();
   state.killSwitchByStore.clear();
+  state.handoffNotifications.length = 0;
 }
 
-describe("handoff + kill switch + ai tool logs", () => {
-  test("angry tone -> HIGH priority ticket created", async () => {
+describe("handoff + notifications + ai tool logs", () => {
+  test("customer service ticket creates notification", async () => {
     resetState();
     const ticket = await createHandoffTicket({
       store_id: "youlya",
       conversation_id: "conv-1",
       customer_id: "cust-1",
-      reason: "ANGRY_TONE",
-      priority: "HIGH",
-      ai_summary: "customer angry",
+      reason: "CUSTOMER_SERVICE_REQUEST",
+      priority: "NORMAL",
+      ai_summary: "customer service",
+      handoff_type: "customer_service",
+      problem_summary: "customer wants support",
     });
-    expect(ticket.priority).toBe("HIGH");
-  });
-
-  test("unclear 3x -> handoff auto-triggered", async () => {
-    resetState();
-    await incrementUnclearCount("conv-2", { store_id: "youlya", customer_id: "cust-2" });
-    await incrementUnclearCount("conv-2", { store_id: "youlya", customer_id: "cust-2" });
-    await incrementUnclearCount("conv-2", { store_id: "youlya", customer_id: "cust-2" });
-    expect(getMockState().handoffs.length).toBe(1);
-    expect(getMockState().handoffs[0]?.reason).toBe("UNCLEAR_3X");
+    expect(ticket.priority).toBe("NORMAL");
+    expect(getMockState().handoffNotifications.length).toBe(1);
+    expect(getMockState().handoffNotifications[0]?.handoff_ticket_id).toBe(ticket.id);
   });
 
   test("kill switch on -> true", async () => {
@@ -92,4 +86,3 @@ describe("handoff + kill switch + ai tool logs", () => {
     expect(getMockState().handoffs[0]?.reason).toBe("API_FAILURE");
   });
 });
-

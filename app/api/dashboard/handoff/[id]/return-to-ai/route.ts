@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { returnToAI } from "@/lib/services/handoff-service";
 import { getMockState } from "@/lib/adapters/supabase/mock-store";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getHaidiSettings } from "@/lib/services/haidi-settings-service";
 
 export async function POST(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const cookieStore = await cookies();
@@ -32,5 +33,17 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   const success = await returnToAI(conversationId, actor);
   if (!success) return NextResponse.json({ error: "not_found" }, { status: 404 });
 
-  return NextResponse.json({ success: true });
+  const settings = await getHaidiSettings("youlya");
+  const ticket = getMockState().handoffs.find((t) => (t as { id: string }).id === id) as { status?: string } | undefined;
+
+  return NextResponse.json({
+    success: true,
+    ticket: ticket
+      ? {
+          id,
+          status: ticket.status === "returned_to_ai" ? "returned_to_ai" : ticket.status ?? "resolved",
+        }
+      : null,
+    customerReply: settings.sendHandoffAcknowledgement ? "أنا رجعت أساعدك تاني يا فندم، تحبي نكمل؟" : null,
+  });
 }

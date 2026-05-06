@@ -25,6 +25,16 @@ describe("haidi-settings-service", () => {
     expect(s.handoffOnHumanRequest).toBe(true);
     expect(s.handoffAfterUnclearCount).toBe(3);
     expect(s.handoffOnAngryTone).toBe(true);
+    expect(s.humanHandoffEnabled).toBe(true);
+    expect(s.handoffCustomerServiceEnabled).toBe(true);
+    expect(s.handoffManagerRequestEnabled).toBe(true);
+    expect(s.pauseAiAfterHandoff).toBe(true);
+    expect(s.sendHandoffAcknowledgement).toBe(true);
+    expect(s.notifyHumanTeam).toBe(true);
+    expect(s.defaultHandoffAssignee).toBeNull();
+    expect(s.customerServiceReplyTemplateAr).toBe("تمام يا فندم، هسجل طلبك وهيتواصل معاكي حد من الفريق حالًا.");
+    expect(s.managerRequestReplyTemplateAr).toBe("تمام يا فندم، هسجل طلبك كطلب تواصل مع الإدارة وهيتواصل معاكي حد من الفريق حالًا.");
+    expect(s.handoffFinalAckTemplateAr).toBe("تم تسجيل الطلب، وسيتواصل معاكي حد من الفريق.");
     expect(s.globalAiPaused).toBe(false);
     expect(s.ordersPaused).toBe(false);
     expect(s.promptVersion).toBe("v1");

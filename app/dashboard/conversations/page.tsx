@@ -1,5 +1,3 @@
-import { cookies } from "next/headers";
-import { getSupabaseServerClient } from "@/lib/supabase/server";
 import {
   listConversations,
   getConversationTimeline,
@@ -12,14 +10,21 @@ import {
   Bot,
   HandHelping,
   Clock,
-  RefreshCw,
 } from "lucide-react";
+import { RecordDateFilter } from "@/components/dashboard/record-date-filter";
+import { RecordExportMenu } from "@/components/dashboard/record-export-menu";
+import { parseDateRangeFromSearchParams } from "@/lib/dashboard/date-range";
 
-async function loadConversations(filter?: string) {
+async function loadConversations(filter?: string, searchParams?: Record<string, string | undefined>) {
   const storeId = "youlya";
   return listConversations(storeId, {
     limit: 50,
     status: filter && filter !== "all" ? filter : undefined,
+    channel: searchParams?.channel || undefined,
+    assignee: searchParams?.assignee || undefined,
+    search: searchParams?.search || undefined,
+    from: searchParams?.from || undefined,
+    to: searchParams?.to || undefined,
   });
 }
 
@@ -59,12 +64,13 @@ function directionBadge(direction?: string) {
 export default async function ConversationsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ conversation?: string; filter?: string }>;
+  searchParams: Promise<{ conversation?: string; filter?: string; from?: string; to?: string; preset?: string; channel?: string; assignee?: string; search?: string }>;
 }) {
   const params = await searchParams;
   const selectedId = params.conversation ?? "";
   const filter = params.filter ?? "all";
-  const conversations = await loadConversations(filter);
+  const range = parseDateRangeFromSearchParams(params);
+  const conversations = await loadConversations(filter, { ...params, from: range.from, to: range.to });
   const selected = selectedId
     ? conversations.find((c) => String(c.id) === selectedId)
     : conversations[0] ?? null;
@@ -87,6 +93,22 @@ export default async function ConversationsPage({
               {handoffCount} تحويل بشري معلق
             </div>
           ) : null}
+          <RecordExportMenu
+            title="Conversations report"
+            page="conversations"
+            columns={[
+              { key: "id", label: "Conversation" },
+              { key: "customer_id_masked", label: "Customer" },
+              { key: "status", label: "Status" },
+              { key: "channel", label: "Channel" },
+              { key: "last_message_at", label: "Last Message" },
+            ]}
+            rows={conversations}
+            summaryLines={[
+              { label: "Total", value: conversations.length },
+              { label: "Handoffs", value: handoffCount },
+            ]}
+          />
           <a
             href="/dashboard/handoff"
             className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary hover:bg-primary/20 transition"
@@ -95,6 +117,10 @@ export default async function ConversationsPage({
             مركز التحويل
           </a>
         </div>
+      </div>
+
+      <div className="mb-4">
+        <RecordDateFilter />
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[380px_1fr]">

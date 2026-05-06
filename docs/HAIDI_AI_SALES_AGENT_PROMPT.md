@@ -9,6 +9,12 @@ Production-ready system prompt for the Haidi AI Sales Agent layer in the Youlya 
 ## Architecture Rule
 Haidi sits **after** the Youlya app safety gate (`/api/internal/messages/turn`) and **before** the final reply preparation.
 
+Prompt source order:
+
+1. Dashboard-published prompt from the app database.
+2. Repo default prompt in this file.
+3. Safe fallback prompt inside the app if the prompt layer is unavailable.
+
 - The **app** decides: products, variants, stock, prices, cart, confirmation, order safety, handoff, kill switch.
 - **Haidi** decides: how to say it beautifully in Egyptian Arabic, using only app-approved facts.
 
@@ -105,6 +111,7 @@ Return valid JSON only:
 No markdown.
 No internal IDs to the customer unless app explicitly allows.
 No raw JSON in customer-facing reply.
+Return valid JSON only.
 ```
 
 ## Safety Enforcement
@@ -115,4 +122,4 @@ This prompt is enforced by:
 3. App commerce gate — Haidi cannot override action/order status
 
 ## Version
-v1.0 — 2026-05-04
+v2.2 — 2026-05-06

@@ -1,7 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ShoppingBag, Search, Filter, Eye } from "lucide-react";
+import { RecordDateFilter } from "@/components/dashboard/record-date-filter";
+import { RecordExportMenu } from "@/components/dashboard/record-export-menu";
+import { useSearchParams } from "next/navigation";
+import { parseDateRangeFromSearchParams } from "@/lib/dashboard/date-range";
 
 const sampleOrders = [
   { id: "#Y-1024", customer: "Nour", total: "1,280 EGP", status: "confirmed", safety: "safe", createdAt: "2026-05-01 14:30" },
@@ -30,12 +34,17 @@ const safetyBadge = (safety: string) => {
 export default function OrdersPage() {
   const [filter, setFilter] = useState<"all" | "confirmed" | "pending">("all");
   const [search, setSearch] = useState("");
+  const searchParams = useSearchParams();
+  const range = useMemo(() => parseDateRangeFromSearchParams(searchParams), [searchParams]);
 
   const filteredOrders = sampleOrders.filter((order) => {
     if (filter !== "all" && order.status !== filter) return false;
     if (search && !order.id.toLowerCase().includes(search.toLowerCase()) && !order.customer.toLowerCase().includes(search.toLowerCase())) {
       return false;
     }
+    const createdAt = new Date(order.createdAt).getTime();
+    if (createdAt < new Date(range.from).getTime()) return false;
+    if (createdAt >= new Date(`${range.to}T23:59:59.999`).getTime()) return false;
     return true;
   });
 
@@ -47,6 +56,23 @@ export default function OrdersPage() {
           <p className="mt-2 text-muted-foreground">Orders</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <RecordExportMenu
+            title="Orders report"
+            page="orders"
+            columns={[
+              { key: "id", label: "Order" },
+              { key: "customer", label: "Customer" },
+              { key: "total", label: "Total" },
+              { key: "status", label: "Status" },
+              { key: "createdAt", label: "Created" },
+            ]}
+            rows={filteredOrders}
+            summaryLines={[
+              { label: "Total", value: filteredOrders.length },
+              { label: "Confirmed", value: filteredOrders.filter((order) => order.status === "confirmed").length },
+              { label: "Pending", value: filteredOrders.filter((order) => order.status === "pending").length },
+            ]}
+          />
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -69,6 +95,10 @@ export default function OrdersPage() {
             <option value="pending">Pending</option>
           </select>
         </div>
+      </div>
+
+      <div className="mb-4">
+        <RecordDateFilter />
       </div>
 
       {/* Stats */}

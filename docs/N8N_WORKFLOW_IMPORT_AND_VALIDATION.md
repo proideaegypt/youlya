@@ -63,9 +63,9 @@ The following raw exports contain hardcoded secrets and are **quarantined outsid
 Configure these in n8n **Settings → Environment variables** or in your Docker Compose env:
 
 ```text
-APP_INTERNAL_URL=https://admin.youlya365.com
+APP_INTERNAL_URL=https://admin.nex-lnk.online
 INTERNAL_API_SECRET=<your-secret>
-EVOLUTION_API_URL=https://evo.youlya365.com
+EVOLUTION_API_URL=https://evo.nex-lnk.online
 EVOLUTION_API_KEY=<your-evolution-key>
 EVOLUTION_INSTANCE=YoulyaMain
 ```

@@ -21,9 +21,10 @@ function getEnvStatus(key: string): "ok" | "missing" {
   return process.env[key] ? "ok" : "missing";
 }
 
-function safePreview(body: string | null): string {
-  if (!body) return "—";
-  return body.length > 120 ? body.slice(0, 120) + "…" : body;
+function safePreview(...parts: Array<string | null | undefined>): string {
+  const picked = parts.find((p) => typeof p === "string" && p.trim().length > 0)?.trim() ?? "";
+  if (!picked) return "—";
+  return picked.length > 120 ? picked.slice(0, 120) + "…" : picked;
 }
 
 function getBuildInfo() {
@@ -81,6 +82,7 @@ export async function GET() {
   if (killSwitchStatus === "ON") safetyBlockers.push("Kill switch ON");
   if (haidiSettings.globalAiPaused) safetyBlockers.push("Global AI paused");
   if (haidiSettings.ordersPaused) safetyBlockers.push("Orders paused");
+  if (process.env.OWNER_APPROVES_LIVE_ORDER !== "true") safetyBlockers.push("Owner live order approval required");
 
   // Shopify sync last time
   let lastSyncTime: string | null = null;
@@ -127,7 +129,7 @@ export async function GET() {
     // Last 10 inbound messages
     const { data: inboundMessages } = await supabase
       .from("messages")
-      .select("id, conversation_id, direction, body, created_at, channel")
+      .select("id, conversation_id, direction, body, text, final_reply, created_at, channel")
       .eq("direction", "inbound")
       .order("created_at", { ascending: false })
       .limit(10);
@@ -135,7 +137,7 @@ export async function GET() {
     // Last 10 outbound messages
     const { data: outboundMessages } = await supabase
       .from("messages")
-      .select("id, conversation_id, direction, body, created_at, channel")
+      .select("id, conversation_id, direction, body, text, final_reply, created_at, channel")
       .eq("direction", "outbound")
       .order("created_at", { ascending: false })
       .limit(10);
@@ -171,14 +173,14 @@ export async function GET() {
       inboundMessages: (inboundMessages ?? []).map((m) => ({
         id: maskId(m.id),
         conversationId: maskId(m.conversation_id),
-        body: safePreview(m.body),
+        body: safePreview(m.body, m.text, m.final_reply),
         createdAt: m.created_at,
         channel: m.channel,
       })),
       outboundMessages: (outboundMessages ?? []).map((m) => ({
         id: maskId(m.id),
         conversationId: maskId(m.conversation_id),
-        body: safePreview(m.body),
+        body: safePreview(m.body, m.text, m.final_reply),
         createdAt: m.created_at,
         channel: m.channel,
       })),

@@ -183,7 +183,7 @@ After this sync:
 
 1. Check env vars: `npm run check:n8n:env`
 2. Run dry run: `npm run shopify:sync:dry-run`
-3. Check Shopify API health: `curl -fsS https://admin.youlya365.com/api/health`
+3. Check Shopify API health: `curl -fsS https://admin.nex-lnk.online/api/health`
 4. Check n8n execution logs for daily workflow
 5. Check Supabase `products` and `product_variants` table counts
 6. Check `dead_letter_log` for failure records

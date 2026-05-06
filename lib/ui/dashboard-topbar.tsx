@@ -1,7 +1,7 @@
 "use client";
 
 import { Bell, Search, Settings, User, Menu } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +23,23 @@ interface TopbarProps {
 
 export function Topbar({ onMenuClick, language, onLanguageChange }: TopbarProps) {
   const [q, setQ] = useState("");
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+    void fetch("/api/dashboard/notifications")
+      .then((r) => r.json())
+      .then((json) => {
+        if (!active) return;
+        setNotificationCount(Number(json.unreadCount ?? 0));
+      })
+      .catch(() => {
+        if (active) setNotificationCount(0);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <header className="lg:-mx-7 sticky top-0 z-30 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border mb-6 rounded-xl lg:rounded-none">
@@ -59,17 +76,13 @@ export function Topbar({ onMenuClick, language, onLanguageChange }: TopbarProps)
               <Bell className="size-5" aria-hidden />
               <span className="sr-only">Open notifications</span>
               <span className="absolute right-1 top-1 inline-flex items-center justify-center text-[10px] bg-red-500 text-white rounded-full h-4 min-w-4 px-1">
-                3
+                {notificationCount}
               </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-64">
               <DropdownMenuLabel>{language === "ar" ? "الإشعارات" : "Notifications"}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>{language === "ar" ? "طلب جديد #Y-1025" : "New order #Y-1025"}</DropdownMenuItem>
-              <DropdownMenuItem>{language === "ar" ? "محادثة واتساب جديدة" : "New WhatsApp conversation"}</DropdownMenuItem>
-              <DropdownMenuItem>{language === "ar" ? "تذكير: تأكيد طلب معلق" : "Reminder: pending confirmation"}</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-muted-foreground">{language === "ar" ? "عرض الكل" : "View all"}</DropdownMenuItem>
+              <DropdownMenuItem>{language === "ar" ? "لا توجد تنبيهات جديدة" : "No new alerts"}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -83,7 +96,11 @@ export function Topbar({ onMenuClick, language, onLanguageChange }: TopbarProps)
               <DropdownMenuLabel>{language === "ar" ? "الإعدادات" : "Settings"}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <button className="w-full text-left" onClick={() => onLanguageChange(language === "ar" ? "en" : "ar")}>
+                <button
+                  type="button"
+                  className="w-full text-left"
+                  onClick={() => onLanguageChange(language === "ar" ? "en" : "ar")}
+                >
                   {language === "ar" ? "English" : "العربية"}
                 </button>
               </DropdownMenuItem>

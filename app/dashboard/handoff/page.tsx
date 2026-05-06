@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
   CheckCircle2,
@@ -14,9 +14,13 @@ import {
   StickyNote,
   Bot,
   User,
+  Search,
 } from "lucide-react";
 import { EmptyState } from "@/lib/ui/empty-state";
 import { StatusBadge } from "@/lib/ui/status-badge";
+import { RecordDateFilter } from "@/components/dashboard/record-date-filter";
+import { RecordExportMenu } from "@/components/dashboard/record-export-menu";
+import { useSearchParams } from "next/navigation";
 
 type HandoffTicket = {
   id: string;
@@ -26,6 +30,9 @@ type HandoffTicket = {
   priority: string;
   status: string;
   assignedTo: string | null;
+  handoffType: string;
+  problemSummary: string;
+  aiPaused: boolean;
   aiSummary: string;
   notes: string | null;
   createdAt: string;
@@ -52,6 +59,7 @@ function StatusBadgeCustom({ status }: { status: string }) {
     open: { tone: "error", label: "مفتوح" },
     assigned: { tone: "warning", label: "معين" },
     resolved: { tone: "success", label: "مغلق" },
+    returned_to_ai: { tone: "success", label: "رجع للـ AI" },
   };
   const s = map[status] ?? { tone: "neutral", label: status };
   return <StatusBadge tone={s.tone}>{s.label}</StatusBadge>;
@@ -64,20 +72,36 @@ function directionLabel(dir?: string) {
 }
 
 export default function HandoffCenterPage() {
+  const searchParams = useSearchParams();
+  const searchKey = searchParams.toString();
   const [tickets, setTickets] = useState<HandoffTicket[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [assigneeFilter, setAssigneeFilter] = useState("all");
+  const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<HandoffTicket | null>(null);
   const [noteText, setNoteText] = useState("");
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
   const [timelineLoading, setTimelineLoading] = useState(false);
 
+  const queryString = useMemo(() => {
+    const params = new URLSearchParams(searchKey);
+    params.set("status", statusFilter);
+    params.set("priority", priorityFilter);
+    params.set("type", typeFilter);
+    params.set("assignee", assigneeFilter);
+    if (search.trim()) params.set("search", search.trim());
+    return params.toString();
+  }, [assigneeFilter, priorityFilter, search, searchKey, statusFilter, typeFilter]);
+
   async function load() {
-    const res = await fetch(`/api/dashboard/handoff?status=${statusFilter}&priority=${priorityFilter}`);
+    const res = await fetch(`/api/dashboard/handoff?${queryString}`);
     const json = await res.json().catch(() => ({ tickets: [] }));
-    setTickets(json.tickets ?? []);
+    const nextTickets: HandoffTicket[] = json.tickets ?? [];
+    setTickets(nextTickets);
     setLoading(false);
   }
 
@@ -85,17 +109,18 @@ export default function HandoffCenterPage() {
     let active = true;
     void (async () => {
       setLoading(true);
-      const res = await fetch(`/api/dashboard/handoff?status=${statusFilter}&priority=${priorityFilter}`);
+      const res = await fetch(`/api/dashboard/handoff?${queryString}`);
       const json = await res.json().catch(() => ({ tickets: [] }));
       if (!active) return;
-      setTickets(json.tickets ?? []);
+      const nextTickets: HandoffTicket[] = json.tickets ?? [];
+      setTickets(nextTickets);
       setLoading(false);
     })();
 
     return () => {
       active = false;
     };
-  }, [statusFilter, priorityFilter]);
+  }, [queryString]);
 
   useEffect(() => {
     if (!selected) return;
@@ -122,6 +147,17 @@ export default function HandoffCenterPage() {
     setActionLoading(id);
     await fetch(`/api/dashboard/handoff/${id}/assign`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ assignedTo: "staff" }) });
     await load();
+    setActionLoading(null);
+  }
+
+  async function markContacted(id: string) {
+    setActionLoading(id);
+    await fetch(`/api/dashboard/handoff/${id}/note`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ note: "تم التواصل مع العميل من الفريق." }),
+    });
+    await assign(id);
     setActionLoading(null);
   }
 
@@ -152,6 +188,13 @@ export default function HandoffCenterPage() {
 
   const openCount = tickets.filter((t) => t.status === "open").length;
   const assignedCount = tickets.filter((t) => t.status === "assigned").length;
+  const filteredRows = tickets.map((ticket) => ({
+    ...ticket,
+    createdAt: ticket.createdAt,
+  }));
+  const lastCustomerMessage = useMemo(() => {
+    return timeline.find((item) => item.type === "message" && item.direction === "inbound" && item.text)?.text ?? "";
+  }, [timeline]);
 
   return (
     <div className="space-y-6">
@@ -171,10 +214,13 @@ export default function HandoffCenterPage() {
           <div className="flex flex-wrap gap-2">
             <StatusBadge tone={openCount > 0 ? "error" : "success"}>{openCount} مفتوح</StatusBadge>
             <StatusBadge tone={assignedCount > 0 ? "warning" : "success"}>{assignedCount} معين</StatusBadge>
+            <StatusBadge tone="neutral">{tickets.length} سجل</StatusBadge>
           </div>
         </div>
         <div className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
       </section>
+
+      <RecordDateFilter />
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3">
@@ -203,6 +249,55 @@ export default function HandoffCenterPage() {
             <option value="NORMAL">عادي</option>
           </select>
         </div>
+        <div className="flex items-center gap-2 rounded-xl bg-card p-2 ring-1 ring-border">
+          <select
+            aria-label="تصفية النوع"
+            value={typeFilter}
+            onChange={(e) => setTypeFilter(e.target.value)}
+            className="bg-transparent text-sm outline-none"
+          >
+            <option value="all">كل الأنواع</option>
+            <option value="customer_service">خدمة العملاء</option>
+            <option value="manager_request">طلب الإدارة</option>
+          </select>
+        </div>
+        <div className="flex items-center gap-2 rounded-xl bg-card p-2 ring-1 ring-border">
+          <input
+            value={assigneeFilter}
+            onChange={(e) => setAssigneeFilter(e.target.value)}
+            placeholder="Assignee"
+            className="w-28 bg-transparent text-sm outline-none"
+            aria-label="تصفية المعين"
+          />
+        </div>
+        <div className="flex items-center gap-2 rounded-xl bg-card p-2 ring-1 ring-border">
+          <Search className="h-4 w-4 text-muted-foreground ml-2" />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="بحث في التذاكر"
+            className="w-48 bg-transparent text-sm outline-none"
+            aria-label="البحث في التحويلات"
+          />
+        </div>
+        <RecordExportMenu
+          title="Handoff queue report"
+          page="handoff"
+          columns={[
+            { key: "conversationIdDisplay", label: "Conversation" },
+            { key: "handoffType", label: "Type" },
+            { key: "priority", label: "Priority" },
+            { key: "status", label: "Status" },
+            { key: "problemSummary", label: "Problem Summary" },
+            { key: "createdAt", label: "Created At" },
+          ]}
+          rows={filteredRows}
+          summaryLines={[
+            { label: "Open", value: openCount },
+            { label: "Assigned", value: assignedCount },
+          ]}
+          className="ml-auto"
+        />
         <button onClick={load} className="ml-auto flex items-center gap-2 rounded-xl bg-card px-3 py-2 text-sm ring-1 ring-border hover:bg-muted transition">
           <RefreshCw className="h-4 w-4" />
           تحديث
@@ -242,6 +337,24 @@ export default function HandoffCenterPage() {
                   <p className="text-sm text-muted-foreground">{selected.aiSummary}</p>
                 </div>
 
+                <div className="rounded-xl bg-brand/5 p-4 space-y-2 border border-brand/10">
+                  <p className="text-sm font-medium text-foreground">Problem Summary</p>
+                  <p className="text-sm text-muted-foreground">{selected.problemSummary}</p>
+                </div>
+
+                <div className="rounded-xl bg-muted/50 p-4 space-y-2 border border-border">
+                  <p className="text-sm font-medium text-foreground">آخر رسالة من العميل</p>
+                  <p className="text-sm text-muted-foreground">{lastCustomerMessage || "لا توجد رسالة واردة حديثة"}</p>
+                </div>
+
+                <a
+                  href={`/dashboard/conversations?conversation=${encodeURIComponent(selected.conversationId)}`}
+                  className="inline-flex items-center gap-2 rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-muted transition"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  فتح المحادثة
+                </a>
+
                 {selected.notes && (
                   <div className="rounded-xl bg-amber-500/5 p-4 space-y-2 border border-amber-500/10">
                     <div className="flex items-center gap-2">
@@ -279,7 +392,17 @@ export default function HandoffCenterPage() {
                       className="flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-2 text-sm font-medium text-primary hover:bg-primary/20 transition"
                     >
                       <UserCheck className="h-4 w-4" />
-                      تعيين لي
+                      تولى المحادثة
+                    </button>
+                  )}
+                  {selected.status !== "resolved" && (
+                    <button
+                      onClick={() => markContacted(selected.id)}
+                      disabled={actionLoading === selected.id}
+                      className="flex items-center gap-2 rounded-xl bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-500 hover:bg-amber-500/20 transition"
+                    >
+                      <Play className="h-4 w-4" />
+                      تم التواصل
                     </button>
                   )}
                   <button
@@ -288,7 +411,7 @@ export default function HandoffCenterPage() {
                     className="flex items-center gap-2 rounded-xl bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-500 hover:bg-emerald-500/20 transition"
                   >
                     <Play className="h-4 w-4" />
-                    إرجاع للـ AI
+                    إرجاع المحادثة للذكاء الاصطناعي
                   </button>
                   <button
                     onClick={() => resolve(selected.id)}
@@ -296,7 +419,7 @@ export default function HandoffCenterPage() {
                     className="flex items-center gap-2 rounded-xl bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand/90 transition"
                   >
                     <CheckCircle2 className="h-4 w-4" />
-                    حلّ القضية
+                    Resolve
                   </button>
                 </div>
               </div>
@@ -307,7 +430,7 @@ export default function HandoffCenterPage() {
               <div className="rounded-2xl bg-card p-6 shadow-sm ring-1 ring-border space-y-4">
                 <div className="flex items-center gap-2">
                   <MessageCircle className="h-4 w-4 text-brand" />
-                  <p className="text-sm font-semibold text-foreground">معاينة المحادثة</p>
+                  <p className="text-sm font-semibold text-foreground">Conversation Preview</p>
                 </div>
 
                 {timelineLoading ? (
@@ -373,11 +496,12 @@ export default function HandoffCenterPage() {
                       <StatusBadgeCustom status={t.status} />
                     </div>
                     <p className="mt-1 text-sm text-muted-foreground">{t.reason}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">Type: {t.handoffType} · Summary: {t.problemSummary}</p>
                     <p className="mt-1 text-xs text-muted-foreground">{new Date(t.createdAt).toLocaleString("ar-EG")}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  {t.status === "open" && (
+                  {t.aiPaused && t.status === "open" && (
                     <span className="flex items-center gap-1 rounded-full bg-red-500/10 px-2.5 py-1 text-[10px] font-semibold text-red-400">
                       <Pause className="h-3 w-3" />
                       AI متوقف
@@ -388,6 +512,18 @@ export default function HandoffCenterPage() {
                       <UserCheck className="h-3 w-3" />
                       معين
                     </span>
+                  )}
+                  {t.status !== "resolved" && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        returnToAI(t.id);
+                      }}
+                      disabled={actionLoading === t.id}
+                      className="flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold text-emerald-500 hover:bg-emerald-500/20 transition disabled:opacity-50"
+                    >
+                      إرجاع للذكاء الاصطناعي
+                    </button>
                   )}
                 </div>
               </div>

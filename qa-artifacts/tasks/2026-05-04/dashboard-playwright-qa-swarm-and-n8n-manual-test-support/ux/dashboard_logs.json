@@ -3,7 +3,7 @@
   "heading": "السجلات",
   "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 863,
+  "bodyTextLength": 969,
   "sidebarVisible": true,
   "contentVisible": true,
   "shellPresent": true,
@@ -15,92 +15,7 @@
   "hasWeakEmptyState": false,
   "consoleErrors": [],
   "realFailedRequests": [],
-  "ignoredNetworkNoise": [
-    {
-      "url": "https://admin.youlya365.com/dashboard/security?_rsc=j0h8i",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/orders?_rsc=j0h8i",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=j0h8i",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/profile?_rsc=j0h8i",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/statistics?_rsc=j0h8i",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/products?_rsc=j0h8i",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/command-center?_rsc=j0h8i",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/orders?_rsc=hbebf",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/profile?_rsc=hbebf",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/security?_rsc=hbebf",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/statistics?_rsc=hbebf",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/products-intelligence?_rsc=hbebf",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/products?_rsc=hbebf",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=hbebf",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    }
-  ],
+  "ignoredNetworkNoise": [],
   "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/ux/screenshots/dashboard_logs.png",
   "uxIssues": [
     "Missing build identity"

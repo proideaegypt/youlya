@@ -19,3 +19,6 @@ export function setKillSwitchForStore(store_id: string, enabled: boolean) {
   cache.delete(store_id);
 }
 
+export function resetKillSwitchCache() {
+  cache.clear();
+}

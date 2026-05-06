@@ -4,7 +4,7 @@
 Controlled internal pilot for WhatsApp inbound/outbound flow through Evolution + n8n + Youlya app in production, without enabling public customer traffic.
 
 ## Preconditions
-- Production app reachable: `https://admin.youlya365.com`
+- Production app reachable: `https://admin.nex-lnk.online`
 - Health/build endpoints are green.
 - Internal test numbers only.
 - Kill switch behavior understood by operator.

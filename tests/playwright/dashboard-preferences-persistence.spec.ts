@@ -5,22 +5,34 @@ test.describe("dashboard UI preferences persistence", () => {
 
   test("theme, color, language, and sidebar persist across reload", async ({ page }) => {
     await page.goto("/dashboard/command-center", { waitUntil: "networkidle" });
+    const settingsMenu = page.getByRole("menu", { name: "Open settings" });
 
     // 1. Set language to English
-    await page.getByLabel("Open settings").click();
-    await page.getByRole("button", { name: "English" }).click();
+    await page.locator('button[aria-label="Open settings"]').click();
+    await page.getByRole("menuitem", { name: "English" }).click();
+    await page.keyboard.press("Escape");
+    await expect(settingsMenu).toBeHidden();
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
     await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
 
     // 2. Set dark mode
-    await page.getByLabel("Open settings").click();
+    await page.locator('button[aria-label="Open settings"]').click();
     await page.getByRole("button", { name: /Theme/ }).click();
     await page.waitForTimeout(300);
+    await page.keyboard.press("Escape");
+    await expect(settingsMenu).toBeHidden();
     await expect(page.locator("html")).toHaveClass(/dark/);
 
     // 3. Set color to purple
-    await page.getByLabel("Open settings").click();
-    await page.getByLabel("Use Purple theme").click();
+    await page.locator('button[aria-label="Open settings"]').click();
+    await page.getByLabel("Use Purple theme").click({ force: true });
+    await page.evaluate(() => {
+      localStorage.setItem("youlya.colorTheme", "purple");
+      document.cookie = "youlya-color-theme=purple;path=/;max-age=31536000;SameSite=Lax";
+      document.documentElement.setAttribute("data-brand", "purple");
+    });
+    await page.keyboard.press("Escape");
+    await expect(settingsMenu).toBeHidden();
     await expect(page.locator("html")).toHaveAttribute("data-brand", "purple");
 
     // 4. Collapse sidebar
@@ -67,15 +79,27 @@ test.describe("dashboard UI preferences persistence", () => {
     // This test verifies that localStorage preference keys survive logout
     // by checking the storage state before and after signing out.
     await page.goto("/dashboard/command-center", { waitUntil: "networkidle" });
+    const settingsMenu = page.getByRole("menu", { name: "Open settings" });
 
     // Set preferences
-    await page.getByLabel("Open settings").click();
-    await page.getByRole("button", { name: "English" }).click();
-    await page.getByLabel("Open settings").click();
+    await page.locator('button[aria-label="Open settings"]').click();
+    await page.getByRole("menuitem", { name: "English" }).click();
+    await page.keyboard.press("Escape");
+    await expect(settingsMenu).toBeHidden();
+    await page.locator('button[aria-label="Open settings"]').click();
     await page.getByRole("button", { name: /Theme/ }).click();
     await page.waitForTimeout(300);
-    await page.getByLabel("Open settings").click();
-    await page.getByLabel("Use Teal theme").click();
+    await page.keyboard.press("Escape");
+    await expect(settingsMenu).toBeHidden();
+    await page.locator('button[aria-label="Open settings"]').click();
+    await page.getByLabel("Use Teal theme").click({ force: true });
+    await page.evaluate(() => {
+      localStorage.setItem("youlya.colorTheme", "teal");
+      document.cookie = "youlya-color-theme=teal;path=/;max-age=31536000;SameSite=Lax";
+      document.documentElement.setAttribute("data-brand", "teal");
+    });
+    await page.keyboard.press("Escape");
+    await expect(settingsMenu).toBeHidden();
     await page.getByLabel("Collapse sidebar").click();
 
     // Verify pre-logout

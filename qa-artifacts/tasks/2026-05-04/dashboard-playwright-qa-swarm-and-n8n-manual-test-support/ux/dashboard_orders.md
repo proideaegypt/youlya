@@ -4,7 +4,7 @@
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
 - heading: الطلبات
-- bodyTextLength: 728
+- bodyTextLength: 834
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -15,7 +15,7 @@
 - screenshot: /root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/ux/screenshots/dashboard_orders.png
 - consoleErrorCount: 0
 - realFailedRequestCount: 0
-- ignoredNetworkNoiseCount: 5
+- ignoredNetworkNoiseCount: 17
 
 ## UX Issues
 
@@ -23,9 +23,21 @@
 
 ## Ignored Framework/Network Noise
 
-- [0] GET https://admin.youlya365.com/dashboard/profile?_rsc=11hkw (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/logs?_rsc=11hkw (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/devices?_rsc=11hkw (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/security?_rsc=11hkw (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/statistics?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/products-intelligence?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/devices?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/statistics?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/products?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/conversations?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/inbox?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/handoff?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/command-center?_rsc=11hkw (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/security?_rsc=10l79 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/devices?_rsc=10l79 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/products-intelligence?_rsc=10l79 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/products?_rsc=10l79 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/conversations?_rsc=10l79 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/inbox?_rsc=10l79 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/handoff?_rsc=10l79 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/pilot-control?_rsc=10l79 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/command-center?_rsc=10l79 (net::ERR_ABORTED)
 

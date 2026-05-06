@@ -1,5 +1,6 @@
 import { getMockState, mappingKey } from "@/lib/adapters/supabase/mock-store";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { resolveStoreUuid } from "@/lib/adapters/supabase/store-resolver";
 import type { ProductRecommendation } from "@/lib/types/commerce";
 type ProductRecommendationLegacy = ProductRecommendation & { productId?: string };
 
@@ -45,18 +46,6 @@ function toLegacyRecommendations(items: ProductSlot[]): ProductRecommendation[] 
         available: true,
       },
     ],
-  }));
-}
-
-function toRecommendationItems(recs: ProductRecommendationLegacy[]): ProductSlot[] {
-  return recs.map((rec) => ({
-    slot_number: rec.index,
-    shopify_product_id: rec.shopifyProductId || rec.productId,
-    shopify_variant_id: rec.variantOptions[0]?.shopifyVariantId ?? "",
-    title: rec.shopifyProductTitle,
-    price: rec.variantOptions[0]?.price ?? 0,
-    image_url: rec.imageUrl,
-    size_asked: rec.variantOptions[0]?.size,
   }));
 }
 
@@ -226,7 +215,51 @@ export async function persistRecommendations(
       });
       return;
     }
-    await saveRecommendations(conversationId, toRecommendationItems(recs));
+    const client = getSupabaseServerClient();
+    if (!client) return;
+
+    const storeUuid = await resolveStoreUuid(storeSlug);
+    if (!storeUuid) {
+      console.error("persistRecommendations failed: store not found", storeSlug);
+      return;
+    }
+
+    await client.from("last_product_recommendations").delete().eq("conversation_id", conversationId);
+    if (!recs.length) return;
+
+    const rows = recs.map((rec) => {
+      const firstVariant = rec.variantOptions[0];
+      const price = Number(firstVariant?.price ?? 0);
+      const inventoryAtShowTime = Number(firstVariant?.inventoryQuantity ?? 0);
+      const shopifyProductId = rec.shopifyProductId || rec.productId || "";
+      const shopifyVariantId = firstVariant?.shopifyVariantId ?? "";
+      return {
+        store_id: storeUuid,
+        conversation_id: conversationId,
+        customer_id: customerId,
+        recommendation_index: rec.index,
+        product_id: rec.productId || shopifyProductId || null,
+        variant_id: shopifyVariantId || null,
+        shopify_product_id: shopifyProductId || null,
+        shopify_product_title: rec.shopifyProductTitle,
+        shopify_handle: rec.shopifyHandle || null,
+        shopify_variant_id: shopifyVariantId || null,
+        sku: firstVariant?.sku ?? null,
+        code_missing: firstVariant?.codeMissing ?? false,
+        size: firstVariant?.size ?? null,
+        color: firstVariant?.color ?? null,
+        price,
+        currency: firstVariant?.currency ?? "EGP",
+        inventory_at_show_time: inventoryAtShowTime,
+        image_url: rec.imageUrl ?? null,
+        slot_number: rec.index,
+        title: rec.shopifyProductTitle,
+        size_asked: firstVariant?.size ?? null,
+      };
+    });
+
+    const { error } = await client.from("last_product_recommendations").insert(rows);
+    if (error) console.error("persistRecommendations failed", error.message);
   } catch (error) {
     console.error("persistRecommendations failed", error);
   }

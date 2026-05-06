@@ -4,7 +4,7 @@
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
 - heading: القنوات والمنتجات
-- bodyTextLength: 550
+- bodyTextLength: 656
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -15,9 +15,14 @@
 - screenshot: /root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/ux/screenshots/dashboard_devices.png
 - consoleErrorCount: 0
 - realFailedRequestCount: 0
-- ignoredNetworkNoiseCount: 0
+- ignoredNetworkNoiseCount: 2
 
 ## UX Issues
 
 - Missing build identity
+
+## Ignored Framework/Network Noise
+
+- [0] GET http://127.0.0.1:3007/dashboard/security?_rsc=1ypm1 (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/inbox?_rsc=1ypm1 (net::ERR_ABORTED)
 

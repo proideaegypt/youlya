@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { runMessageTurn } from "@/lib/services/message-turn-service";
 import { getMockState } from "@/lib/adapters/supabase/mock-store";
+import { evolutionClient } from "@/lib/adapters/evolution/evolution-client";
 
 describe("message turn evolution integration", () => {
   beforeEach(() => {
@@ -46,5 +47,26 @@ describe("message turn evolution integration", () => {
     const second = await runMessageTurn(base);
     expect(second.action).toBe(first.action);
     expect(second.reply).toBe(first.reply);
+  });
+
+  test("testMode does not call evolution sendText", async () => {
+    const sendTextSpy = vi.spyOn(evolutionClient, "sendText").mockResolvedValue();
+    const sendMediaSpy = vi.spyOn(evolutionClient, "sendMedia").mockResolvedValue();
+    await runMessageTurn({
+      store_id: "youlya",
+      conversation_id: "c-testmode",
+      customer_id: "u1",
+      channel: "whatsapp_evolution",
+      message_type: "text",
+      text: "ممكن تفاصيل",
+      language: "ar-EG",
+      tone: "neutral",
+      remote_jid: "201000000000@s.whatsapp.net",
+      instance_name: "YoulyaMain",
+      provider_message_id: "pmid-testmode",
+      testMode: true,
+    });
+    expect(sendTextSpy).not.toHaveBeenCalled();
+    expect(sendMediaSpy).not.toHaveBeenCalled();
   });
 });

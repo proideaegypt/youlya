@@ -1,0 +1,48 @@
+{
+  "route": "/dashboard/statistics",
+  "heading": "الإحصائيات",
+  "hasH1": true,
+  "title": "YOULYA HOME WEAR Dashboard",
+  "bodyTextLength": 599,
+  "sidebarVisible": true,
+  "contentVisible": true,
+  "shellPresent": true,
+  "footerBuildIdentityVisible": false,
+  "hasArabicText": true,
+  "direction": "rtl",
+  "hasHorizontalOverflow": false,
+  "hasErrorOverlay": false,
+  "hasWeakEmptyState": false,
+  "consoleErrors": [],
+  "realFailedRequests": [],
+  "ignoredNetworkNoise": [
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/products-intelligence?_rsc=ujjow",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/inbox?_rsc=ujjow",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/statistics?_rsc=1p7is",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/conversations?_rsc=1p7is",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    }
+  ],
+  "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-06/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_statistics.png",
+  "uxIssues": [
+    "Missing build identity"
+  ]
+}

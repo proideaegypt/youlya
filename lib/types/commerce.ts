@@ -98,6 +98,8 @@ export type CreateShopifyOrderOutput = {
   shopifyOrderName?: string;
   duplicate: boolean;
   error?: string;
+  action?: "owner_approval_required";
+  reply?: string;
 };
 
 export type ToolCallLog = {
@@ -123,4 +125,3 @@ export type HandoffTicket = {
   locale: string;
   createdAt: string;
 };
-

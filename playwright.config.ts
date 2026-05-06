@@ -1,6 +1,6 @@
 import { defineConfig } from "@playwright/test";
 
-const baseURL = process.env.PLAYWRIGHT_BASE_URL || "https://admin.youlya365.com";
+const baseURL = process.env.PLAYWRIGHT_BASE_URL || "https://admin.nex-lnk.online";
 
 export default defineConfig({
   testDir: "./tests/playwright",
@@ -47,7 +47,13 @@ export default defineConfig({
     {
       name: "dashboard-preferences-persistence",
       testMatch: /dashboard-preferences-persistence\.spec\.ts/,
-      dependencies: ["auth-setup"],
+      dependencies: [
+        "auth-setup",
+        "dashboard-ux-swarm",
+        "dashboard-functional-swarm",
+        "dashboard-a11y-rtl-swarm",
+        "dashboard-api-health-swarm",
+      ],
       use: { storageState: "tests/playwright/.auth/admin.json" },
     },
   ],

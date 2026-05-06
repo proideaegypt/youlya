@@ -2,7 +2,7 @@ import { beforeAll, beforeEach, describe, expect, test } from "vitest";
 import { POST as turnRoute } from "@/app/api/internal/messages/turn/route";
 import { addCartItems } from "@/lib/services/cart-service";
 import { getMockState } from "@/lib/adapters/supabase/mock-store";
-import { setKillSwitchForStore } from "@/lib/services/kill-switch-service";
+import { resetKillSwitchCache, setKillSwitchForStore } from "@/lib/services/kill-switch-service";
 
 const INTERNAL_SECRET = "test-internal-secret";
 
@@ -27,6 +27,7 @@ function resetState() {
   state.killSwitchByStore.clear();
   state.carts.clear();
   state.orderByIdempotency.clear();
+  resetKillSwitchCache();
 }
 
 beforeAll(() => {
@@ -115,11 +116,11 @@ describe("message turn integration", () => {
       }),
     );
     const body = (await res.json()) as Record<string, unknown>;
-    expect(body.action).toBe("handoff");
-    expect(body.handoff).toBe(true);
+    expect(body.action).toBe("ai_disabled");
+    expect(body.handoff).toBe(false);
   });
 
-  test("explicit human request -> immediate handoff", async () => {
+  test("explicit customer service request -> immediate handoff", async () => {
     const res = await turnRoute(
       makeRequest({
         store_id: "11111111-1111-1111-1111-111111111111",
@@ -127,7 +128,7 @@ describe("message turn integration", () => {
         customer_id: "33333333-3333-3333-3333-333333333333",
         channel: "whatsapp_evolution",
         message_type: "text",
-        text: "عايزة أكلم حد",
+        text: "عايزه حد من خدمة العملاء",
         language: "ar-EG",
         tone: "browsing",
         remote_jid: "201000000000@s.whatsapp.net",
@@ -139,30 +140,52 @@ describe("message turn integration", () => {
     expect(body.intent).toBe("handoff");
     expect(body.action).toBe("handoff");
     expect(body.handoff).toBe(true);
+    expect(String(body.reply ?? "")).toContain("تمام يا فندم، هسجل طلبك وهيتواصل معاكي حد من الفريق حالًا.");
+    expect(String(body.reply ?? "")).toContain("تم تسجيل الطلب، وسيتواصل معاكي حد من الفريق.");
   });
 
-  test("unclear x3 -> auto handoff triggered", async () => {
+  test("explicit manager request -> immediate handoff", async () => {
+    const res = await turnRoute(
+      makeRequest({
+        store_id: "11111111-1111-1111-1111-111111111111",
+        conversation_id: "77777777-7777-7777-7777-777777777777",
+        customer_id: "33333333-3333-3333-3333-333333333333",
+        channel: "whatsapp_evolution",
+        message_type: "text",
+        text: "ممكن اتواصل مع حد من المديرين",
+        language: "ar-EG",
+        tone: "browsing",
+        remote_jid: "201000000000@s.whatsapp.net",
+        instance_name: "youlya",
+        provider_message_id: "msg-manager-request",
+      }),
+    );
+    const body = (await res.json()) as Record<string, unknown>;
+    expect(body.intent).toBe("handoff");
+    expect(body.action).toBe("handoff");
+    expect(body.handoff).toBe(true);
+    expect(String(body.reply ?? "")).toContain("تمام يا فندم، هسجل طلبك كطلب تواصل مع الإدارة وهيتواصل معاكي حد من الفريق حالًا.");
+    expect(String(body.reply ?? "")).toContain("تم تسجيل الطلب، وسيتواصل معاكي حد من الفريق.");
+  });
+
+  test("greeting and unclear messages do not handoff", async () => {
     const bodyTemplate = {
       store_id: "11111111-1111-1111-1111-111111111111",
       conversation_id: "55555555-5555-5555-5555-555555555555",
       customer_id: "33333333-3333-3333-3333-333333333333",
       channel: "whatsapp_evolution" as const,
       message_type: "text" as const,
-      text: "مش فاهم",
+      text: "هاي",
       language: "ar-EG",
-      tone: "confused" as const,
+      tone: "browsing" as const,
       remote_jid: "201000000000@s.whatsapp.net",
       instance_name: "youlya",
       provider_message_id: "msg-unclear",
     };
 
-    let lastBody: Record<string, unknown> = {};
-    for (let i = 0; i < 3; i += 1) {
-      const res = await turnRoute(makeRequest({ ...bodyTemplate, provider_message_id: `msg-unclear-${i + 1}` }));
-      lastBody = (await res.json()) as Record<string, unknown>;
-    }
-
-    expect(lastBody.action).toBe("handoff");
-    expect(lastBody.handoff).toBe(true);
+    const res = await turnRoute(makeRequest(bodyTemplate));
+    const body = (await res.json()) as Record<string, unknown>;
+    expect(body.handoff).toBe(false);
+    expect(String(body.reply ?? "")).not.toContain("خدمة العملاء");
   });
 });

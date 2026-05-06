@@ -1,0 +1,1402 @@
+[
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-env",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "local-8080",
+    "baseUrl": "http://127.0.0.1:8080",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "localhost-8080",
+    "baseUrl": "http://localhost:8080",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/next-link-main",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"The \\\"next-link-main\\\" instance does not exist\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/next-link-main",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/next-link-main\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-evo-domain",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "next-link-main",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "AI",
+    "header": "none",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "AI",
+    "header": "apikey",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "AI",
+    "header": "authorization_bearer",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/",
+    "instance": "AI",
+    "header": "x-api-key",
+    "status": 200,
+    "ok": true,
+    "snippet": "{\"status\":200,\"message\":\"Welcome to the Evolution API, it is working!\",\"version\":\"2.3.7\",\"clientName\":\"evoluti"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "AI",
+    "header": "none",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "AI",
+    "header": "apikey",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "AI",
+    "header": "authorization_bearer",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/manager",
+    "instance": "AI",
+    "header": "x-api-key",
+    "status": 301,
+    "ok": false,
+    "snippet": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Redirecting</title> </head> <body> <pre>"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "AI",
+    "header": "none",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "AI",
+    "header": "apikey",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "AI",
+    "header": "authorization_bearer",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/fetchInstances",
+    "instance": "AI",
+    "header": "x-api-key",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/AI",
+    "instance": "AI",
+    "header": "none",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/AI",
+    "instance": "AI",
+    "header": "apikey",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/AI",
+    "instance": "AI",
+    "header": "authorization_bearer",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectionState/AI",
+    "instance": "AI",
+    "header": "x-api-key",
+    "status": 401,
+    "ok": false,
+    "snippet": "{\"status\":401,\"error\":\"Unauthorized\",\"response\":{\"message\":\"Unauthorized\"}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/AI",
+    "instance": "AI",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/AI\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/AI",
+    "instance": "AI",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/AI\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/AI",
+    "instance": "AI",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/AI\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/instance/connectState/AI",
+    "instance": "AI",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /instance/connectState/AI\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "AI",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "AI",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "AI",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/openapi-json",
+    "instance": "AI",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /openapi-json\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "AI",
+    "header": "none",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "AI",
+    "header": "apikey",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "AI",
+    "header": "authorization_bearer",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  },
+  {
+    "base": "public-with-ai",
+    "baseUrl": "https://evo.nex-lnk.online",
+    "endpoint": "/docs",
+    "instance": "AI",
+    "header": "x-api-key",
+    "status": 404,
+    "ok": false,
+    "snippet": "{\"status\":404,\"error\":\"Not Found\",\"response\":{\"message\":[\"Cannot GET /docs\"]}}"
+  }
+]

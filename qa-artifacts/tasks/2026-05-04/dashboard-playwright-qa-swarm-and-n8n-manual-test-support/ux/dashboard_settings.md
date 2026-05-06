@@ -4,7 +4,7 @@
 - title: YOULYA HOME WEAR Dashboard
 - h1Present: yes
 - heading: الإعدادات
-- bodyTextLength: 947
+- bodyTextLength: 1053
 - shellSidebarPresent: yes
 - sidebarVisible: true
 - contentVisible: true
@@ -15,7 +15,7 @@
 - screenshot: /root/youlya/qa-artifacts/tasks/2026-05-04/dashboard-playwright-qa-swarm-and-n8n-manual-test-support/ux/screenshots/dashboard_settings.png
 - consoleErrorCount: 0
 - realFailedRequestCount: 0
-- ignoredNetworkNoiseCount: 2
+- ignoredNetworkNoiseCount: 1
 
 ## UX Issues
 
@@ -23,6 +23,5 @@
 
 ## Ignored Framework/Network Noise
 
-- [0] GET https://admin.youlya365.com/dashboard/orders?_rsc=1c9xt (net::ERR_ABORTED)
-- [0] GET https://admin.youlya365.com/dashboard/statistics?_rsc=1c9xt (net::ERR_ABORTED)
+- [0] GET http://127.0.0.1:3007/dashboard/statistics?_rsc=1c9xt (net::ERR_ABORTED)
 

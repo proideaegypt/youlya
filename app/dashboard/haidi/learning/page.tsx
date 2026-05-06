@@ -11,21 +11,27 @@ type LearningRow = {
   source_ref?: string | null;
 };
 
+async function fetchLearningQueue() {
+  const res = await fetch("/api/dashboard/haidi/learning?store_id=youlya");
+  const data = await res.json();
+  return data as {
+    suggestions?: LearningRow[];
+    counts?: { pending: number; approved: number; rejected: number; published: number };
+    publishedKnowledgeVersionPlaceholder?: string;
+  };
+}
+
 export default function HaidiLearningPage() {
   const [rows, setRows] = useState<LearningRow[]>([]);
   const [counts, setCounts] = useState({ pending: 0, approved: 0, rejected: 0, published: 0 });
   const [versionPlaceholder, setVersionPlaceholder] = useState("v1-placeholder");
 
-  const load = async () => {
-    const res = await fetch("/api/dashboard/haidi/learning?store_id=youlya");
-    const data = await res.json();
-    setRows(data.suggestions ?? []);
-    setCounts(data.counts ?? counts);
-    setVersionPlaceholder(String(data.publishedKnowledgeVersionPlaceholder ?? "v1-placeholder"));
-  };
-
   useEffect(() => {
-    void load();
+    void fetchLearningQueue().then((data) => {
+      setRows(data.suggestions ?? []);
+      setCounts(data.counts ?? { pending: 0, approved: 0, rejected: 0, published: 0 });
+      setVersionPlaceholder(String(data.publishedKnowledgeVersionPlaceholder ?? "v1-placeholder"));
+    });
   }, []);
 
   const review = async (id: string, action: "approve" | "reject" | "publish") => {
@@ -34,7 +40,11 @@ export default function HaidiLearningPage() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ store_id: "youlya", suggestion_id: id, action }),
     });
-    await load();
+    void fetchLearningQueue().then((data) => {
+      setRows(data.suggestions ?? []);
+      setCounts(data.counts ?? { pending: 0, approved: 0, rejected: 0, published: 0 });
+      setVersionPlaceholder(String(data.publishedKnowledgeVersionPlaceholder ?? "v1-placeholder"));
+    });
   };
 
   return (

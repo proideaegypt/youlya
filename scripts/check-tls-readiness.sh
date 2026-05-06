@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_URL="${APP_URL:-https://admin.youlya365.com}"
+APP_URL="${APP_URL:-https://admin.nex-lnk.online}"
 
 check_endpoint() {
   local endpoint="$1"

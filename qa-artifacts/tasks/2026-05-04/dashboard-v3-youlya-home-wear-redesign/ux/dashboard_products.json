@@ -3,7 +3,7 @@
   "heading": "المنتجات والمخزون",
   "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 904,
+  "bodyTextLength": 958,
   "sidebarVisible": true,
   "contentVisible": true,
   "shellPresent": true,
@@ -17,13 +17,19 @@
   "realFailedRequests": [],
   "ignoredNetworkNoise": [
     {
+      "url": "https://admin.youlya365.com/dashboard/handoff?_rsc=1ipce",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
       "url": "https://admin.youlya365.com/dashboard/inbox?_rsc=1ipce",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.youlya365.com/dashboard/devices?_rsc=1xo2v",
+      "url": "https://admin.youlya365.com/dashboard/pilot-control?_rsc=1ipce",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"

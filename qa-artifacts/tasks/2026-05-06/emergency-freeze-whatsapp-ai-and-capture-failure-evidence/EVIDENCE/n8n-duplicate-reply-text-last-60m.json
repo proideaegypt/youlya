@@ -1,0 +1,29 @@
+{
+  "captured_at": "2026-05-06T01:08:07.537Z",
+  "dupReplies": [
+    {
+      "key": "201111839150||طلبك مع فريق Youlya، وهيتم التواصل معاكي في أقرب وقت.",
+      "count": 3,
+      "events": [
+        {
+          "execId": "9927",
+          "startedAt": "2026-05-06T00:29:10.840Z",
+          "provider_message_id": "3A9BA218F87C99318872",
+          "inbound_text": "عايز اشتري بيجامه"
+        },
+        {
+          "execId": "9915",
+          "startedAt": "2026-05-06T00:28:58.132Z",
+          "provider_message_id": "3A2CEEF60157E921B71E",
+          "inbound_text": "اهلا"
+        },
+        {
+          "execId": "9903",
+          "startedAt": "2026-05-06T00:28:43.404Z",
+          "provider_message_id": "3ABC1879A1D354CD3506",
+          "inbound_text": "هاي"
+        }
+      ]
+    }
+  ]
+}

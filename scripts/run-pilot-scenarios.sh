@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SCENARIOS_PATH="${SCENARIOS_PATH:-$ROOT_DIR/tests/scenarios/pilot-day-5.jsonl}"
 REPORT_DIR="${REPORT_DIR:-$ROOT_DIR/qa-artifacts/scenarios}"
-APP_URL="${APP_URL:-https://admin.youlya365.com}"
+APP_URL="${APP_URL:-https://admin.nex-lnk.online}"
 INTERNAL_SECRET="${INTERNAL_API_SECRET:-}"
 
 if [[ -z "$INTERNAL_SECRET" ]]; then

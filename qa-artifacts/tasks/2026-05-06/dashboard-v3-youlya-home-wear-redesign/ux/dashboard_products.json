@@ -1,0 +1,79 @@
+{
+  "route": "/dashboard/products",
+  "heading": "المنتجات والمخزون",
+  "hasH1": true,
+  "title": "YOULYA HOME WEAR Dashboard",
+  "bodyTextLength": 682,
+  "sidebarVisible": true,
+  "contentVisible": true,
+  "shellPresent": true,
+  "footerBuildIdentityVisible": false,
+  "hasArabicText": true,
+  "direction": "rtl",
+  "hasHorizontalOverflow": false,
+  "hasErrorOverlay": false,
+  "hasWeakEmptyState": false,
+  "consoleErrors": [
+    "Failed to load resource: net::ERR_NETWORK_CHANGED",
+    "Failed to load resource: net::ERR_NETWORK_CHANGED",
+    "Failed to load resource: net::ERR_NETWORK_CHANGED",
+    "Failed to load resource: net::ERR_NETWORK_CHANGED",
+    "Failed to load resource: net::ERR_NETWORK_CHANGED"
+  ],
+  "realFailedRequests": [
+    {
+      "url": "https://admin.nex-lnk.online/api/dashboard/products/overview",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_NETWORK_CHANGED"
+    }
+  ],
+  "ignoredNetworkNoise": [
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/settings/ai-agent?_rsc=1ipce",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_NETWORK_CHANGED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/settings/channels?_rsc=1ipce",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_NETWORK_CHANGED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/statistics?_rsc=1ipce",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_NETWORK_CHANGED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/conversations?_rsc=1ipce",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_NETWORK_CHANGED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/orders?_rsc=1ipce",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/inbox?_rsc=1ipce",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/handoff?_rsc=1ipce",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    }
+  ],
+  "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-06/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_products.png",
+  "uxIssues": [
+    "Missing build identity"
+  ]
+}

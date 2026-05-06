@@ -2325,3 +2325,593 @@ Tests passed:
 Tests failed/skipped:
 Blockers:
 Next step:
+
+## 2026-05-04 — haidi-settings-and-pilot-control-room
+
+Date: 2026-05-04
+Phase:
+Task: haidi-settings-and-pilot-control-room
+Version: v2.18.0
+Version Name: haidi-settings-and-pilot-control-room
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — full-system-audit-swarm-gap-analysis-and-readiness-report
+
+Date: 2026-05-04
+Phase:
+Task: full-system-audit-swarm-gap-analysis-and-readiness-report
+Version: v2.18.1
+Version Name: full-system-audit-swarm-gap-analysis-and-readiness-report
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — full-system-audit-swarm
+
+Date: 2026-05-04
+Phase: Audit
+Task: full-system-audit-swarm
+Version:
+Version Name:
+Files changed:
+- qa-artifacts/tasks/2026-05-04/full-system-audit-swarm/P0_STOP_REPORT.md
+- qa-artifacts/tasks/2026-05-04/full-system-audit-swarm/kimi/KIMI_REVIEW.md
+- worktime.md
+Commands run:
+- `npm run typecheck`
+- `npm run lint`
+- `npm test -- --reporter=verbose`
+- `npm run scan:secrets`
+- `npm run check:env:tracking`
+- `npm run check:env:production`
+- `node scripts/schema-inventory.mjs`
+- `node scripts/schema-reconcile-check.mjs`
+- `npm run validate:n8n`
+- `npm run check:n8n:env`
+- `npm run validate:scenarios`
+- `npm run shopify:assert-readonly`
+Tests passed:
+- typecheck
+- unit/integration tests
+- secret scan
+- env tracking check
+- env production key check
+- n8n validation
+- n8n env check
+- scenario validation
+- Shopify read-only assertion
+Tests failed/skipped:
+- lint failed with 2 errors and 30 warnings
+- schema-reconcile check reported missing app-referenced tables in DB inventory
+Blockers:
+- `testMode` does not suppress live Evolution sends
+- `testMode` does not suppress live Shopify order creation
+Next step:
+- Add explicit `testMode` suppression for all external side effects, then re-run the audit
+
+## 2026-05-04 — full-system-audit-swarm
+
+Date: 2026-05-04
+Phase: Audit
+Task: full-system-audit-swarm
+Files changed:
+- `qa-artifacts/tasks/2026-05-04/full-system-audit-swarm/*`
+- `worktime.md`
+- `PROGRESS-LOG.md`
+Commands run:
+- `npm run typecheck`
+- `npm run lint`
+- `npm run scan:secrets`
+- `npm run check:env:tracking`
+- `npm run check:env:production`
+- `node scripts/validate-scenarios.mjs`
+- `npm test -- --reporter=verbose`
+- `npm run validate:n8n`
+- `npm run shopify:assert-readonly`
+- `node scripts/schema-inventory.mjs`
+- `node scripts/schema-reconcile-check.mjs`
+- `npm run build` (blocked by concurrent Next build)
+Results:
+- Audit completed as FAIL / NO-GO.
+- P0 blockers confirmed for internal state mutation before auth, public product-search writes, optional webhook auth, live Evolution sends in testMode, live Shopify order creation in testMode, and idempotency schema drift.
+Next step:
+- Fix the P0 blockers, reconcile the live DB schema, then re-run the audit swarm.
+
+## 2026-05-04 — fix-testmode-side-effect-suppression
+
+Date: 2026-05-04
+Phase: Audit remediation
+Task: fix-testmode-side-effect-suppression
+Files changed:
+- [lib/services/message-turn-service.ts](/root/youlya/lib/services/message-turn-service.ts)
+- [lib/services/shopify-order-service.ts](/root/youlya/lib/services/shopify-order-service.ts)
+- [lib/validation/schemas.ts](/root/youlya/lib/validation/schemas.ts)
+- [app/api/ai/tools/create-shopify-order/route.ts](/root/youlya/app/api/ai/tools/create-shopify-order/route.ts)
+- [tests/unit/shopify-order-service.test.ts](/root/youlya/tests/unit/shopify-order-service.test.ts)
+- [tests/integration/message-turn-evolution.test.ts](/root/youlya/tests/integration/message-turn-evolution.test.ts)
+- [qa-artifacts/tasks/2026-05-04/fix-testmode-side-effect-suppression/RESULT.md](/root/youlya/qa-artifacts/tasks/2026-05-04/fix-testmode-side-effect-suppression/RESULT.md)
+Commands run:
+- `npm run typecheck`
+- `npm test -- tests/unit/shopify-order-service.test.ts tests/integration/message-turn-evolution.test.ts --reporter=verbose`
+- `npm test`
+Results:
+- PASS: explicit `testMode` now suppresses Evolution sendText/sendMedia in the internal message-turn path.
+- PASS: explicit `testMode` now forces mock Shopify order creation and ignores injected live adapters.
+- PASS: regression tests cover both paths.
+Next step:
+- Re-run the full audit after the remaining P0 blockers are fixed.
+
+## 2026-05-04 — full-system-audit-swarm
+
+Date: 2026-05-04
+Phase:
+Task: full-system-audit-swarm
+Version: v2.19.0
+Version Name: full-system-audit-swarm
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — fix-p0-blockers-from-audit-swarms
+
+Date: 2026-05-04
+Phase:
+Task: fix-p0-blockers-from-audit-swarms
+Version: v2.19.1
+Version Name: p0-blockers-from-audit-swarms
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — fix-testmode-side-effect-suppression
+
+Date: 2026-05-04
+Phase:
+Task: fix-testmode-side-effect-suppression
+Version: v2.19.2
+Version Name: testmode-side-effect-suppression
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — fix-evolution-instance-sendtext-and-whatsapp-outbound
+
+Date: 2026-05-04
+Phase:
+Task: fix-evolution-instance-sendtext-and-whatsapp-outbound
+Version: v2.19.3
+Version Name: evolution-instance-sendtext-and-whatsapp-outbound
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — unblock-deploy-and-add-live-order-approval-gate
+
+Date: 2026-05-04
+Phase:
+Task: unblock-deploy-and-add-live-order-approval-gate
+Version: v2.19.4
+Version Name: unblock-deploy-and-add-live-order-approval-gate
+Files changed:
+- `app/api/dashboard/pilot-control/route.ts`
+- `app/api/internal/messages/turn/route.ts`
+- `app/dashboard/haidi/lab/page.tsx`
+- `app/dashboard/haidi/learning/page.tsx`
+- `lib/config/env.ts`
+- `lib/services/message-turn-service.ts`
+- `lib/services/shopify-order-service.ts`
+- `lib/types/commerce.ts`
+- `lib/types/messages.ts`
+- `lib/validation/schemas.ts`
+- `tests/api/message-turn.test.ts`
+- `tests/unit/shopify-order-service.test.ts`
+- `RELEASES/v2.19.4-unblock-deploy-and-add-live-order-approval-gate.md`
+- `qa-artifacts/tasks/2026-05-04/unblock-deploy-and-add-live-order-approval-gate/RESULT.md`
+- `worktime.md`
+Commands run:
+- `git status --short`
+- `git log -1 --oneline`
+- `curl -fsS https://admin.youlya365.com/api/health`
+- `curl -fsS https://admin.youlya365.com/api/build-info`
+- `node scripts/validate-scenarios.mjs`
+- `node scripts/scan-secrets.mjs`
+- `node scripts/validate-shopify-products.mjs`
+- `node scripts/validate-n8n-workflows.mjs`
+- `npm run lint`
+- `npm run typecheck`
+- `npm test -- tests/unit/shopify-order-service.test.ts tests/api/message-turn.test.ts`
+- `npm test`
+- `npm run validate:n8n`
+- `npm run validate:scenarios`
+- `npm run scan:secrets`
+- `npm run build > qa-artifacts/tasks/2026-05-04/unblock-deploy-and-add-live-order-approval-gate/build.log 2>&1`
+- `npm run qa:collect`
+- `npm run release:task -- --task "unblock-deploy-and-add-live-order-approval-gate" --type patch`
+- `npm run verify:release`
+- `npm run verify:deploy`
+- `npm run test:e2e:dashboard:swarm`
+Tests passed:
+- lint
+- typecheck
+- unit/integration tests
+- validate:n8n
+- validate:scenarios
+- scan:secrets
+- build
+- verify:release
+- verify:deploy precheck
+Tests failed/skipped:
+- `npm run test:e2e:dashboard:swarm` failed with 7 dashboard UI/a11y/persistence checks on the live admin surface
+- production deploy not run
+Blockers:
+- Live dashboard swarm failures block a clean deploy
+Next step:
+- Fix or explicitly accept the live dashboard QA failures before attempting production deploy
+
+## 2026-05-04 — pre-pilot-runtime-reset-and-final-validation
+
+Date: 2026-05-04
+Phase:
+Task: pre-pilot-runtime-reset-and-final-validation
+Version: v2.19.5
+Version Name: pre-pilot-runtime-reset-and-final-validation
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — fix-dashboard-swarm-and-deploy-safety-gates
+
+Date: 2026-05-04
+Phase:
+Task: fix-dashboard-swarm-and-deploy-safety-gates
+Version: v2.19.6
+Version Name: dashboard-swarm-and-deploy-safety-gates
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — fix-remaining-dashboard-swarm-blockers-for-deploy
+
+Date: 2026-05-04
+Phase:
+Task: fix-remaining-dashboard-swarm-blockers-for-deploy
+Version: v2.19.7
+Version Name: remaining-dashboard-swarm-blockers-for-deploy
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-04 — final-whatsapp-pilot-go-no-go-after-v2197-deploy
+
+Date: 2026-05-04
+Phase:
+Task: final-whatsapp-pilot-go-no-go-after-v2197-deploy
+Version: v2.19.8
+Version Name: final-whatsapp-pilot-go-no-go-after-v2197-deploy
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-05 — final-whatsapp-pilot-go-no-go-after-v2197-deploy
+
+Date: 2026-05-05
+Phase:
+Task: final-whatsapp-pilot-go-no-go-after-v2197-deploy
+Version: v2.19.9
+Version Name: final-whatsapp-pilot-go-no-go-after-v2197-deploy
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-05 — locate-and-make-haidi-system-prompt-editable
+
+Date: 2026-05-05
+Phase:
+Task: locate-and-make-haidi-system-prompt-editable
+Version: v2.19.10
+Version Name: locate-and-make-haidi-system-prompt-editable
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-05 — simplify-human-handoff-and-add-records-filters-exports
+
+Date: 2026-05-05
+Phase:
+Task: simplify-human-handoff-and-add-records-filters-exports
+Version: v2.20.0
+Version Name: simplify-human-handoff-and-add-records-filters-exports
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-05 — fix-login-after-domain-change
+
+Date: 2026-05-05
+Phase:
+Task: fix-login-after-domain-change
+Version: v2.20.1
+Version Name: login-after-domain-change
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-05 — upgrade-haidi-app-prompt-to-v22-and-align-n8n-json-mode
+
+Date: 2026-05-05
+Phase:
+Task: upgrade-haidi-app-prompt-to-v22-and-align-n8n-json-mode
+Version: v2.20.2
+Version Name: upgrade-haidi-app-prompt-to-v22-and-align-n8n-json-mode
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — emergency-freeze-whatsapp-ai-and-capture-failure-evidence
+
+Date: 2026-05-06
+Phase:
+Task: emergency-freeze-whatsapp-ai-and-capture-failure-evidence
+Version: v2.20.3
+Version Name: emergency-freeze-whatsapp-ai-and-capture-failure-evidence
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan
+
+Date: 2026-05-06
+Phase:
+Task: admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan
+Version: v2.21.0
+Version Name: admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — repair-production-schema-and-restore-safe-whatsapp-pipeline-after-emergency-freeze
+
+Date: 2026-05-06
+Phase:
+Task: repair-production-schema-and-restore-safe-whatsapp-pipeline-after-emergency-freeze
+Version: v2.21.1
+Version Name: repair-production-schema-and-restore-safe-whatsapp-pipeline-after-emergency-freeze
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — stabilize-whatsapp-products-dashboard-handoff-after-failed-pilot
+
+Date: 2026-05-06
+Phase:
+Task: stabilize-whatsapp-products-dashboard-handoff-after-failed-pilot
+Version: v2.22.0
+Version Name: stabilize-whatsapp-products-dashboard-handoff-after-failed-pilot
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — fix-evolution-auth-401-while-whatsapp-freeze-remains-active
+
+Date: 2026-05-06
+Phase:
+Task: fix-evolution-auth-401-while-whatsapp-freeze-remains-active
+Version: v2.22.1
+Version Name: evolution-auth-401-while-whatsapp-freeze-remains-active
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan
+
+Date: 2026-05-06
+Phase:
+Task: admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan
+Version: v2.23.0
+Version Name: admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — user-management-add-update-buttons-and-safe-rbac-api-flow
+
+Date: 2026-05-06
+Phase: Phase 1 (admin control plane hardening)
+Task: user-management-add-update-buttons-and-safe-rbac-api-flow
+Files changed:
+- app/dashboard/settings/users/page.tsx
+- app/api/dashboard/users/route.ts
+- tests/unit/user-management-route-guards.test.ts
+- qa-artifacts/go-live-review/user-management-pre-change-status.txt
+- claudeahmed.md
+- qa-artifacts/go-live-review/GO_LIVE_REVIEW.md
+Commands run:
+- discovery grep scans for users/roles/store_user_roles/super_admin
+- npm run typecheck
+- npm run lint
+- npm test
+- npm run validate:scenarios
+- npm run build
+- npm run release:task -- --task "user-management-add-update-buttons-and-safe-rbac-api-flow" --type patch
+- npm run verify:release
+Tests passed:
+- unit/integration suite status recorded in task result
+Tests failed/skipped:
+- validate:scenarios and build may remain blocked by existing repo state if encountered
+Blockers:
+- no dedicated per-id user PATCH route; current patch remains collection-level
+Next step:
+- add `/api/dashboard/users/[id]` and optional invite/deactivate endpoints if auth policy requires hard deactivation.
+
+## 2026-05-06 — fix-dashboard-bugs-pilot-domain-command-center
+
+Date: 2026-05-06
+Phase:
+Task: fix-dashboard-bugs-pilot-domain-command-center
+Version: v2.23.1
+Version Name: dashboard-bugs-pilot-domain-command-center
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — user-management-add-update-buttons-and-safe-rbac-api-flow
+
+Date: 2026-05-06
+Phase:
+Task: user-management-add-update-buttons-and-safe-rbac-api-flow
+Version: v2.23.2
+Version Name: user-management-add-update-buttons-and-safe-rbac-api-flow
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — finish-user-management-update-deactivate-invite-flow
+
+Date: 2026-05-06
+Phase: Phase 1 (admin control plane hardening)
+Task: finish-user-management-update-deactivate-invite-flow
+Files changed:
+- app/api/dashboard/users/route.ts
+- app/api/dashboard/users/[id]/route.ts
+- app/api/dashboard/users/[id]/deactivate/route.ts
+- app/api/dashboard/users/[id]/invite/route.ts
+- app/dashboard/settings/users/page.tsx
+- lib/auth/user-management-api.ts
+- lib/auth/user-management-guards.ts
+- tests/unit/user-management-route-guards.test.ts
+- qa-artifacts/go-live-review/user-management-final/pre-change-git-status.txt
+- qa-artifacts/go-live-review/user-management-final/MANUAL_QA.md
+- claudeahmed.md
+- qa-artifacts/go-live-review/GO_LIVE_REVIEW.md
+- worktime.md
+Commands run:
+- discovery/status capture commands from user prompt
+- npm run typecheck
+- npm run lint
+- npm test
+- npm run validate:scenarios
+- npm run build
+- npm run scan:secrets
+- npm run release:task -- --task "finish-user-management-update-deactivate-invite-flow" --type patch
+- npm run verify:release
+Tests passed:
+- typecheck, tests, scenario validation, secret scan
+Tests failed/skipped:
+- build failed due .next manifest ENOENT after long build pipeline in current env
+Blockers:
+- environment build instability unrelated to user-management logic
+Next step:
+- rerun clean build in stable workspace and add e2e coverage for user-management flows.
+
+## 2026-05-06 — finish-user-management-update-deactivate-invite-flow
+
+Date: 2026-05-06
+Phase:
+Task: finish-user-management-update-deactivate-invite-flow
+Version: v2.23.3
+Version Name: finish-user-management-update-deactivate-invite-flow
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — normalize-production-domain-and-fix-critical-launch-blockers
+
+Date: 2026-05-06
+Phase:
+Task: normalize-production-domain-and-fix-critical-launch-blockers
+Version: v2.23.4
+Version Name: normalize-production-domain-and-fix-critical-launch-blockers
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — fix-number-stuck-in-handoff-and-add-clear-return-to-ai-control
+
+Date: 2026-05-06
+Phase:
+Task: fix-number-stuck-in-handoff-and-add-clear-return-to-ai-control
+Version: v2.23.5
+Version Name: number-stuck-in-handoff-and-add-clear-return-to-ai-control
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:

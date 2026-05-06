@@ -19,6 +19,7 @@ const serverSchema = z.object({
   MOCK_MODE: z.string().default("true"),
   TEST_MODE: z.string().default(isTestModeRuntime ? "true" : "false"),
   ALLOW_TEST_MODE: z.string().default("true"),
+  OWNER_APPROVES_LIVE_ORDER: z.string().default("false"),
   INTERNAL_API_SECRET: z.string().optional(),
 
   SUPABASE_URL: z.string().default(isTestModeRuntime ? "mock" : ""),
@@ -38,6 +39,8 @@ const serverSchema = z.object({
 
   OPENAI_API_KEY: z.string().optional(),
   OPENAI_MODEL: z.string().default("gpt-4o"),
+
+  SETTINGS_ENCRYPTION_KEY: z.string().optional(),
 
   SHIPPING_CAIRO_EGP: z.coerce.number().default(70),
   SHIPPING_ALEXANDRIA_EGP: z.coerce.number().default(90),
@@ -81,6 +84,11 @@ export function getServerEnv() {
 export function isMockMode() {
   const env = getServerEnv();
   return env.MOCK_MODE === "true" || env.TEST_MODE === "true";
+}
+
+export function isOwnerApprovedLiveOrder() {
+  const env = getServerEnv();
+  return env.OWNER_APPROVES_LIVE_ORDER === "true";
 }
 
 export function assertInternalSecret(req: Request): boolean {

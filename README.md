@@ -4,6 +4,195 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.23.5 |
+| Version Name | number-stuck-in-handoff-and-add-clear-return-to-ai-control |
+| Task | fix-number-stuck-in-handoff-and-add-clear-return-to-ai-control |
+| Release File | RELEASES/v2.23.5-number-stuck-in-handoff-and-add-clear-return-to-ai-control.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.23.4 |
+| Version Name | normalize-production-domain-and-fix-critical-launch-blockers |
+| Task | normalize-production-domain-and-fix-critical-launch-blockers |
+| Release File | RELEASES/v2.23.4-normalize-production-domain-and-fix-critical-launch-blockers.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.23.3 |
+| Version Name | finish-user-management-update-deactivate-invite-flow |
+| Task | finish-user-management-update-deactivate-invite-flow |
+| Release File | RELEASES/v2.23.3-finish-user-management-update-deactivate-invite-flow.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.23.2 |
+| Version Name | user-management-add-update-buttons-and-safe-rbac-api-flow |
+| Task | user-management-add-update-buttons-and-safe-rbac-api-flow |
+| Release File | RELEASES/v2.23.2-user-management-add-update-buttons-and-safe-rbac-api-flow.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.23.1 |
+| Version Name | dashboard-bugs-pilot-domain-command-center |
+| Task | fix-dashboard-bugs-pilot-domain-command-center |
+| Release File | RELEASES/v2.23.1-dashboard-bugs-pilot-domain-command-center.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.23.0 |
+| Version Name | admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan |
+| Task | admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan |
+| Release File | RELEASES/v2.23.0-admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.22.1 |
+| Version Name | evolution-auth-401-while-whatsapp-freeze-remains-active |
+| Task | fix-evolution-auth-401-while-whatsapp-freeze-remains-active |
+| Release File | RELEASES/v2.22.1-evolution-auth-401-while-whatsapp-freeze-remains-active.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.22.0 |
+| Version Name | stabilize-whatsapp-products-dashboard-handoff-after-failed-pilot |
+| Task | stabilize-whatsapp-products-dashboard-handoff-after-failed-pilot |
+| Release File | RELEASES/v2.22.0-stabilize-whatsapp-products-dashboard-handoff-after-failed-pilot.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.21.1 |
+| Version Name | repair-production-schema-and-restore-safe-whatsapp-pipeline-after-emergency-freeze |
+| Task | repair-production-schema-and-restore-safe-whatsapp-pipeline-after-emergency-freeze |
+| Release File | RELEASES/v2.21.1-repair-production-schema-and-restore-safe-whatsapp-pipeline-after-emergency-freeze.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.21.0 |
+| Version Name | admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan |
+| Task | admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan |
+| Release File | RELEASES/v2.21.0-admin-control-plane-shipping-ai-channels-roles-and-pilot-test-plan.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.20.3 |
+| Version Name | emergency-freeze-whatsapp-ai-and-capture-failure-evidence |
+| Task | emergency-freeze-whatsapp-ai-and-capture-failure-evidence |
+| Release File | RELEASES/v2.20.3-emergency-freeze-whatsapp-ai-and-capture-failure-evidence.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.20.2 |
+| Version Name | upgrade-haidi-app-prompt-to-v22-and-align-n8n-json-mode |
+| Task | upgrade-haidi-app-prompt-to-v22-and-align-n8n-json-mode |
+| Release File | RELEASES/v2.20.2-upgrade-haidi-app-prompt-to-v22-and-align-n8n-json-mode.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.20.1 |
+| Version Name | login-after-domain-change |
+| Task | fix-login-after-domain-change |
+| Release File | RELEASES/v2.20.1-login-after-domain-change.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.20.0 |
+| Version Name | simplify-human-handoff-and-add-records-filters-exports |
+| Task | simplify-human-handoff-and-add-records-filters-exports |
+| Release File | RELEASES/v2.20.0-simplify-human-handoff-and-add-records-filters-exports.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.10 |
+| Version Name | locate-and-make-haidi-system-prompt-editable |
+| Task | locate-and-make-haidi-system-prompt-editable |
+| Release File | RELEASES/v2.19.10-locate-and-make-haidi-system-prompt-editable.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.9 |
+| Version Name | final-whatsapp-pilot-go-no-go-after-v2197-deploy |
+| Task | final-whatsapp-pilot-go-no-go-after-v2197-deploy |
+| Release File | RELEASES/v2.19.9-final-whatsapp-pilot-go-no-go-after-v2197-deploy.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.8 |
+| Version Name | final-whatsapp-pilot-go-no-go-after-v2197-deploy |
+| Task | final-whatsapp-pilot-go-no-go-after-v2197-deploy |
+| Release File | RELEASES/v2.19.8-final-whatsapp-pilot-go-no-go-after-v2197-deploy.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.7 |
+| Version Name | remaining-dashboard-swarm-blockers-for-deploy |
+| Task | fix-remaining-dashboard-swarm-blockers-for-deploy |
+| Release File | RELEASES/v2.19.7-remaining-dashboard-swarm-blockers-for-deploy.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.6 |
+| Version Name | dashboard-swarm-and-deploy-safety-gates |
+| Task | fix-dashboard-swarm-and-deploy-safety-gates |
+| Release File | RELEASES/v2.19.6-dashboard-swarm-and-deploy-safety-gates.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.5 |
+| Version Name | pre-pilot-runtime-reset-and-final-validation |
+| Task | pre-pilot-runtime-reset-and-final-validation |
+| Release File | RELEASES/v2.19.5-pre-pilot-runtime-reset-and-final-validation.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.4 |
+| Version Name | unblock-deploy-and-add-live-order-approval-gate |
+| Task | unblock-deploy-and-add-live-order-approval-gate |
+| Release File | RELEASES/v2.19.4-unblock-deploy-and-add-live-order-approval-gate.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.3 |
+| Version Name | evolution-instance-sendtext-and-whatsapp-outbound |
+| Task | fix-evolution-instance-sendtext-and-whatsapp-outbound |
+| Release File | RELEASES/v2.19.3-evolution-instance-sendtext-and-whatsapp-outbound.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.2 |
+| Version Name | testmode-side-effect-suppression |
+| Task | fix-testmode-side-effect-suppression |
+| Release File | RELEASES/v2.19.2-testmode-side-effect-suppression.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.1 |
+| Version Name | p0-blockers-from-audit-swarms |
+| Task | fix-p0-blockers-from-audit-swarms |
+| Release File | RELEASES/v2.19.1-p0-blockers-from-audit-swarms.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.19.0 |
+| Version Name | full-system-audit-swarm |
+| Task | full-system-audit-swarm |
+| Release File | RELEASES/v2.19.0-full-system-audit-swarm.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.18.1 |
+| Version Name | full-system-audit-swarm-gap-analysis-and-readiness-report |
+| Task | full-system-audit-swarm-gap-analysis-and-readiness-report |
+| Release File | RELEASES/v2.18.1-full-system-audit-swarm-gap-analysis-and-readiness-report.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.18.0 |
+| Version Name | haidi-settings-and-pilot-control-room |
+| Task | haidi-settings-and-pilot-control-room |
+| Release File | RELEASES/v2.18.0-haidi-settings-and-pilot-control-room.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.17.2 |
 | Version Name | haidi-lab-and-approved-learning-pipeline |
 | Task | haidi-lab-and-approved-learning-pipeline |
