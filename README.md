@@ -4,6 +4,20 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.25.0 |
+| Version Name | finish-dashboard-finetune-remaining-failures |
+| Task | finish-dashboard-finetune-remaining-failures |
+| Release File | RELEASES/v2.25.0-finish-dashboard-finetune-remaining-failures.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.24.1 |
+| Version Name | critical-launch-blockers-before-any-new-feature |
+| Task | fix-critical-launch-blockers-before-any-new-feature |
+| Release File | RELEASES/v2.24.1-critical-launch-blockers-before-any-new-feature.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.24.0 |
 | Version Name | complete-dashboard-operations-control-center-handoff-channels-shipping-history |
 | Task | complete-dashboard-operations-control-center-handoff-channels-shipping-history |

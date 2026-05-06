@@ -2122,3 +2122,21 @@ BLOCKERS:
 RISKS: Low — all changes are additive, no breaking changes
 NEXT STEP: Apply handoff_settings migration, configure Evolution, test full handoff flow
 MANUAL QA: See opsahmed.md section 11
+
+PROMPT TBD 2026-05-06
+Release prep for task fix-critical-launch-blockers-before-any-new-feature (v2.24.1, critical-launch-blockers-before-any-new-feature).
+
+RESULT TBD 2026-05-06
+STATUS: PENDING
+Release file generated: RELEASES/v2.24.1-critical-launch-blockers-before-any-new-feature.md
+
+RESULT 34 06/05/26
+STATUS: PARTIAL
+Executed launch-blocker stabilization workflow with state capture, domain/live checks, command-center hardening, security-header tightening, auth-ordering verification, version drift analysis, WhatsApp webhook/handoff forensics, full validation runs, Playwright swarm run, release note generation, and consolidated reporting (`LAUNCH_BLOCKERS_AHMED.md`). Remaining blockers prevent GO: typecheck failure in channels page icon imports, live/container version drift, unresolved WhatsApp end-to-end reply verification, and failing dashboard swarm tests.
+
+PROMPT TBD 2026-05-06
+Release prep for task finish-dashboard-finetune-remaining-failures (v2.25.0, finish-dashboard-finetune-remaining-failures).
+
+RESULT TBD 2026-05-06
+STATUS: PENDING
+Release file generated: RELEASES/v2.25.0-finish-dashboard-finetune-remaining-failures.md

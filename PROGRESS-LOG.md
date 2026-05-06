@@ -2943,3 +2943,31 @@ Tests passed:
 Tests failed/skipped:
 Blockers:
 Next step:
+
+## 2026-05-06 — fix-critical-launch-blockers-before-any-new-feature
+
+Date: 2026-05-06
+Phase:
+Task: fix-critical-launch-blockers-before-any-new-feature
+Version: v2.24.1
+Version Name: critical-launch-blockers-before-any-new-feature
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:
+
+## 2026-05-06 — finish-dashboard-finetune-remaining-failures
+
+Date: 2026-05-06
+Phase:
+Task: finish-dashboard-finetune-remaining-failures
+Version: v2.25.0
+Version Name: finish-dashboard-finetune-remaining-failures
+Files changed:
+Commands run:
+Tests passed:
+Tests failed/skipped:
+Blockers:
+Next step:

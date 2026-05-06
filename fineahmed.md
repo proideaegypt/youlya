@@ -543,3 +543,39 @@ Evolution WhatsApp Setup
 ## 16. Final Recommendation
 
 يا أحمد، الداشبورد يعمل بشكل جيد وجميع التدفقات الأساسية سليمة. تم تطبيق تحسينات اللغة العربية والأزرار والشارات الأكثر إلحاحاً في هذا التاسك. الأولويات الحرجة قبل الإطلاق الكامل هي ثلاثة: (1) إضافة واجهة مسح QR لـ Evolution حتى تتمكن من توصيل WhatsApp من الداشبورد مباشرةً بدلاً من واجهة Evolution الخارجية، (2) إظهار زر تشغيل/إيقاف التحويل البشري في صفحة الهاندأوف مباشرةً بدلاً من إخفائه في غرفة الطيار، و(3) ربط قائمة المحافظات/المدن الموجودة في `lib/data/egypt-governorates.ts` بواجهة إعدادات الشحن حتى يتمكن الأوبريتور من رؤية وتعديل تكلفة الشحن لكل محافظة بسهولة. كل هذه التغييرات لها API موجود بالفعل — تحتاج فقط واجهة مستخدم.
+
+---
+
+## 17. Final Dashboard Fine-Tune Follow-Up (v2.25.0)
+
+**تاريخ:** 2026-05-06  
+**الإصدار:** v2.25.0-finish-dashboard-finetune-remaining-failures
+
+### ما تم إنجازه في جلسة المتابعة
+
+#### ✅ زر تحويل بشري عالمي — صفحة Handoff
+- أضفنا State لتحميل إعداد `global_handoff_enabled` من API
+- أضفنا `toggleGlobalHandoff()` لتغيير الإعداد عبر POST
+- أضفنا Widget في هيدر الصفحة: اسم الإعداد + حالة مفعل/متوقف + أيقونة ToggleRight/ToggleLeft
+- إذا كان متوقفاً: يظهر نص توضيحي "المحادثات الجديدة ستظل مع الذكاء الاصطناعي"
+- Toast notification ثابت في أسفل الشاشة مدة 3 ثوانٍ عند كل تغيير
+
+#### ✅ Evolution QR UI — صفحة Channels Settings
+- أصلحنا icons خاطئة: `Facebook`/`Instagram` (غير موجودتان في lucide-react@1.14.0) → `Share2`/`Camera`
+- أضفنا عمود "إجراء" في جدول الحسابات — زر QR يظهر فقط لحسابات Evolution
+- أضفنا `fetchAccountQR(id)` يستدعي `/api/dashboard/channels/evolution/accounts/[id]/qr`
+- Modal مستقل للـ QR: يعرض الصورة base64، زر تحديث، معالجة أخطاء
+
+#### ✅ نتائج الفالديشن النهائية
+
+| الأمر | النتيجة |
+|---|---|
+| `npx tsc --noEmit` | ✅ PASS — 0 أخطاء |
+| `npm run lint` | ✅ PASS — 0 errors، 30 تحذيرات موروثة |
+| `npm run test` | ✅ PASS — 31 ملف، 229 اختبار |
+| `npm run scan:secrets` | ✅ PASS |
+| `npm run build` | ✅ PASS — 78 صفحة، 0 أخطاء، مدة البناء ~3.6 دقيقة |
+| `npm run verify:release` | ✅ PASS — v2.25.0 |
+
+### الحالة النهائية
+**STATUS: PASS** — جميع البنود المطلوبة في تاسك `finish-dashboard-finetune-remaining-failures` اكتملت بنجاح.

@@ -1,6 +1,6 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.24.0",
+  "version": "2.25.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -44,7 +44,7 @@
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "complete-dashboard-operations-control-center-handoff-channels-shipping-history"
+    "youlyaVersionName": "finish-dashboard-finetune-remaining-failures"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
