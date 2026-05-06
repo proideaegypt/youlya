@@ -14,14 +14,14 @@
 ```
 Error: expect(locator).toBeVisible() failed
 
-Locator: getByRole('heading', { name: 'الطلبات' })
+Locator: locator('span').filter({ hasText: 'AI Tool' })
 Expected: visible
 Timeout: 10000ms
 Error: element(s) not found
 
 Call log:
   - Expect "toBeVisible" with timeout 10000ms
-  - waiting for getByRole('heading', { name: 'الطلبات' })
+  - waiting for locator('span').filter({ hasText: 'AI Tool' })
 
 ```
 
@@ -29,25 +29,239 @@ Call log:
 
 ```yaml
 - generic [active] [ref=e1]:
-  - main [ref=e2]:
-    - generic [ref=e3]:
-      - generic [ref=e4]:
-        - generic "YOULYA HOME WEAR logo" [ref=e7]:
-          - img "YOULYA HOME WEAR logo" [ref=e8]
-        - heading "تسجيل الدخول" [level=1] [ref=e9]
-        - paragraph [ref=e10]: YOULYA HOME WEAR Dashboard
-      - generic [ref=e11]:
-        - generic [ref=e12]:
-          - generic [ref=e13]: البريد الإلكتروني
-          - textbox "البريد الإلكتروني" [ref=e14]:
-            - /placeholder: you@example.com
-        - generic [ref=e15]:
-          - generic [ref=e16]: كلمة المرور
-          - textbox "كلمة المرور" [ref=e17]:
-            - /placeholder: ••••••••
-        - button "تسجيل الدخول" [ref=e18]
-    - paragraph [ref=e20]: Youlya AI Commerce OS · v2.23.3 finish-user-management-update-deactivate-invite-flow · commit unknown · built 2026-05-06 04:34 · production
-  - alert [ref=e21]
+  - generic [ref=e5]:
+    - complementary "Primary navigation" [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic "YOULYA HOME WEAR logo" [ref=e11]:
+            - img "YOULYA HOME WEAR logo" [ref=e12]
+          - generic [ref=e13]: YOULYA
+        - button "Collapse sidebar" [ref=e14]:
+          - img [ref=e15]
+      - navigation [ref=e17]:
+        - list [ref=e18]:
+          - listitem [ref=e19]:
+            - link "لوحة التحكم" [ref=e20] [cursor=pointer]:
+              - /url: /dashboard/command-center
+              - img [ref=e21]
+              - generic [ref=e26]: لوحة التحكم
+          - listitem [ref=e27]:
+            - link "الرسائل" [ref=e28] [cursor=pointer]:
+              - /url: /dashboard/inbox
+              - img [ref=e29]
+              - generic [ref=e31]: الرسائل
+          - listitem [ref=e32]:
+            - link "الطلبات" [ref=e33] [cursor=pointer]:
+              - /url: /dashboard/orders
+              - img [ref=e34]
+              - generic [ref=e37]: الطلبات
+          - listitem [ref=e38]:
+            - link "المنتجات والمخزون" [ref=e39] [cursor=pointer]:
+              - /url: /dashboard/products
+              - img [ref=e40]
+              - generic [ref=e44]: المنتجات والمخزون
+          - listitem [ref=e45]:
+            - link "ذكاء المنتجات" [ref=e46] [cursor=pointer]:
+              - /url: /dashboard/products-intelligence
+              - img [ref=e47]
+              - generic [ref=e55]: ذكاء المنتجات
+          - listitem [ref=e56]:
+            - link "التحويل البشري" [ref=e57] [cursor=pointer]:
+              - /url: /dashboard/handoff
+              - img [ref=e58]
+              - generic [ref=e60]: التحويل البشري
+          - listitem [ref=e61]:
+            - link "المحادثات" [ref=e62] [cursor=pointer]:
+              - /url: /dashboard/conversations
+              - img [ref=e63]
+              - generic [ref=e65]: المحادثات
+          - listitem [ref=e66]:
+            - link "الإحصائيات" [ref=e67] [cursor=pointer]:
+              - /url: /dashboard/statistics
+              - img [ref=e68]
+              - generic [ref=e70]: الإحصائيات
+          - listitem [ref=e71]:
+            - link "القنوات" [ref=e72] [cursor=pointer]:
+              - /url: /dashboard/settings/channels
+              - img [ref=e73]
+              - generic [ref=e76]: القنوات
+          - listitem [ref=e77]:
+            - link "AI Agent" [ref=e78] [cursor=pointer]:
+              - /url: /dashboard/settings/ai-agent
+              - img [ref=e79]
+              - generic [ref=e82]: AI Agent
+          - listitem [ref=e83]:
+            - link "الشحن" [ref=e84] [cursor=pointer]:
+              - /url: /dashboard/settings/shipping
+              - img [ref=e85]
+              - generic [ref=e90]: الشحن
+          - listitem [ref=e91]:
+            - link "المستخدمين والأدوار" [ref=e92] [cursor=pointer]:
+              - /url: /dashboard/settings/users
+              - img [ref=e93]
+              - generic [ref=e98]: المستخدمين والأدوار
+          - listitem [ref=e99]:
+            - link "السجلات" [ref=e100] [cursor=pointer]:
+              - /url: /dashboard/logs
+              - img [ref=e101]
+              - generic [ref=e104]: السجلات
+          - listitem [ref=e105]:
+            - link "الملف الشخصي" [ref=e106] [cursor=pointer]:
+              - /url: /dashboard/profile
+              - img [ref=e107]
+              - generic [ref=e110]: الملف الشخصي
+          - listitem [ref=e111]:
+            - link "الإعدادات" [ref=e112] [cursor=pointer]:
+              - /url: /dashboard/settings
+              - img [ref=e113]
+              - generic [ref=e116]: الإعدادات
+          - listitem [ref=e117]:
+            - link "غرفة التحكم التجريبي" [ref=e118] [cursor=pointer]:
+              - /url: /dashboard/pilot-control
+              - img [ref=e119]
+              - generic [ref=e121]: غرفة التحكم التجريبي
+          - listitem [ref=e122]:
+            - link "مختبر Haidi" [ref=e123] [cursor=pointer]:
+              - /url: /dashboard/haidi/lab
+              - img [ref=e124]
+              - generic [ref=e126]: مختبر Haidi
+          - listitem [ref=e127]:
+            - link "تعلم Haidi" [ref=e128] [cursor=pointer]:
+              - /url: /dashboard/haidi/learning
+              - img [ref=e129]
+              - generic [ref=e137]: تعلم Haidi
+          - listitem [ref=e138]:
+            - link "إعدادات Haidi" [ref=e139] [cursor=pointer]:
+              - /url: /dashboard/haidi/settings
+              - img [ref=e140]
+              - generic [ref=e143]: إعدادات Haidi
+          - listitem [ref=e144]:
+            - link "الأمان" [ref=e145] [cursor=pointer]:
+              - /url: /dashboard/security
+              - img [ref=e146]
+              - generic [ref=e148]: الأمان
+          - listitem [ref=e149]:
+            - link "الأجهزة" [ref=e150] [cursor=pointer]:
+              - /url: /dashboard/devices
+              - img [ref=e151]
+              - generic [ref=e154]: الأجهزة
+      - generic [ref=e155]:
+        - generic [ref=e157]:
+          - img [ref=e158]
+          - paragraph [ref=e161]: متجر ذكي مدعوم بالذكاء الاصطناعي
+        - button "تسجيل الخروج" [ref=e162]:
+          - img [ref=e163]
+          - generic [ref=e166]: تسجيل الخروج
+    - main [ref=e167]:
+      - generic [ref=e169]:
+        - generic [ref=e171]:
+          - img [ref=e173]
+          - textbox "Search" [ref=e176]:
+            - /placeholder: بحث في الطلبات والمحادثات...
+        - generic [ref=e177]:
+          - button "Open notifications" [ref=e178]:
+            - img [ref=e179]
+            - generic [ref=e182]: Open notifications
+            - generic [ref=e183]: "1"
+          - button "Open settings" [ref=e184]:
+            - img [ref=e185]
+            - generic [ref=e188]: Open settings
+          - button "Open user menu" [ref=e189]:
+            - generic [ref=e191]: YH
+            - generic [ref=e192]: Open user menu
+      - generic [ref=e194]:
+        - generic [ref=e195]:
+          - generic [ref=e196]:
+            - heading "السجلات" [level=1] [ref=e197]
+            - paragraph [ref=e198]: Logs
+          - generic [ref=e199]:
+            - generic [ref=e200]:
+              - button "Export" [ref=e201]:
+                - img [ref=e202]
+                - text: Export
+                - img [ref=e205]
+              - generic:
+                - generic:
+                  - generic:
+                    - paragraph: Youlya Report
+                    - heading "Logs report" [level=1]
+                    - generic:
+                      - paragraph: "Page: logs"
+                      - paragraph: "Preset: today"
+                      - paragraph: "From: 2026-05-06"
+                      - paragraph: "To: 2026-05-06"
+                      - paragraph: "Generated at: 2026-05-06T13:43:47.602Z"
+                      - paragraph: "App version: 2.23.4"
+                  - generic:
+                    - generic:
+                      - paragraph: Total
+                      - paragraph: "0"
+                    - generic:
+                      - paragraph: Errors
+                      - paragraph: "0"
+                    - generic:
+                      - paragraph: Warnings
+                      - paragraph: "0"
+                  - table:
+                    - rowgroup:
+                      - row "Timestamp Type Level Message Details":
+                        - columnheader "Timestamp"
+                        - columnheader "Type"
+                        - columnheader "Level"
+                        - columnheader "Message"
+                        - columnheader "Details"
+                    - rowgroup:
+                      - row "No records for the selected filters.":
+                        - cell "No records for the selected filters."
+            - generic [ref=e207]:
+              - img [ref=e208]
+              - textbox "Search logs" [ref=e211]:
+                - /placeholder: Search logs...
+        - generic [ref=e213]:
+          - generic [ref=e214]:
+            - generic [ref=e215]:
+              - img [ref=e216]
+              - text: Date filters
+            - button "Today" [ref=e217]
+            - button "This week" [ref=e218]
+            - button "This month" [ref=e219]
+          - generic [ref=e220]:
+            - generic [ref=e221]:
+              - generic [ref=e222]: From
+              - textbox [ref=e223]: 2026-05-06
+            - generic [ref=e224]:
+              - generic [ref=e225]: To
+              - textbox [ref=e226]: 2026-05-06
+            - button "Apply" [ref=e227]:
+              - img [ref=e228]
+              - text: Apply
+            - button "Reset" [ref=e230]:
+              - img [ref=e231]
+              - text: Reset
+        - generic [ref=e234]:
+          - generic [ref=e235]:
+            - generic [ref=e236]:
+              - img [ref=e237]
+              - generic [ref=e240]: All
+            - paragraph [ref=e241]: "6"
+          - generic [ref=e242]:
+            - generic [ref=e243]:
+              - img [ref=e244]
+              - generic [ref=e246]: Info
+            - paragraph [ref=e247]: "4"
+          - generic [ref=e248]:
+            - generic [ref=e249]:
+              - img [ref=e250]
+              - generic [ref=e252]: Warning
+            - paragraph [ref=e253]: "1"
+          - generic [ref=e254]:
+            - generic [ref=e255]:
+              - img [ref=e256]
+              - generic [ref=e258]: Error
+            - paragraph [ref=e259]: "1"
+        - paragraph [ref=e261]: No logs match your filters.
+      - paragraph [ref=e263]: Youlya AI Commerce OS · v2.23.4 normalize-production-domain-and-fix-critical-launch-blockers · commit unknown · built 2026-05-06 04:55 · production
+  - alert [ref=e264]
 ```
 
 # Test source
@@ -104,12 +318,12 @@ Call log:
   49  | 
   50  | test("orders and logs pages render non-blank states", async ({ page }) => {
   51  |   await page.goto("/dashboard/orders");
-> 52  |   await expect(page.getByRole("heading", { name: "الطلبات" })).toBeVisible();
-      |                                                                ^ Error: expect(locator).toBeVisible() failed
+  52  |   await expect(page.getByRole("heading", { name: "الطلبات" })).toBeVisible();
   53  | 
   54  |   await page.goto("/dashboard/logs");
   55  |   await expect(page.getByRole("heading", { name: "السجلات" })).toBeVisible();
-  56  |   await expect(page.locator("span").filter({ hasText: "AI Tool" })).toBeVisible();
+> 56  |   await expect(page.locator("span").filter({ hasText: "AI Tool" })).toBeVisible();
+      |                                                                     ^ Error: expect(locator).toBeVisible() failed
   57  | });
   58  | 
   59  | test("pilot control shows health and safety counters", async ({ page }) => {

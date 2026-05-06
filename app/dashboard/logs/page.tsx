@@ -47,12 +47,12 @@ const typeBadge = (type: string) => {
 
 const typeLabel = (type: string) => {
   const labels: Record<string, string> = {
-    AI_TOOL: "AI Tool",
-    ORDER: "Order",
-    WEBHOOK: "Webhook",
-    EVOLUTION: "Evolution",
-    AUDIT: "Audit",
-    SECURITY: "Security",
+    AI_TOOL: "أداة الذكاء الاصطناعي",
+    ORDER: "طلب",
+    WEBHOOK: "ويب هوك",
+    EVOLUTION: "إيفولوشن",
+    AUDIT: "تدقيق",
+    SECURITY: "أمان",
   };
   return labels[type] || type;
 };
@@ -77,35 +77,35 @@ export default function DashboardLogsPage() {
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-balance text-2xl font-semibold text-foreground">السجلات</h1>
-          <p className="mt-2 text-muted-foreground">Logs</p>
+          <p className="mt-2 text-muted-foreground">سجلات النظام والأحداث</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <RecordExportMenu
-            title="Logs report"
+            title="تقرير السجلات"
             page="logs"
             columns={[
-              { key: "timestamp", label: "Timestamp" },
-              { key: "type", label: "Type" },
-              { key: "level", label: "Level" },
-              { key: "message", label: "Message" },
-              { key: "details", label: "Details" },
+              { key: "timestamp", label: "الوقت" },
+              { key: "type", label: "النوع" },
+              { key: "level", label: "المستوى" },
+              { key: "message", label: "الرسالة" },
+              { key: "details", label: "التفاصيل" },
             ]}
             rows={filteredLogs}
             summaryLines={[
-              { label: "Total", value: filteredLogs.length },
-              { label: "Errors", value: filteredLogs.filter((log) => log.level === "error").length },
-              { label: "Warnings", value: filteredLogs.filter((log) => log.level === "warning").length },
+              { label: "الإجمالي", value: filteredLogs.length },
+              { label: "أخطاء", value: filteredLogs.filter((log) => log.level === "error").length },
+              { label: "تنبيهات", value: filteredLogs.filter((log) => log.level === "warning").length },
             ]}
           />
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
-              placeholder="Search logs..."
+              placeholder="ابحث في السجلات..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="h-10 rounded-full border border-border bg-background pl-9 pr-3 text-sm"
-              aria-label="Search logs"
+              aria-label="البحث في السجلات"
             />
           </div>
         </div>
@@ -120,28 +120,28 @@ export default function DashboardLogsPage() {
         <div className="rounded-2xl bg-background p-4 ring-1 ring-border">
           <div className="flex items-center gap-2">
             <FileText className="h-4 w-4 text-muted-foreground" />
-            <span className="text-xs text-muted-foreground">All</span>
+            <span className="text-xs text-muted-foreground">الكل</span>
           </div>
           <p className="mt-1 text-xl font-bold">{sampleLogs.length}</p>
         </div>
         <div className="rounded-2xl bg-background p-4 ring-1 ring-border">
           <div className="flex items-center gap-2">
             <Info className="h-4 w-4 text-emerald-500" />
-            <span className="text-xs text-muted-foreground">Info</span>
+            <span className="text-xs text-muted-foreground">معلومات</span>
           </div>
           <p className="mt-1 text-xl font-bold">{sampleLogs.filter((l) => l.level === "info").length}</p>
         </div>
         <div className="rounded-2xl bg-background p-4 ring-1 ring-border">
           <div className="flex items-center gap-2">
             <AlertCircle className="h-4 w-4 text-amber-500" />
-            <span className="text-xs text-muted-foreground">Warning</span>
+            <span className="text-xs text-muted-foreground">تنبيه</span>
           </div>
           <p className="mt-1 text-xl font-bold">{sampleLogs.filter((l) => l.level === "warning").length}</p>
         </div>
         <div className="rounded-2xl bg-background p-4 ring-1 ring-border">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 text-red-500" />
-            <span className="text-xs text-muted-foreground">Error</span>
+            <span className="text-xs text-muted-foreground">خطأ</span>
           </div>
           <p className="mt-1 text-xl font-bold">{sampleLogs.filter((l) => l.level === "error").length}</p>
         </div>
@@ -150,7 +150,7 @@ export default function DashboardLogsPage() {
       {/* Logs List */}
       {filteredLogs.length === 0 ? (
         <div className="flex min-h-[140px] items-center justify-center rounded-xl border border-dashed border-border bg-background p-6 text-center">
-          <p className="text-sm text-muted-foreground">No logs match your filters.</p>
+          <p className="text-sm text-muted-foreground">لا توجد سجلات مطابقة للفلتر.</p>
         </div>
       ) : (
         <ul className="space-y-2">

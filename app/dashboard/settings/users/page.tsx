@@ -35,6 +35,7 @@ export default function UsersRolesPage() {
   const [showAdd, setShowAdd] = useState(false);
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [form, setForm] = useState<UserFormState>(emptyForm);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const editingUser = useMemo(() => users.find((u) => u.id === editingUserId) ?? null, [users, editingUserId]);
 
@@ -76,7 +77,10 @@ export default function UsersRolesPage() {
     };
   }, []);
 
-  const resetForm = () => setForm(emptyForm);
+  const resetForm = () => {
+    setForm(emptyForm);
+    setFieldErrors({});
+  };
 
   const openAdd = () => {
     setSuccess("");
@@ -89,6 +93,7 @@ export default function UsersRolesPage() {
   const openEdit = (user: UserRow) => {
     setSuccess("");
     setError("");
+    setFieldErrors({});
     setShowAdd(false);
     setEditingUserId(user.id);
     setForm({ name: user.name ?? "", email: user.email, role: user.role, is_active: user.is_active });
@@ -100,7 +105,21 @@ export default function UsersRolesPage() {
     resetForm();
   };
 
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
+    if (!form.name.trim()) errors.name = "أدخل الاسم";
+    if (!form.email.trim()) {
+      errors.email = "أدخل البريد الإلكتروني";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      errors.email = "أدخل بريد إلكتروني صحيح";
+    }
+    if (!form.role) errors.role = "اختر الدور";
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const submitAdd = async () => {
+    if (!validateForm()) return;
     setSaving(true);
     setError("");
     setSuccess("");
@@ -121,6 +140,7 @@ export default function UsersRolesPage() {
   };
 
   const submitEdit = async () => {
+    if (!validateForm()) return;
     if (!editingUserId) return;
     if (editingUser?.role === "super_admin" && form.role !== "super_admin") {
       const ok = confirm("تأكيد تغيير دور مدير رئيسي؟");
@@ -213,7 +233,7 @@ export default function UsersRolesPage() {
                 <tr key={u.id} className="border-b">
                   <td className="py-2">{u.email}</td>
                   <td className="py-2">{u.name || "-"}</td>
-                  <td className="py-2">{u.role}</td>
+                  <td className="py-2">{u.role === "super_admin" ? "مدير رئيسي" : u.role === "moderator" ? "مشرف" : "خدمة العملاء"}</td>
                   <td className="py-2">{u.is_active ? "نشط" : "غير نشط"}</td>
                   <td className="py-2">
                     <button
@@ -247,43 +267,78 @@ export default function UsersRolesPage() {
       )}
 
       {(showAdd || editingUserId) && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-md rounded-xl bg-card p-4 shadow-lg sm:p-5" role="dialog" aria-modal="true">
-            <h2 className="text-lg font-semibold">{showAdd ? "إضافة مستخدم" : "تعديل المستخدم"}</h2>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+          onClick={(e) => {
+            if (e.currentTarget === e.target) closeModal();
+          }}
+          role="presentation"
+        >
+          <div
+            className="w-full max-w-md rounded-2xl bg-card p-5 shadow-2xl sm:p-6 max-h-[90vh] overflow-y-auto"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="user-modal-title"
+          >
+            <div className="flex items-center justify-between">
+              <h2 id="user-modal-title" className="text-lg font-semibold">
+                {showAdd ? "إضافة مستخدم" : "تعديل المستخدم"}
+              </h2>
+              <button
+                onClick={closeModal}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+                aria-label="إغلاق"
+                disabled={saving}
+              >
+                ✕
+              </button>
+            </div>
 
-            <div className="mt-4 space-y-3">
-              <label className="block text-sm">
-                الاسم
+            <div className="mt-4 space-y-4">
+              <div>
+                <label className="block text-sm font-medium">
+                  الاسم
+                </label>
                 <input
                   className="mt-1 h-10 w-full rounded-md border border-border bg-background px-3"
                   value={form.name}
                   onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+                  aria-invalid={Boolean(fieldErrors.name)}
                 />
-              </label>
+                {fieldErrors.name ? <p className="mt-1 text-xs text-red-600">{fieldErrors.name}</p> : null}
+              </div>
 
-              <label className="block text-sm">
-                البريد الإلكتروني
+              <div>
+                <label className="block text-sm font-medium">
+                  البريد الإلكتروني
+                </label>
                 <input
                   type="email"
-                  className="mt-1 h-10 w-full rounded-md border border-border bg-background px-3"
+                  className="mt-1 h-10 w-full rounded-md border border-border bg-background px-3 disabled:opacity-50"
                   value={form.email}
                   onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
                   disabled={!showAdd}
+                  aria-invalid={Boolean(fieldErrors.email)}
                 />
-              </label>
+                {fieldErrors.email ? <p className="mt-1 text-xs text-red-600">{fieldErrors.email}</p> : null}
+              </div>
 
-              <label className="block text-sm">
-                الدور
+              <div>
+                <label className="block text-sm font-medium">
+                  الدور
+                </label>
                 <select
                   className="mt-1 h-10 w-full rounded-md border border-border bg-background px-3"
                   value={form.role}
                   onChange={(e) => setForm((prev) => ({ ...prev, role: e.target.value as UserRow["role"] }))}
+                  aria-invalid={Boolean(fieldErrors.role)}
                 >
-                  <option value="super_admin">Super Admin</option>
-                  <option value="moderator">Moderator</option>
-                  <option value="customer_service">Customer Service</option>
+                  <option value="super_admin">مدير رئيسي</option>
+                  <option value="moderator">مشرف</option>
+                  <option value="customer_service">خدمة العملاء</option>
                 </select>
-              </label>
+                {fieldErrors.role ? <p className="mt-1 text-xs text-red-600">{fieldErrors.role}</p> : null}
+              </div>
 
               <label className="flex items-center gap-2 text-sm">
                 <input
@@ -291,20 +346,20 @@ export default function UsersRolesPage() {
                   checked={form.is_active}
                   onChange={(e) => setForm((prev) => ({ ...prev, is_active: e.target.checked }))}
                 />
-                نشط
+                الحالة: نشط
               </label>
             </div>
 
-            <div className="mt-5 flex justify-end gap-2">
-              <button onClick={closeModal} className="rounded-md px-3 py-2 text-sm ring-1 ring-border" disabled={saving}>
+            <div className="mt-6 flex justify-end gap-2">
+              <button onClick={closeModal} className="rounded-md px-4 py-2 text-sm ring-1 ring-border hover:bg-muted" disabled={saving}>
                 إلغاء
               </button>
               <button
                 onClick={showAdd ? submitAdd : submitEdit}
-                className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-60"
+                className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-60"
                 disabled={saving}
               >
-                {saving ? "جاري الحفظ..." : showAdd ? "إضافة" : "حفظ"}
+                {saving ? "جاري الحفظ..." : showAdd ? "حفظ" : "حفظ"}
               </button>
             </div>
           </div>

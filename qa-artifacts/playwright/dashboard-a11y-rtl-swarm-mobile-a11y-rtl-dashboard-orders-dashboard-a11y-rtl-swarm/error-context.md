@@ -154,7 +154,7 @@ Received: 2
           - button "Open notifications" [ref=e177]:
             - img [ref=e178]
             - generic [ref=e181]: Open notifications
-            - generic [ref=e182]: "1"
+            - generic [ref=e182]: "0"
           - button "Open settings" [ref=e183]:
             - img [ref=e184]
             - generic [ref=e187]: Open settings
@@ -182,8 +182,8 @@ Received: 2
                       - paragraph: "Preset: today"
                       - paragraph: "From: 2026-05-06"
                       - paragraph: "To: 2026-05-06"
-                      - paragraph: "Generated at: 2026-05-06T04:50:01.267Z"
-                      - paragraph: "App version: 2.23.3"
+                      - paragraph: "Generated at: 2026-05-06T13:50:00.324Z"
+                      - paragraph: "App version: 2.23.4"
                   - generic:
                     - generic:
                       - paragraph: Total
@@ -251,7 +251,7 @@ Received: 2
               - paragraph [ref=e258]: Pending
               - paragraph [ref=e259]: "2"
         - paragraph [ref=e261]: No orders match your filters.
-      - paragraph [ref=e263]: Youlya AI Commerce OS · v2.23.3 finish-user-management-update-deactivate-invite-flow · commit unknown · built 2026-05-06 04:34 · production
+      - paragraph [ref=e263]: Youlya AI Commerce OS · v2.23.4 normalize-production-domain-and-fix-critical-launch-blockers · commit unknown · built 2026-05-06 04:55 · production
   - alert [ref=e264]
 ```
 

@@ -186,8 +186,8 @@ Received: 2
                       - paragraph: "Preset: today"
                       - paragraph: "From: 2026-05-06"
                       - paragraph: "To: 2026-05-06"
-                      - paragraph: "Generated at: 2026-05-06T04:43:05.838Z"
-                      - paragraph: "App version: 2.23.3"
+                      - paragraph: "Generated at: 2026-05-06T13:41:34.304Z"
+                      - paragraph: "App version: 2.23.4"
                   - generic:
                     - generic:
                       - paragraph: Total
@@ -234,7 +234,7 @@ Received: 2
           - generic [ref=e237]:
             - heading "Timeline" [level=2] [ref=e238]
             - paragraph [ref=e240]: لا توجد محادثة محددة
-      - paragraph [ref=e242]: Youlya AI Commerce OS · v2.23.3 finish-user-management-update-deactivate-invite-flow · commit unknown · built 2026-05-06 04:34 · production
+      - paragraph [ref=e242]: Youlya AI Commerce OS · v2.23.4 normalize-production-domain-and-fix-critical-launch-blockers · commit unknown · built 2026-05-06 04:55 · production
   - alert [ref=e243]
 ```
 

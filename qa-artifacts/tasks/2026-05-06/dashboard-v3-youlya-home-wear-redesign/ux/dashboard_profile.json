@@ -1,9 +1,9 @@
 {
   "route": "/dashboard/profile",
-  "heading": "",
-  "hasH1": false,
+  "heading": "الملف الشخصي",
+  "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 667,
+  "bodyTextLength": 675,
   "sidebarVisible": true,
   "contentVisible": true,
   "shellPresent": true,
@@ -17,19 +17,37 @@
   "realFailedRequests": [],
   "ignoredNetworkNoise": [
     {
-      "url": "https://admin.nex-lnk.online/dashboard/statistics?_rsc=1f5xx",
+      "url": "https://admin.nex-lnk.online/dashboard/orders?_rsc=1f5xx",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.nex-lnk.online/dashboard/settings/ai-agent?_rsc=1f5xx",
+      "url": "https://admin.nex-lnk.online/dashboard/handoff?_rsc=1f5xx",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.nex-lnk.online/dashboard/conversations?_rsc=1f5xx",
+      "url": "https://admin.nex-lnk.online/dashboard/products-intelligence?_rsc=1f5xx",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/products?_rsc=1f5xx",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/inbox?_rsc=1f5xx",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/settings/channels?_rsc=lhfjt",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
@@ -37,7 +55,6 @@
   ],
   "screenshot": "/root/youlya/qa-artifacts/tasks/2026-05-06/dashboard-v3-youlya-home-wear-redesign/ux/screenshots/dashboard_profile.png",
   "uxIssues": [
-    "Missing h1/main page heading",
     "Missing build identity"
   ]
 }

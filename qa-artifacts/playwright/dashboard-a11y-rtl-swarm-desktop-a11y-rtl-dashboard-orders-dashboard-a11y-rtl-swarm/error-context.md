@@ -183,8 +183,8 @@ Received: 2
                       - paragraph: "Preset: today"
                       - paragraph: "From: 2026-05-06"
                       - paragraph: "To: 2026-05-06"
-                      - paragraph: "Generated at: 2026-05-06T04:44:42.372Z"
-                      - paragraph: "App version: 2.23.3"
+                      - paragraph: "Generated at: 2026-05-06T13:43:37.864Z"
+                      - paragraph: "App version: 2.23.4"
                   - generic:
                     - generic:
                       - paragraph: Total
@@ -252,7 +252,7 @@ Received: 2
               - paragraph [ref=e259]: Pending
               - paragraph [ref=e260]: "2"
         - paragraph [ref=e262]: No orders match your filters.
-      - paragraph [ref=e264]: Youlya AI Commerce OS · v2.23.3 finish-user-management-update-deactivate-invite-flow · commit unknown · built 2026-05-06 04:34 · production
+      - paragraph [ref=e264]: Youlya AI Commerce OS · v2.23.4 normalize-production-domain-and-fix-critical-launch-blockers · commit unknown · built 2026-05-06 04:55 · production
   - alert [ref=e265]
 ```
 

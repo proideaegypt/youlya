@@ -182,8 +182,8 @@ Received: 2
                       - paragraph: "Preset: today"
                       - paragraph: "From: 2026-05-06"
                       - paragraph: "To: 2026-05-06"
-                      - paragraph: "Generated at: 2026-05-06T04:50:10.194Z"
-                      - paragraph: "App version: 2.23.3"
+                      - paragraph: "Generated at: 2026-05-06T13:50:08.671Z"
+                      - paragraph: "App version: 2.23.4"
                   - generic:
                     - generic:
                       - paragraph: Total
@@ -252,7 +252,7 @@ Received: 2
               - generic [ref=e257]: Error
             - paragraph [ref=e258]: "1"
         - paragraph [ref=e260]: No logs match your filters.
-      - paragraph [ref=e262]: Youlya AI Commerce OS · v2.23.3 finish-user-management-update-deactivate-invite-flow · commit unknown · built 2026-05-06 04:34 · production
+      - paragraph [ref=e262]: Youlya AI Commerce OS · v2.23.4 normalize-production-domain-and-fix-critical-launch-blockers · commit unknown · built 2026-05-06 04:55 · production
   - alert [ref=e263]
 ```
 

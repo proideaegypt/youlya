@@ -1,0 +1,16 @@
+ M PROGRESS-LOG.md
+ M README.md
+ M app/api/dashboard/conversations/[id]/return-to-ai/route.ts
+ M app/dashboard/conversations/page.tsx
+ M app/dashboard/inbox/page.tsx
+ M claudeahmed.md
+ M components/dashboard/return-to-ai-button.tsx
+ M lib/services/handoff-service.ts
+ M package.json
+ M scripts/fix-stuck-handoff.mjs
+ M worktime.md
+?? RELEASES/v2.23.6-ahmed-number-stuck-in-handoff-now.md
+?? qa-artifacts/go-live-review/ops-dashboard-control/
+?? scripts/fix-stuck-handoff.ts
+?? tests/unit/conversations-page-return-to-ai-ui.test.ts
+?? tests/unit/dashboard-return-to-ai-api.test.ts

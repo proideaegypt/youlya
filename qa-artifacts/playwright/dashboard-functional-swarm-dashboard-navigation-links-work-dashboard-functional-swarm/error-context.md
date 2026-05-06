@@ -197,8 +197,8 @@ Call log:
             - listitem [ref=e225]:
               - generic [ref=e226]: Kill switch toggled by admin
               - generic [ref=e227]: Yesterday
-      - paragraph [ref=e229]: Youlya AI Commerce OS · v2.23.3 finish-user-management-update-deactivate-invite-flow · commit unknown · built 2026-05-06 04:34 · production
-  - alert [ref=e230]: YOULYA HOME WEAR Dashboard
+      - paragraph [ref=e229]: Youlya AI Commerce OS · v2.23.4 normalize-production-domain-and-fix-critical-launch-blockers · commit unknown · built 2026-05-06 04:55 · production
+  - alert [ref=e230]
   - generic [ref=e231]: "0"
 ```
 

@@ -3,7 +3,7 @@
   "heading": "طلبات التحويل للبشر",
   "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 988,
+  "bodyTextLength": 996,
   "sidebarVisible": true,
   "contentVisible": true,
   "shellPresent": true,
@@ -16,12 +16,6 @@
   "consoleErrors": [],
   "realFailedRequests": [],
   "ignoredNetworkNoise": [
-    {
-      "url": "https://admin.nex-lnk.online/dashboard/settings/channels?_rsc=1n4r8",
-      "method": "GET",
-      "status": 0,
-      "statusText": "net::ERR_ABORTED"
-    },
     {
       "url": "https://admin.nex-lnk.online/dashboard/statistics?_rsc=1n4r8",
       "method": "GET",

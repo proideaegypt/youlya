@@ -61,14 +61,14 @@ export default function AIAgentSettingsPage() {
     const d = await r.json();
     setSettings((s) => ({ ...(s ?? {}), connection_status: d.ok ? "ok" : "error" }));
     setTesting(false);
-    alert(d.ok ? "Connection OK" : `Connection failed: ${d.message}`);
+    alert(d.ok ? "الاتصال ناجح" : `فشل الاتصال: ${d.message}`);
   };
 
   if (loading) return <SettingsSkeleton />;
 
   return (
     <section className="rounded-2xl bg-card p-6 shadow-sm ring-1 ring-border" dir="rtl">
-      <h1 className="text-2xl font-semibold">إعدادات AI Agent</h1>
+      <h1 className="text-2xl font-semibold">إعدادات الذكاء الاصطناعي</h1>
 
       <div className="mt-6 grid gap-4 max-w-xl">
         <label className="grid gap-2">

@@ -6,6 +6,21 @@
 
 ---
 
+## Ops Dashboard Control Update
+
+> **Updated:** 2026-05-06 as part of `complete-dashboard-operations-control-center-handoff-channels-shipping-history`
+
+Full report saved to `opsahmed.md`.
+
+Key updates:
+- Global handoff ON/OFF toggle added to pilot control
+- Per-conversation handoff/return-to-AI buttons in inbox/conversations
+- Channel identity display (WhatsApp/Facebook/Instagram) in conversation lists
+- Add User modal centered and responsive
+- Egypt 27-governorate shipping dropdowns with Cairo/Alexandria 70 EGP default
+- Channels step-by-step wizard with masked secret fields
+- Evolution QR UI structure ready (needs live credentials)
+
 ## Current Canonical Launch Status
 
 > **Updated:** 2026-05-06 as part of `normalize-production-domain-and-fix-critical-launch-blockers`
@@ -641,3 +656,11 @@ curl -fsS https://admin.nex-lnk.online/api/build-info
 - test results: typecheck pass, tests pass, scenarios pass, secrets scan pass, lint warnings only (repo-wide), build failed with `.next` manifest ENOENT in existing environment process state.
 - remaining risks: hard deactivation depends on Supabase ban_duration behavior; build instability in current dirty environment; no dedicated UI e2e coverage added in this task.
 - manual QA steps: see `qa-artifacts/go-live-review/user-management-final/MANUAL_QA.md`.
+
+## Ahmed Number Stuck in Handoff Fix
+
+- Added dashboard warning + return-to-AI action in conversations/inbox when AI is paused or handoff state is active.
+- Hardened `POST /api/dashboard/conversations/[id]/return-to-ai` with dashboard auth + role authorization and safe JSON responses.
+- Ensured `returnToAI(conversationId, actor)` clears `conversation_state.ai_paused`, restores conversation to `ai_active`, resolves all open handoff tickets, and writes audit trail.
+- Added phone/customer-id search input on conversations/inbox UI.
+- Added safe admin fixer flow through `scripts/fix-stuck-handoff.mjs` (wrapper) + `scripts/fix-stuck-handoff.ts` using explicit id and `--confirm`, with masked identifiers and before/after verification output.

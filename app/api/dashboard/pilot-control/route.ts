@@ -4,6 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getMockState } from "@/lib/adapters/supabase/mock-store";
 import { isAiEnabled } from "@/lib/services/ai-settings-service";
 import { getHaidiSettings } from "@/lib/services/haidi-settings-service";
+import { getHandoffSettings } from "@/lib/services/handoff-settings-service";
 import fs from "node:fs";
 import path from "node:path";
 import packageJson from "@/package.json";
@@ -74,6 +75,7 @@ export async function GET() {
   // Kill switch / pause status
   const aiEnabled = await isAiEnabled(storeId);
   const haidiSettings = await getHaidiSettings(storeId);
+  const handoffSettings = await getHandoffSettings(storeId);
   const killSwitchStatus = aiEnabled ? "OFF" : "ON";
   const safetyBlockers: string[] = [];
 
@@ -112,6 +114,7 @@ export async function GET() {
       killSwitchStatus,
       globalAiPaused: haidiSettings.globalAiPaused,
       ordersPaused: haidiSettings.ordersPaused,
+      globalHandoffEnabled: handoffSettings.global_handoff_enabled,
       n8nWorkflowActive: false,
       evolutionConnected: false,
       inboundMessages: [],
@@ -168,6 +171,7 @@ export async function GET() {
       killSwitchStatus,
       globalAiPaused: haidiSettings.globalAiPaused,
       ordersPaused: haidiSettings.ordersPaused,
+      globalHandoffEnabled: handoffSettings.global_handoff_enabled,
       n8nWorkflowActive,
       evolutionConnected,
       inboundMessages: (inboundMessages ?? []).map((m) => ({
@@ -199,6 +203,7 @@ export async function GET() {
       killSwitchStatus,
       globalAiPaused: haidiSettings.globalAiPaused,
       ordersPaused: haidiSettings.ordersPaused,
+      globalHandoffEnabled: handoffSettings.global_handoff_enabled,
       n8nWorkflowActive: false,
       evolutionConnected: false,
       inboundMessages: [],

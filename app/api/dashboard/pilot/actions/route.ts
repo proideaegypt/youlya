@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 import { setAiEnabled } from "@/lib/services/ai-settings-service";
 import { updateHaidiSettings } from "@/lib/services/haidi-settings-service";
+import { updateHandoffSettings } from "@/lib/services/handoff-settings-service";
 
 async function hasSession() {
   const cookieStore = await cookies();
@@ -15,6 +16,8 @@ const actionSchema = z.object({
     "resume_haidi",
     "pause_orders",
     "resume_orders",
+    "enable_global_handoff",
+    "disable_global_handoff",
   ]),
   updatedBy: z.string().optional(),
 });
@@ -50,6 +53,14 @@ export async function POST(req: Request) {
     if (action === "resume_orders") {
       await updateHaidiSettings("youlya", { ordersPaused: false }, updatedBy);
       return NextResponse.json({ ok: true, action, ordersPaused: false });
+    }
+    if (action === "enable_global_handoff") {
+      await updateHandoffSettings("youlya", { global_handoff_enabled: true }, updatedBy);
+      return NextResponse.json({ ok: true, action, globalHandoffEnabled: true });
+    }
+    if (action === "disable_global_handoff") {
+      await updateHandoffSettings("youlya", { global_handoff_enabled: false }, updatedBy);
+      return NextResponse.json({ ok: true, action, globalHandoffEnabled: false });
     }
     return NextResponse.json({ error: "unknown_action" }, { status: 400 });
   } catch (err) {

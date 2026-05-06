@@ -232,8 +232,8 @@ Received: 2
                     - paragraph: "Preset: today"
                     - paragraph: "From: 2026-05-06"
                     - paragraph: "To: 2026-05-06"
-                    - paragraph: "Generated at: 2026-05-06T04:42:33.784Z"
-                    - paragraph: "App version: 2.23.3"
+                    - paragraph: "Generated at: 2026-05-06T13:41:07.555Z"
+                    - paragraph: "App version: 2.23.4"
                 - generic:
                   - generic:
                     - paragraph: Open
@@ -261,18 +261,20 @@ Received: 2
           - button "تحديث" [ref=e251]:
             - img [ref=e252]
             - text: تحديث
-        - generic [ref=e260] [cursor=pointer]:
-          - img [ref=e262]
-          - generic [ref=e264]:
-            - generic [ref=e265]:
-              - paragraph [ref=e266]: synthe···-002
-              - generic [ref=e267]: عادي
-              - generic [ref=e268]: مفتوح
-            - paragraph [ref=e269]: CUSTOMER_SERVICE_REQUEST
-            - paragraph [ref=e270]: "Type: customer_service · Summary: customer_service_request: عايزه حد من خدمه العملاء يكلمني"
-            - paragraph [ref=e271]: ٦‏/٥‏/٢٠٢٦ ٦:٠١:٣٥ ص
-      - paragraph [ref=e273]: Youlya AI Commerce OS · v2.23.3 finish-user-management-update-deactivate-invite-flow · commit unknown · built 2026-05-06 04:34 · production
-  - alert [ref=e274]
+        - generic [ref=e259] [cursor=pointer]:
+          - generic [ref=e260]:
+            - img [ref=e262]
+            - generic [ref=e264]:
+              - generic [ref=e265]:
+                - paragraph [ref=e266]: synthe···-002
+                - generic [ref=e267]: عادي
+                - generic [ref=e268]: مفتوح
+              - paragraph [ref=e269]: CUSTOMER_SERVICE_REQUEST
+              - paragraph [ref=e270]: "Type: customer_service · Summary: customer_service_request: عايزه حد من خدمه العملاء يكلمني"
+              - paragraph [ref=e271]: ٦‏/٥‏/٢٠٢٦ ٦:٠١:٣٥ ص
+          - button "إرجاع للذكاء الاصطناعي" [ref=e273]
+      - paragraph [ref=e275]: Youlya AI Commerce OS · v2.23.4 normalize-production-domain-and-fix-critical-launch-blockers · commit unknown · built 2026-05-06 04:55 · production
+  - alert [ref=e276]
 ```
 
 # Test source

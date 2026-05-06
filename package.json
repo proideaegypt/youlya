@@ -1,6 +1,6 @@
 {
   "name": "youlya-phase0-app",
-  "version": "2.23.5",
+  "version": "2.24.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -26,6 +26,7 @@
     "shopify:sync": "npx tsx scripts/sync-shopify-products.ts --mode full",
     "shopify:sync:inventory": "npx tsx scripts/sync-shopify-products.ts --mode inventory",
     "shopify:sync:dry-run": "npx tsx scripts/sync-shopify-products.ts --mode full --dry-run",
+    "admin:fix-stuck-handoff": "node scripts/fix-stuck-handoff.mjs",
     "smoke:daily": "bash scripts/smoke-test-daily.sh",
     "pilot:scenarios": "bash scripts/run-pilot-scenarios.sh",
     "validate:scenarios": "node scripts/validate-scenarios.mjs",
@@ -43,7 +44,7 @@
     "deploy:watch": "bash scripts/watch-and-deploy.sh"
   },
   "config": {
-    "youlyaVersionName": "number-stuck-in-handoff-and-add-clear-return-to-ai-control"
+    "youlyaVersionName": "complete-dashboard-operations-control-center-handoff-channels-shipping-history"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

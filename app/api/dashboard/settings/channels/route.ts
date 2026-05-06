@@ -57,3 +57,21 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
+
+export async function PUT(req: Request) {
+  const role = await getCurrentUserRole();
+  if (!role || !canManageChannels(role)) {
+    return NextResponse.json({ error: "forbidden" }, { status: 403 });
+  }
+  const body = await req.json().catch(() => ({}));
+  // Test connection placeholder — actual provider test would go here
+  if (body.test) {
+    // Simulate test based on provider type
+    const type = body.type as string;
+    if (type === "evolution_whatsapp") {
+      return NextResponse.json({ ok: true, message: "Evolution connection test not implemented in this task" });
+    }
+    return NextResponse.json({ ok: true, message: "Connection test not implemented" });
+  }
+  return NextResponse.json({ error: "unknown_operation" }, { status: 400 });
+}

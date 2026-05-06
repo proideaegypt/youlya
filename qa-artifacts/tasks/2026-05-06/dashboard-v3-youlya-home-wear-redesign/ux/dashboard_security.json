@@ -3,7 +3,7 @@
   "heading": "الأمان",
   "hasH1": true,
   "title": "YOULYA HOME WEAR Dashboard",
-  "bodyTextLength": 802,
+  "bodyTextLength": 810,
   "sidebarVisible": true,
   "contentVisible": true,
   "shellPresent": true,
@@ -17,19 +17,25 @@
   "realFailedRequests": [],
   "ignoredNetworkNoise": [
     {
-      "url": "https://admin.nex-lnk.online/dashboard/settings/ai-agent?_rsc=11aqc",
+      "url": "https://admin.nex-lnk.online/dashboard/handoff?_rsc=11aqc",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.nex-lnk.online/dashboard/conversations?_rsc=11aqc",
+      "url": "https://admin.nex-lnk.online/dashboard/products-intelligence?_rsc=11aqc",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"
     },
     {
-      "url": "https://admin.nex-lnk.online/dashboard/statistics?_rsc=11aqc",
+      "url": "https://admin.nex-lnk.online/dashboard/settings/ai-agent?_rsc=1g9gs",
+      "method": "GET",
+      "status": 0,
+      "statusText": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://admin.nex-lnk.online/dashboard/settings/channels?_rsc=1g9gs",
       "method": "GET",
       "status": 0,
       "statusText": "net::ERR_ABORTED"

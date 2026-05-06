@@ -8,6 +8,7 @@ import { RecordDateFilter } from "@/components/dashboard/record-date-filter";
 import { RecordExportMenu } from "@/components/dashboard/record-export-menu";
 import { ReturnToAiButton } from "@/components/dashboard/return-to-ai-button";
 import { parseDateRangeFromSearchParams } from "@/lib/dashboard/date-range";
+import { ChannelBadge } from "@/lib/ui/channel-identity";
 
 async function loadConversations(searchParams?: Record<string, string | undefined>) {
   const storeId = "youlya";
@@ -31,18 +32,18 @@ function statusBadge(status: string) {
   if (status === "handoff")
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold text-amber-500">
-        <HandHelping className="h-3 w-3" /> Handoff
+        <HandHelping className="h-3 w-3" /> تحويل بشري
       </span>
     );
   if (status === "resolved")
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-500">
-        Resolved
+        مغلق
       </span>
     );
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
-      <Bot className="h-3 w-3" /> AI
+      <Bot className="h-3 w-3" /> ذكاء اصطناعي
     </span>
   );
 }
@@ -74,13 +75,13 @@ export default async function InboxPage({
     <section className="rounded-2xl bg-card p-6 md:p-8 shadow-sm ring-1 ring-border">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-balance text-2xl font-semibold text-foreground">طلبات التحويل للبشر</h1>
-          <p className="mt-2 text-muted-foreground">Conversation timeline / AI events / handoff history</p>
+          <h1 className="text-balance text-2xl font-semibold text-foreground">صندوق الوارد</h1>
+          <p className="mt-2 text-muted-foreground">سجل المحادثات · الأحداث · تاريخ التحويل البشري</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 rounded-full bg-amber-500/15 px-3 py-1.5 text-xs font-semibold text-amber-500">
             <AlertTriangle className="h-4 w-4" />
-            {conversations.filter((c) => String(c.status) === "handoff").length} pending handoffs
+            {conversations.filter((c) => String(c.status) === "handoff").length} تحويل بشري معلق
           </div>
           <RecordExportMenu
             title="Inbox report"
@@ -102,6 +103,15 @@ export default async function InboxPage({
       </div>
 
       <div className="mb-4">
+        <form className="mb-4">
+          <input
+            type="search"
+            name="search"
+            defaultValue={params.search ?? ""}
+            placeholder="ابحث برقم العميل أو المحادثة..."
+            className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none ring-0 placeholder:text-muted-foreground focus:border-primary/50"
+          />
+        </form>
         <RecordDateFilter />
       </div>
 
@@ -140,9 +150,9 @@ export default async function InboxPage({
                             </span>
                           ) : null}
                         </div>
-                        <div className="flex items-center gap-2 mt-1">
+                        <div className="flex items-center gap-2 mt-1 flex-wrap">
                           {statusBadge(String(c.status ?? "ai_active"))}
-                          <span className="text-[10px] text-muted-foreground">{String(c.channel ?? "")}</span>
+                          {c.channel ? <ChannelBadge channel={String(c.channel)} /> : null}
                         </div>
                       </div>
                     </a>
@@ -155,7 +165,7 @@ export default async function InboxPage({
 
         {/* Timeline */}
         <div className="rounded-2xl bg-background p-5 ring-1 ring-border">
-          <h2 className="mb-4 text-base font-semibold text-foreground">Timeline</h2>
+          <h2 className="mb-4 text-base font-semibold text-foreground">الجدول الزمني</h2>
           {selected ? (
             <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
               <div className="rounded-xl border border-primary/30 bg-primary/5 p-3">
@@ -167,7 +177,7 @@ export default async function InboxPage({
                 </div>
                 <div className="flex items-center gap-2 mt-1 flex-wrap">
                   {statusBadge(String(selected.status ?? "ai_active"))}
-                  {selected.ai_paused ? (
+                  {selected.ai_paused || String(selected.status ?? "") === "handoff" ? (
                     <span className="inline-flex items-center gap-1 rounded-full bg-red-500/10 px-2 py-0.5 text-[10px] font-semibold text-red-400">
                       <Pause className="h-3 w-3" />
                       الذكاء الاصطناعي متوقف لهذه المحادثة
@@ -175,7 +185,7 @@ export default async function InboxPage({
                   ) : null}
                   <span className="text-xs text-muted-foreground">ID: {String(selected.id).slice(0, 24)}…</span>
                 </div>
-                {selected.ai_paused ? (
+                {selected.ai_paused || String(selected.status ?? "") === "handoff" ? (
                   <div className="mt-3">
                     <ReturnToAiButton conversationId={String(selected.id)} />
                   </div>

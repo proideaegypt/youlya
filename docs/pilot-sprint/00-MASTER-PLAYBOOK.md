@@ -8,9 +8,9 @@ It is an operational guide, not a product reset.
 
 ## Current architecture
 
-- `https://admin.youlya365.com` is the app/operator surface.
-- `https://ai.youlya365.com` is the n8n orchestration surface.
-- `https://evo.youlya365.com` is the Evolution transport surface.
+- `https://admin.nex-lnk.online` is the app/operator surface.
+- `https://ai.nex-lnk.online` is the n8n orchestration surface.
+- `https://evo.nex-lnk.online` is the Evolution transport surface.
 - Shopify is the source of truth for products, variants, inventory, and orders.
 - Supabase is the operational cache and state layer.
 - n8n orchestrates only.

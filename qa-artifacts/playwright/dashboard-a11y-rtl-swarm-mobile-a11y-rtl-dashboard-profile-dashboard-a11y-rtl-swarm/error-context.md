@@ -193,7 +193,7 @@ Received: 3
               - generic [ref=e222]: طي القائمة
               - switch [ref=e223]
         - button "حفظ" [ref=e225]
-      - paragraph [ref=e227]: Youlya AI Commerce OS · v2.23.3 finish-user-management-update-deactivate-invite-flow · commit unknown · built 2026-05-06 04:34 · production
+      - paragraph [ref=e227]: Youlya AI Commerce OS · v2.23.4 normalize-production-domain-and-fix-critical-launch-blockers · commit unknown · built 2026-05-06 04:55 · production
   - alert [ref=e228]
 ```
 

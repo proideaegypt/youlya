@@ -4,6 +4,20 @@
 
 | Field | Value |
 |---|---|
+| Version | v2.24.0 |
+| Version Name | complete-dashboard-operations-control-center-handoff-channels-shipping-history |
+| Task | complete-dashboard-operations-control-center-handoff-channels-shipping-history |
+| Release File | RELEASES/v2.24.0-complete-dashboard-operations-control-center-handoff-channels-shipping-history.md |
+
+| Field | Value |
+|---|---|
+| Version | v2.23.6 |
+| Version Name | ahmed-number-stuck-in-handoff-now |
+| Task | fix-ahmed-number-stuck-in-handoff-now |
+| Release File | RELEASES/v2.23.6-ahmed-number-stuck-in-handoff-now.md |
+
+| Field | Value |
+|---|---|
 | Version | v2.23.5 |
 | Version Name | number-stuck-in-handoff-and-add-clear-return-to-ai-control |
 | Task | fix-number-stuck-in-handoff-and-add-clear-return-to-ai-control |

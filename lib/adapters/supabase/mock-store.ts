@@ -54,6 +54,7 @@ type StoreState = {
   haidiLabRuns: Array<Record<string, unknown>>;
   haidiSettingsByStore: Map<string, Record<string, unknown>>;
   haidiPromptByStore: Map<string, Record<string, unknown>>;
+  globalHandoffEnabled: boolean;
 };
 
 const globalStore = globalThis as typeof globalThis & { __youlyaMockState__?: StoreState };
@@ -85,6 +86,7 @@ function buildState(): StoreState {
     haidiLabRuns: [],
     haidiSettingsByStore: new Map(),
     haidiPromptByStore: new Map(),
+    globalHandoffEnabled: true,
   };
 }
 

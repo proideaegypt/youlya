@@ -1,8 +1,8 @@
 "use client";
 
 import { SettingsSkeleton } from "@/components/dashboard/settings-skeleton";
-
-import { useEffect, useState } from "react";
+import { EGYPT_GOVERNORATES, getCitiesForGovernorate, getDefaultShippingFee } from "@/lib/data/egypt-governorates";
+import { useEffect, useMemo, useState } from "react";
 
 export default function ShippingSettingsPage() {
   const [settings, setSettings] = useState<Record<string, unknown> | null>(null);
@@ -11,6 +11,16 @@ export default function ShippingSettingsPage() {
   const [testAddress, setTestAddress] = useState("");
   const [testSubtotal, setTestSubtotal] = useState("");
   const [testResult, setTestResult] = useState<Record<string, unknown> | null>(null);
+
+  // Add zone form
+  const [addMode, setAddMode] = useState(false);
+  const [selectedGov, setSelectedGov] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [zoneCost, setZoneCost] = useState("");
+  const [saveError, setSaveError] = useState("");
+  const [saveSuccess, setSaveSuccess] = useState("");
+
+  const cities = useMemo(() => getCitiesForGovernorate(selectedGov), [selectedGov]);
 
   function getStr(obj: Record<string, unknown>, key: string): string {
     return String(obj[key] ?? "");
@@ -35,6 +45,8 @@ export default function ShippingSettingsPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ settings: { free_shipping_threshold_egp: Number(settings?.free_shipping_threshold_egp) } }),
     });
+    setSaveSuccess("تم حفظ الإعدادات");
+    setTimeout(() => setSaveSuccess(""), 3000);
   };
 
   const runTest = async () => {
@@ -47,11 +59,61 @@ export default function ShippingSettingsPage() {
     setTestResult(data.result);
   };
 
+  const addZone = async () => {
+    setSaveError("");
+    setSaveSuccess("");
+    if (!selectedGov) {
+      setSaveError("اختر المحافظة");
+      return;
+    }
+    if (!selectedCity) {
+      setSaveError("اختر المدينة");
+      return;
+    }
+    const cost = Number(zoneCost);
+    if (!cost || cost < 0 || !Number.isFinite(cost)) {
+      setSaveError("أدخل تكلفة شحن صحيحة");
+      return;
+    }
+
+    const gov = EGYPT_GOVERNORATES.find((g) => g.id === selectedGov);
+    const res = await fetch("/api/dashboard/settings/shipping", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        addZone: {
+          governorate: gov?.nameAr ?? selectedGov,
+          district: selectedCity,
+          aliases: [gov?.nameEn ?? ""],
+          shipping_fee_egp: cost,
+          active: true,
+        },
+      }),
+    });
+    const data = await res.json();
+    if (data.error) {
+      setSaveError(data.error);
+      return;
+    }
+    setZones(data.zones ?? []);
+    setSettings(data.settings);
+    setAddMode(false);
+    setSelectedGov("");
+    setSelectedCity("");
+    setZoneCost("");
+    setSaveSuccess("تمت إضافة المنطقة");
+    setTimeout(() => setSaveSuccess(""), 3000);
+  };
+
   if (loading) return <SettingsSkeleton />;
 
   return (
     <section className="rounded-2xl bg-card p-6 shadow-sm ring-1 ring-border" dir="rtl">
       <h1 className="text-2xl font-semibold">إعدادات الشحن</h1>
+      <p className="mt-1 text-sm text-muted-foreground">إدارة مناطق الشحن وتكاليف التوصيل داخل مصر</p>
+
+      {saveSuccess ? <p className="mt-3 rounded-md bg-emerald-50 p-2 text-sm text-emerald-700">{saveSuccess}</p> : null}
+      {saveError ? <p className="mt-3 rounded-md bg-red-50 p-2 text-sm text-red-700">{saveError}</p> : null}
 
       <div className="mt-6 grid gap-4">
         <label className="grid gap-2">
@@ -64,17 +126,83 @@ export default function ShippingSettingsPage() {
           />
         </label>
         <button onClick={saveSettings} className="h-10 rounded-md bg-brand text-white font-semibold hover:opacity-90">
-          حفظ
+          حفظ التغييرات
         </button>
       </div>
 
       <div className="mt-8">
-        <h2 className="text-lg font-medium">مناطق الشحن</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-medium">مناطق الشحن</h2>
+          <button
+            onClick={() => setAddMode(!addMode)}
+            className="rounded-md bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground"
+          >
+            {addMode ? "إلغاء" : "إضافة منطقة"}
+          </button>
+        </div>
+
+        {addMode && (
+          <div className="mt-4 rounded-xl bg-background p-4 ring-1 ring-border space-y-3">
+            <div className="grid gap-3 md:grid-cols-3">
+              <label className="grid gap-1 text-sm">
+                المحافظة
+                <select
+                  className="h-10 rounded-md bg-background ring-1 ring-border px-2"
+                  value={selectedGov}
+                  onChange={(e) => {
+                    setSelectedGov(e.target.value);
+                    setSelectedCity("");
+                    setZoneCost(String(getDefaultShippingFee(e.target.value)));
+                  }}
+                >
+                  <option value="">اختر المحافظة</option>
+                  {EGYPT_GOVERNORATES.map((g) => (
+                    <option key={g.id} value={g.id}>
+                      {g.nameAr}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="grid gap-1 text-sm">
+                المدينة
+                <select
+                  className="h-10 rounded-md bg-background ring-1 ring-border px-2"
+                  value={selectedCity}
+                  onChange={(e) => setSelectedCity(e.target.value)}
+                  disabled={!selectedGov}
+                >
+                  <option value="">اختر المدينة</option>
+                  {cities.map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="grid gap-1 text-sm">
+                تكلفة الشحن (جنيه)
+                <input
+                  type="number"
+                  className="h-10 rounded-md bg-background ring-1 ring-border px-3"
+                  value={zoneCost}
+                  onChange={(e) => setZoneCost(e.target.value)}
+                  min={0}
+                />
+              </label>
+            </div>
+            <div className="flex justify-end">
+              <button onClick={addZone} className="h-10 rounded-md bg-brand px-4 text-white font-semibold hover:opacity-90">
+                حفظ المنطقة
+              </button>
+            </div>
+          </div>
+        )}
+
         <table className="mt-3 w-full text-sm">
           <thead>
             <tr className="border-b">
               <th className="py-2 text-right">المحافظة</th>
-              <th className="py-2 text-right">المنطقة</th>
+              <th className="py-2 text-right">المدينة</th>
               <th className="py-2 text-right">الأسماء البديلة</th>
               <th className="py-2 text-right">الرسوم</th>
             </tr>

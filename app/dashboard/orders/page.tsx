@@ -53,46 +53,46 @@ export default function OrdersPage() {
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-balance text-2xl font-semibold text-foreground">الطلبات</h1>
-          <p className="mt-2 text-muted-foreground">Orders</p>
+          <p className="mt-2 text-muted-foreground">قائمة الطلبات والحالة</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <RecordExportMenu
-            title="Orders report"
+            title="تقرير الطلبات"
             page="orders"
             columns={[
-              { key: "id", label: "Order" },
-              { key: "customer", label: "Customer" },
-              { key: "total", label: "Total" },
-              { key: "status", label: "Status" },
-              { key: "createdAt", label: "Created" },
+              { key: "id", label: "الطلب" },
+              { key: "customer", label: "العميل" },
+              { key: "total", label: "المجموع" },
+              { key: "status", label: "الحالة" },
+              { key: "createdAt", label: "التاريخ" },
             ]}
             rows={filteredOrders}
             summaryLines={[
-              { label: "Total", value: filteredOrders.length },
-              { label: "Confirmed", value: filteredOrders.filter((order) => order.status === "confirmed").length },
-              { label: "Pending", value: filteredOrders.filter((order) => order.status === "pending").length },
+              { label: "الإجمالي", value: filteredOrders.length },
+              { label: "تم التأكيد", value: filteredOrders.filter((order) => order.status === "confirmed").length },
+              { label: "معلّق", value: filteredOrders.filter((order) => order.status === "pending").length },
             ]}
           />
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
-              placeholder="Search orders..."
+              placeholder="ابحث برقم الطلب أو اسم العميل..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="h-10 rounded-full border border-border bg-background pl-9 pr-3 text-sm"
-              aria-label="Search orders"
+              aria-label="البحث في الطلبات"
             />
           </div>
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value as typeof filter)}
             className="h-10 rounded-full border border-border bg-background px-3 text-sm"
-            aria-label="Filter orders by status"
+            aria-label="تصفية الطلبات حسب الحالة"
           >
-            <option value="all">All</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="pending">Pending</option>
+            <option value="all">الكل</option>
+            <option value="confirmed">تم التأكيد</option>
+            <option value="pending">معلق</option>
           </select>
         </div>
       </div>
@@ -109,7 +109,7 @@ export default function OrdersPage() {
               <ShoppingBag className="h-5 w-5 text-brand" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground">Total Orders</p>
+              <p className="text-xs text-muted-foreground">إجمالي الطلبات</p>
               <p className="text-xl font-bold">{sampleOrders.length}</p>
             </div>
           </div>
@@ -120,7 +120,7 @@ export default function OrdersPage() {
               <Filter className="h-5 w-5 text-emerald-500" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground">Confirmed</p>
+              <p className="text-xs text-muted-foreground">تم التأكيد</p>
               <p className="text-xl font-bold">{sampleOrders.filter((o) => o.status === "confirmed").length}</p>
             </div>
           </div>
@@ -131,7 +131,7 @@ export default function OrdersPage() {
               <Filter className="h-5 w-5 text-amber-500" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground">Pending</p>
+              <p className="text-xs text-muted-foreground">معلق</p>
               <p className="text-xl font-bold">{sampleOrders.filter((o) => o.status === "pending").length}</p>
             </div>
           </div>
@@ -141,19 +141,19 @@ export default function OrdersPage() {
       {/* Table */}
       {filteredOrders.length === 0 ? (
         <div className="flex min-h-[140px] items-center justify-center rounded-xl border border-dashed border-border bg-background p-6 text-center">
-          <p className="text-sm text-muted-foreground">No orders match your filters.</p>
+          <p className="text-sm text-muted-foreground">لا توجد طلبات مطابقة للفلتر.</p>
         </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border text-xs font-semibold text-muted-foreground">
-                <th className="px-3 py-3 text-start">Order</th>
-                <th className="px-3 py-3 text-start">Customer</th>
-                <th className="px-3 py-3 text-start">Total</th>
-                <th className="px-3 py-3 text-start">Status</th>
-                <th className="px-3 py-3 text-start">Safety</th>
-                <th className="px-3 py-3 text-start">Created</th>
+                <th className="px-3 py-3 text-start">الطلب</th>
+                <th className="px-3 py-3 text-start">العميل</th>
+                <th className="px-3 py-3 text-start">المجموع</th>
+                <th className="px-3 py-3 text-start">الحالة</th>
+                <th className="px-3 py-3 text-start">الأمان</th>
+                <th className="px-3 py-3 text-start">التاريخ</th>
                 <th className="px-3 py-3 text-start"></th>
               </tr>
             </thead>
@@ -177,7 +177,7 @@ export default function OrdersPage() {
                   <td className="px-3 py-3">
                     <button className="inline-flex items-center gap-1 rounded-lg border border-border px-3 py-1.5 text-xs font-medium transition hover:bg-muted">
                       <Eye className="h-3.5 w-3.5" />
-                      View
+                      عرض
                     </button>
                   </td>
                 </tr>

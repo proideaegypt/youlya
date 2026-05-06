@@ -19,6 +19,7 @@ import {
   Smartphone,
   Bot,
   ArrowRight,
+  HandHelping,
 } from "lucide-react";
 import { EmptyState } from "@/lib/ui/empty-state";
 import { StatusBadge } from "@/lib/ui/status-badge";
@@ -45,6 +46,7 @@ type PilotControlData = {
   killSwitchStatus: "ON" | "OFF";
   globalAiPaused: boolean;
   ordersPaused: boolean;
+  globalHandoffEnabled: boolean;
   n8nWorkflowActive: boolean;
   evolutionConnected: boolean;
   inboundMessages: Array<{
@@ -243,20 +245,20 @@ export default function PilotPage() {
         <div className="relative z-10 flex flex-col gap-4">
           <div className="inline-flex w-fit items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">
             <Shield className="h-3.5 w-3.5" />
-            Pilot control room
+            غرفة التحكم الفنية
           </div>
           <div className="max-w-2xl space-y-2">
-            <h1 className="text-balance text-3xl font-semibold">غرفة الطيار للواتساب</h1>
+            <h1 className="text-balance text-3xl font-semibold">غرفة الطيار</h1>
             <p className="text-sm leading-6 text-white/90">
-              متابعة health، n8n، Evolution، آخر الرسائل، وعدّادات الحماية قبل تشغيل التجربة اليدوية الآمنة.
+              متابعة الصحة والاتصال والرسائل وعدّادات الحماية قبل التشغيل.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <StatusPill label={data ? (data.killSwitchStatus === "OFF" ? "Kill switch OFF" : "Kill switch ON") : "Loading"} tone={data?.killSwitchStatus === "OFF" ? "success" : "warning"} />
-            <StatusPill label={data?.n8nWorkflowActive ? "n8n active" : "n8n pending"} tone={data?.n8nWorkflowActive ? "success" : "warning"} />
-            <StatusPill label={data?.evolutionConnected ? "Evolution connected" : "Evolution pending"} tone={data?.evolutionConnected ? "success" : "warning"} />
-            <StatusPill label={data?.health?.testMode ? "testMode" : "live-ready"} tone={data?.health?.testMode ? "neutral" : "success"} />
-            {data?.ordersPaused && <StatusPill label="Orders paused" tone="warning" />}
+            <StatusPill label={data ? (data.killSwitchStatus === "OFF" ? "مفتاح الإيقاف: معطل" : "مفتاح الإيقاف: مفعل") : "جاري التحميل"} tone={data?.killSwitchStatus === "OFF" ? "success" : "warning"} />
+            <StatusPill label={data?.n8nWorkflowActive ? "n8n: نشط" : "n8n: معلق"} tone={data?.n8nWorkflowActive ? "success" : "warning"} />
+            <StatusPill label={data?.evolutionConnected ? "إيفولوشن: متصل" : "إيفولوشن: معلق"} tone={data?.evolutionConnected ? "success" : "warning"} />
+            <StatusPill label={data?.health?.testMode ? "وضع الاختبار" : "جاهز للتشغيل"} tone={data?.health?.testMode ? "neutral" : "success"} />
+            {data?.ordersPaused && <StatusPill label="الطلبات متوقفة" tone="warning" />}
           </div>
         </div>
         <div className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
@@ -285,43 +287,50 @@ export default function PilotPage() {
               tone="brand"
             />
             <MetricCard
-              label="Kill switch"
-              value={data.killSwitchStatus}
-              helper="يجب أن يبقى OFF أثناء التجربة"
+              label="مفتاح الإيقاف"
+              value={data.killSwitchStatus === "OFF" ? "معطل" : "مفعل"}
+              helper={data.killSwitchStatus === "OFF" ? "النظام يعمل بشكل طبيعي" : "تم إيقاف العمليات الحية"}
               icon={Zap}
               tone={data.killSwitchStatus === "OFF" ? "success" : "warning"}
             />
             <MetricCard
-              label="Dead letters"
+              label="رسائل فاشلة"
               value={data.deadLetterCount}
               helper="رسائل فشل بحاجة مراجعة"
               icon={AlertTriangle}
               tone={data.deadLetterCount > 0 ? "warning" : "success"}
             />
             <MetricCard
-              label="Handoffs"
+              label="التحويلات البشرية"
               value={data.handoffCount}
               helper="تحويلات بشرية مفتوحة"
               icon={MessagesSquare}
               tone={data.handoffCount > 0 ? "warning" : "success"}
             />
+            <MetricCard
+              label="التحويل البشري"
+              value={data.globalHandoffEnabled ? "مفعل" : "متوقف"}
+              helper={data.globalHandoffEnabled ? "يمكن للنظام تحويل المحادثات" : "التحويل البشري متوقف"}
+              icon={HandHelping}
+              tone={data.globalHandoffEnabled ? "success" : "warning"}
+            />
           </section>
 
           <div className="flex justify-end">
             <RecordExportMenu
-              title="Pilot control report"
+              title="تقرير غرفة الطيار"
               page="pilot-control"
               columns={[
-                { key: "conversationId", label: "Conversation" },
-                { key: "channel", label: "Channel" },
-                { key: "body", label: "Body" },
-                { key: "createdAt", label: "Created At" },
+                { key: "conversationId", label: "المحادثة" },
+                { key: "channel", label: "القناة" },
+                { key: "body", label: "المحتوى" },
+                { key: "createdAt", label: "التاريخ" },
               ]}
               rows={[...inboundMessages, ...outboundMessages]}
               summaryLines={[
-                { label: "Inbound", value: inboundMessages.length },
-                { label: "Outbound", value: outboundMessages.length },
-                { label: "Handoffs", value: data.handoffCount },
+                { label: "واردة", value: inboundMessages.length },
+                { label: "صادرة", value: outboundMessages.length },
+                { label: "تحويلات", value: data.handoffCount },
               ]}
             />
           </div>
@@ -331,23 +340,23 @@ export default function PilotPage() {
             <div className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
               <div className="mb-3 flex items-center gap-2">
                 <Bot className="h-5 w-5 text-brand" />
-                <h2 className="text-sm font-semibold text-foreground">Build Identity</h2>
+                <h2 className="text-sm font-semibold text-foreground">بيانات الإصدار</h2>
               </div>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Version</span>
+                  <span className="text-muted-foreground">الإصدار</span>
                   <span className="font-semibold">{data.buildInfo.version}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Version Name</span>
+                  <span className="text-muted-foreground">اسم الإصدار</span>
                   <span className="font-semibold">{data.buildInfo.versionName ?? "—"}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Commit</span>
+                  <span className="text-muted-foreground">الكود</span>
                   <span className="font-mono text-xs">{data.buildInfo.commit.slice(0, 8)}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Built</span>
+                  <span className="text-muted-foreground">تاريخ البناء</span>
                   <span className="text-xs">{new Date(data.buildInfo.builtAt).toLocaleString("ar-EG")}</span>
                 </div>
               </div>
@@ -356,23 +365,23 @@ export default function PilotPage() {
             <div className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
               <div className="mb-3 flex items-center gap-2">
                 <Workflow className="h-5 w-5 text-brand" />
-                <h2 className="text-sm font-semibold text-foreground">Workflow & safety</h2>
+                <h2 className="text-sm font-semibold text-foreground">سير العمل والحماية</h2>
               </div>
               <div className="space-y-3 text-sm">
                 <div className="flex items-center justify-between rounded-xl bg-muted p-3">
-                  <span className="text-muted-foreground">n8n workflow</span>
-                  <StatusBadge tone={data.n8nWorkflowActive ? "success" : "warning"}>{data.n8nWorkflowActive ? "Active" : "Pending"}</StatusBadge>
+                  <span className="text-muted-foreground">سير عمل n8n</span>
+                  <StatusBadge tone={data.n8nWorkflowActive ? "success" : "warning"}>{data.n8nWorkflowActive ? "نشط" : "معلق"}</StatusBadge>
                 </div>
                 <div className="flex items-center justify-between rounded-xl bg-muted p-3">
-                  <span className="text-muted-foreground">Evolution</span>
-                  <StatusBadge tone={data.evolutionConnected ? "success" : "warning"}>{data.evolutionConnected ? "Connected" : "Pending"}</StatusBadge>
+                  <span className="text-muted-foreground">إيفولوشن</span>
+                  <StatusBadge tone={data.evolutionConnected ? "success" : "warning"}>{data.evolutionConnected ? "متصل" : "معلق"}</StatusBadge>
                 </div>
                 <div className="flex items-center justify-between rounded-xl bg-muted p-3">
-                  <span className="text-muted-foreground">Shopify last sync</span>
+                  <span className="text-muted-foreground">آخر مزامنة شوبيفاي</span>
                   <span className="font-semibold text-foreground">{data.lastSyncTime ? new Date(data.lastSyncTime).toLocaleString("ar-EG") : "—"}</span>
                 </div>
                 <div className="flex items-center justify-between rounded-xl bg-muted p-3">
-                  <span className="text-muted-foreground">Duplicate blocks</span>
+                  <span className="text-muted-foreground">محاولات مكررة محجوبة</span>
                   <span className="font-semibold text-foreground">{data.duplicateBlockedCount}</span>
                 </div>
               </div>
@@ -381,10 +390,10 @@ export default function PilotPage() {
             <div className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
               <div className="mb-3 flex items-center gap-2">
                 <Ban className="h-5 w-5 text-amber-500" />
-                <h2 className="text-sm font-semibold text-foreground">Safety blockers</h2>
+                <h2 className="text-sm font-semibold text-foreground">معوّقات الأمان</h2>
               </div>
               {blockers.length === 0 ? (
-                <EmptyState compact title="لا توجد blockers" description="لا توجد عوائق Safety ظاهرة الآن" />
+                <EmptyState compact title="لا توجد معوّقات" description="لا توجد عوائق أمان ظاهرة الآن" />
               ) : (
                 <ul className="grid gap-2">
                   {blockers.map((blocker) => (
@@ -401,7 +410,7 @@ export default function PilotPage() {
           <section className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
             <div className="mb-4 flex items-center gap-2">
               <Smartphone className="h-5 w-5 text-brand" />
-              <h2 className="text-sm font-semibold text-foreground">Pilot Actions</h2>
+              <h2 className="text-sm font-semibold text-foreground">إجراءات الطيار</h2>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               <ActionButton
@@ -417,6 +426,13 @@ export default function PilotPage() {
                 tone={data.ordersPaused ? "success" : "warning"}
                 onClick={() => doAction(data.ordersPaused ? "resume_orders" : "pause_orders")}
                 loading={actionLoading === (data.ordersPaused ? "resume_orders" : "pause_orders")}
+              />
+              <ActionButton
+                label={data.globalHandoffEnabled ? "إيقاف التحويل البشري" : "تفعيل التحويل البشري"}
+                icon={HandHelping}
+                tone={data.globalHandoffEnabled ? "warning" : "success"}
+                onClick={() => doAction(data.globalHandoffEnabled ? "disable_global_handoff" : "enable_global_handoff")}
+                loading={actionLoading === (data.globalHandoffEnabled ? "disable_global_handoff" : "enable_global_handoff")}
               />
               <ActionButton
                 label="فتح Products Search QA"
@@ -455,14 +471,14 @@ export default function PilotPage() {
           {/* Messages */}
           <section className="grid gap-4 xl:grid-cols-2">
             <MessagePanel
-              title="آخر 10 inbound messages"
+              title="آخر 10 رسائل واردة"
               icon={MessageCircle}
               items={data.inboundMessages}
               emptyTitle="لا توجد رسائل واردة"
-              emptyDescription="ستظهر الرسائل الواردة هنا بعد وصول حركة حقيقية أو synthetic."
+              emptyDescription="ستظهر الرسائل الواردة هنا بعد وصول حركة حقيقية."
             />
             <MessagePanel
-              title="آخر 10 outbound messages"
+              title="آخر 10 رسائل صادرة"
               icon={MessagesSquare}
               items={data.outboundMessages}
               emptyTitle="لا توجد رسائل صادرة"
@@ -474,16 +490,16 @@ export default function PilotPage() {
           <section className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
             <div className="mb-3 flex items-center gap-2">
               <Package className="h-5 w-5 text-brand" />
-              <h2 className="text-sm font-semibold text-foreground">Synthetic Webhook Test</h2>
+              <h2 className="text-sm font-semibold text-foreground">اختبار الويب هوك التجريبي</h2>
             </div>
             <div className="rounded-xl bg-muted p-4 text-sm text-muted-foreground space-y-2">
-              <p>Send a safe synthetic message to verify the loop without real WhatsApp:</p>
+              <p>أرسل رسالة تجريبية آمنة للتحقق من الحلقة دون واتساب حقيقي:</p>
               <pre className="overflow-x-auto rounded-lg bg-background p-3 text-xs text-foreground">
 {`curl -X POST ${process.env.NEXT_PUBLIC_APP_URL ?? "https://admin.nex-lnk.online"}/webhook/youlya-whatsapp \\
   -H "Content-Type: application/json" \\
   -d '{"data":{"key":{"remoteJid":"201000000000@s.whatsapp.net","fromMe":false},"message":{"conversation":"هاي"},"messageTimestamp":$(date +%s)}}'`}
               </pre>
-              <p className="text-xs">Expected: HTTP 200, workflow execution created, no real message sent to customer.</p>
+              <p className="text-xs">المتوقع: HTTP 200، إنشاء سير عمل، بدون إرسال رسالة حقيقية للعميل.</p>
             </div>
           </section>
         </>

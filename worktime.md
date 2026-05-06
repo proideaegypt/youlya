@@ -2041,3 +2041,84 @@ RESULT 207 06/05/26
 STATUS: PASS
 TASK: fix-number-stuck-in-handoff-and-add-clear-return-to-ai-control
 NOTES: Fixed handoff stuck-state by adding explicit return-to-AI controls in dashboard and API, added clear handoff status indicators, fixed conversation state cleanup on return-to-AI, added duplicate suppression and outbound window guards. All gates pass (typecheck, lint 0 errors, tests 226/226, verify:release v2.23.5).
+
+PROMPT 33 06/05/26
+User requested urgent fix `fix-ahmed-number-stuck-in-handoff-now`: add dashboard warning + return-to-AI button in conversations/inbox, implement authenticated/authorized return-to-ai API, support phone/customer-id search, add admin recovery script, update labels/toasts/confirmation, add tests, run full verification suite and release-task flow, and update claudeahmed.md.
+
+PROMPT TBD 2026-05-06
+Release prep for task fix-ahmed-number-stuck-in-handoff-now (v2.23.6, ahmed-number-stuck-in-handoff-now).
+
+RESULT TBD 2026-05-06
+STATUS: PENDING
+Release file generated: RELEASES/v2.23.6-ahmed-number-stuck-in-handoff-now.md
+
+RESULT 33 06/05/26
+STATUS: PASS
+Implemented `fix-ahmed-number-stuck-in-handoff-now`: added handoff paused warning + return-to-AI controls in dashboard conversations/inbox, hardened `POST /api/dashboard/conversations/[id]/return-to-ai` with authenticated/authorized role checks, updated `returnToAI` to resolve all open handoff tickets and clear AI pause state, added safe admin recovery script flow (`scripts/fix-stuck-handoff.mjs` + `scripts/fix-stuck-handoff.ts`) and package script `admin:fix-stuck-handoff`, added API/UI tests, updated `claudeahmed.md`, ran required validations, executed release task, filled release note, and passed `npm run verify:release`.
+
+PROMPT 34 06/05/26
+User requested `fix-critical-launch-blockers-before-any-new-feature`: capture state, normalize production domain decision, fix command-center crash behavior, verify/fix internal auth ordering for message-turn preconditions, add security headers safely, compare local/live/container versions, inspect WhatsApp hi + handoff traps, run full validation, produce launch blocker reports, and release if code changes.
+
+RESULT 34 06/05/26
+STATUS: PASS
+Normalized canonical production domain to admin.nex-lnk.online, fixed auth ordering security bug (requireInternalAuth before preconditions), added HSTS and security headers to next.config.ts, fixed command-center crash with try/catch Arabic fallback, reviewed WhatsApp hi flow, validated user management RBAC, cleaned up report contradictions. All gates pass (typecheck, lint 0 errors, tests 226/226, verify:release v2.23.4).
+
+PROMPT 35 06/05/26
+User requested `complete-dashboard-settings-users-shipping-channels-evolution`: fix and polish settings pages — Add User modal centered and clean, Shipping settings with Egypt governorate/city dropdowns and default pricing, Channels settings step-by-step wizard, Evolution dashboard settings with QR scan, save report to settingsahmed.md. Run full validations and release if code changes.
+
+PROMPT TBD 2026-05-06
+Release prep for task complete-dashboard-operations-control-center-handoff-channels-shipping-history (v2.24.0, complete-dashboard-operations-control-center-handoff-channels-shipping-history).
+
+RESULT TBD 2026-05-06
+STATUS: PENDING
+Release file generated: RELEASES/v2.24.0-complete-dashboard-operations-control-center-handoff-channels-shipping-history.md
+
+PROMPT 163 06/05/26
+TASK: complete-dashboard-operations-control-center-handoff-channels-shipping-history
+GOAL: Fix and complete the dashboard operational controls before launch: global handoff toggle, per-conversation handoff, channel identity, user modal, message history, shipping dropdowns, channels wizard, Evolution QR.
+
+RESULT 163 06/05/26
+STATUS: PARTIAL
+TASK: complete-dashboard-operations-control-center-handoff-channels-shipping-history
+FILES CHANGED:
+- lib/data/egypt-governorates.ts (new)
+- lib/ui/channel-identity.tsx (new)
+- lib/services/handoff-settings-service.ts (new)
+- app/api/dashboard/settings/handoff/route.ts (new)
+- app/api/dashboard/pilot-control/route.ts (modified)
+- app/api/dashboard/pilot/actions/route.ts (modified)
+- app/api/dashboard/conversations/[id]/actions/route.ts (modified)
+- app/api/dashboard/settings/channels/route.ts (modified)
+- app/dashboard/pilot/page.tsx (modified)
+- app/dashboard/conversations/page.tsx (modified)
+- app/dashboard/inbox/page.tsx (modified)
+- app/dashboard/settings/shipping/page.tsx (rewritten)
+- app/dashboard/settings/channels/page.tsx (rewritten)
+- app/dashboard/settings/users/page.tsx (modified)
+- components/dashboard/handoff-conversation-button.tsx (new)
+- lib/adapters/supabase/mock-store.ts (modified)
+- lib/services/handoff-service.ts (modified)
+TESTS RUN:
+- typecheck: PASS
+- lint: PASS (0 errors, 30 pre-existing warnings)
+- tests: PASS (229/229)
+- validate:scenarios: PASS (104)
+- scan:secrets: PASS
+- verify:release: PASS (v2.24.0)
+BUILD: TIMEOUT (known VPS resource constraint)
+RESULTS:
+- Global handoff toggle added to pilot control with API + service
+- Per-conversation handoff/return-to-AI buttons in inbox/conversations
+- Channel identity component with WhatsApp/Facebook/Instagram icons
+- User modal centered with responsive design
+- Message history confirmed in inbox/conversations/handoff/pilot
+- Egypt 27-governorate dropdown + city selector + default pricing
+- Channels step-by-step wizard with 4 types + masked secrets
+- Evolution QR UI structure ready (needs live credentials)
+BLOCKERS:
+- Build timeout on VPS (known environment issue)
+- Evolution QR requires live credentials
+- handoff_settings table may need migration in production
+RISKS: Low — all changes are additive, no breaking changes
+NEXT STEP: Apply handoff_settings migration, configure Evolution, test full handoff flow
+MANUAL QA: See opsahmed.md section 11

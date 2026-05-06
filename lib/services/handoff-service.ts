@@ -3,6 +3,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { writeAuditLog } from "@/lib/services/audit-log-service";
 import { setAIPaused } from "@/lib/services/conversation-flow-service";
 import { createHandoffNotification } from "@/lib/services/handoff-notification-service";
+import { isGlobalHandoffEnabled } from "@/lib/services/handoff-settings-service";
 import type { HandoffType } from "@/lib/services/handoff-policy-service";
 
 export type HandoffReason =
@@ -58,6 +59,10 @@ export async function pauseAIForConversation(conversationId: string): Promise<vo
 }
 
 export async function createHandoffTicket(input: HandoffInput): Promise<HandoffTicket> {
+  const globalEnabled = await isGlobalHandoffEnabled(input.store_id);
+  if (!globalEnabled) {
+    throw new Error("global_handoff_disabled");
+  }
   const state = getMockState();
   const now = new Date().toISOString();
   const shouldPauseAI = input.pause_ai_after_handoff !== false;
@@ -188,22 +193,26 @@ export async function returnToAI(conversationId: string, actor: string): Promise
   await setAIPaused(conversationId, false);
   state.conversationStatus.set(conversationId, "ai_active");
 
-  const idx = state.handoffs.findIndex(
-    (t) => (t as HandoffTicket).conversation_id === conversationId && (t as HandoffTicket).status !== "resolved",
-  );
-  if (idx !== -1) {
-    const ticket = {
-      ...(state.handoffs[idx] as HandoffTicket),
+  const now = new Date().toISOString();
+  const openTickets = state.handoffs
+    .map((ticket) => ticket as HandoffTicket)
+    .filter((ticket) => ticket.conversation_id === conversationId && ticket.status !== "resolved" && ticket.status !== "returned_to_ai");
+
+  for (const openTicket of openTickets) {
+    const updated = {
+      ...openTicket,
       status: "returned_to_ai" as HandoffStatus,
-      returned_to_ai_at: new Date().toISOString(),
+      returned_to_ai_at: now,
       returned_to_ai_by: actor,
     };
-    state.handoffs[idx] = ticket as Record<string, unknown>;
-    await updateHandoffInDb(ticket.id, {
+    const idx = state.handoffs.findIndex((item) => (item as HandoffTicket).id === openTicket.id);
+    if (idx !== -1) state.handoffs[idx] = updated as Record<string, unknown>;
+    await updateHandoffInDb(openTicket.id, {
       status: "resolved",
-      returned_to_ai_at: ticket.returned_to_ai_at,
+      returned_to_ai_at: now,
       returned_to_ai_by: actor,
       resolved_by: actor,
+      resolved_at: now,
     });
   }
 

@@ -14,6 +14,8 @@ import {
 import { RecordDateFilter } from "@/components/dashboard/record-date-filter";
 import { RecordExportMenu } from "@/components/dashboard/record-export-menu";
 import { parseDateRangeFromSearchParams } from "@/lib/dashboard/date-range";
+import { ReturnToAiButton } from "@/components/dashboard/return-to-ai-button";
+import { ChannelBadge } from "@/lib/ui/channel-identity";
 
 async function loadConversations(filter?: string, searchParams?: Record<string, string | undefined>) {
   const storeId = "youlya";
@@ -37,18 +39,18 @@ function statusBadge(status: string) {
   if (status === "handoff")
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold text-amber-500">
-        <HandHelping className="h-3 w-3" /> Handoff
+        <HandHelping className="h-3 w-3" /> تحويل بشري
       </span>
     );
   if (status === "resolved")
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-500">
-        Resolved
+        مغلق
       </span>
     );
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
-      <Bot className="h-3 w-3" /> AI
+      <Bot className="h-3 w-3" /> ذكاء اصطناعي
     </span>
   );
 }
@@ -114,10 +116,20 @@ export default async function ConversationsPage({
             className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary hover:bg-primary/20 transition"
           >
             <HandHelping className="h-4 w-4" />
-            مركز التحويل
+            مركز التحويل البشري
           </a>
         </div>
       </div>
+
+      <form className="mb-4">
+        <input
+          type="search"
+          name="search"
+          defaultValue={params.search ?? ""}
+          placeholder="ابحث برقم العميل أو المحادثة..."
+          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none ring-0 placeholder:text-muted-foreground focus:border-primary/50"
+        />
+      </form>
 
       <div className="mb-4">
         <RecordDateFilter />
@@ -139,7 +151,7 @@ export default async function ConversationsPage({
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {f === "all" ? "الكل" : f === "handoff" ? "تحويل" : "AI"}
+                  {f === "all" ? "الكل" : f === "handoff" ? "تحويل بشري" : "ذكاء اصطناعي"}
                 </a>
               ))}
             </div>
@@ -176,11 +188,11 @@ export default async function ConversationsPage({
                             </span>
                           ) : null}
                         </div>
-                        <div className="flex items-center gap-2 mt-1">
+                        <div className="flex items-center gap-2 mt-1 flex-wrap">
                           {statusBadge(String(c.status ?? "ai_active"))}
-                          <span className="text-[10px] text-muted-foreground">{String(c.channel ?? "")}</span>
-                          {c.ai_paused ? (
-                            <span className="text-[10px] text-red-400">AI متوقف</span>
+                          {c.channel ? <ChannelBadge channel={String(c.channel)} /> : null}
+                          {c.ai_paused || String(c.status ?? "") === "handoff" ? (
+                            <span className="text-[10px] text-red-400">الذكاء الاصطناعي متوقف</span>
                           ) : null}
                         </div>
                       </div>
@@ -213,10 +225,14 @@ export default async function ConversationsPage({
                     {maskCustomerIdentifier(String(selected.customer_id ?? selected.id))}
                   </p>
                 </div>
-                <div className="flex items-center gap-2 mt-1">
-                  {statusBadge(String(selected.status ?? "ai_active"))}
-                  <span className="text-xs text-muted-foreground">ID: {String(selected.id).slice(0, 24)}…</span>
-                </div>
+                {selected.ai_paused || String(selected.status ?? "") === "handoff" ? (
+                  <div className="mt-2">
+                    <p className="text-xs font-semibold text-red-400">الذكاء الاصطناعي متوقف لهذه المحادثة</p>
+                    <div className="mt-2">
+                      <ReturnToAiButton conversationId={String(selected.id)} />
+                    </div>
+                  </div>
+                ) : null}
                 {selected.assigned_to ? (
                   <p className="mt-1 text-[10px] text-muted-foreground">
                     معين لـ: {String(selected.assigned_to)}

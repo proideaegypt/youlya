@@ -15,6 +15,8 @@ import {
   Bot,
   User,
   Search,
+  ToggleLeft,
+  ToggleRight,
 } from "lucide-react";
 import { EmptyState } from "@/lib/ui/empty-state";
 import { StatusBadge } from "@/lib/ui/status-badge";
@@ -59,7 +61,7 @@ function StatusBadgeCustom({ status }: { status: string }) {
     open: { tone: "error", label: "مفتوح" },
     assigned: { tone: "warning", label: "معين" },
     resolved: { tone: "success", label: "مغلق" },
-    returned_to_ai: { tone: "success", label: "رجع للـ AI" },
+    returned_to_ai: { tone: "success", label: "عاد للذكاء الاصطناعي" },
   };
   const s = map[status] ?? { tone: "neutral", label: status };
   return <StatusBadge tone={s.tone}>{s.label}</StatusBadge>;
@@ -67,7 +69,7 @@ function StatusBadgeCustom({ status }: { status: string }) {
 
 function directionLabel(dir?: string) {
   if (dir === "inbound") return { icon: User, label: "العميل", color: "text-brand" };
-  if (dir === "outbound") return { icon: Bot, label: "AI", color: "text-emerald-500" };
+  if (dir === "outbound") return { icon: Bot, label: "المساعد الذكي", color: "text-emerald-500" };
   return { icon: MessageCircle, label: "النظام", color: "text-muted-foreground" };
 }
 
@@ -86,6 +88,9 @@ export default function HandoffCenterPage() {
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
   const [timelineLoading, setTimelineLoading] = useState(false);
+  const [globalHandoffEnabled, setGlobalHandoffEnabled] = useState<boolean | null>(null);
+  const [handoffToggleLoading, setHandoffToggleLoading] = useState(false);
+  const [handoffToast, setHandoffToast] = useState<string>("");
 
   const queryString = useMemo(() => {
     const params = new URLSearchParams(searchKey);
@@ -142,6 +147,42 @@ export default function HandoffCenterPage() {
       active = false;
     };
   }, [selected]);
+
+  useEffect(() => {
+    void fetch("/api/dashboard/settings/handoff")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.settings?.global_handoff_enabled !== undefined) {
+          setGlobalHandoffEnabled(Boolean(data.settings.global_handoff_enabled));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const toggleGlobalHandoff = async () => {
+    if (globalHandoffEnabled === null) return;
+    const next = !globalHandoffEnabled;
+    setHandoffToggleLoading(true);
+    try {
+      const res = await fetch("/api/dashboard/settings/handoff", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ globalHandoffEnabled: next }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        setGlobalHandoffEnabled(data.settings?.global_handoff_enabled ?? next);
+        setHandoffToast(next ? "التحويل البشري مفعل الآن" : "التحويل البشري متوقف الآن");
+      } else {
+        setHandoffToast("حدث خطأ أثناء تغيير الإعداد");
+      }
+    } catch {
+      setHandoffToast("حدث خطأ أثناء تغيير الإعداد");
+    } finally {
+      setHandoffToggleLoading(false);
+      setTimeout(() => setHandoffToast(""), 3000);
+    }
+  };
 
   async function assign(id: string) {
     setActionLoading(id);
@@ -203,7 +244,7 @@ export default function HandoffCenterPage() {
         <div className="relative z-10 flex flex-col gap-4">
           <div className="inline-flex w-fit items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">
             <Shield className="h-3.5 w-3.5" />
-            Human Handoff Center
+            مركز التحويل البشري
           </div>
           <div className="max-w-2xl space-y-2">
             <h1 className="text-balance text-3xl font-semibold">مركز التحويل البشري</h1>
@@ -216,9 +257,41 @@ export default function HandoffCenterPage() {
             <StatusBadge tone={assignedCount > 0 ? "warning" : "success"}>{assignedCount} معين</StatusBadge>
             <StatusBadge tone="neutral">{tickets.length} سجل</StatusBadge>
           </div>
+          {/* Global handoff toggle */}
+          <div className="flex items-center gap-3 rounded-2xl bg-white/10 px-4 py-3 w-fit">
+            <div>
+              <p className="text-xs font-semibold text-white/70">التحويل البشري</p>
+              <p className="text-sm font-bold text-white">
+                {globalHandoffEnabled === null ? "..." : globalHandoffEnabled ? "مفعل" : "متوقف"}
+              </p>
+              {globalHandoffEnabled === false && (
+                <p className="mt-0.5 text-[10px] text-white/60">
+                  التحويل متوقف. المحادثات الجديدة ستظل مع الذكاء الاصطناعي.
+                </p>
+              )}
+            </div>
+            <button
+              onClick={toggleGlobalHandoff}
+              disabled={handoffToggleLoading || globalHandoffEnabled === null}
+              aria-label={globalHandoffEnabled ? "إيقاف التحويل البشري" : "تفعيل التحويل البشري"}
+              className="flex items-center justify-center rounded-xl bg-white/20 p-1 transition hover:bg-white/30 disabled:opacity-50"
+            >
+              {globalHandoffEnabled ? (
+                <ToggleRight className="h-8 w-8 text-emerald-300" />
+              ) : (
+                <ToggleLeft className="h-8 w-8 text-white/60" />
+              )}
+            </button>
+          </div>
         </div>
         <div className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
       </section>
+
+      {handoffToast && (
+        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-2xl bg-foreground px-5 py-3 text-sm font-medium text-background shadow-lg">
+          {handoffToast}
+        </div>
+      )}
 
       <RecordDateFilter />
 
@@ -265,7 +338,7 @@ export default function HandoffCenterPage() {
           <input
             value={assigneeFilter}
             onChange={(e) => setAssigneeFilter(e.target.value)}
-            placeholder="Assignee"
+            placeholder="بحث بالمعين"
             className="w-28 bg-transparent text-sm outline-none"
             aria-label="تصفية المعين"
           />
@@ -281,20 +354,20 @@ export default function HandoffCenterPage() {
           />
         </div>
         <RecordExportMenu
-          title="Handoff queue report"
+          title="تقرير قائمة التحويل"
           page="handoff"
           columns={[
-            { key: "conversationIdDisplay", label: "Conversation" },
-            { key: "handoffType", label: "Type" },
-            { key: "priority", label: "Priority" },
-            { key: "status", label: "Status" },
-            { key: "problemSummary", label: "Problem Summary" },
-            { key: "createdAt", label: "Created At" },
+            { key: "conversationIdDisplay", label: "المحادثة" },
+            { key: "handoffType", label: "النوع" },
+            { key: "priority", label: "الأولوية" },
+            { key: "status", label: "الحالة" },
+            { key: "problemSummary", label: "ملخص المشكلة" },
+            { key: "createdAt", label: "تاريخ الإنشاء" },
           ]}
           rows={filteredRows}
           summaryLines={[
-            { label: "Open", value: openCount },
-            { label: "Assigned", value: assignedCount },
+            { label: "مفتوح", value: openCount },
+            { label: "معين", value: assignedCount },
           ]}
           className="ml-auto"
         />
@@ -338,7 +411,7 @@ export default function HandoffCenterPage() {
                 </div>
 
                 <div className="rounded-xl bg-brand/5 p-4 space-y-2 border border-brand/10">
-                  <p className="text-sm font-medium text-foreground">Problem Summary</p>
+                  <p className="text-sm font-medium text-foreground">ملخص المشكلة</p>
                   <p className="text-sm text-muted-foreground">{selected.problemSummary}</p>
                 </div>
 
@@ -350,6 +423,7 @@ export default function HandoffCenterPage() {
                 <a
                   href={`/dashboard/conversations?conversation=${encodeURIComponent(selected.conversationId)}`}
                   className="inline-flex items-center gap-2 rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-muted transition"
+                  aria-label="فتح المحادثة الكاملة"
                 >
                   <MessageCircle className="h-4 w-4" />
                   فتح المحادثة
@@ -419,7 +493,7 @@ export default function HandoffCenterPage() {
                     className="flex items-center gap-2 rounded-xl bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand/90 transition"
                   >
                     <CheckCircle2 className="h-4 w-4" />
-                    Resolve
+                    إغلاق التذكرة
                   </button>
                 </div>
               </div>
@@ -430,7 +504,7 @@ export default function HandoffCenterPage() {
               <div className="rounded-2xl bg-card p-6 shadow-sm ring-1 ring-border space-y-4">
                 <div className="flex items-center gap-2">
                   <MessageCircle className="h-4 w-4 text-brand" />
-                  <p className="text-sm font-semibold text-foreground">Conversation Preview</p>
+                  <p className="text-sm font-semibold text-foreground">معاينة المحادثة</p>
                 </div>
 
                 {timelineLoading ? (
@@ -496,7 +570,7 @@ export default function HandoffCenterPage() {
                       <StatusBadgeCustom status={t.status} />
                     </div>
                     <p className="mt-1 text-sm text-muted-foreground">{t.reason}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">Type: {t.handoffType} · Summary: {t.problemSummary}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">النوع: {t.handoffType} · الملخص: {t.problemSummary}</p>
                     <p className="mt-1 text-xs text-muted-foreground">{new Date(t.createdAt).toLocaleString("ar-EG")}</p>
                   </div>
                 </div>
@@ -504,7 +578,7 @@ export default function HandoffCenterPage() {
                   {t.aiPaused && t.status === "open" && (
                     <span className="flex items-center gap-1 rounded-full bg-red-500/10 px-2.5 py-1 text-[10px] font-semibold text-red-400">
                       <Pause className="h-3 w-3" />
-                      AI متوقف
+                      الذكاء الاصطناعي متوقف
                     </span>
                   )}
                   {t.status === "assigned" && (

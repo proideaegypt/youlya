@@ -1,0 +1,33 @@
+ M PROGRESS-LOG.md
+ M README.md
+ M app/api/dashboard/conversations/[id]/actions/route.ts
+ M app/api/dashboard/conversations/[id]/return-to-ai/route.ts
+ M app/api/dashboard/pilot-control/route.ts
+ M app/api/dashboard/pilot/actions/route.ts
+ M app/dashboard/command-center/page.tsx
+ M app/dashboard/conversations/page.tsx
+ M app/dashboard/handoff/page.tsx
+ M app/dashboard/inbox/page.tsx
+ M app/dashboard/pilot/page.tsx
+ M app/dashboard/settings/shipping/page.tsx
+ M app/dashboard/settings/users/page.tsx
+ M claudeahmed.md
+ M components/dashboard/return-to-ai-button.tsx
+ M lib/adapters/supabase/mock-store.ts
+ M lib/services/handoff-service.ts
+ M package.json
+ M scripts/fix-stuck-handoff.mjs
+ M worktime.md
+?? RELEASES/v2.23.6-ahmed-number-stuck-in-handoff-now.md
+?? app/api/dashboard/settings/handoff/
+?? components/dashboard/handoff-conversation-button.tsx
+?? fineahmed.md
+?? lib/data/
+?? lib/services/handoff-settings-service.ts
+?? lib/ui/channel-identity.tsx
+?? qa-artifacts/dashboard-finetune/
+?? qa-artifacts/go-live-review/ops-dashboard-control/
+?? qa-artifacts/launch-blockers-ahmed/
+?? scripts/fix-stuck-handoff.ts
+?? tests/unit/conversations-page-return-to-ai-ui.test.ts
+?? tests/unit/dashboard-return-to-ai-api.test.ts

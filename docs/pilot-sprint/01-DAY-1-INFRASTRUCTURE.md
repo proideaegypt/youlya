@@ -6,7 +6,7 @@ Confirm the production foundation is visible, healthy, and documented without ch
 
 ## Current production snapshot
 
-- App live: `https://admin.youlya365.com`
+- App live: `https://admin.nex-lnk.online`
 - Health endpoint: `/api/health`
 - Build info endpoint: `/api/build-info`
 - n8n workflow active: `Youlya WhatsApp Main`
@@ -24,8 +24,8 @@ Confirm the production foundation is visible, healthy, and documented without ch
 
 ## Safe checks
 
-- `curl -fsS https://admin.youlya365.com/api/health`
-- `curl -fsS https://admin.youlya365.com/api/build-info`
+- `curl -fsS https://admin.nex-lnk.online/api/health`
+- `curl -fsS https://admin.nex-lnk.online/api/build-info`
 - `node scripts/scan-secrets.mjs`
 - `node scripts/validate-n8n-workflows.mjs`
 

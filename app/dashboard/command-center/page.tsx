@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import {
   ShoppingBag,
   MessageCircle,
@@ -12,6 +11,9 @@ import {
   Settings,
 } from "lucide-react";
 import { DashboardCharts } from "@/lib/ui/dashboard-charts";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getMockState } from "@/lib/adapters/supabase/mock-store";
+import { isAiEnabled } from "@/lib/services/ai-settings-service";
 
 type Stats = {
   activeConversations: number;
@@ -31,16 +33,48 @@ type StatsResult = {
 
 async function loadStats(): Promise<StatsResult> {
   try {
-    const cookieHeader = (await cookies()).getAll().map((c) => `${c.name}=${c.value}`).join("; ");
-    const baseUrl = process.env.APP_INTERNAL_URL ?? "http://127.0.0.1:3000";
-    const res = await fetch(`${baseUrl}/api/dashboard/stats`, {
-      headers: { cookie: cookieHeader },
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      throw new Error(`stats API returned ${res.status}`);
+    const storeId = "youlya";
+    const aiEnabled = await isAiEnabled(storeId);
+    const supabase = getSupabaseServerClient();
+
+    if (!supabase) {
+      const flow = [...getMockState().conversationFlow.values()];
+      const handoffs = getMockState().humanHandoffs.filter((h) => h.resolved_at === null).length;
+      return {
+        stats: {
+          activeConversations: flow.length,
+          aiActiveConversations: aiEnabled ? flow.length : 0,
+          needsHuman: handoffs,
+          pendingConfirmations: flow.filter((f) => f.stage === "awaiting_confirmation").length,
+          ordersCreatedToday: flow.filter((f) => f.stage === "ordered").length,
+          failedOrderAttempts: 0,
+          duplicateWebhooksBlocked: 0,
+          killSwitchStatus: aiEnabled ? "OFF" : "ON",
+        },
+        fromFallback: false,
+      };
     }
-    return { stats: (await res.json()) as Stats, fromFallback: false };
+
+    const [{ data: conv }, { count: failedCount }, { count: handoffCount }] = await Promise.all([
+      supabase.from("conversation_state").select("stage"),
+      supabase.from("failed_events").select("id", { head: true, count: "exact" }),
+      supabase.from("human_handoffs").select("id", { head: true, count: "exact" }).is("resolved_at", null),
+    ]);
+
+    const stages = conv ?? [];
+    return {
+      stats: {
+        activeConversations: stages.length,
+        aiActiveConversations: aiEnabled ? stages.length : 0,
+        needsHuman: handoffCount ?? 0,
+        pendingConfirmations: stages.filter((s) => s.stage === "awaiting_confirmation").length,
+        ordersCreatedToday: stages.filter((s) => s.stage === "ordered").length,
+        failedOrderAttempts: failedCount ?? 0,
+        duplicateWebhooksBlocked: 0,
+        killSwitchStatus: aiEnabled ? "OFF" : "ON",
+      },
+      fromFallback: false,
+    };
   } catch (err) {
     console.error("loadStats error:", err);
     return {
@@ -210,7 +244,7 @@ export default async function CommandCenterPage() {
                     </span>
                     <h3 className="text-sm font-semibold text-foreground">{r}</h3>
                   </div>
-                  <p className="mt-2 text-xs text-muted-foreground">Active</p>
+                  <p className="mt-2 text-xs text-muted-foreground">نشط</p>
                 </div>
               ))}
             </div>
@@ -255,38 +289,38 @@ export default async function CommandCenterPage() {
               <div className="flex items-center justify-between rounded-xl bg-background p-3 ring-1 ring-border">
                 <div className="flex items-center gap-2">
                   <Shield className="size-5 text-primary" />
-                  <span className="text-sm font-medium">AI Enabled</span>
+                  <span className="text-sm font-medium">الذكاء الاصطناعي</span>
                 </div>
-                <span className="text-xs text-emerald-500 font-semibold">ON</span>
+                <span className="text-xs text-emerald-500 font-semibold">مفعل</span>
               </div>
               <div className="flex items-center justify-between rounded-xl bg-background p-3 ring-1 ring-border">
                 <div className="flex items-center gap-2">
                   <Zap className="size-5 text-amber-500" />
-                  <span className="text-sm font-medium">إيقاف الطيار</span>
+                  <span className="text-sm font-medium">مفتاح الإيقاف</span>
                 </div>
                 <span className={`text-xs font-semibold ${stats.killSwitchStatus === "OFF" ? "text-emerald-500" : "text-red-400"}`}>
-                  {stats.killSwitchStatus}
+                  {stats.killSwitchStatus === "OFF" ? "غير مفعل" : "مفعل"}
                 </span>
               </div>
               <div className="flex items-center justify-between rounded-xl bg-background p-3 ring-1 ring-border">
                 <div className="flex items-center gap-2">
                   <Shield className="size-5 text-primary" />
-                  <span className="text-sm font-medium">Safety Guard</span>
+                  <span className="text-sm font-medium">حماية السلامة</span>
                 </div>
-                <span className="text-xs text-emerald-500 font-semibold">Active</span>
+                <span className="text-xs text-emerald-500 font-semibold">نشط</span>
               </div>
             </div>
           </section>
 
           {/* Conversion / Resolution */}
           <section className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
-            <h2 className="text-sm font-semibold text-foreground mb-3">Conversion</h2>
+            <h2 className="text-sm font-semibold text-foreground mb-3">معدل التحويل</h2>
             <div className="flex items-center justify-center py-4">
               <div className="relative flex items-center justify-center size-32 rounded-full bg-muted">
                 <span className="text-2xl font-bold text-foreground">{conversion}%</span>
               </div>
             </div>
-            <p className="text-center text-xs text-muted-foreground">Orders / Conversations</p>
+            <p className="text-center text-xs text-muted-foreground">الطلبات / المحادثات</p>
           </section>
         </div>
       </div>

@@ -236,8 +236,8 @@ Received: 2
                   - paragraph: "Preset: today"
                   - paragraph: "From: 2026-05-06"
                   - paragraph: "To: 2026-05-06"
-                  - paragraph: "Generated at: 2026-05-06T04:42:01.666Z"
-                  - paragraph: "App version: 2.23.3"
+                  - paragraph: "Generated at: 2026-05-06T13:40:14.665Z"
+                  - paragraph: "App version: 2.23.4"
               - generic:
                 - generic:
                   - paragraph: Inbound
@@ -256,6 +256,16 @@ Received: 2
                     - columnheader "Body"
                     - columnheader "Created At"
                 - rowgroup:
+                  - row "20****et whatsapp_evolution هاي 2026-05-06T12:45:37.567+00:00":
+                    - cell "20****et"
+                    - cell "whatsapp_evolution"
+                    - cell "هاي"
+                    - cell "2026-05-06T12:45:37.567+00:00"
+                  - row "20****et whatsapp_evolution عايز اشوف البوركيني ؟ 2026-05-06T12:42:50.934+00:00":
+                    - cell "20****et"
+                    - cell "whatsapp_evolution"
+                    - cell "عايز اشوف البوركيني ؟"
+                    - cell "2026-05-06T12:42:50.934+00:00"
                   - row "20****et whatsapp_evolution هاي 2026-05-06T04:29:34.107+00:00":
                     - cell "20****et"
                     - cell "whatsapp_evolution"
@@ -296,16 +306,16 @@ Received: 2
                     - cell "whatsapp_evolution"
                     - cell "—"
                     - cell "2026-05-06T03:50:59.994+00:00"
-                  - 'row "20****et whatsapp_evolution اختاري المقاس المناسب: S / M / L / XL. 2026-05-06T03:50:59.623+00:00"':
+                  - row "20****et whatsapp_evolution طلبك مع فريق Youlya، وهيتم التواصل معاكي في أقرب وقت. 2026-05-06T12:45:38.684+00:00":
                     - cell "20****et"
                     - cell "whatsapp_evolution"
-                    - 'cell "اختاري المقاس المناسب: S / M / L / XL."'
-                    - cell "2026-05-06T03:50:59.623+00:00"
-                  - row "un****wn whatsapp_evolution — 2026-05-06T03:50:58.916+00:00":
-                    - cell "un****wn"
+                    - cell "طلبك مع فريق Youlya، وهيتم التواصل معاكي في أقرب وقت."
+                    - cell "2026-05-06T12:45:38.684+00:00"
+                  - row "20****et whatsapp_evolution طلبك مع فريق Youlya، وهيتم التواصل معاكي في أقرب وقت. 2026-05-06T12:42:52.254+00:00":
+                    - cell "20****et"
                     - cell "whatsapp_evolution"
-                    - cell "—"
-                    - cell "2026-05-06T03:50:58.916+00:00"
+                    - cell "طلبك مع فريق Youlya، وهيتم التواصل معاكي في أقرب وقت."
+                    - cell "2026-05-06T12:42:52.254+00:00"
                   - row "20****et whatsapp_evolution طلبك مع فريق Youlya، وهيتم التواصل معاكي في أقرب وقت. 2026-05-06T04:29:36.941+00:00":
                     - cell "20****et"
                     - cell "whatsapp_evolution"
@@ -346,16 +356,6 @@ Received: 2
                     - cell "whatsapp_evolution"
                     - cell "ممكن توضحي أكثر؟"
                     - cell "2026-05-06T03:51:01.209+00:00"
-                  - 'row "20****et whatsapp_evolution اختاري المقاس المناسب: S / M / L / XL. 2026-05-06T03:51:00.486+00:00"':
-                    - cell "20****et"
-                    - cell "whatsapp_evolution"
-                    - 'cell "اختاري المقاس المناسب: S / M / L / XL."'
-                    - cell "2026-05-06T03:51:00.486+00:00"
-                  - 'row "20****et whatsapp_evolution اختاري المقاس المناسب: S / M / L / XL. 2026-05-06T03:50:59.633+00:00"':
-                    - cell "20****et"
-                    - cell "whatsapp_evolution"
-                    - 'cell "اختاري المقاس المناسب: S / M / L / XL."'
-                    - cell "2026-05-06T03:50:59.633+00:00"
         - generic [ref=e275]:
           - generic [ref=e276]:
             - generic [ref=e277]:
@@ -364,16 +364,16 @@ Received: 2
             - generic [ref=e282]:
               - generic [ref=e283]:
                 - generic [ref=e284]: Version
-                - generic [ref=e285]: 2.23.3
+                - generic [ref=e285]: 2.23.4
               - generic [ref=e286]:
                 - generic [ref=e287]: Version Name
-                - generic [ref=e288]: finish-user-management-update-deactivate-invite-flow
+                - generic [ref=e288]: normalize-production-domain-and-fix-critical-launch-blockers
               - generic [ref=e289]:
                 - generic [ref=e290]: Commit
                 - generic [ref=e291]: unknown
               - generic [ref=e292]:
                 - generic [ref=e293]: Built
-                - generic [ref=e294]: ٦‏/٥‏/٢٠٢٦ ٧:٣٤:٢٠ ص
+                - generic [ref=e294]: ٦‏/٥‏/٢٠٢٦ ٧:٥٥:٢٦ ص
           - generic [ref=e295]:
             - generic [ref=e296]:
               - img [ref=e297]
@@ -434,70 +434,70 @@ Received: 2
                 - generic [ref=e370]:
                   - generic [ref=e371]:
                     - generic [ref=e372]: whatsapp_evolution
-                    - generic [ref=e373]: ٦‏/٥‏/٢٠٢٦ ٧:٢٩:٣٤ ص
+                    - generic [ref=e373]: ٦‏/٥‏/٢٠٢٦ ٣:٤٥:٣٧ م
                   - generic [ref=e374]: Conversation 2011···.net
                 - paragraph [ref=e375]: هاي
               - listitem [ref=e376]:
                 - generic [ref=e377]:
                   - generic [ref=e378]:
                     - generic [ref=e379]: whatsapp_evolution
-                    - generic [ref=e380]: ٦‏/٥‏/٢٠٢٦ ٧:٢٥:٤٣ ص
-                  - generic [ref=e381]: Conversation 2010···.net
-                - paragraph [ref=e382]: hi
+                    - generic [ref=e380]: ٦‏/٥‏/٢٠٢٦ ٣:٤٢:٥٠ م
+                  - generic [ref=e381]: Conversation 2011···.net
+                - paragraph [ref=e382]: عايز اشوف البوركيني ؟
               - listitem [ref=e383]:
                 - generic [ref=e384]:
                   - generic [ref=e385]:
                     - generic [ref=e386]: whatsapp_evolution
-                    - generic [ref=e387]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٤ ص
+                    - generic [ref=e387]: ٦‏/٥‏/٢٠٢٦ ٧:٢٩:٣٤ ص
                   - generic [ref=e388]: Conversation 2011···.net
-                - paragraph [ref=e389]: "اختاري المقاس المناسب: S / M / L / XL."
+                - paragraph [ref=e389]: هاي
               - listitem [ref=e390]:
                 - generic [ref=e391]:
                   - generic [ref=e392]:
                     - generic [ref=e393]: whatsapp_evolution
-                    - generic [ref=e394]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٣ ص
-                  - generic [ref=e395]: Conversation unknown
-                - paragraph [ref=e396]: —
+                    - generic [ref=e394]: ٦‏/٥‏/٢٠٢٦ ٧:٢٥:٤٣ ص
+                  - generic [ref=e395]: Conversation 2010···.net
+                - paragraph [ref=e396]: hi
               - listitem [ref=e397]:
                 - generic [ref=e398]:
                   - generic [ref=e399]:
                     - generic [ref=e400]: whatsapp_evolution
-                    - generic [ref=e401]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٢ ص
+                    - generic [ref=e401]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٤ ص
                   - generic [ref=e402]: Conversation 2011···.net
                 - paragraph [ref=e403]: "اختاري المقاس المناسب: S / M / L / XL."
               - listitem [ref=e404]:
                 - generic [ref=e405]:
                   - generic [ref=e406]:
                     - generic [ref=e407]: whatsapp_evolution
-                    - generic [ref=e408]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠١ ص
+                    - generic [ref=e408]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٣ ص
                   - generic [ref=e409]: Conversation unknown
                 - paragraph [ref=e410]: —
               - listitem [ref=e411]:
                 - generic [ref=e412]:
                   - generic [ref=e413]:
                     - generic [ref=e414]: whatsapp_evolution
-                    - generic [ref=e415]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٠ ص
+                    - generic [ref=e415]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٢ ص
                   - generic [ref=e416]: Conversation 2011···.net
                 - paragraph [ref=e417]: "اختاري المقاس المناسب: S / M / L / XL."
               - listitem [ref=e418]:
                 - generic [ref=e419]:
                   - generic [ref=e420]:
                     - generic [ref=e421]: whatsapp_evolution
-                    - generic [ref=e422]: ٦‏/٥‏/٢٠٢٦ ٦:٥٠:٥٩ ص
+                    - generic [ref=e422]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠١ ص
                   - generic [ref=e423]: Conversation unknown
                 - paragraph [ref=e424]: —
               - listitem [ref=e425]:
                 - generic [ref=e426]:
                   - generic [ref=e427]:
                     - generic [ref=e428]: whatsapp_evolution
-                    - generic [ref=e429]: ٦‏/٥‏/٢٠٢٦ ٦:٥٠:٥٩ ص
+                    - generic [ref=e429]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٠ ص
                   - generic [ref=e430]: Conversation 2011···.net
                 - paragraph [ref=e431]: "اختاري المقاس المناسب: S / M / L / XL."
               - listitem [ref=e432]:
                 - generic [ref=e433]:
                   - generic [ref=e434]:
                     - generic [ref=e435]: whatsapp_evolution
-                    - generic [ref=e436]: ٦‏/٥‏/٢٠٢٦ ٦:٥٠:٥٨ ص
+                    - generic [ref=e436]: ٦‏/٥‏/٢٠٢٦ ٦:٥٠:٥٩ ص
                   - generic [ref=e437]: Conversation unknown
                 - paragraph [ref=e438]: —
           - generic [ref=e439]:
@@ -509,72 +509,72 @@ Received: 2
                 - generic [ref=e447]:
                   - generic [ref=e448]:
                     - generic [ref=e449]: whatsapp_evolution
-                    - generic [ref=e450]: ٦‏/٥‏/٢٠٢٦ ٧:٢٩:٣٦ ص
+                    - generic [ref=e450]: ٦‏/٥‏/٢٠٢٦ ٣:٤٥:٣٨ م
                   - generic [ref=e451]: Conversation 2011···.net
                 - paragraph [ref=e452]: طلبك مع فريق Youlya، وهيتم التواصل معاكي في أقرب وقت.
               - listitem [ref=e453]:
                 - generic [ref=e454]:
                   - generic [ref=e455]:
                     - generic [ref=e456]: whatsapp_evolution
-                    - generic [ref=e457]: ٦‏/٥‏/٢٠٢٦ ٧:٢٥:٤٦ ص
-                  - generic [ref=e458]: Conversation 2010···.net
-                - paragraph [ref=e459]: ممكن توضحي أكثر؟
+                    - generic [ref=e457]: ٦‏/٥‏/٢٠٢٦ ٣:٤٢:٥٢ م
+                  - generic [ref=e458]: Conversation 2011···.net
+                - paragraph [ref=e459]: طلبك مع فريق Youlya، وهيتم التواصل معاكي في أقرب وقت.
               - listitem [ref=e460]:
                 - generic [ref=e461]:
                   - generic [ref=e462]:
                     - generic [ref=e463]: whatsapp_evolution
-                    - generic [ref=e464]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٥ ص
+                    - generic [ref=e464]: ٦‏/٥‏/٢٠٢٦ ٧:٢٩:٣٦ ص
                   - generic [ref=e465]: Conversation 2011···.net
-                - paragraph [ref=e466]: "اختاري المقاس المناسب: S / M / L / XL."
+                - paragraph [ref=e466]: طلبك مع فريق Youlya، وهيتم التواصل معاكي في أقرب وقت.
               - listitem [ref=e467]:
                 - generic [ref=e468]:
                   - generic [ref=e469]:
                     - generic [ref=e470]: whatsapp_evolution
-                    - generic [ref=e471]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٤ ص
-                  - generic [ref=e472]: Conversation unknown
+                    - generic [ref=e471]: ٦‏/٥‏/٢٠٢٦ ٧:٢٥:٤٦ ص
+                  - generic [ref=e472]: Conversation 2010···.net
                 - paragraph [ref=e473]: ممكن توضحي أكثر؟
               - listitem [ref=e474]:
                 - generic [ref=e475]:
                   - generic [ref=e476]:
                     - generic [ref=e477]: whatsapp_evolution
-                    - generic [ref=e478]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٤ ص
+                    - generic [ref=e478]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٥ ص
                   - generic [ref=e479]: Conversation 2011···.net
                 - paragraph [ref=e480]: "اختاري المقاس المناسب: S / M / L / XL."
               - listitem [ref=e481]:
                 - generic [ref=e482]:
                   - generic [ref=e483]:
                     - generic [ref=e484]: whatsapp_evolution
-                    - generic [ref=e485]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٣ ص
+                    - generic [ref=e485]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٤ ص
                   - generic [ref=e486]: Conversation unknown
                 - paragraph [ref=e487]: ممكن توضحي أكثر؟
               - listitem [ref=e488]:
                 - generic [ref=e489]:
                   - generic [ref=e490]:
                     - generic [ref=e491]: whatsapp_evolution
-                    - generic [ref=e492]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٢ ص
+                    - generic [ref=e492]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٤ ص
                   - generic [ref=e493]: Conversation 2011···.net
                 - paragraph [ref=e494]: "اختاري المقاس المناسب: S / M / L / XL."
               - listitem [ref=e495]:
                 - generic [ref=e496]:
                   - generic [ref=e497]:
                     - generic [ref=e498]: whatsapp_evolution
-                    - generic [ref=e499]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠١ ص
+                    - generic [ref=e499]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٣ ص
                   - generic [ref=e500]: Conversation unknown
                 - paragraph [ref=e501]: ممكن توضحي أكثر؟
               - listitem [ref=e502]:
                 - generic [ref=e503]:
                   - generic [ref=e504]:
                     - generic [ref=e505]: whatsapp_evolution
-                    - generic [ref=e506]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٠ ص
+                    - generic [ref=e506]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠٢ ص
                   - generic [ref=e507]: Conversation 2011···.net
                 - paragraph [ref=e508]: "اختاري المقاس المناسب: S / M / L / XL."
               - listitem [ref=e509]:
                 - generic [ref=e510]:
                   - generic [ref=e511]:
                     - generic [ref=e512]: whatsapp_evolution
-                    - generic [ref=e513]: ٦‏/٥‏/٢٠٢٦ ٦:٥٠:٥٩ ص
-                  - generic [ref=e514]: Conversation 2011···.net
-                - paragraph [ref=e515]: "اختاري المقاس المناسب: S / M / L / XL."
+                    - generic [ref=e513]: ٦‏/٥‏/٢٠٢٦ ٦:٥١:٠١ ص
+                  - generic [ref=e514]: Conversation unknown
+                - paragraph [ref=e515]: ممكن توضحي أكثر؟
         - generic [ref=e516]:
           - generic [ref=e517]:
             - img [ref=e518]
@@ -583,7 +583,7 @@ Received: 2
             - paragraph [ref=e524]: "Send a safe synthetic message to verify the loop without real WhatsApp:"
             - generic [ref=e525]: "curl -X POST https://admin.nex-lnk.online/webhook/youlya-whatsapp \\ -H \"Content-Type: application/json\" \\ -d '{\"data\":{\"key\":{\"remoteJid\":\"201000000000@s.whatsapp.net\",\"fromMe\":false},\"message\":{\"conversation\":\"هاي\"},\"messageTimestamp\":$(date +%s)}}'"
             - paragraph [ref=e526]: "Expected: HTTP 200, workflow execution created, no real message sent to customer."
-      - paragraph [ref=e528]: Youlya AI Commerce OS · v2.23.3 finish-user-management-update-deactivate-invite-flow · commit unknown · built 2026-05-06 04:34 · production
+      - paragraph [ref=e528]: Youlya AI Commerce OS · v2.23.4 normalize-production-domain-and-fix-critical-launch-blockers · commit unknown · built 2026-05-06 04:55 · production
   - alert [ref=e529]
 ```
 

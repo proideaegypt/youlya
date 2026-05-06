@@ -4,7 +4,7 @@ This folder is the safe operational version of the pilot sprint playbook for the
 
 ## Current state
 
-- The app is live at `https://admin.youlya365.com`.
+- The app is live at `https://admin.nex-lnk.online`.
 - `Youlya WhatsApp Main` is active in n8n.
 - Shopify remains the source of truth.
 - Supabase is operational cache and app state.

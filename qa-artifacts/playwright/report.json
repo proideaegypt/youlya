@@ -160,12 +160,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 355,
+                  "duration": 1496,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:41:37.306Z",
+                  "startTime": "2026-05-06T13:39:37.666Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -194,12 +194,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 201,
+                  "duration": 359,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:41:37.823Z",
+                  "startTime": "2026-05-06T13:39:39.904Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -228,12 +228,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8995,
+                  "duration": 10065,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:41:38.172Z",
+                  "startTime": "2026-05-06T13:39:40.508Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -262,12 +262,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 79141,
+                  "duration": 79213,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:41:47.390Z",
+                  "startTime": "2026-05-06T13:39:50.745Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -311,12 +311,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 11611,
+                      "duration": 19129,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:41:37.525Z",
+                      "startTime": "2026-05-06T13:39:37.875Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -345,7 +345,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 23629,
+                      "duration": 43281,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -369,7 +369,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:41:49.860Z",
+                      "startTime": "2026-05-06T13:39:58.398Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -424,7 +424,7 @@
                       "workerIndex": 3,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 29793,
+                      "duration": 18190,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -448,7 +448,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:42:19.028Z",
+                      "startTime": "2026-05-06T13:40:55.227Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -500,10 +500,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 4,
+                      "workerIndex": 5,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 18353,
+                      "duration": 24461,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -527,7 +527,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:42:53.744Z",
+                      "startTime": "2026-05-06T13:41:20.370Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -582,12 +582,12 @@
                       "workerIndex": 6,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 16165,
+                      "duration": 12816,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:43:16.388Z",
+                      "startTime": "2026-05-06T13:41:49.816Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -616,12 +616,12 @@
                       "workerIndex": 6,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 25126,
+                      "duration": 13574,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:43:33.336Z",
+                      "startTime": "2026-05-06T13:42:03.052Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -650,12 +650,12 @@
                       "workerIndex": 6,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 9169,
+                      "duration": 14865,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:43:58.670Z",
+                      "startTime": "2026-05-06T13:42:16.896Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -684,12 +684,12 @@
                       "workerIndex": 6,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 7757,
+                      "duration": 11460,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:44:08.029Z",
+                      "startTime": "2026-05-06T13:42:31.900Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -718,12 +718,12 @@
                       "workerIndex": 6,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 9819,
+                      "duration": 11676,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:44:15.994Z",
+                      "startTime": "2026-05-06T13:42:43.550Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -752,7 +752,7 @@
                       "workerIndex": 6,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 7030,
+                      "duration": 20525,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -776,7 +776,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:44:26.064Z",
+                      "startTime": "2026-05-06T13:42:55.646Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -831,7 +831,7 @@
                       "workerIndex": 8,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 10067,
+                      "duration": 23543,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -855,7 +855,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:44:36.458Z",
+                      "startTime": "2026-05-06T13:43:25.237Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -910,7 +910,7 @@
                       "workerIndex": 9,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 12343,
+                      "duration": 16828,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -934,7 +934,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:44:51.709Z",
+                      "startTime": "2026-05-06T13:43:56.080Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -986,15 +986,15 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 10,
+                      "workerIndex": 11,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 8032,
+                      "duration": 18926,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:45:08.068Z",
+                      "startTime": "2026-05-06T13:44:17.724Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1028,15 +1028,15 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 10,
+                      "workerIndex": 11,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 11947,
+                      "duration": 16286,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:45:16.758Z",
+                      "startTime": "2026-05-06T13:44:38.762Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1062,10 +1062,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 10,
+                      "workerIndex": 11,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 17858,
+                      "duration": 24380,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -1089,7 +1089,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:45:28.995Z",
+                      "startTime": "2026-05-06T13:44:55.219Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1144,7 +1144,7 @@
                       "workerIndex": 12,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 16713,
+                      "duration": 22470,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -1168,7 +1168,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:45:51.275Z",
+                      "startTime": "2026-05-06T13:45:30.996Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1220,10 +1220,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 13,
+                      "workerIndex": 14,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 8387,
+                      "duration": 22163,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -1247,7 +1247,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:46:16.774Z",
+                      "startTime": "2026-05-06T13:46:01.099Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1302,12 +1302,12 @@
                       "workerIndex": 15,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 24747,
+                      "duration": 28037,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:46:29.607Z",
+                      "startTime": "2026-05-06T13:46:41.281Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1336,12 +1336,12 @@
                       "workerIndex": 15,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 19542,
+                      "duration": 27762,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:46:55.157Z",
+                      "startTime": "2026-05-06T13:47:11.212Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1370,12 +1370,12 @@
                       "workerIndex": 15,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 16286,
+                      "duration": 13266,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:47:14.799Z",
+                      "startTime": "2026-05-06T13:47:39.139Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1404,12 +1404,12 @@
                       "workerIndex": 15,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 6151,
+                      "duration": 6419,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:47:31.240Z",
+                      "startTime": "2026-05-06T13:47:52.517Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1438,12 +1438,12 @@
                       "workerIndex": 15,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 12141,
+                      "duration": 8437,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:47:37.467Z",
+                      "startTime": "2026-05-06T13:47:59.094Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1472,7 +1472,7 @@
                       "workerIndex": 15,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 9406,
+                      "duration": 9898,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -1496,7 +1496,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:47:49.802Z",
+                      "startTime": "2026-05-06T13:48:07.817Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1548,10 +1548,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 17,
+                      "workerIndex": 16,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 14557,
+                      "duration": 7249,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -1575,7 +1575,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:48:04.579Z",
+                      "startTime": "2026-05-06T13:48:23.225Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1627,10 +1627,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 18,
+                      "workerIndex": 17,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 11287,
+                      "duration": 10965,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -1654,7 +1654,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:48:24.060Z",
+                      "startTime": "2026-05-06T13:48:33.412Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1706,15 +1706,15 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 19,
-                      "parallelIndex": 1,
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 9696,
+                      "duration": 6570,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:48:41.012Z",
+                      "startTime": "2026-05-06T13:48:46.420Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1748,15 +1748,15 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 19,
-                      "parallelIndex": 1,
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4278,
+                      "duration": 3731,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:48:51.604Z",
+                      "startTime": "2026-05-06T13:48:53.250Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1782,10 +1782,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 19,
-                      "parallelIndex": 1,
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 5980,
+                      "duration": 4665,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -1809,7 +1809,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:48:55.957Z",
+                      "startTime": "2026-05-06T13:48:57.023Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1861,10 +1861,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 20,
+                      "workerIndex": 19,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 5733,
+                      "duration": 4794,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -1888,7 +1888,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:49:04.787Z",
+                      "startTime": "2026-05-06T13:49:04.209Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1940,10 +1940,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 21,
+                      "workerIndex": 20,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 5465,
+                      "duration": 3889,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -1967,7 +1967,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:49:13.027Z",
+                      "startTime": "2026-05-06T13:49:11.133Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2019,15 +2019,15 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 22,
+                      "workerIndex": 21,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4316,
+                      "duration": 4351,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:49:21.123Z",
+                      "startTime": "2026-05-06T13:49:17.203Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2053,15 +2053,15 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 22,
+                      "workerIndex": 21,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 6190,
+                      "duration": 5387,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:49:25.805Z",
+                      "startTime": "2026-05-06T13:49:21.885Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2087,15 +2087,15 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 22,
+                      "workerIndex": 21,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4326,
+                      "duration": 4477,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:49:32.101Z",
+                      "startTime": "2026-05-06T13:49:27.345Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2121,15 +2121,15 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 22,
+                      "workerIndex": 21,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3425,
+                      "duration": 7397,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:49:36.511Z",
+                      "startTime": "2026-05-06T13:49:31.941Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2155,15 +2155,15 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 22,
+                      "workerIndex": 21,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7000,
+                      "duration": 6955,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:49:40.021Z",
+                      "startTime": "2026-05-06T13:49:39.426Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2189,10 +2189,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 22,
+                      "workerIndex": 21,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 7399,
+                      "duration": 7679,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -2216,7 +2216,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:49:47.072Z",
+                      "startTime": "2026-05-06T13:49:46.420Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2268,10 +2268,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 23,
+                      "workerIndex": 22,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 7784,
+                      "duration": 6043,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -2295,7 +2295,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:49:56.793Z",
+                      "startTime": "2026-05-06T13:49:56.249Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2347,10 +2347,10 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 24,
+                      "workerIndex": 23,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 4518,
+                      "duration": 8344,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-a11y-rtl-swarm.spec.ts:63:33",
@@ -2374,7 +2374,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:50:07.176Z",
+                      "startTime": "2026-05-06T13:50:05.317Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2426,15 +2426,15 @@
                   "projectName": "dashboard-a11y-rtl-swarm",
                   "results": [
                     {
-                      "workerIndex": 25,
+                      "workerIndex": 24,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3674,
+                      "duration": 3185,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-06T04:50:14.436Z",
+                      "startTime": "2026-05-06T13:50:15.787Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2470,10 +2470,10 @@
               "projectName": "dashboard-functional-swarm",
               "results": [
                 {
-                  "workerIndex": 5,
+                  "workerIndex": 4,
                   "parallelIndex": 0,
                   "status": "timedOut",
-                  "duration": 72707,
+                  "duration": 81067,
                   "error": {
                     "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
                     "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
@@ -2494,7 +2494,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:43:14.658Z",
+                  "startTime": "2026-05-06T13:41:15.615Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -2544,12 +2544,12 @@
                   "workerIndex": 7,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8402,
+                  "duration": 19778,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:44:35.661Z",
+                  "startTime": "2026-05-06T13:42:58.044Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -2578,12 +2578,12 @@
                   "workerIndex": 7,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5450,
+                  "duration": 10549,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:44:44.925Z",
+                  "startTime": "2026-05-06T13:43:19.325Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -2612,31 +2612,31 @@
                   "workerIndex": 7,
                   "parallelIndex": 0,
                   "status": "failed",
-                  "duration": 20631,
+                  "duration": 37219,
                   "error": {
-                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'الطلبات' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'الطلبات' })\u001b[22m\n",
-                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'الطلبات' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'الطلبات' })\u001b[22m\n\n    at /root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts:52:64",
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('span').filter({ hasText: 'AI Tool' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('span').filter({ hasText: 'AI Tool' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('span').filter({ hasText: 'AI Tool' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('span').filter({ hasText: 'AI Tool' })\u001b[22m\n\n    at /root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts:56:69",
                     "location": {
                       "file": "/root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts",
-                      "column": 64,
-                      "line": 52
+                      "column": 69,
+                      "line": 56
                     },
-                    "snippet": "  50 | test(\"orders and logs pages render non-blank states\", async ({ page }) => {\n  51 |   await page.goto(\"/dashboard/orders\");\n> 52 |   await expect(page.getByRole(\"heading\", { name: \"الطلبات\" })).toBeVisible();\n     |                                                                ^\n  53 |\n  54 |   await page.goto(\"/dashboard/logs\");\n  55 |   await expect(page.getByRole(\"heading\", { name: \"السجلات\" })).toBeVisible();"
+                    "snippet": "  54 |   await page.goto(\"/dashboard/logs\");\n  55 |   await expect(page.getByRole(\"heading\", { name: \"السجلات\" })).toBeVisible();\n> 56 |   await expect(page.locator(\"span\").filter({ hasText: \"AI Tool\" })).toBeVisible();\n     |                                                                     ^\n  57 | });\n  58 |\n  59 | test(\"pilot control shows health and safety counters\", async ({ page }) => {"
                   },
                   "errors": [
                     {
                       "location": {
                         "file": "/root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts",
-                        "column": 64,
-                        "line": 52
+                        "column": 69,
+                        "line": 56
                       },
-                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'الطلبات' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'الطلبات' })\u001b[22m\n\n\n  50 | test(\"orders and logs pages render non-blank states\", async ({ page }) => {\n  51 |   await page.goto(\"/dashboard/orders\");\n> 52 |   await expect(page.getByRole(\"heading\", { name: \"الطلبات\" })).toBeVisible();\n     |                                                                ^\n  53 |\n  54 |   await page.goto(\"/dashboard/logs\");\n  55 |   await expect(page.getByRole(\"heading\", { name: \"السجلات\" })).toBeVisible();\n    at /root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts:52:64"
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('span').filter({ hasText: 'AI Tool' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('span').filter({ hasText: 'AI Tool' })\u001b[22m\n\n\n  54 |   await page.goto(\"/dashboard/logs\");\n  55 |   await expect(page.getByRole(\"heading\", { name: \"السجلات\" })).toBeVisible();\n> 56 |   await expect(page.locator(\"span\").filter({ hasText: \"AI Tool\" })).toBeVisible();\n     |                                                                     ^\n  57 | });\n  58 |\n  59 | test(\"pilot control shows health and safety counters\", async ({ page }) => {\n    at /root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts:56:69"
                     }
                   ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:44:50.517Z",
+                  "startTime": "2026-05-06T13:43:30.473Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -2662,8 +2662,8 @@
                   ],
                   "errorLocation": {
                     "file": "/root/youlya/tests/playwright/dashboard-functional-swarm.spec.ts",
-                    "column": 64,
-                    "line": 52
+                    "column": 69,
+                    "line": 56
                   }
                 }
               ],
@@ -2688,15 +2688,15 @@
               "projectName": "dashboard-functional-swarm",
               "results": [
                 {
-                  "workerIndex": 11,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 12733,
+                  "duration": 21315,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:45:17.969Z",
+                  "startTime": "2026-05-06T13:44:14.977Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -2722,15 +2722,15 @@
               "projectName": "dashboard-functional-swarm",
               "results": [
                 {
-                  "workerIndex": 11,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 14199,
+                  "duration": 12805,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:45:31.275Z",
+                  "startTime": "2026-05-06T13:44:36.936Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -2761,15 +2761,15 @@
               "projectName": "dashboard-functional-swarm",
               "results": [
                 {
-                  "workerIndex": 11,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4095,
+                  "duration": 7074,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:45:45.793Z",
+                  "startTime": "2026-05-06T13:44:49.877Z",
                   "annotations": [
                     {
                       "type": "safety",
@@ -2800,15 +2800,15 @@
               "projectName": "dashboard-functional-swarm",
               "results": [
                 {
-                  "workerIndex": 11,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5979,
+                  "duration": 15416,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:45:50.060Z",
+                  "startTime": "2026-05-06T13:44:57.287Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -2834,15 +2834,15 @@
               "projectName": "dashboard-functional-swarm",
               "results": [
                 {
-                  "workerIndex": 11,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 10934,
+                  "duration": 9611,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:45:56.262Z",
+                  "startTime": "2026-05-06T13:45:12.890Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -2868,15 +2868,15 @@
               "projectName": "dashboard-functional-swarm",
               "results": [
                 {
-                  "workerIndex": 11,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4299,
+                  "duration": 6753,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:46:07.351Z",
+                  "startTime": "2026-05-06T13:45:22.596Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -2902,15 +2902,15 @@
               "projectName": "dashboard-functional-swarm",
               "results": [
                 {
-                  "workerIndex": 11,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4636,
+                  "duration": 8964,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:46:11.818Z",
+                  "startTime": "2026-05-06T13:45:29.504Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -2936,15 +2936,15 @@
               "projectName": "dashboard-functional-swarm",
               "results": [
                 {
-                  "workerIndex": 11,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4505,
+                  "duration": 14443,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:46:16.598Z",
+                  "startTime": "2026-05-06T13:45:38.684Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -2978,15 +2978,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 14,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8121,
+                  "duration": 24012,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:46:26.317Z",
+                  "startTime": "2026-05-06T13:45:58.440Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3012,15 +3012,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 14,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 20073,
+                  "duration": 20580,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:46:34.739Z",
+                  "startTime": "2026-05-06T13:46:23.541Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3046,15 +3046,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 14,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 18421,
+                  "duration": 24765,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:46:55.020Z",
+                  "startTime": "2026-05-06T13:46:44.318Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3069,7 +3069,7 @@
         },
         {
           "title": "ux audit /dashboard/products",
-          "ok": false,
+          "ok": true,
           "tags": [],
           "tests": [
             {
@@ -3080,65 +3080,20 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 14,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
-                  "status": "failed",
-                  "duration": 16011,
-                  "error": {
-                    "message": "Error: Uncaught console errors\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
-                    "stack": "Error: Uncaught console errors\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /root/youlya/tests/playwright/dashboard-ux-swarm.spec.ts:114:63",
-                    "location": {
-                      "file": "/root/youlya/tests/playwright/dashboard-ux-swarm.spec.ts",
-                      "column": 63,
-                      "line": 114
-                    },
-                    "snippet": "  112 |     expect(shellPresent, \"Dashboard shell/sidebar should be visible\").toBe(true);\n  113 |     expect(hasHorizontalOverflow, \"Horizontal overflow >20px\").toBe(false);\n> 114 |     expect(trackers.consoleErrors, \"Uncaught console errors\").toEqual([]);\n      |                                                               ^\n  115 |     expect(trackers.realFailedRequests, \"Unexpected failed network requests\").toEqual([]);\n  116 |   });\n  117 | }"
-                  },
-                  "errors": [
-                    {
-                      "location": {
-                        "file": "/root/youlya/tests/playwright/dashboard-ux-swarm.spec.ts",
-                        "column": 63,
-                        "line": 114
-                      },
-                      "message": "Error: Uncaught console errors\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+   \"Failed to load resource: net::ERR_NETWORK_CHANGED\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  112 |     expect(shellPresent, \"Dashboard shell/sidebar should be visible\").toBe(true);\n  113 |     expect(hasHorizontalOverflow, \"Horizontal overflow >20px\").toBe(false);\n> 114 |     expect(trackers.consoleErrors, \"Uncaught console errors\").toEqual([]);\n      |                                                               ^\n  115 |     expect(trackers.realFailedRequests, \"Unexpected failed network requests\").toEqual([]);\n  116 |   });\n  117 | }\n    at /root/youlya/tests/playwright/dashboard-ux-swarm.spec.ts:114:63"
-                    }
-                  ],
+                  "status": "passed",
+                  "duration": 27232,
+                  "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:47:13.609Z",
+                  "startTime": "2026-05-06T13:47:09.466Z",
                   "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-ux-swarm-ux-audit-dashboard-products-dashboard-ux-swarm/test-failed-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-ux-swarm-ux-audit-dashboard-products-dashboard-ux-swarm/video.webm"
-                    },
-                    {
-                      "name": "error-context",
-                      "contentType": "text/markdown",
-                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-ux-swarm-ux-audit-dashboard-products-dashboard-ux-swarm/error-context.md"
-                    },
-                    {
-                      "name": "trace",
-                      "contentType": "application/zip",
-                      "path": "/root/youlya/qa-artifacts/playwright/dashboard-ux-swarm-ux-audit-dashboard-products-dashboard-ux-swarm/trace.zip"
-                    }
-                  ],
-                  "errorLocation": {
-                    "file": "/root/youlya/tests/playwright/dashboard-ux-swarm.spec.ts",
-                    "column": 63,
-                    "line": 114
-                  }
+                  "attachments": []
                 }
               ],
-              "status": "unexpected"
+              "status": "expected"
             }
           ],
           "id": "e0b2e968d828253534a2-e580187698e09bff6eed",
@@ -3159,15 +3114,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 16,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 13416,
+                  "duration": 13670,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:47:36.617Z",
+                  "startTime": "2026-05-06T13:47:36.886Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3193,15 +3148,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 16,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 10891,
+                  "duration": 8393,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:47:50.951Z",
+                  "startTime": "2026-05-06T13:47:50.816Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3227,15 +3182,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 16,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7368,
+                  "duration": 9796,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:48:02.014Z",
+                  "startTime": "2026-05-06T13:47:59.369Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3261,15 +3216,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 16,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 10270,
+                  "duration": 7843,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:48:09.440Z",
+                  "startTime": "2026-05-06T13:48:09.260Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3295,15 +3250,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 16,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7996,
+                  "duration": 5592,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:48:19.822Z",
+                  "startTime": "2026-05-06T13:48:17.223Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3329,15 +3284,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 16,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7634,
+                  "duration": 5698,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:48:27.902Z",
+                  "startTime": "2026-05-06T13:48:23.019Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3363,15 +3318,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 16,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5296,
+                  "duration": 3536,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:48:35.614Z",
+                  "startTime": "2026-05-06T13:48:28.970Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3397,15 +3352,15 @@
               "projectName": "dashboard-ux-swarm",
               "results": [
                 {
-                  "workerIndex": 16,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9783,
+                  "duration": 11052,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:48:41.020Z",
+                  "startTime": "2026-05-06T13:48:32.692Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3442,12 +3397,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8905,
+                  "duration": 15182,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-05-06T04:41:24.586Z",
+                  "startTime": "2026-05-06T13:39:13.688Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -3522,11 +3477,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-06T04:41:22.591Z",
-    "duration": 536027.728,
-    "expected": 47,
+    "startTime": "2026-05-06T13:39:10.281Z",
+    "duration": 669226.818,
+    "expected": 48,
     "skipped": 2,
-    "unexpected": 21,
+    "unexpected": 20,
     "flaky": 0
   }
 }

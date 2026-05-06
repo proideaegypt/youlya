@@ -1,14 +1,16 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { returnToAI } from "@/lib/services/handoff-service";
 import { isAIPaused } from "@/lib/services/conversation-flow-service";
+import { getCurrentDashboardActor } from "@/lib/auth/user-management-api";
 
 export async function POST(_req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const cookieStore = await cookies();
-  const hasSession = cookieStore.getAll().some((c) => c.name.startsWith("sb-"));
-  if (!hasSession) {
+  const actorUser = await getCurrentDashboardActor();
+  if (!actorUser) {
     return NextResponse.json({ error: "ليس لديك صلاحية لتنفيذ هذا الإجراء." }, { status: 401 });
   }
+  const role = actorUser.role;
+  const allowedRoles = new Set(["super_admin", "owner", "admin", "customer_service", "moderator"]);
+  if (!allowedRoles.has(role)) return NextResponse.json({ error: "ليس لديك صلاحية لتنفيذ هذا الإجراء." }, { status: 403 });
 
   const { id: conversationId } = await params;
   if (!conversationId) {
@@ -16,7 +18,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   }
 
   const body = await _req.json().catch(() => ({}));
-  const actor = typeof body.actor === "string" ? body.actor : "staff";
+  const actor = typeof body.actor === "string" && body.actor.trim() ? body.actor : actorUser.userId;
 
   try {
     const success = await returnToAI(conversationId, actor);
